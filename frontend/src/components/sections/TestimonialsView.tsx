@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
+import Image from "next/image";
 import { resolveImageUrl } from "@/lib/hero";
 
 type TestimonialItem = {
@@ -102,10 +103,11 @@ export default function TestimonialsView({ items }: { items: TestimonialItem[] }
                   </p>
                   <div className="mt-6 flex items-center gap-3 border-t border-ink/10 pt-5">
                     {item.clientPhotoUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={resolveImageUrl(item.clientPhotoUrl)}
                         alt=""
+                        width={40}
+                        height={40}
                         className="h-10 w-10 shrink-0 rounded-full object-cover"
                       />
                     ) : (

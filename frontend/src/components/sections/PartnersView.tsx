@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Handshake } from "lucide-react";
+import Image from "next/image";
 import { resolveImageUrl } from "@/lib/hero";
 
 type PartnerDto = {
@@ -93,11 +94,15 @@ export default function PartnersView({ partners }: { partners: PartnerDto[] }) {
               >
                 {visible.map((partner) => {
                   const content = partner.logoUrl ? (
-                    <img
-                      src={resolveImageUrl(partner.logoUrl)}
-                      alt={partner.name}
-                      className="h-14 w-auto max-w-[160px] object-contain md:h-16"
-                    />
+                    <div className="relative h-14 w-[160px] md:h-16">
+                      <Image
+                        src={resolveImageUrl(partner.logoUrl)}
+                        alt={partner.name}
+                        fill
+                        sizes="160px"
+                        className="object-contain"
+                      />
+                    </div>
                   ) : (
                     <span className="flex items-center gap-2 font-mono text-base text-graphite/60">
                       <Handshake className="h-6 w-6" strokeWidth={1.6} />

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Layers } from "lucide-react";
+import Image from "next/image";
 
 type ServiceItem = {
   id: string;
@@ -109,9 +110,11 @@ export default function ServicesView({ services }: { services: ServiceItem[] }) 
                       }`}
                     >
                       {service.iconUrl ? (
-                        <img
+                        <Image
                           src={service.iconUrl}
                           alt=""
+                          width={28}
+                          height={28}
                           className="h-7 w-7 object-contain"
                         />
                       ) : (
