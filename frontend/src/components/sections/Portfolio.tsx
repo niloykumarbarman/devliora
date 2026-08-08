@@ -49,12 +49,14 @@ const PROJECTS: Project[] = [
 
 const AUTO_ROTATE_MS = 4500;
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project, isSignal }: { project: Project; isSignal: boolean }) {
+  const accentText = isSignal ? "text-signal" : "text-ember";
+  const accentBorder = isSignal ? "border-signal/30" : "border-ember/30";
   return (
     <>
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-signal">
+          <p className={`font-mono text-[0.6875rem] uppercase tracking-[0.14em] ${accentText}`}>
             {project.category}
           </p>
           <p className="mt-1.5 font-mono text-xs text-graphite/50">
@@ -62,7 +64,7 @@ function ProjectCard({ project }: { project: Project }) {
           </p>
         </div>
         <ArrowUpRight
-          className="h-5 w-5 shrink-0 text-graphite/30"
+          className={`h-5 w-5 shrink-0 ${accentText}`}
           strokeWidth={1.75}
         />
       </div>
@@ -78,7 +80,7 @@ function ProjectCard({ project }: { project: Project }) {
         {project.tags.map((tag) => (
           <li
             key={tag}
-            className="rounded-sm border border-ink/10 px-2.5 py-1 font-mono text-[0.6875rem] text-graphite/60"
+            className={`rounded-sm border ${accentBorder} px-2.5 py-1 font-mono text-[0.6875rem] text-graphite/70`}
           >
             {tag}
           </li>
@@ -160,6 +162,11 @@ export default function Portfolio() {
               const isActive = offset === 0;
               const absOffset = Math.abs(offset);
               const visible = absOffset <= 1;
+              const isSignal = i % 2 === 0;
+              const activeBorder = isSignal ? "border-signal/40" : "border-ember/40";
+              const activeShadow = isSignal
+                ? "shadow-[0_20px_70px_-15px_rgba(47,92,255,0.35)]"
+                : "shadow-[0_20px_70px_-15px_rgba(255,122,69,0.35)]";
 
               return (
                 <motion.article
@@ -168,15 +175,19 @@ export default function Portfolio() {
                     x: reduceMotion ? 0 : `${offset * 62}%`,
                     scale: isActive ? 1 : 0.82,
                     rotateY: reduceMotion ? 0 : offset * -28,
-                    opacity: visible ? (isActive ? 1 : 0.4) : 0,
+                    opacity: visible ? (isActive ? 1 : 0.45) : 0,
                     zIndex: 10 - absOffset,
                     pointerEvents: isActive ? "auto" : "none",
                   }}
                   transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
                   style={{ transformStyle: "preserve-3d" }}
-                  className="absolute w-[88%] max-w-md rounded-xl border border-ink/10 bg-paper p-8 shadow-[0_20px_60px_-20px_rgba(14,20,32,0.25)] sm:p-10"
+                  className={`absolute w-[88%] max-w-md rounded-xl border bg-paper p-8 sm:p-10 ${
+                    isActive
+                      ? `${activeBorder} ${activeShadow}`
+                      : "border-ink/10 shadow-[0_20px_60px_-20px_rgba(14,20,32,0.25)]"
+                  }`}
                 >
-                  <ProjectCard project={project} />
+                  <ProjectCard project={project} isSignal={isSignal} />
                 </motion.article>
               );
             })}
