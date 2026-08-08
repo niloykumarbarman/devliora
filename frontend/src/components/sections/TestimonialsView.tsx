@@ -15,7 +15,7 @@ type TestimonialItem = {
   rating: number;
 };
 
-const PER_PAGE = 4;
+const PER_PAGE = 3;
 
 export default function TestimonialsView({ items }: { items: TestimonialItem[] }) {
   const shouldReduceMotion = useReducedMotion();
@@ -23,7 +23,7 @@ export default function TestimonialsView({ items }: { items: TestimonialItem[] }
   const [perPage, setPerPage] = useState(PER_PAGE);
 
   useEffect(() => {
-    const updatePerPage = () => setPerPage(window.innerWidth < 768 ? 1 : PER_PAGE);
+    const updatePerPage = () => setPerPage(window.innerWidth < 1024 ? 1 : PER_PAGE);
     updatePerPage();
     window.addEventListener("resize", updatePerPage);
     return () => window.removeEventListener("resize", updatePerPage);
@@ -75,7 +75,7 @@ export default function TestimonialsView({ items }: { items: TestimonialItem[] }
               transition={
                 shouldReduceMotion ? { duration: 0.2 } : { duration: 0.4, ease: "easeOut" }
               }
-              className="grid gap-8 sm:grid-cols-2"
+              className="grid gap-8 lg:grid-cols-3"
             >
               {visible.map((item) => (
                 <div
