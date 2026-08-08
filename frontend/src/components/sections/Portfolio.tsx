@@ -1,7 +1,8 @@
 "use client";
 
+import { useEffect, useState, useCallback } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 
 type Project = {
   client: string;
@@ -46,8 +47,72 @@ const PROJECTS: Project[] = [
   },
 ];
 
+const AUTO_ROTATE_MS = 4500;
+
+function ProjectCard({ project }: { project: Project }) {
+  return (
+    <>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-signal">
+            {project.category}
+          </p>
+          <p className="mt-1.5 font-mono text-xs text-graphite/50">
+            {project.client}
+          </p>
+        </div>
+        <ArrowUpRight
+          className="h-5 w-5 shrink-0 text-graphite/30"
+          strokeWidth={1.75}
+        />
+      </div>
+
+      <h3 className="mt-5 font-display text-2xl font-semibold leading-snug tracking-tight sm:text-3xl">
+        {project.title}
+      </h3>
+      <p className="mt-3 text-sm leading-relaxed text-graphite/75">
+        {project.description}
+      </p>
+
+      <ul className="mt-6 flex flex-wrap gap-2">
+        {project.tags.map((tag) => (
+          <li
+            key={tag}
+            className="rounded-sm border border-ink/10 px-2.5 py-1 font-mono text-[0.6875rem] text-graphite/60"
+          >
+            {tag}
+          </li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
 export default function Portfolio() {
   const reduceMotion = useReducedMotion();
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const count = PROJECTS.length;
+
+  const goTo = useCallback((index: number) => {
+    setActive(((index % count) + count) % count);
+  }, [count]);
+
+  const goPrev = useCallback(() => goTo(active - 1), [active, goTo]);
+  const goNext = useCallback(() => goTo(active + 1), [active, goTo]);
+
+  useEffect(() => {
+    if (paused || reduceMotion) return;
+    const timer = setInterval(() => {
+      setActive((prev) => (prev + 1) % count);
+    }, AUTO_ROTATE_MS);
+    return () => clearInterval(timer);
+  }, [paused, reduceMotion, count]);
+
+  const handleManualNav = (fn: () => void) => {
+    setPaused(true);
+    fn();
+  };
 
   return (
     <section id="work" className="relative overflow-hidden bg-paper text-ink">
@@ -78,54 +143,78 @@ export default function Portfolio() {
           </p>
         </motion.div>
 
-        <div className="mt-16 grid gap-8 sm:grid-cols-2">
-          {PROJECTS.map((project, i) => (
-            <motion.article
-              key={project.title}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={
-                reduceMotion
-                  ? { duration: 0.3 }
-                  : { duration: 0.5, ease: "easeOut", delay: i * 0.08 }
-              }
-              className="group relative border border-ink/10 bg-paper p-8 transition-colors duration-300 hover:border-ink/25"
+        <div
+          className="relative mt-16"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <div
+            className="relative flex h-[420px] items-center justify-center sm:h-[380px]"
+            style={{ perspective: "1400px" }}
+          >
+            {PROJECTS.map((project, i) => {
+              let offset = i - active;
+              if (offset > count / 2) offset -= count;
+              if (offset < -count / 2) offset += count;
+
+              const isActive = offset === 0;
+              const absOffset = Math.abs(offset);
+              const visible = absOffset <= 1;
+
+              return (
+                <motion.article
+                  key={project.title}
+                  animate={{
+                    x: reduceMotion ? 0 : `${offset * 62}%`,
+                    scale: isActive ? 1 : 0.82,
+                    rotateY: reduceMotion ? 0 : offset * -28,
+                    opacity: visible ? (isActive ? 1 : 0.4) : 0,
+                    zIndex: 10 - absOffset,
+                    pointerEvents: isActive ? "auto" : "none",
+                  }}
+                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ transformStyle: "preserve-3d" }}
+                  className="absolute w-[88%] max-w-md rounded-xl border border-ink/10 bg-paper p-8 shadow-[0_20px_60px_-20px_rgba(14,20,32,0.25)] sm:p-10"
+                >
+                  <ProjectCard project={project} />
+                </motion.article>
+              );
+            })}
+          </div>
+
+          <div className="mt-10 flex items-center justify-center gap-6">
+            <button
+              type="button"
+              onClick={() => handleManualNav(goPrev)}
+              aria-label="Previous project"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-wire text-ink transition-colors hover:border-signal hover:text-signal"
             >
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-signal">
-                    {project.category}
-                  </p>
-                  <p className="mt-1.5 font-mono text-xs text-graphite/50">
-                    {project.client}
-                  </p>
-                </div>
-                <ArrowUpRight
-                  className="h-5 w-5 shrink-0 text-graphite/30 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ember"
-                  strokeWidth={1.75}
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+
+            <div className="flex items-center gap-2">
+              {PROJECTS.map((project, i) => (
+                <button
+                  key={project.title}
+                  type="button"
+                  onClick={() => handleManualNav(() => goTo(i))}
+                  aria-label={`Go to project ${i + 1}`}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    active === i ? "w-8 bg-signal" : "w-2 bg-ink/15 hover:bg-ink/30"
+                  }`}
                 />
-              </div>
+              ))}
+            </div>
 
-              <h3 className="mt-5 font-display text-2xl font-semibold leading-snug tracking-tight">
-                {project.title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-graphite/75">
-                {project.description}
-              </p>
-
-              <ul className="mt-6 flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <li
-                    key={tag}
-                    className="rounded-sm border border-ink/10 px-2.5 py-1 font-mono text-[0.6875rem] text-graphite/60"
-                  >
-                    {tag}
-                  </li>
-                ))}
-              </ul>
-            </motion.article>
-          ))}
+            <button
+              type="button"
+              onClick={() => handleManualNav(goNext)}
+              aria-label="Next project"
+              className="flex h-10 w-10 items-center justify-center rounded-full border border-wire text-ink transition-colors hover:border-signal hover:text-signal"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </div>
     </section>
