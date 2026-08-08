@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 
@@ -14,22 +15,31 @@ type TestimonialItem = {
   rating: number;
 };
 
+const PER_PAGE = 4;
+
 export default function TestimonialsView({ items }: { items: TestimonialItem[] }) {
   const shouldReduceMotion = useReducedMotion();
+  const [page, setPage] = useState(0);
+  const [perPage, setPerPage] = useState(PER_PAGE);
 
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.5, delay: (i % 6) * 0.08 },
-        };
+  useEffect(() => {
+    const updatePerPage = () => setPerPage(window.innerWidth < 768 ? 1 : PER_PAGE);
+    updatePerPage();
+    window.addEventListener("resize", updatePerPage);
+    return () => window.removeEventListener("resize", updatePerPage);
+  }, []);
+
+  const pageCount = Math.max(1, Math.ceil(items.length / perPage));
+
+  useEffect(() => {
+    setPage((prev) => Math.min(prev, pageCount - 1));
+  }, [pageCount]);
 
   if (items.length === 0) {
     return null;
   }
+
+  const visible = items.slice(page * perPage, page * perPage + perPage);
 
   return (
     <section className="relative overflow-hidden bg-paper py-24 text-ink md:py-32">
@@ -55,62 +65,89 @@ export default function TestimonialsView({ items }: { items: TestimonialItem[] }
           </h2>
         </motion.div>
 
-        <div className="mt-16 grid gap-px overflow-hidden rounded-xl border border-ink/10 bg-ink/10 md:grid-cols-2">
-          {items.map((item, i) => (
+        <div className="mt-16 min-h-[420px]">
+          <AnimatePresence mode="wait">
             <motion.div
-              key={item.id}
-              {...fadeUp(i)}
-              className="flex flex-col bg-paper p-8 md:p-10"
+              key={page}
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -24 }}
+              transition={
+                shouldReduceMotion ? { duration: 0.2 } : { duration: 0.4, ease: "easeOut" }
+              }
+              className="grid gap-8 sm:grid-cols-2"
             >
-              <Quote
-                className="h-6 w-6 text-signal"
-                strokeWidth={1.75}
-                fill="currentColor"
-              />
-              {item.rating > 0 && (
-                <div className="mt-4 flex gap-1">
-                  {Array.from({ length: 5 }).map((_, starIndex) => (
-                    <Star
-                      key={starIndex}
-                      className={`h-3.5 w-3.5 ${
-                        starIndex < item.rating
-                          ? "fill-signal text-signal"
-                          : "fill-transparent text-ink/15"
-                      }`}
-                      strokeWidth={1.5}
-                    />
-                  ))}
-                </div>
-              )}
-              <p className="mt-4 flex-1 text-sm leading-relaxed text-graphite/80">
-                &ldquo;{item.quote}&rdquo;
-              </p>
-              <div className="mt-6 flex items-center gap-3 border-t border-ink/10 pt-5">
-                {item.clientPhotoUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={resolveImageUrl(item.clientPhotoUrl)}
-                    alt=""
-                    className="h-10 w-10 shrink-0 rounded-full object-cover"
-                  />
-                ) : (
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-signal/15 font-mono text-xs uppercase text-signal">
-                    {item.clientName.slice(0, 1)}
+              {visible.map((item) => (
+                <div
+                  key={item.id}
+                  className="relative flex flex-col rounded-xl border border-ink/10 bg-paper p-8 pb-14 shadow-[0_1px_2px_rgba(14,20,32,0.04)]"
+                >
+                  {item.rating > 0 && (
+                    <div className="flex gap-1">
+                      {Array.from({ length: 5 }).map((_, starIndex) => (
+                        <Star
+                          key={starIndex}
+                          className={`h-4 w-4 ${
+                            starIndex < item.rating
+                              ? "fill-signal text-signal"
+                              : "fill-transparent text-ink/15"
+                          }`}
+                          strokeWidth={1.5}
+                        />
+                      ))}
+                    </div>
+                  )}
+                  <p className="mt-5 flex-1 text-sm leading-relaxed text-graphite/80">
+                    &ldquo;{item.quote}&rdquo;
+                  </p>
+                  <div className="mt-6 flex items-center gap-3 border-t border-ink/10 pt-5">
+                    {item.clientPhotoUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={resolveImageUrl(item.clientPhotoUrl)}
+                        alt=""
+                        className="h-10 w-10 shrink-0 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-signal/15 font-mono text-xs uppercase text-signal">
+                        {item.clientName.slice(0, 1)}
+                      </div>
+                    )}
+                    <div>
+                      <p className="text-sm font-semibold text-graphite">
+                        {item.clientName}
+                      </p>
+                      <p className="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-graphite/50">
+                        {item.clientTitle}
+                        {item.clientCompany ? ` — ${item.clientCompany}` : ""}
+                      </p>
+                    </div>
                   </div>
-                )}
-                <div>
-                  <p className="text-sm font-semibold text-graphite">
-                    {item.clientName}
-                  </p>
-                  <p className="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-graphite/50">
-                    {item.clientTitle}
-                    {item.clientCompany ? ` — ${item.clientCompany}` : ""}
-                  </p>
+
+                  <div className="absolute -bottom-5 left-1/2 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full bg-signal text-paper shadow-[0_8px_20px_-6px_var(--color-signal)]">
+                    <Quote className="h-4 w-4" strokeWidth={2} fill="currentColor" />
+                  </div>
                 </div>
-              </div>
+              ))}
             </motion.div>
-          ))}
+          </AnimatePresence>
         </div>
+
+        {pageCount > 1 && (
+          <div className="mt-12 flex items-center justify-center gap-2">
+            {Array.from({ length: pageCount }).map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setPage(i)}
+                aria-label={`Go to testimonials page ${i + 1}`}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  page === i ? "w-8 bg-signal" : "w-2 bg-ink/15 hover:bg-ink/30"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
