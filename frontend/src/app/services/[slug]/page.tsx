@@ -5,8 +5,9 @@ import { ArrowLeft, ArrowRight, Layers } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { fetchServiceBySlug } from "@/lib/services";
-import { resolveImageUrl } from "@/lib/hero";
+import { fetchHero, resolveImageUrl } from "@/lib/hero";
 import { buildMetadata } from "@/lib/seo";
+import ServiceTabs, { type ServiceTab } from "@/components/sections/ServiceTabs";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -48,9 +49,32 @@ const ROADMAP_CHECKPOINTS: Record<string, string[]> = {
   ],
 };
 
+// Platform breakdown shown as a tab switcher under the hero. Only defined
+// where we have real, distinct capabilities to describe per tab — every
+// other service falls back to a single general overview section instead.
+const SERVICE_TABS: Record<string, ServiceTab[]> = {
+  "software-engineering": [
+    {
+      label: "Web",
+      heading: "Web Application Development",
+      body: "We design and build custom web applications from the ground up, matched to your actual workflows rather than a generic template. From architecture through deployment, every layer is built for correctness, maintainability, and long-term stability.",
+    },
+    {
+      label: "Mobile",
+      heading: "Mobile Application Development",
+      body: "Native and cross-platform mobile apps for iOS and Android, built around real user workflows. We handle everything from initial architecture through app store release and post-launch support.",
+    },
+    {
+      label: "Enterprise",
+      heading: "Enterprise System Integration",
+      body: "Enterprise systems designed to integrate cleanly with what you already run — connecting existing tools, data, and processes instead of forcing a rebuild. We focus on architecture that holds up as the organization scales.",
+    },
+  ],
+};
+
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
-  const service = await fetchServiceBySlug(slug);
+  const [service, hero] = await Promise.all([fetchServiceBySlug(slug), fetchHero()]);
 
   if (!service) {
     notFound();
@@ -60,21 +84,34 @@ export default async function ServiceDetailPage({ params }: Props) {
   const checkpoints =
     rawCheckpoints && rawCheckpoints.length === service.includes.length ? rawCheckpoints : null;
   const stepCount = service.includes.length;
+  const tabs = SERVICE_TABS[service.slug];
 
   return (
     <>
       <Navbar />
       <main className="bg-ink text-paper">
-        {/* Hero */}
-        <section className="bg-grain relative overflow-hidden py-24 md:py-32">
-          <div
-            className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.14] blur-[120px]"
-            style={{ backgroundColor: "var(--color-ember)" }}
-          />
-          <div className="pointer-events-none absolute inset-0 bg-[size:56px_56px]" style={gridOverlayStyle} />
+        {/* Hero: full-bleed background image with the service title */}
+        <section className="relative h-[380px] overflow-hidden sm:h-[440px] md:h-[480px]">
+          {hero?.backgroundImageUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={resolveImageUrl(hero.backgroundImageUrl)}
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          )}
+          <div className="absolute inset-0 bg-ink/70" />
+          <div className="relative flex h-full items-center justify-center px-6">
+            <h1 className="text-balance text-center font-display text-4xl font-extrabold leading-tight text-paper sm:text-6xl md:text-7xl">
+              {service.title}
+            </h1>
+          </div>
+        </section>
 
-          <div className="relative mx-auto max-w-4xl px-6">
-            <nav className="flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-paper/50">
+        {/* Breadcrumb bar */}
+        <section className="border-t border-paper/10 py-6">
+          <div className="mx-auto max-w-5xl px-6">
+            <nav className="flex flex-wrap items-center gap-2 font-mono text-sm text-paper/50">
               <Link href="/" className="transition-colors hover:text-paper">
                 Home
               </Link>
@@ -85,36 +122,35 @@ export default async function ServiceDetailPage({ params }: Props) {
               <span>/</span>
               <span className="text-ember">{service.title}</span>
             </nav>
+          </div>
+        </section>
 
-            <div className="mt-6 flex items-center gap-4">
-              {service.iconUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={resolveImageUrl(service.iconUrl)}
-                  alt=""
-                  className="h-10 w-10 shrink-0 object-contain"
-                />
-              ) : (
-                <Layers className="h-10 w-10 shrink-0 text-ember" strokeWidth={1.75} />
-              )}
-              <h1 className="text-balance font-display text-3xl font-semibold leading-tight sm:text-5xl">
-                {service.title}
-              </h1>
+        {tabs ? (
+          <ServiceTabs tabs={tabs} />
+        ) : (
+          /* Fallback overview for services without a tab breakdown */
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-4xl px-6">
+              <div className="flex items-center gap-4">
+                {service.iconUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={resolveImageUrl(service.iconUrl)}
+                    alt=""
+                    className="h-8 w-8 shrink-0 object-contain"
+                  />
+                ) : (
+                  <Layers className="h-8 w-8 shrink-0 text-ember" strokeWidth={1.75} />
+                )}
+                <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">Overview</p>
+              </div>
+              <p className="mt-5 max-w-2xl text-lg text-paper/70">{service.shortDescription}</p>
+              <p className="mt-4 max-w-2xl text-lg leading-relaxed text-paper/70">
+                {service.fullDescription}
+              </p>
             </div>
-
-            <p className="mt-6 max-w-2xl text-lg text-paper/70">{service.shortDescription}</p>
-          </div>
-        </section>
-
-        {/* Intro */}
-        <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
-          <div className="mx-auto max-w-4xl px-6">
-            <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">Overview</p>
-            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-paper/70">
-              {service.fullDescription}
-            </p>
-          </div>
-        </section>
+          </section>
+        )}
 
         {/* Roadmap, built from the service's own includes[] */}
         {service.includes.length > 0 && (
