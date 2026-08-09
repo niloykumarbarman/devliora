@@ -6,6 +6,7 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
 import { useExploreMenuData } from "@/lib/useExploreMenuData";
+import { serviceHref } from "@/lib/services";
 import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/technologyCategories";
 import { SOLUTIONS } from "@/lib/solutions";
 import { slugify } from "@/lib/slugify";
@@ -235,7 +236,7 @@ export default function Navbar() {
                           {visibleMobileServices.map((service) => (
                             <li key={service.id}>
                               <Link
-                                href={`/services#${service.slug}`}
+                                href={serviceHref(service.slug)}
                                 onClick={closeMobileMenu}
                                 className="block py-0.5 font-mono text-xs text-graphite/70 hover:text-ink"
                               >

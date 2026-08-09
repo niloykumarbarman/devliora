@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { ArrowRight, Layers } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
+import { serviceHref } from "@/lib/services";
 import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/technologyCategories";
 import { SOLUTIONS } from "@/lib/solutions";
 import { slugify } from "@/lib/slugify";
@@ -58,7 +59,7 @@ export default function MegaMenu({
           <ul className="mt-4 space-y-3">
             {visibleServices.map((service) => (
               <li key={service.id}>
-                <Link href={`/services#${service.slug}`} onClick={onNavigate} className={linkClass}>
+                <Link href={serviceHref(service.slug)} onClick={onNavigate} className={linkClass}>
                   {service.iconUrl ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img

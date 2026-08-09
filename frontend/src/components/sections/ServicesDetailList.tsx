@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { Layers } from "lucide-react";
+import { ArrowRight, Layers } from "lucide-react";
 import { API_BASE_URL } from "@/lib/apiConfig";
 import { resolveImageUrl } from "@/lib/hero";
+import { hasDetailPage } from "@/lib/services";
 
 type ServiceItem = {
   id: string;
@@ -114,6 +116,17 @@ export default function ServicesDetailList() {
                       </li>
                     ))}
                   </ul>
+                )}
+                {hasDetailPage(service.slug) && (
+                  <Link
+                    href={`/services/${service.slug}`}
+                    className={`group mt-4 inline-flex items-center gap-1.5 font-mono text-xs font-semibold uppercase tracking-wide text-signal transition-colors hover:text-ink ${
+                      service.includes.length === 0 ? "border-t border-ink/10 pt-5" : ""
+                    }`}
+                  >
+                    View full breakdown
+                    <ArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
+                  </Link>
                 )}
               </motion.div>
             ))}
