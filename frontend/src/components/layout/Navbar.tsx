@@ -24,7 +24,7 @@ const NAV_LINKS = [
 ];
 
 const MORE_LABELS = ["Industries", "Case Studies", "About", "Blog"];
-const MEGA_LABELS = ["Solutions", "Technologies"];
+const MEGA_LABELS = ["Services", "Solutions", "Technologies"];
 const SERVICES_MENU_LIMIT = 6;
 const PRIMARY_LINKS = NAV_LINKS.filter((link) => !MORE_LABELS.includes(link.label));
 const MORE_LINKS = NAV_LINKS.filter((link) => MORE_LABELS.includes(link.label));
