@@ -7,11 +7,23 @@ export type ServiceTabCard = {
   body: string;
 };
 
+export type ServiceTabRoadmapStep = {
+  title: string;
+  body: string;
+  bullets?: string[];
+};
+
+export type ServiceTabRoadmap = {
+  tagline: string;
+  steps: ServiceTabRoadmapStep[];
+};
+
 export type ServiceTab = {
   label: string;
   heading: string;
   body: string;
   cards?: ServiceTabCard[];
+  roadmap?: ServiceTabRoadmap;
 };
 
 export default function ServiceTabs({ tabs }: { tabs: ServiceTab[] }) {
@@ -58,6 +70,39 @@ export default function ServiceTabs({ tabs }: { tabs: ServiceTab[] }) {
           </div>
         )}
       </div>
+
+      {current.roadmap && (
+        <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
+          <h3 className="text-balance font-display text-2xl font-semibold leading-tight text-paper sm:text-3xl">
+            Full-cycle {current.label.toLowerCase()} development roadmap
+          </h3>
+          <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+            {current.roadmap.tagline}
+          </p>
+
+          <div className="mt-14 grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+            {current.roadmap.steps.map((step, i) => (
+              <div key={step.title}>
+                <p className="font-display text-4xl font-extrabold tabular-nums text-ember">
+                  {String(i + 1).padStart(2, "0")}
+                </p>
+                <h4 className="mt-2 font-display text-xl font-bold text-ember">{step.title}</h4>
+                <div className="mt-3 border-t border-paper/15" />
+                <p className="mt-4 text-sm leading-relaxed text-paper/70">{step.body}</p>
+                {step.bullets && step.bullets.length > 0 && (
+                  <ul className="mt-3 space-y-1">
+                    {step.bullets.map((bullet) => (
+                      <li key={bullet} className="text-sm leading-relaxed text-paper/70">
+                        &middot; {bullet}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

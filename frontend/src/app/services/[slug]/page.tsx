@@ -72,6 +72,42 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           body: "Careful, incremental migration of aging web systems onto modern, maintainable architecture — without disrupting the business that depends on them.",
         },
       ],
+      roadmap: {
+        tagline: "Crafting web experiences that are fast, secure, and built to grow with your business.",
+        steps: [
+          {
+            title: "Development",
+            body: "We build web applications of varying complexity, helping teams streamline internal operations, strengthen business transactions, and digitize customer-facing services.",
+          },
+          {
+            title: "Integration",
+            body: "We connect your web application with the rest of your stack — internal systems, third-party APIs, and enterprise tools — through secure, well-documented integration points.",
+          },
+          {
+            title: "Migration",
+            body: "When it's time to move a web application to a new host, cloud provider, or on-premise environment, we plan the migration to avoid downtime, data loss, and the usual surprises.",
+          },
+          {
+            title: "Testing",
+            body: "We run structured testing across the application before every release.",
+            bullets: [
+              "Functional testing",
+              "Performance testing",
+              "Cross-browser compatibility testing",
+              "Usability testing",
+              "Automated regression testing",
+            ],
+          },
+          {
+            title: "Security",
+            body: "We build with security in mind from the start — encryption, access controls, and hardening against common and emerging web threats.",
+          },
+          {
+            title: "Modernization",
+            body: "We refactor and modernize the parts of a legacy web application that are holding the business back, reducing maintenance cost and improving reliability.",
+          },
+        ],
+      },
     },
     {
       label: "Mobile",
@@ -91,6 +127,42 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           body: "Refreshing aging mobile apps with modern interfaces, updated code, and improved performance and stability.",
         },
       ],
+      roadmap: {
+        tagline: "Building secure, feature-rich mobile experiences that move your business forward.",
+        steps: [
+          {
+            title: "Development",
+            body: "We develop mobile applications of varying complexity to help teams streamline internal operations, strengthen business transactions, and digitize customer-facing services.",
+          },
+          {
+            title: "Integration",
+            body: "We integrate your mobile application with other software in your enterprise ecosystem or third-party tools, with secure connections and reliable data exchange.",
+          },
+          {
+            title: "Migration",
+            body: "We can move a mobile app's backend to a new cloud or on-premise environment, planning around common migration risks like downtime and data loss.",
+          },
+          {
+            title: "Testing",
+            body: "We perform comprehensive testing to catch the bugs, defects, and weaknesses that undermine an app's operation and user experience.",
+            bullets: [
+              "Functional testing",
+              "Performance testing",
+              "Device & OS compatibility testing",
+              "Usability testing",
+              "Test automation",
+            ],
+          },
+          {
+            title: "Security",
+            body: "We advise on making mobile applications resilient against common and emerging security threats, with encryption, secure storage, and access controls.",
+          },
+          {
+            title: "Modernization",
+            body: "We improve the outdated or underperforming parts of a legacy mobile app, reducing usability issues and long-term cost of ownership.",
+          },
+        ],
+      },
     },
     {
       label: "Enterprise",
@@ -110,6 +182,42 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           body: "Migrating aging enterprise systems onto modern, maintainable architecture without disrupting business continuity.",
         },
       ],
+      roadmap: {
+        tagline: "Building enterprise systems that are secure, integrated, and built to scale with your organization.",
+        steps: [
+          {
+            title: "Development",
+            body: "We build enterprise systems of varying complexity, tailored to how your organization actually operates rather than a generic off-the-shelf process.",
+          },
+          {
+            title: "Integration",
+            body: "We integrate enterprise systems with the tools, data sources, and third-party platforms your teams already depend on, with secure and reliable connections.",
+          },
+          {
+            title: "Migration",
+            body: "We move enterprise applications between environments — on-premise, cloud, or hybrid — with a migration plan that accounts for uptime and data integrity.",
+          },
+          {
+            title: "Testing",
+            body: "We test enterprise systems thoroughly before rollout, across functionality, load, and the workflows real users depend on.",
+            bullets: [
+              "Functional testing",
+              "Load & performance testing",
+              "Integration testing",
+              "User acceptance testing",
+              "Regression testing",
+            ],
+          },
+          {
+            title: "Security",
+            body: "We apply enterprise-grade security practices — access management, encryption, and audit trails — appropriate to the systems and data involved.",
+          },
+          {
+            title: "Modernization",
+            body: "We modernize legacy enterprise systems in place, reducing technical debt and total cost of ownership without disrupting the business.",
+          },
+        ],
+      },
     },
   ],
 };
@@ -202,13 +310,13 @@ export default async function ServiceDetailPage({ params }: Props) {
               style={gridOverlayStyle}
             />
             <div className="relative mx-auto max-w-6xl px-6">
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">Our approach</p>
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">Delivery framework</p>
               <h2 className="mt-4 max-w-2xl text-balance font-display text-3xl font-semibold md:text-4xl">
-                Full-cycle {service.title.toLowerCase()} roadmap
+                From code to launch
               </h2>
               <p className="mt-4 max-w-xl text-paper/60">
-                From the first architecture decision to launch and post-launch support —
-                here is exactly how we get there.
+                A consistent process from the first commit to production, and every
+                release after.
               </p>
 
               {/* Desktop: delivery-framework timeline (single line, labels above, optional checkpoint drop-line below) */}
