@@ -73,11 +73,11 @@ export default async function Footer() {
           <div>
             {settings?.logoUrl ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <span className="relative block h-10 w-[49px] overflow-hidden">
+              <span className="relative block h-10 w-[194px] overflow-hidden">
                 <img
                   src={resolveImageUrl(settings.logoUrl)}
                   alt="Devliora"
-                  className="absolute -left-[1px] -top-[6px] h-[51px] w-[51px] max-w-none"
+                  className="absolute -left-[51px] -top-[184px] h-[429px] w-[304px] max-w-none"
                 />
               </span>
             ) : (

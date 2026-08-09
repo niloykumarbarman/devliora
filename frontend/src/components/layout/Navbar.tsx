@@ -52,11 +52,11 @@ export default function Navbar() {
         <Link href="/" className="flex items-center font-display text-lg font-semibold tracking-tight text-ink">
           {logoUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <span className="relative block h-11 w-[53px] overflow-hidden">
+            <span className="relative block h-11 w-[213px] overflow-hidden">
               <img
                 src={resolveImageUrl(logoUrl)}
                 alt="Devliora"
-                className="absolute -left-[1px] -top-[7px] h-[56px] w-[56px] max-w-none"
+                className="absolute -left-[56px] -top-[202px] h-[472px] w-[334px] max-w-none"
               />
             </span>
           ) : (
