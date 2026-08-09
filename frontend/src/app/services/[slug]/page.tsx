@@ -637,6 +637,42 @@ export default async function ServiceDetailPage({ params }: Props) {
           </div>
         </section>
 
+        {/* Engagement models */}
+        <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
+          <div className="mx-auto max-w-6xl px-6">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">How we engage</p>
+            <h2 className="mt-4 max-w-2xl text-balance font-display text-3xl font-semibold leading-tight sm:text-4xl">
+              Engagement models
+            </h2>
+
+            <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                {
+                  title: "Fixed Price",
+                  body: "We provide fixed-price engagement for projects with well-defined scope and requirements, so cost and timeline are clear from the start.",
+                },
+                {
+                  title: "Time & Materials",
+                  body: "We bill for the time and resources spent on your project, giving you flexibility and transparency as scope evolves.",
+                },
+                {
+                  title: "Dedicated Team",
+                  body: "We set up a dedicated development team — engineers, tools, and process — built around your project's specific needs.",
+                },
+                {
+                  title: "Team Augmentation",
+                  body: "Our engineers integrate directly with your existing team, extending your in-house capacity without the overhead of a full hire.",
+                },
+              ].map((model) => (
+                <div key={model.title} className="border-t border-ember/40 pt-5">
+                  <h3 className="font-display text-xl font-semibold text-paper">{model.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-paper/70">{model.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Roadmap, built from the service's own includes[] */}
         {service.includes.length > 0 && (
           <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
