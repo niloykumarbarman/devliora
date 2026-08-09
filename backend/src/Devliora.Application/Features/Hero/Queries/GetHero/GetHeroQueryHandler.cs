@@ -44,7 +44,7 @@ public class GetHeroQueryHandler : IRequestHandler<GetHeroQuery, HeroDto>
                 PrimaryCtaText = "Book a Consultation",
                 PrimaryCtaUrl = "#contact",
                 SecondaryCtaText = "View Our Work",
-                SecondaryCtaUrl = "#portfolio",
+                SecondaryCtaUrl = "/portfolio",
                 BackgroundImageUrl = "/uploads/hero-placeholder.jpg",
                 BackgroundVideoUrl = ""
             };
