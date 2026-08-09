@@ -6,8 +6,17 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { fetchServiceBySlug } from "@/lib/services";
 import { fetchHero, resolveImageUrl } from "@/lib/hero";
+import { fetchCaseStudies } from "@/lib/caseStudies";
 import { buildMetadata } from "@/lib/seo";
 import ServiceTabs, { type ServiceTab } from "@/components/sections/ServiceTabs";
+
+async function safeFetchCaseStudies() {
+  try {
+    return await fetchCaseStudies();
+  } catch {
+    return [];
+  }
+}
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -311,7 +320,11 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
 
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
-  const [service, hero] = await Promise.all([fetchServiceBySlug(slug), fetchHero()]);
+  const [service, hero, caseStudies] = await Promise.all([
+    fetchServiceBySlug(slug),
+    fetchHero(),
+    safeFetchCaseStudies(),
+  ]);
 
   if (!service) {
     notFound();
@@ -385,6 +398,48 @@ export default async function ServiceDetailPage({ params }: Props) {
               <p className="mt-4 max-w-2xl text-lg leading-relaxed text-paper/70">
                 {service.fullDescription}
               </p>
+            </div>
+          </section>
+        )}
+
+        {/* Case studies, pulled live from the site's real case-studies data */}
+        {caseStudies.length > 0 && (
+          <section className="relative overflow-hidden border-t border-paper/10 bg-graphite py-24 md:py-32">
+            <div className="mx-auto max-w-6xl px-6">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">Case studies</p>
+              <h2 className="mt-4 max-w-2xl text-balance font-display text-3xl font-semibold leading-tight sm:text-4xl">
+                Real results, real impact
+              </h2>
+              <p className="mt-4 max-w-xl text-paper/60">
+                A look at the challenges we&apos;ve taken on and the outcomes they led to.
+              </p>
+
+              <div className="mt-14 grid grid-cols-2 gap-6 lg:grid-cols-4">
+                {caseStudies.slice(0, 4).map((study) => (
+                  <Link
+                    key={study.id}
+                    href={`/case-studies/${study.slug}`}
+                    className="group relative block aspect-[3/4] overflow-hidden rounded-lg bg-ink"
+                  >
+                    {study.coverImageUrl && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={resolveImageUrl(study.coverImageUrl)}
+                        alt=""
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    )}
+                    <div className="absolute inset-x-0 bottom-0 bg-ink/90 p-4">
+                      <p className="font-mono text-xs font-semibold uppercase tracking-wide text-ember">
+                        &middot; {study.industry}
+                      </p>
+                      <p className="mt-1.5 line-clamp-2 text-sm leading-snug text-paper/80">
+                        {study.results}
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
             </div>
           </section>
         )}
