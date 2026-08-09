@@ -247,11 +247,6 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
-      techIntro: {
-        heading: "Powering your web vision with cutting-edge tech",
-        tagline: "Bringing web ideas to life with next-gen tech.",
-        body: "Our web application development approach focuses on thoughtful use of modern technologies to build reliable, well-designed applications. We combine practical engineering with considered design to address your specific requirements, using current tools and frameworks that support long-term maintainability — from front-end to back-end, we support the full journey from concept to launch.",
-      },
     },
     {
       label: "Mobile",
@@ -336,11 +331,6 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
-      techIntro: {
-        heading: "Powering your mobile vision with cutting-edge tech",
-        tagline: "Bringing mobile ideas to life with next-gen tech.",
-        body: "Our mobile application development approach focuses on thoughtful use of modern technologies to build reliable, well-designed apps. Across iOS and Android, we combine practical engineering with considered design to address your specific requirements. Our team works with current tools and frameworks to ensure long-term maintainability — from native to hybrid and cross-platform, we support the full journey from concept to launch.",
-      },
     },
     {
       label: "Enterprise",
@@ -424,11 +414,6 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
             body: "We handle rollout carefully and provide ongoing support afterward, so the system keeps running reliably as your organization's needs evolve.",
           },
         ],
-      },
-      techIntro: {
-        heading: "Powering your enterprise vision with cutting-edge tech",
-        tagline: "Bringing enterprise ideas to life with next-gen tech.",
-        body: "Our enterprise system development approach focuses on thoughtful use of modern technologies to build reliable, well-integrated systems. We combine practical engineering with considered design to address your organization's specific requirements, using current tools and frameworks that support long-term maintainability and scale.",
       },
     },
   ],
@@ -690,6 +675,29 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+
+        {/* Tech philosophy intro */}
+        <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="grid gap-10 md:grid-cols-2 md:items-start">
+              <div>
+                <h2 className="text-balance font-display text-3xl font-semibold leading-tight sm:text-4xl">
+                  Powering your vision with cutting-edge tech
+                </h2>
+                <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+                  Bringing ideas to life with next-gen tech.
+                </p>
+              </div>
+              <p className="text-lg leading-relaxed text-paper/70">
+                Our development approach focuses on thoughtful use of modern technologies to build
+                reliable, well-designed software. We combine practical engineering with considered
+                design to address your specific requirements, using current tools and frameworks
+                that support long-term maintainability — from first architecture decision to launch
+                and beyond.
+              </p>
+            </div>
           </div>
         </section>
 
