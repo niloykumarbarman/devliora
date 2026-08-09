@@ -14,9 +14,7 @@ import MegaMenu from "./MegaMenu";
 
 const NAV_LINKS = [
   { href: "/services", label: "Services" },
-  { href: "/solutions", label: "Solutions" },
   { href: "/industries", label: "Industries" },
-  { href: "/technologies", label: "Technologies" },
   { href: "/portfolio", label: "Portfolio" },
   { href: "/case-studies", label: "Case Studies" },
   { href: "/about", label: "About" },
@@ -24,8 +22,12 @@ const NAV_LINKS = [
   { href: "/book-consultation", label: "Book Consultation" },
 ];
 
-const MORE_LABELS = ["Industries", "Case Studies", "About", "Blog"];
-const MEGA_LABELS = ["Services", "Solutions", "Technologies"];
+// Solutions and Technologies no longer get their own top-level nav
+// items — they're reachable as columns inside the Services mega-menu
+// (and from its "View all" links), matching kaz.com.bd's nav, which
+// only has one mega-menu trigger.
+const MORE_LABELS = ["Case Studies", "About", "Blog"];
+const MEGA_LABELS = ["Services"];
 const SERVICES_MENU_LIMIT = 6;
 const PRIMARY_LINKS = NAV_LINKS.filter((link) => !MORE_LABELS.includes(link.label));
 const MORE_LINKS = NAV_LINKS.filter((link) => MORE_LABELS.includes(link.label));
