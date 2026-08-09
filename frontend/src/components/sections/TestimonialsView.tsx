@@ -78,11 +78,18 @@ export default function TestimonialsView({ items }: { items: TestimonialItem[] }
               }
               className="grid gap-8 lg:grid-cols-3"
             >
-              {visible.map((item) => (
+              {visible.map((item, i) => {
+                const isSignal = i % 2 === 0;
+                const starClass = isSignal ? "fill-signal text-signal" : "fill-ember text-ember";
+                const ringClass = isSignal ? "ring-signal/30" : "ring-ember/30";
+                const badgeClass = isSignal ? "bg-signal" : "bg-ember";
+                const topBarClass = isSignal ? "bg-signal" : "bg-ember";
+                return (
                 <div
                   key={item.id}
-                  className="relative flex flex-col rounded-xl border border-ink/10 bg-paper p-8 pb-14 shadow-[0_1px_2px_rgba(14,20,32,0.04)]"
+                  className="relative flex flex-col overflow-hidden rounded-xl border border-ink/10 bg-paper p-8 pb-14 shadow-[0_1px_2px_rgba(14,20,32,0.04)]"
                 >
+                  <span className={`absolute inset-x-0 top-0 h-1 ${topBarClass}`} />
                   {item.rating > 0 && (
                     <div className="flex gap-1">
                       {Array.from({ length: 5 }).map((_, starIndex) => (
@@ -90,7 +97,7 @@ export default function TestimonialsView({ items }: { items: TestimonialItem[] }
                           key={starIndex}
                           className={`h-4 w-4 ${
                             starIndex < item.rating
-                              ? "fill-signal text-signal"
+                              ? starClass
                               : "fill-transparent text-ink/15"
                           }`}
                           strokeWidth={1.5}
@@ -108,10 +115,10 @@ export default function TestimonialsView({ items }: { items: TestimonialItem[] }
                         alt=""
                         width={40}
                         height={40}
-                        className="h-10 w-10 shrink-0 rounded-full object-cover"
+                        className={`h-10 w-10 shrink-0 rounded-full object-cover ring-2 ${ringClass}`}
                       />
                     ) : (
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-signal/15 font-mono text-xs uppercase text-signal">
+                      <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full font-mono text-xs uppercase ring-2 ${ringClass} ${isSignal ? "bg-signal/15 text-signal" : "bg-ember/15 text-ember"}`}>
                         {item.clientName.slice(0, 1)}
                       </div>
                     )}
@@ -126,11 +133,12 @@ export default function TestimonialsView({ items }: { items: TestimonialItem[] }
                     </div>
                   </div>
 
-                  <div className="absolute -bottom-5 left-1/2 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full bg-signal text-paper shadow-[0_8px_20px_-6px_var(--color-signal)]">
+                  <div className={`absolute -bottom-5 left-1/2 flex h-10 w-10 -translate-x-1/2 items-center justify-center rounded-full text-paper shadow-lg ${badgeClass}`}>
                     <Quote className="h-4 w-4" strokeWidth={2} fill="currentColor" />
                   </div>
                 </div>
-              ))}
+                );
+                })}
             </motion.div>
           </AnimatePresence>
         </div>
