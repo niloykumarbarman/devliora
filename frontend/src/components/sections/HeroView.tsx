@@ -215,7 +215,7 @@ export default function HeroView({ hero }: { hero: HeroDto }) {
               transition: { duration: 0.7, ease: "easeOut", staggerChildren: 0.12, delayChildren: 0.2 },
             },
           }}
-          className="relative w-full overflow-hidden rounded-none bg-paper p-4 shadow-none sm:max-w-md sm:rounded-lg sm:p-6 sm:shadow-[0_24px_60px_-20px_rgba(14,20,32,0.55)] md:max-w-lg md:p-8 lg:rounded-xl lg:p-10"
+          className="relative w-full overflow-hidden rounded-none bg-paper p-4 shadow-none sm:max-w-lg sm:rounded-lg sm:p-6 sm:shadow-[0_24px_60px_-20px_rgba(14,20,32,0.55)] md:max-w-xl md:p-8 lg:max-w-2xl lg:rounded-xl lg:p-10"
         >
           <div className="pointer-events-none absolute inset-0 z-10 flex">
             {Array.from({ length: 12 }).map((_, i) => (
@@ -233,7 +233,7 @@ export default function HeroView({ hero }: { hero: HeroDto }) {
           <motion.h1
             variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="mt-4 font-display text-3xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-4xl md:text-[2.75rem]"
+            className="mt-4 font-display text-4xl font-bold leading-[1.05] tracking-tight text-ink sm:text-5xl md:text-6xl"
           >
             {hero.title}
           </motion.h1>
