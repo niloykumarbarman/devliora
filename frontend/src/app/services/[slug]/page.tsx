@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Layers } from "lucide-react";
+import { ArrowLeft, ArrowRight, Layers, Star } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { fetchServiceBySlug } from "@/lib/services";
 import { fetchHero, resolveImageUrl } from "@/lib/hero";
 import { fetchCaseStudies } from "@/lib/caseStudies";
 import { fetchBlogPosts, type BlogPost } from "@/lib/blogPosts";
+import { API_BASE_URL } from "@/lib/apiConfig";
 import { buildMetadata } from "@/lib/seo";
 import ServiceTabs, { type ServiceTab } from "@/components/sections/ServiceTabs";
 
@@ -24,6 +25,30 @@ async function safeFetchBlogPosts() {
     return await fetchBlogPosts();
   } catch {
     return [];
+  }
+}
+
+type Testimonial = {
+  id: string;
+  clientName: string;
+  clientTitle: string;
+  clientCompany: string;
+  clientPhotoUrl: string;
+  quote: string;
+  rating: number;
+};
+
+// Same GET /api/testimonials?featured=true source the homepage
+// Testimonials section uses (see components/sections/Testimonials.tsx) —
+// real, admin-entered client feedback, not anything written for this page.
+async function fetchFeaturedTestimonial(): Promise<Testimonial | null> {
+  try {
+    const res = await fetch(`${API_BASE_URL}/testimonials?featured=true`, { cache: "no-store" });
+    if (!res.ok) return null;
+    const items = (await res.json()) as Testimonial[];
+    return items[0] ?? null;
+  } catch {
+    return null;
   }
 }
 
@@ -355,11 +380,12 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
 
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
-  const [service, hero, caseStudies, blogPosts] = await Promise.all([
+  const [service, hero, caseStudies, blogPosts, testimonial] = await Promise.all([
     fetchServiceBySlug(slug),
     fetchHero(),
     safeFetchCaseStudies(),
     safeFetchBlogPosts(),
+    fetchFeaturedTestimonial(),
   ]);
   const blogGridCells = buildBlogGridCells(blogPosts.slice(0, 4));
 
@@ -532,6 +558,84 @@ export default async function ServiceDetailPage({ params }: Props) {
             </div>
           </section>
         )}
+
+        {/* Why choose us + a real, admin-entered client testimonial */}
+        <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
+          <div className="mx-auto grid max-w-6xl gap-16 px-6 md:grid-cols-2">
+            <div>
+              <h2 className="text-balance font-display text-3xl font-semibold leading-tight sm:text-4xl">
+                Built around how you actually work.
+              </h2>
+              <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+                No layers of account management between you and the people building it.
+              </p>
+
+              {testimonial && (
+                <div className="mt-12 rounded-2xl border border-ember/20 bg-ember/10 p-8">
+                  <h3 className="font-display text-xl font-semibold text-paper">Customer Voice</h3>
+                  <p className="mt-4 text-lg leading-relaxed text-paper/80">
+                    &ldquo;{testimonial.quote.replace(/^[“"]|[”"]$/g, "")}&rdquo;
+                  </p>
+                  <div className="mt-6 flex items-center gap-3">
+                    {testimonial.clientPhotoUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={resolveImageUrl(testimonial.clientPhotoUrl)}
+                        alt=""
+                        className="h-11 w-11 shrink-0 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ember/20 text-ember">
+                        <Star className="h-5 w-5" />
+                      </div>
+                    )}
+                    <div>
+                      <p className="font-semibold text-paper">{testimonial.clientName}</p>
+                      <p className="text-sm text-paper/60">
+                        {testimonial.clientTitle}
+                        {testimonial.clientCompany && (
+                          <>
+                            , <span className="text-ember">{testimonial.clientCompany}</span>
+                          </>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <ul className="space-y-8">
+              {[
+                {
+                  title: "Client-Centric Approach",
+                  body: "Our process starts with understanding your actual business needs, not fitting you into a template.",
+                },
+                {
+                  title: "Thoughtful Engineering",
+                  body: "We choose architecture and technologies based on your real requirements, not what's trending.",
+                },
+                {
+                  title: "Direct Communication",
+                  body: "You work directly with the team building your software — no layers of account management in between.",
+                },
+                {
+                  title: "Comprehensive Services",
+                  body: "From initial architecture through deployment and beyond, we handle the full lifecycle.",
+                },
+                {
+                  title: "Dedicated Support",
+                  body: "We stay involved after launch, so your application keeps running reliably as your needs change.",
+                },
+              ].map((item) => (
+                <li key={item.title}>
+                  <span className="font-semibold text-ember">{item.title}:</span>{" "}
+                  <span className="text-paper/80">{item.body}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
 
         {/* Roadmap, built from the service's own includes[] */}
         {service.includes.length > 0 && (
