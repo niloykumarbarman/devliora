@@ -20,6 +20,8 @@ public interface IAppDbContext
     DbSet<ConsultationRequest> ConsultationRequests { get; }
     DbSet<HeroContent> HeroContents { get; }
     DbSet<TechnologyItem> TechnologyItems { get; }
+    DbSet<Industry> Industries { get; }
+    DbSet<IndustryStat> IndustryStats { get; }
     DbSet<FaqItem> FaqItems { get; }
     DbSet<SiteSettings> SiteSettings { get; }
     DbSet<ChatConversation> ChatConversations { get; }

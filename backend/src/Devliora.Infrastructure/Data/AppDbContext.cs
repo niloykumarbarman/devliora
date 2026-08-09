@@ -25,6 +25,8 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<ConsultationRequest> ConsultationRequests => Set<ConsultationRequest>();
     public DbSet<HeroContent> HeroContents => Set<HeroContent>();
     public DbSet<TechnologyItem> TechnologyItems => Set<TechnologyItem>();
+    public DbSet<Industry> Industries => Set<Industry>();
+    public DbSet<IndustryStat> IndustryStats => Set<IndustryStat>();
     public DbSet<FaqItem> FaqItems => Set<FaqItem>();
     public DbSet<HeroTelemetryPill> HeroTelemetryPills => Set<HeroTelemetryPill>();
     public DbSet<SiteSettings> SiteSettings => Set<SiteSettings>();

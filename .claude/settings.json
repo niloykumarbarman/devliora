@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \"require.resolve\\('playwright'\\)\")",
+      "Read(//tmp/**)",
+      "Bash(timeout 60 npm install --no-save playwright-core)",
+      "Bash(xargs -I{} sh -c 'echo ==={}; cat {}')",
+      "Bash(xargs -I{} sh -c 'echo {}; cat {}')",
+      "Bash(dotnet --version)",
+      "Bash(dotnet tool *)"
+    ]
+  }
+}

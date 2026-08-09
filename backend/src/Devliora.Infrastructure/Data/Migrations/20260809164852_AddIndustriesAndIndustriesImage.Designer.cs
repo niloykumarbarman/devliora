@@ -4,17 +4,20 @@ using System.Collections.Generic;
 using Devliora.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Devliora.Infrastructure.Migrations
+namespace Devliora.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260809164852_AddIndustriesAndIndustriesImage")]
+    partial class AddIndustriesAndIndustriesImage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -527,10 +530,6 @@ namespace Devliora.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("DisplayOrder")
                         .HasColumnType("integer");
 
@@ -544,56 +543,12 @@ namespace Devliora.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Slug")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
                     b.ToTable("Industries");
-                });
-
-            modelBuilder.Entity("Devliora.Domain.Entities.IndustryStat", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("IndustryId")
-                        .HasColumnType("uuid");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Label")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IndustryId");
-
-                    b.ToTable("IndustryStats");
                 });
 
             modelBuilder.Entity("Devliora.Domain.Entities.JobListing", b =>
@@ -1116,17 +1071,6 @@ namespace Devliora.Infrastructure.Migrations
                     b.Navigation("HeroContent");
                 });
 
-            modelBuilder.Entity("Devliora.Domain.Entities.IndustryStat", b =>
-                {
-                    b.HasOne("Devliora.Domain.Entities.Industry", "Industry")
-                        .WithMany("Stats")
-                        .HasForeignKey("IndustryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Industry");
-                });
-
             modelBuilder.Entity("Devliora.Domain.Entities.Portfolio", b =>
                 {
                     b.HasOne("Devliora.Domain.Entities.Testimonial", "Testimonial")
@@ -1166,11 +1110,6 @@ namespace Devliora.Infrastructure.Migrations
             modelBuilder.Entity("Devliora.Domain.Entities.HeroContent", b =>
                 {
                     b.Navigation("TelemetryPills");
-                });
-
-            modelBuilder.Entity("Devliora.Domain.Entities.Industry", b =>
-                {
-                    b.Navigation("Stats");
                 });
 
             modelBuilder.Entity("Devliora.Domain.Entities.Portfolio", b =>

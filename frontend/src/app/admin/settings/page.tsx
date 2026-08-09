@@ -15,9 +15,11 @@ export default function AdminSettingsPage() {
   const [logoUrl, setLogoUrl] = useState("");
   const [siteName, setSiteName] = useState("");
   const [portfolioHeroImageUrl, setPortfolioHeroImageUrl] = useState("");
+  const [industriesImageUrl, setIndustriesImageUrl] = useState("");
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [uploadingHero, setUploadingHero] = useState(false);
+  const [uploadingIndustries, setUploadingIndustries] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -33,6 +35,7 @@ export default function AdminSettingsPage() {
           setLogoUrl(data.logoUrl);
           setSiteName(data.siteName);
           setPortfolioHeroImageUrl(data.portfolioHeroImageUrl);
+          setIndustriesImageUrl(data.industriesImageUrl);
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load site settings.");
@@ -79,13 +82,37 @@ export default function AdminSettingsPage() {
     }
   };
 
+  const handleIndustriesFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingIndustries(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setIndustriesImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload industries image.");
+    } finally {
+      setUploadingIndustries(false);
+    }
+  };
+
   const handleSave = async () => {
     if (!settingsId) return;
     setSaving(true);
     setError("");
     setSuccess(false);
     try {
-      await updateSiteSettings({ id: settingsId, logoUrl, siteName, portfolioHeroImageUrl });
+      await updateSiteSettings({
+        id: settingsId,
+        logoUrl,
+        siteName,
+        portfolioHeroImageUrl,
+        industriesImageUrl,
+      });
       setSuccess(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to save site settings.");
@@ -201,6 +228,44 @@ export default function AdminSettingsPage() {
               className="hidden"
               onChange={handleHeroFileChange}
               disabled={uploadingHero}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Industries Menu Image</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            Shown next to the industry list in the navbar&apos;s Industries dropdown.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {industriesImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(industriesImageUrl)}
+                alt="Industries menu preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No industries menu image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingIndustries ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingIndustries ? "Uploading..." : "Upload industries menu image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleIndustriesFileChange}
+              disabled={uploadingIndustries}
             />
           </label>
         </div>

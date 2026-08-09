@@ -14,6 +14,7 @@ public static class DbSeeder
     public static async Task SeedAsync(AppDbContext context, CancellationToken cancellationToken = default)
     {
         await SeedTechnologiesAsync(context, cancellationToken);
+        await SeedIndustriesAsync(context, cancellationToken);
     }
 
     private static async Task SeedTechnologiesAsync(AppDbContext context, CancellationToken cancellationToken)
@@ -66,6 +67,110 @@ public static class DbSeeder
         };
 
         context.TechnologyItems.AddRange(technologies);
+        await context.SaveChangesAsync(cancellationToken);
+    }
+
+    // Same six industries already live on the /industries page (previously a
+    // hardcoded frontend array) — seeded here as the starting content so the
+    // new admin-managed Industry table isn't empty after migrating.
+    private static async Task SeedIndustriesAsync(AppDbContext context, CancellationToken cancellationToken)
+    {
+        if (context.Industries.Any())
+        {
+            return;
+        }
+
+        // Descriptions and stats are illustrative starting content — replace
+        // with real figures and sourcing from the admin panel before launch.
+        var industries = new List<Industry>
+        {
+            new()
+            {
+                Name = "FinTech",
+                Slug = "fintech",
+                Description = "Payments, lending, and wealth platforms where uptime, auditability, and regulatory compliance aren't optional.",
+                DisplayOrder = 1,
+                IsActive = true,
+                Stats = new List<IndustryStat>
+                {
+                    new() { Value = "PCI-DSS", Label = "compliance baseline we build to", DisplayOrder = 1 },
+                    new() { Value = "99.95%", Label = "uptime target for payment paths", DisplayOrder = 2 },
+                    new() { Value = "<200ms", Label = "p95 latency for transaction APIs", DisplayOrder = 3 },
+                },
+            },
+            new()
+            {
+                Name = "Healthcare",
+                Slug = "healthcare",
+                Description = "Patient-facing and clinical systems built around HIPAA-grade data handling and interoperability.",
+                DisplayOrder = 2,
+                IsActive = true,
+                Stats = new List<IndustryStat>
+                {
+                    new() { Value = "HIPAA", Label = "data-handling standard we build to", DisplayOrder = 1 },
+                    new() { Value = "HL7/FHIR", Label = "interoperability formats supported", DisplayOrder = 2 },
+                    new() { Value = "24/7", Label = "monitoring on clinical-facing systems", DisplayOrder = 3 },
+                },
+            },
+            new()
+            {
+                Name = "E-commerce & Retail",
+                Slug = "e-commerce-retail",
+                Description = "Storefronts, checkout, and inventory systems engineered to hold up under peak-season traffic.",
+                DisplayOrder = 3,
+                IsActive = true,
+                Stats = new List<IndustryStat>
+                {
+                    new() { Value = "10x", Label = "peak-traffic load we design for", DisplayOrder = 1 },
+                    new() { Value = "<2s", Label = "target page load at checkout", DisplayOrder = 2 },
+                    new() { Value = "PCI-DSS", Label = "payment compliance baseline", DisplayOrder = 3 },
+                },
+            },
+            new()
+            {
+                Name = "Logistics & Supply Chain",
+                Slug = "logistics-supply-chain",
+                Description = "Fleet, warehouse, and tracking systems that stay accurate when the data source is a moving truck.",
+                DisplayOrder = 4,
+                IsActive = true,
+                Stats = new List<IndustryStat>
+                {
+                    new() { Value = "Real-time", Label = "GPS/telemetry ingestion", DisplayOrder = 1 },
+                    new() { Value = "99.9%", Label = "uptime target for tracking APIs", DisplayOrder = 2 },
+                    new() { Value = "Multi-carrier", Label = "integrations we've shipped", DisplayOrder = 3 },
+                },
+            },
+            new()
+            {
+                Name = "SaaS & B2B Platforms",
+                Slug = "saas-b2b-platforms",
+                Description = "Multi-tenant products built for scale from day one — auth, billing, and admin tooling included.",
+                DisplayOrder = 5,
+                IsActive = true,
+                Stats = new List<IndustryStat>
+                {
+                    new() { Value = "Multi-tenant", Label = "architecture by default", DisplayOrder = 1 },
+                    new() { Value = "SOC 2-ready", Label = "controls we design around", DisplayOrder = 2 },
+                    new() { Value = "SSO/SAML", Label = "enterprise auth supported", DisplayOrder = 3 },
+                },
+            },
+            new()
+            {
+                Name = "EdTech",
+                Slug = "edtech",
+                Description = "Learning platforms that hold up under classroom-scale concurrency and student-data privacy rules.",
+                DisplayOrder = 6,
+                IsActive = true,
+                Stats = new List<IndustryStat>
+                {
+                    new() { Value = "FERPA", Label = "student-data standard we build to", DisplayOrder = 1 },
+                    new() { Value = "WCAG 2.1", Label = "accessibility level targeted", DisplayOrder = 2 },
+                    new() { Value = "Concurrent", Label = "classroom-scale load testing", DisplayOrder = 3 },
+                },
+            },
+        };
+
+        context.Industries.AddRange(industries);
         await context.SaveChangesAsync(cancellationToken);
     }
 

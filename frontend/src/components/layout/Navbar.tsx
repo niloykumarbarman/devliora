@@ -10,7 +10,9 @@ import { serviceHref } from "@/lib/services";
 import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/technologyCategories";
 import { SOLUTIONS } from "@/lib/solutions";
 import { slugify } from "@/lib/slugify";
+import { fetchIndustries, type IndustryDto } from "@/lib/industries";
 import MegaMenu from "./MegaMenu";
+import IndustriesMenu from "./IndustriesMenu";
 
 const NAV_LINKS = [
   { href: "/services", label: "Services" },
@@ -28,6 +30,7 @@ const NAV_LINKS = [
 // only has one mega-menu trigger.
 const MORE_LABELS = ["Case Studies", "About", "Blog"];
 const MEGA_LABELS = ["Services"];
+const INDUSTRIES_LABEL = "Industries";
 const SERVICES_MENU_LIMIT = 6;
 const PRIMARY_LINKS = NAV_LINKS.filter((link) => !MORE_LABELS.includes(link.label));
 const MORE_LINKS = NAV_LINKS.filter((link) => MORE_LABELS.includes(link.label));
@@ -36,10 +39,15 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+  const [industriesOpen, setIndustriesOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [logoUrl, setLogoUrl] = useState("");
+  const [industriesImageUrl, setIndustriesImageUrl] = useState("");
+  const [industries, setIndustries] = useState<IndustryDto[]>([]);
+  const [industriesLoaded, setIndustriesLoaded] = useState(false);
   const moreRef = useRef<HTMLLIElement>(null);
   const megaCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const industriesCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const exploreMenu = useExploreMenuData();
 
   useEffect(() => {
@@ -47,6 +55,16 @@ export default function Navbar() {
       if (settings?.logoUrl) {
         setLogoUrl(settings.logoUrl);
       }
+      if (settings?.industriesImageUrl) {
+        setIndustriesImageUrl(settings.industriesImageUrl);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    fetchIndustries().then((data) => {
+      setIndustries(data);
+      setIndustriesLoaded(true);
     });
   }, []);
 
@@ -65,6 +83,9 @@ export default function Navbar() {
       if (megaCloseTimer.current) {
         clearTimeout(megaCloseTimer.current);
       }
+      if (industriesCloseTimer.current) {
+        clearTimeout(industriesCloseTimer.current);
+      }
     };
   }, []);
 
@@ -78,6 +99,18 @@ export default function Navbar() {
 
   const scheduleCloseMega = () => {
     megaCloseTimer.current = setTimeout(() => setMegaOpen(false), 150);
+  };
+
+  const openIndustries = () => {
+    if (industriesCloseTimer.current) {
+      clearTimeout(industriesCloseTimer.current);
+      industriesCloseTimer.current = null;
+    }
+    setIndustriesOpen(true);
+  };
+
+  const scheduleCloseIndustries = () => {
+    industriesCloseTimer.current = setTimeout(() => setIndustriesOpen(false), 150);
   };
 
   const visibleMobileServices = [...exploreMenu.services]
@@ -115,21 +148,42 @@ export default function Navbar() {
         </Link>
 
         <ul className="hidden items-center gap-6 md:flex">
-          {PRIMARY_LINKS.map((link) =>
-            MEGA_LABELS.includes(link.label) ? (
-              <li key={link.href} onMouseEnter={openMega} onMouseLeave={scheduleCloseMega}>
-                <Link
-                  href={link.href}
-                  className="group relative flex items-center gap-1 whitespace-nowrap font-mono text-sm text-graphite/70 transition-colors duration-300 hover:text-ink"
-                  aria-haspopup="true"
-                  aria-expanded={megaOpen}
-                >
-                  {link.label}
-                  <ChevronDown className={`h-3.5 w-3.5 transition-transform ${megaOpen ? "rotate-180" : ""}`} />
-                  <span className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-signal transition-transform duration-300 ease-out group-hover:scale-x-100" />
-                </Link>
-              </li>
-            ) : (
+          {PRIMARY_LINKS.map((link) => {
+            if (MEGA_LABELS.includes(link.label)) {
+              return (
+                <li key={link.href} onMouseEnter={openMega} onMouseLeave={scheduleCloseMega}>
+                  <Link
+                    href={link.href}
+                    className="group relative flex items-center gap-1 whitespace-nowrap font-mono text-sm text-graphite/70 transition-colors duration-300 hover:text-ink"
+                    aria-haspopup="true"
+                    aria-expanded={megaOpen}
+                  >
+                    {link.label}
+                    <ChevronDown className={`h-3.5 w-3.5 transition-transform ${megaOpen ? "rotate-180" : ""}`} />
+                    <span className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-signal transition-transform duration-300 ease-out group-hover:scale-x-100" />
+                  </Link>
+                </li>
+              );
+            }
+            if (link.label === INDUSTRIES_LABEL) {
+              return (
+                <li key={link.href} onMouseEnter={openIndustries} onMouseLeave={scheduleCloseIndustries}>
+                  <Link
+                    href={link.href}
+                    className="group relative flex items-center gap-1 whitespace-nowrap font-mono text-sm text-graphite/70 transition-colors duration-300 hover:text-ink"
+                    aria-haspopup="true"
+                    aria-expanded={industriesOpen}
+                  >
+                    {link.label}
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 transition-transform ${industriesOpen ? "rotate-180" : ""}`}
+                    />
+                    <span className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-signal transition-transform duration-300 ease-out group-hover:scale-x-100" />
+                  </Link>
+                </li>
+              );
+            }
+            return (
               <li key={link.href}>
                 <Link
                   href={link.href}
@@ -139,8 +193,8 @@ export default function Navbar() {
                   <span className="pointer-events-none absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-signal transition-transform duration-300 ease-out group-hover:scale-x-100" />
                 </Link>
               </li>
-            )
-          )}
+            );
+          })}
           <li className="relative" ref={moreRef}>
             <button
               type="button"
@@ -195,6 +249,16 @@ export default function Navbar() {
           onMouseEnter={openMega}
           onMouseLeave={scheduleCloseMega}
           onNavigate={() => setMegaOpen(false)}
+        />
+
+        <IndustriesMenu
+          open={industriesOpen}
+          industries={industries}
+          imageUrl={industriesImageUrl}
+          loaded={industriesLoaded}
+          onMouseEnter={openIndustries}
+          onMouseLeave={scheduleCloseIndustries}
+          onNavigate={() => setIndustriesOpen(false)}
         />
       </nav>
 
