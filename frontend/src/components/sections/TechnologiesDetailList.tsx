@@ -2,64 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import {
-  Server,
-  LayoutTemplate,
-  Cloud,
-  Database,
-  GitBranch,
-  BrainCircuit,
-} from "lucide-react";
 import TechBrandIcon from "@/components/TechBrandIcon";
 import { getTechIcon } from "@/lib/techIcons";
 import { fetchTechnologies, TechnologyDto } from "@/lib/technologies";
-
-type CategoryMeta = {
-  icon: typeof Server;
-  title: string;
-  description: string;
-};
-
-const CATEGORY_META: Record<number, CategoryMeta> = {
-  0: {
-    icon: Server,
-    title: "Backend & APIs",
-    description:
-      "Type-safe, well-tested services built for correctness and long-term maintainability.",
-  },
-  1: {
-    icon: LayoutTemplate,
-    title: "Frontend & UI",
-    description:
-      "Fast, accessible interfaces that hold up across devices and screen sizes.",
-  },
-  2: {
-    icon: Cloud,
-    title: "Cloud & Infrastructure",
-    description:
-      "Infrastructure that scales predictably and fails gracefully under load.",
-  },
-  3: {
-    icon: Database,
-    title: "Databases & Caching",
-    description:
-      "Data layers chosen for consistency, speed, and the access patterns that matter.",
-  },
-  4: {
-    icon: GitBranch,
-    title: "DevOps & CI/CD",
-    description:
-      "Automated pipelines so every release ships the same way, every time.",
-  },
-  5: {
-    icon: BrainCircuit,
-    title: "AI/ML & Data",
-    description:
-      "Practical AI integration focused on real workflows, not novelty.",
-  },
-};
-
-const CATEGORY_ORDER = [0, 1, 2, 3, 4, 5];
+import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/technologyCategories";
 
 export default function TechnologiesDetailList() {
   const reducedMotion = useReducedMotion();
@@ -68,6 +14,13 @@ export default function TechnologiesDetailList() {
   useEffect(() => {
     fetchTechnologies().then(setTechnologies);
   }, []);
+
+  useEffect(() => {
+    if (technologies.length === 0) return;
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+    document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [technologies]);
 
   const groups = CATEGORY_ORDER.map((categoryId) => {
     const items = technologies
@@ -104,11 +57,12 @@ export default function TechnologiesDetailList() {
             return (
               <motion.div
                 key={group.categoryId}
+                id={group.meta.slug}
                 initial={{ opacity: 0, y: reducedMotion ? 0 : 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
                 transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="flex flex-col bg-paper p-8"
+                className="flex scroll-mt-24 flex-col bg-paper p-8"
               >
                 <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-signal/10 text-signal">
                   <Icon size={20} strokeWidth={1.75} />

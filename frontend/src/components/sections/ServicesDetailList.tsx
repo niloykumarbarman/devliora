@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Layers } from "lucide-react";
 import { API_BASE_URL } from "@/lib/apiConfig";
+import { resolveImageUrl } from "@/lib/hero";
 
 type ServiceItem = {
   id: string;
@@ -43,6 +44,13 @@ export default function ServicesDetailList() {
     load();
   }, []);
 
+  useEffect(() => {
+    if (services.length === 0) return;
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+    document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [services]);
+
   const fadeUp = (i: number) =>
     shouldReduceMotion
       ? {}
@@ -75,12 +83,13 @@ export default function ServicesDetailList() {
             {services.map((service, i) => (
               <motion.div
                 key={service.id}
+                id={service.slug}
                 {...fadeUp(i)}
-                className="bg-paper p-8 md:p-10"
+                className="scroll-mt-24 bg-paper p-8 md:p-10"
               >
                 {service.iconUrl ? (
                   <img
-                    src={service.iconUrl}
+                    src={resolveImageUrl(service.iconUrl)}
                     alt=""
                     className="h-6 w-6 object-contain"
                   />

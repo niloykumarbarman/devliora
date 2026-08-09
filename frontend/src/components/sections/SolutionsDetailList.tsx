@@ -1,48 +1,18 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-
-const solutions = [
-  {
-    id: "01",
-    title: "Custom Software Development",
-    description:
-      "Bespoke applications built around your exact workflows, not forced into an off-the-shelf template — from internal tools to customer-facing platforms.",
-  },
-  {
-    id: "02",
-    title: "Legacy System Modernization",
-    description:
-      "Careful, incremental migration of aging systems onto modern, maintainable architectures — without disrupting the business that depends on them.",
-  },
-  {
-    id: "03",
-    title: "Cloud & DevOps Modernization",
-    description:
-      "Containerized, CI/CD-driven infrastructure that ships faster and fails safer, with observability and rollback built in from day one.",
-  },
-  {
-    id: "04",
-    title: "Digital Transformation Consulting",
-    description:
-      "A pragmatic assessment of where technology is holding your business back, and a phased roadmap to fix it without a full rebuild.",
-  },
-  {
-    id: "05",
-    title: "Data & Analytics",
-    description:
-      "Turning scattered operational data into dashboards and pipelines that decision-makers actually trust and use.",
-  },
-  {
-    id: "06",
-    title: "AI / ML Integration",
-    description:
-      "Practical, scoped AI features — not hype — added where they measurably reduce manual work or improve a product experience.",
-  },
-];
+import { SOLUTIONS } from "@/lib/solutions";
+import { slugify } from "@/lib/slugify";
 
 export default function SolutionsDetailList() {
   const shouldReduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const hash = window.location.hash.slice(1);
+    if (!hash) return;
+    document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
 
   return (
     <section className="relative bg-paper py-24">
@@ -54,14 +24,15 @@ export default function SolutionsDetailList() {
         </h2>
 
         <div className="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-ink/10 bg-ink/10 md:grid-cols-2">
-          {solutions.map((solution, i) => (
+          {SOLUTIONS.map((solution, i) => (
             <motion.div
               key={solution.id}
+              id={slugify(solution.title)}
               initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="bg-paper p-8"
+              className="scroll-mt-24 bg-paper p-8"
             >
               <span className="font-mono text-sm tabular-nums text-signal">
                 {solution.id}
