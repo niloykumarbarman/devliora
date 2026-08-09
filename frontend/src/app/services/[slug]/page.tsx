@@ -58,16 +58,58 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       label: "Web",
       heading: "Web Application Development",
       body: "We design and build custom web applications from the ground up, matched to your actual workflows rather than a generic template. From architecture through deployment, every layer is built for correctness, maintainability, and long-term stability.",
+      cards: [
+        {
+          title: "Custom Web Application Development",
+          body: "Bespoke web apps built from the ground up around your actual workflows, not forced into an off-the-shelf template.",
+        },
+        {
+          title: "Platform-Based Web Customization",
+          body: "Built on proven frameworks and reusable components, so you get a reliable product without paying to reinvent the basics.",
+        },
+        {
+          title: "Legacy Web Application Modernization",
+          body: "Careful, incremental migration of aging web systems onto modern, maintainable architecture — without disrupting the business that depends on them.",
+        },
+      ],
     },
     {
       label: "Mobile",
       heading: "Mobile Application Development",
       body: "Native and cross-platform mobile apps for iOS and Android, built around real user workflows. We handle everything from initial architecture through app store release and post-launch support.",
+      cards: [
+        {
+          title: "Custom Mobile Application Development",
+          body: "Bespoke iOS and Android apps built from the ground up around your actual product requirements.",
+        },
+        {
+          title: "Platform-Based Mobile Customization",
+          body: "Built on proven frameworks and reusable components to ship a dependable mobile product without starting from zero.",
+        },
+        {
+          title: "Legacy Mobile Application Redesign",
+          body: "Refreshing aging mobile apps with modern interfaces, updated code, and improved performance and stability.",
+        },
+      ],
     },
     {
       label: "Enterprise",
       heading: "Enterprise System Integration",
       body: "Enterprise systems designed to integrate cleanly with what you already run — connecting existing tools, data, and processes instead of forcing a rebuild. We focus on architecture that holds up as the organization scales.",
+      cards: [
+        {
+          title: "Custom Enterprise System Development",
+          body: "Enterprise software built around your organization's real processes, not a generic template.",
+        },
+        {
+          title: "Platform Integration & Customization",
+          body: "Connecting and customizing the enterprise platforms and tools you already run, instead of forcing a rebuild.",
+        },
+        {
+          title: "Legacy System Modernization",
+          body: "Migrating aging enterprise systems onto modern, maintainable architecture without disrupting business continuity.",
+        },
+      ],
     },
   ],
 };
