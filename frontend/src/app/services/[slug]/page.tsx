@@ -104,6 +104,47 @@ const gridOverlayStyle = {
     "linear-gradient(to right, color-mix(in srgb, var(--color-paper) 4%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--color-paper) 4%, transparent) 1px, transparent 1px)",
 };
 
+// Six evenly spaced points around the "Software essentials" decorative
+// ring (top, then clockwise), as percentages of the ring's own box.
+const RING_DOT_POSITIONS = [
+  { top: "0%", left: "50%" },
+  { top: "25%", left: "93.3%" },
+  { top: "75%", left: "93.3%" },
+  { top: "100%", left: "50%" },
+  { top: "75%", left: "6.7%" },
+  { top: "25%", left: "6.7%" },
+];
+
+// Generic, non-platform-specific capability copy — same content
+// regardless of which tab (Web/Mobile/Enterprise) is active, since this
+// section sits below the tabs as a shared block, not inside them.
+const SOFTWARE_ESSENTIALS = [
+  {
+    title: "Lightning-Fast Performance",
+    body: "Built with efficient code, smart caching, and optimized rendering, so your software stays fast even as usage grows.",
+  },
+  {
+    title: "Rock-Solid Security",
+    body: "Data protection is built in from the start — encrypted transfers, secure sessions, and hardening against common threats.",
+  },
+  {
+    title: "Seamless Interoperability",
+    body: "Your software connects cleanly with the third-party tools and internal systems it needs to talk to.",
+  },
+  {
+    title: "Tailored Personalization",
+    body: "We design experiences that adapt to each user, from smart defaults to targeted content.",
+  },
+  {
+    title: "User-First Experience",
+    body: "Our design process centers on the user, resulting in interfaces that are intuitive from first use to final release.",
+  },
+  {
+    title: "Uncompromising Compliance",
+    body: "We build with the regulatory and data-handling standards your industry requires, from day one.",
+  },
+];
+
 // Secondary checkpoint shown under each roadmap step's dotted drop-line.
 // Only defined where it lines up 1:1 with a service's real includes[] —
 // everything else falls back to the single-tier line (see ServiceDetailPage).
@@ -206,35 +247,6 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
-      essentials: {
-        tagline: "We build web applications with a focus on speed, security, and a smooth user experience — every time.",
-        items: [
-          {
-            title: "Lightning-Fast Performance",
-            body: "Built with efficient code, smart caching, and optimized rendering, so pages stay fast even as traffic grows.",
-          },
-          {
-            title: "Rock-Solid Security",
-            body: "Data protection is built in from the start — encrypted transfers, secure sessions, and hardening against common web threats.",
-          },
-          {
-            title: "Seamless Interoperability",
-            body: "Your web application connects cleanly with the third-party tools and internal systems it needs to talk to.",
-          },
-          {
-            title: "Tailored Personalization",
-            body: "We design experiences that adapt to each user, from smart defaults to targeted content.",
-          },
-          {
-            title: "User-First Experience",
-            body: "Our design process centers on the user, resulting in interfaces that are intuitive from first click to final release.",
-          },
-          {
-            title: "Uncompromising Compliance",
-            body: "We build with the regulatory and data-handling standards your industry requires, from day one.",
-          },
-        ],
-      },
     },
     {
       label: "Mobile",
@@ -319,35 +331,6 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
-      essentials: {
-        tagline: "We craft mobile apps with a focus on quality, performance, and security — every time.",
-        items: [
-          {
-            title: "Lightning-Fast Performance",
-            body: "Built with efficient code, smart caching, and optimized interactions, our apps stay responsive even under real-world network conditions.",
-          },
-          {
-            title: "Rock-Solid Security",
-            body: "Data privacy is a priority — we secure every transfer, follow strict standards, and harden the app against common threats.",
-          },
-          {
-            title: "Seamless Interoperability",
-            body: "Our apps connect smoothly with third-party tools, keeping communication consistent across platforms and systems.",
-          },
-          {
-            title: "Tailored Personalization",
-            body: "We design apps that feel personal, with smart recommendations and experiences tailored to each user.",
-          },
-          {
-            title: "User-First Experience",
-            body: "Our design process centers on the user, resulting in intuitive interfaces from prototype to final release.",
-          },
-          {
-            title: "Uncompromising Compliance",
-            body: "With attention to relevant regulations, we make sure both our process and your app meet the standards that matter.",
-          },
-        ],
-      },
     },
     {
       label: "Enterprise",
@@ -429,35 +412,6 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           {
             title: "Launch & Beyond",
             body: "We handle rollout carefully and provide ongoing support afterward, so the system keeps running reliably as your organization's needs evolve.",
-          },
-        ],
-      },
-      essentials: {
-        tagline: "We build enterprise systems with a focus on reliability, security, and fit for how your organization actually works.",
-        items: [
-          {
-            title: "Lightning-Fast Performance",
-            body: "Built with efficient architecture and smart caching, our systems stay responsive even as data volume and usage grow.",
-          },
-          {
-            title: "Rock-Solid Security",
-            body: "Data protection is built in from the start — access controls, encryption, and audit trails appropriate to enterprise data.",
-          },
-          {
-            title: "Seamless Interoperability",
-            body: "Your enterprise system connects cleanly with the tools and data sources your teams already depend on.",
-          },
-          {
-            title: "Tailored Personalization",
-            body: "We design workflows and dashboards tailored to how different teams in your organization actually work.",
-          },
-          {
-            title: "User-First Experience",
-            body: "Our design process centers on the people who use the system daily, not just the requirements it was scoped from.",
-          },
-          {
-            title: "Uncompromising Compliance",
-            body: "We build with the regulatory and data-governance standards your industry requires, from day one.",
           },
         ],
       },
@@ -756,6 +710,56 @@ export default async function ServiceDetailPage({ params }: Props) {
                   <p className="mt-3 text-sm leading-relaxed text-paper/70">{model.body}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Software essentials */}
+        <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
+          <div className="mx-auto max-w-6xl px-6">
+            <h2 className="font-display text-3xl font-semibold leading-tight sm:text-4xl">
+              Our software essentials
+            </h2>
+            <p className="mt-3 inline-block border-b border-paper/20 pb-3 italic text-paper/60">
+              We build software with a focus on speed, security, and a smooth user experience — every time.
+            </p>
+
+            <div className="relative mt-16 grid grid-cols-1 items-center gap-x-12 gap-y-12 md:grid-cols-[1fr_14rem_1fr]">
+              <div className="space-y-10 md:text-right">
+                {SOFTWARE_ESSENTIALS.slice(0, 3).map((item) => (
+                  <div key={item.title}>
+                    <h3 className="font-display text-lg font-semibold text-ember">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-paper/70">{item.body}</p>
+                  </div>
+                ))}
+              </div>
+
+              <div className="relative mx-auto hidden h-56 w-56 shrink-0 md:block">
+                <div className="absolute inset-0 rounded-full border border-dashed border-paper/30" />
+                {RING_DOT_POSITIONS.map((pos, i) => (
+                  <span
+                    key={i}
+                    className="absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ember"
+                    style={{ top: pos.top, left: pos.left }}
+                  />
+                ))}
+                <div className="absolute inset-8 flex items-center justify-center rounded-full border-2 border-ember text-center">
+                  <p className="font-display text-sm font-bold leading-snug text-paper">
+                    Our software
+                    <br />
+                    essentials
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-10">
+                {SOFTWARE_ESSENTIALS.slice(3, 6).map((item) => (
+                  <div key={item.title}>
+                    <h3 className="font-display text-lg font-semibold text-ember">{item.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-paper/70">{item.body}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
