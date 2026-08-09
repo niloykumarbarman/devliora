@@ -7,9 +7,9 @@ import PortfolioGrid from "@/components/sections/PortfolioGrid";
 import PortfolioCTA from "@/components/sections/PortfolioCTA";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Portfolio | Devliora",
+  title: "My Work | Devliora",
   description:
-    "A visual look at the systems we have shipped — browse the portfolio and open any project for the full case study.",
+    "A visual look at the systems we have shipped — browse our work and open any project for the full case study.",
   path: "/portfolio",
 });
 

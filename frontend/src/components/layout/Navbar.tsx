@@ -17,7 +17,7 @@ import IndustriesMenu from "./IndustriesMenu";
 const NAV_LINKS = [
   { href: "/services", label: "Services" },
   { href: "/industries", label: "Industries" },
-  { href: "/portfolio", label: "Portfolio" },
+  { href: "/portfolio", label: "My Work" },
   { href: "/case-studies", label: "Case Studies" },
   { href: "/about", label: "About" },
   { href: "/blog", label: "Blog" },

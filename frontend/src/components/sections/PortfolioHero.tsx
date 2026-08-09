@@ -66,7 +66,7 @@ export default function PortfolioHero() {
             Home
           </Link>
           <span className="text-paper/30">/</span>
-          <span className="text-ember">Portfolio</span>
+          <span className="text-ember">My Work</span>
         </div>
       </div>
     </section>
