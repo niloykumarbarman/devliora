@@ -247,6 +247,11 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      techIntro: {
+        heading: "Powering your web vision with cutting-edge tech",
+        tagline: "Bringing web ideas to life with next-gen tech.",
+        body: "Our web application development approach focuses on thoughtful use of modern technologies to build reliable, well-designed applications. We combine practical engineering with considered design to address your specific requirements, using current tools and frameworks that support long-term maintainability — from front-end to back-end, we support the full journey from concept to launch.",
+      },
     },
     {
       label: "Mobile",
@@ -331,6 +336,11 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      techIntro: {
+        heading: "Powering your mobile vision with cutting-edge tech",
+        tagline: "Bringing mobile ideas to life with next-gen tech.",
+        body: "Our mobile application development approach focuses on thoughtful use of modern technologies to build reliable, well-designed apps. Across iOS and Android, we combine practical engineering with considered design to address your specific requirements. Our team works with current tools and frameworks to ensure long-term maintainability — from native to hybrid and cross-platform, we support the full journey from concept to launch.",
+      },
     },
     {
       label: "Enterprise",
@@ -414,6 +424,11 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
             body: "We handle rollout carefully and provide ongoing support afterward, so the system keeps running reliably as your organization's needs evolve.",
           },
         ],
+      },
+      techIntro: {
+        heading: "Powering your enterprise vision with cutting-edge tech",
+        tagline: "Bringing enterprise ideas to life with next-gen tech.",
+        body: "Our enterprise system development approach focuses on thoughtful use of modern technologies to build reliable, well-integrated systems. We combine practical engineering with considered design to address your organization's specific requirements, using current tools and frameworks that support long-term maintainability and scale.",
       },
     },
   ],

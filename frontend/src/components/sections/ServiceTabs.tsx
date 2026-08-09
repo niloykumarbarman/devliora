@@ -29,6 +29,12 @@ export type ServiceScope = {
   items: ServiceScopeItem[];
 };
 
+export type ServiceTechIntro = {
+  heading: string;
+  tagline: string;
+  body: string;
+};
+
 export type ServiceTab = {
   label: string;
   heading: string;
@@ -36,6 +42,7 @@ export type ServiceTab = {
   cards?: ServiceTabCard[];
   roadmap?: ServiceTabRoadmap;
   scope?: ServiceScope;
+  techIntro?: ServiceTechIntro;
 };
 
 function ScopeCard({ item }: { item: ServiceScopeItem }) {
@@ -168,6 +175,22 @@ export default function ServiceTabs({
             {current.scope.items.map((item) => (
               <ScopeCard key={item.title} item={item} />
             ))}
+          </div>
+        </div>
+      )}
+
+      {current.techIntro && (
+        <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
+          <div className="grid gap-10 md:grid-cols-2 md:items-start">
+            <div>
+              <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+                {current.techIntro.heading}
+              </h3>
+              <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+                {current.techIntro.tagline}
+              </p>
+            </div>
+            <p className="text-lg leading-relaxed text-paper/70">{current.techIntro.body}</p>
           </div>
         </div>
       )}
