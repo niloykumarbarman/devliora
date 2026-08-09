@@ -206,6 +206,35 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      essentials: {
+        tagline: "We build web applications with a focus on speed, security, and a smooth user experience — every time.",
+        items: [
+          {
+            title: "Lightning-Fast Performance",
+            body: "Built with efficient code, smart caching, and optimized rendering, so pages stay fast even as traffic grows.",
+          },
+          {
+            title: "Rock-Solid Security",
+            body: "Data protection is built in from the start — encrypted transfers, secure sessions, and hardening against common web threats.",
+          },
+          {
+            title: "Seamless Interoperability",
+            body: "Your web application connects cleanly with the third-party tools and internal systems it needs to talk to.",
+          },
+          {
+            title: "Tailored Personalization",
+            body: "We design experiences that adapt to each user, from smart defaults to targeted content.",
+          },
+          {
+            title: "User-First Experience",
+            body: "Our design process centers on the user, resulting in interfaces that are intuitive from first click to final release.",
+          },
+          {
+            title: "Uncompromising Compliance",
+            body: "We build with the regulatory and data-handling standards your industry requires, from day one.",
+          },
+        ],
+      },
     },
     {
       label: "Mobile",
@@ -290,6 +319,35 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      essentials: {
+        tagline: "We craft mobile apps with a focus on quality, performance, and security — every time.",
+        items: [
+          {
+            title: "Lightning-Fast Performance",
+            body: "Built with efficient code, smart caching, and optimized interactions, our apps stay responsive even under real-world network conditions.",
+          },
+          {
+            title: "Rock-Solid Security",
+            body: "Data privacy is a priority — we secure every transfer, follow strict standards, and harden the app against common threats.",
+          },
+          {
+            title: "Seamless Interoperability",
+            body: "Our apps connect smoothly with third-party tools, keeping communication consistent across platforms and systems.",
+          },
+          {
+            title: "Tailored Personalization",
+            body: "We design apps that feel personal, with smart recommendations and experiences tailored to each user.",
+          },
+          {
+            title: "User-First Experience",
+            body: "Our design process centers on the user, resulting in intuitive interfaces from prototype to final release.",
+          },
+          {
+            title: "Uncompromising Compliance",
+            body: "With attention to relevant regulations, we make sure both our process and your app meet the standards that matter.",
+          },
+        ],
+      },
     },
     {
       label: "Enterprise",
@@ -371,6 +429,35 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           {
             title: "Launch & Beyond",
             body: "We handle rollout carefully and provide ongoing support afterward, so the system keeps running reliably as your organization's needs evolve.",
+          },
+        ],
+      },
+      essentials: {
+        tagline: "We build enterprise systems with a focus on reliability, security, and fit for how your organization actually works.",
+        items: [
+          {
+            title: "Lightning-Fast Performance",
+            body: "Built with efficient architecture and smart caching, our systems stay responsive even as data volume and usage grow.",
+          },
+          {
+            title: "Rock-Solid Security",
+            body: "Data protection is built in from the start — access controls, encryption, and audit trails appropriate to enterprise data.",
+          },
+          {
+            title: "Seamless Interoperability",
+            body: "Your enterprise system connects cleanly with the tools and data sources your teams already depend on.",
+          },
+          {
+            title: "Tailored Personalization",
+            body: "We design workflows and dashboards tailored to how different teams in your organization actually work.",
+          },
+          {
+            title: "User-First Experience",
+            body: "Our design process centers on the people who use the system daily, not just the requirements it was scoped from.",
+          },
+          {
+            title: "Uncompromising Compliance",
+            body: "We build with the regulatory and data-governance standards your industry requires, from day one.",
           },
         ],
       },

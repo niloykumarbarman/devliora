@@ -29,6 +29,16 @@ export type ServiceScope = {
   items: ServiceScopeItem[];
 };
 
+export type ServiceEssentialItem = {
+  title: string;
+  body: string;
+};
+
+export type ServiceEssentials = {
+  tagline: string;
+  items: ServiceEssentialItem[];
+};
+
 export type ServiceTab = {
   label: string;
   heading: string;
@@ -36,7 +46,19 @@ export type ServiceTab = {
   cards?: ServiceTabCard[];
   roadmap?: ServiceTabRoadmap;
   scope?: ServiceScope;
+  essentials?: ServiceEssentials;
 };
+
+// Six evenly spaced points around the decorative ring (top, then
+// clockwise), as percentages of the ring's own box.
+const RING_DOT_POSITIONS = [
+  { top: "0%", left: "50%" },
+  { top: "25%", left: "93.3%" },
+  { top: "75%", left: "93.3%" },
+  { top: "100%", left: "50%" },
+  { top: "75%", left: "6.7%" },
+  { top: "25%", left: "6.7%" },
+];
 
 function ScopeCard({ item }: { item: ServiceScopeItem }) {
   const [expanded, setExpanded] = useState(false);
@@ -168,6 +190,55 @@ export default function ServiceTabs({
             {current.scope.items.map((item) => (
               <ScopeCard key={item.title} item={item} />
             ))}
+          </div>
+        </div>
+      )}
+
+      {current.essentials && current.essentials.items.length === 6 && (
+        <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
+          <h3 className="font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+            Our {current.label.toLowerCase()} app essentials
+          </h3>
+          <p className="mt-3 inline-block border-b border-paper/20 pb-3 italic text-paper/60">
+            {current.essentials.tagline}
+          </p>
+
+          <div className="relative mt-16 grid grid-cols-1 items-center gap-x-12 gap-y-12 md:grid-cols-[1fr_14rem_1fr]">
+            <div className="space-y-10 md:text-right">
+              {current.essentials.items.slice(0, 3).map((item) => (
+                <div key={item.title}>
+                  <h4 className="font-display text-lg font-semibold text-ember">{item.title}</h4>
+                  <p className="mt-2 text-sm leading-relaxed text-paper/70">{item.body}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="relative mx-auto hidden h-56 w-56 shrink-0 md:block">
+              <div className="absolute inset-0 rounded-full border border-dashed border-paper/30" />
+              {RING_DOT_POSITIONS.map((pos, i) => (
+                <span
+                  key={i}
+                  className="absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ember"
+                  style={{ top: pos.top, left: pos.left }}
+                />
+              ))}
+              <div className="absolute inset-8 flex items-center justify-center rounded-full border-2 border-ember text-center">
+                <p className="font-display text-sm font-bold leading-snug text-paper">
+                  Our {current.label.toLowerCase()}
+                  <br />
+                  app essentials
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-10">
+              {current.essentials.items.slice(3, 6).map((item) => (
+                <div key={item.title}>
+                  <h4 className="font-display text-lg font-semibold text-ember">{item.title}</h4>
+                  <p className="mt-2 text-sm leading-relaxed text-paper/70">{item.body}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       )}
