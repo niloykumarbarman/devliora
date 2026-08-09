@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer";
 import { fetchServiceBySlug } from "@/lib/services";
 import { fetchHero, resolveImageUrl } from "@/lib/hero";
 import { fetchCaseStudies } from "@/lib/caseStudies";
+import { fetchBlogPosts, type BlogPost } from "@/lib/blogPosts";
 import { buildMetadata } from "@/lib/seo";
 import ServiceTabs, { type ServiceTab } from "@/components/sections/ServiceTabs";
 
@@ -16,6 +17,40 @@ async function safeFetchCaseStudies() {
   } catch {
     return [];
   }
+}
+
+async function safeFetchBlogPosts() {
+  try {
+    return await fetchBlogPosts();
+  } catch {
+    return [];
+  }
+}
+
+function formatPostDate(publishedAt: string | null): string {
+  if (!publishedAt) return "";
+  return new Date(publishedAt).toLocaleDateString("en-US", {
+    month: "short",
+    day: "2-digit",
+    year: "numeric",
+  });
+}
+
+type BlogGridCell = { post: BlogPost; type: "image" | "label" };
+
+function buildBlogGridCells(posts: BlogPost[]): BlogGridCell[] {
+  const cells: BlogGridCell[] = [];
+  for (let i = 0; i < posts.length; i += 2) {
+    const rowPosts = posts.slice(i, i + 2);
+    const rowIndex = i / 2;
+    const order: BlogGridCell["type"][] = rowIndex % 2 === 0 ? ["image", "label"] : ["label", "image"];
+    for (const post of rowPosts) {
+      for (const type of order) {
+        cells.push({ post, type });
+      }
+    }
+  }
+  return cells;
 }
 
 type Props = {
@@ -320,11 +355,13 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
 
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
-  const [service, hero, caseStudies] = await Promise.all([
+  const [service, hero, caseStudies, blogPosts] = await Promise.all([
     fetchServiceBySlug(slug),
     fetchHero(),
     safeFetchCaseStudies(),
+    safeFetchBlogPosts(),
   ]);
+  const blogGridCells = buildBlogGridCells(blogPosts.slice(0, 4));
 
   if (!service) {
     notFound();
@@ -440,6 +477,58 @@ export default async function ServiceDetailPage({ params }: Props) {
                   </Link>
                 ))}
               </div>
+            </div>
+          </section>
+        )}
+
+        {/* Blog Highlights, pulled live from the site's real blog posts */}
+        {blogGridCells.length > 0 && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
+            <div className="mx-auto max-w-6xl px-6 text-center">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">From the blog</p>
+              <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl">
+                Blog Highlights
+              </h2>
+            </div>
+
+            <div className="mx-auto mt-14 grid max-w-6xl grid-cols-2 lg:grid-cols-4">
+              {blogGridCells.map((cell, i) =>
+                cell.type === "image" ? (
+                  <div key={`${cell.post.id}-image-${i}`} className="relative h-64 overflow-hidden sm:h-72">
+                    {cell.post.coverImageUrl && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={resolveImageUrl(cell.post.coverImageUrl)}
+                        alt=""
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
+                    )}
+                  </div>
+                ) : (
+                  <Link
+                    key={`${cell.post.id}-label-${i}`}
+                    href={`/blog/${cell.post.slug}`}
+                    className={`group flex h-64 flex-col justify-center px-6 transition-colors sm:h-72 ${
+                      i % 4 < 2 ? "bg-graphite" : "bg-ink"
+                    }`}
+                  >
+                    {formatPostDate(cell.post.publishedAt) && (
+                      <p className="font-mono text-xs font-semibold uppercase tracking-wide text-ember">
+                        &middot; {formatPostDate(cell.post.publishedAt)}
+                      </p>
+                    )}
+                    <h3 className="mt-3 font-display text-xl font-semibold leading-snug text-paper">
+                      {cell.post.title}
+                    </h3>
+                    <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-paper/70">
+                      {cell.post.excerpt}
+                    </p>
+                    <span className="mt-4 font-mono text-sm font-semibold text-ember transition-colors group-hover:text-paper">
+                      Read more
+                    </span>
+                  </Link>
+                )
+              )}
             </div>
           </section>
         )}
