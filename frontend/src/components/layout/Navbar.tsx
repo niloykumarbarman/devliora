@@ -43,6 +43,7 @@ export default function Navbar() {
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const [logoUrl, setLogoUrl] = useState("");
   const [industriesImageUrl, setIndustriesImageUrl] = useState("");
+  const [servicesImageUrl, setServicesImageUrl] = useState("");
   const [industries, setIndustries] = useState<IndustryDto[]>([]);
   const [industriesLoaded, setIndustriesLoaded] = useState(false);
   const moreRef = useRef<HTMLLIElement>(null);
@@ -57,6 +58,9 @@ export default function Navbar() {
       }
       if (settings?.industriesImageUrl) {
         setIndustriesImageUrl(settings.industriesImageUrl);
+      }
+      if (settings?.servicesImageUrl) {
+        setServicesImageUrl(settings.servicesImageUrl);
       }
     });
   }, []);
@@ -246,6 +250,7 @@ export default function Navbar() {
           services={exploreMenu.services}
           technologyCounts={exploreMenu.technologyCounts}
           loaded={exploreMenu.loaded}
+          imageUrl={servicesImageUrl}
           onMouseEnter={openMega}
           onMouseLeave={scheduleCloseMega}
           onNavigate={() => setMegaOpen(false)}

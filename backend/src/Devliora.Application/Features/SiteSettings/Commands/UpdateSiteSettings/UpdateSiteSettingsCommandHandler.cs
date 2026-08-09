@@ -27,6 +27,7 @@ public class UpdateSiteSettingsCommandHandler : IRequestHandler<UpdateSiteSettin
         settings.SiteName = request.SiteName;
         settings.PortfolioHeroImageUrl = request.PortfolioHeroImageUrl;
         settings.IndustriesImageUrl = request.IndustriesImageUrl;
+        settings.ServicesImageUrl = request.ServicesImageUrl;
         settings.UpdatedAt = DateTime.UtcNow;
 
         await _context.SaveChangesAsync(cancellationToken);
