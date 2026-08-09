@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { resolveImageUrl } from "@/lib/hero";
+import type { TechnologyDto } from "@/lib/technologies";
+import { getTechIcon } from "@/lib/techIcons";
+import TechBrandIcon from "@/components/TechBrandIcon";
 
 export type ServiceTabCard = {
   title: string;
@@ -69,9 +72,11 @@ function ScopeCard({ item }: { item: ServiceScopeItem }) {
 export default function ServiceTabs({
   tabs,
   heroImageUrl,
+  technologies = [],
 }: {
   tabs: ServiceTab[];
   heroImageUrl?: string;
+  technologies?: TechnologyDto[];
 }) {
   const [active, setActive] = useState(0);
   const current = tabs[active];
@@ -181,6 +186,31 @@ export default function ServiceTabs({
 
       {current.techIntro && (
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
+          {technologies.length > 0 && (
+            <div className="mb-16">
+              <h3 className="font-display text-2xl font-semibold text-paper">
+                Technologies we work with
+              </h3>
+              <div className="mt-6 grid grid-cols-2 gap-x-10 gap-y-5 sm:grid-cols-4">
+                {technologies.map((tech) => {
+                  const hasIcon = !!getTechIcon(tech.name);
+                  return (
+                    <div key={tech.id} className="flex items-center gap-2.5">
+                      {hasIcon ? (
+                        <TechBrandIcon name={tech.name} className="h-6 w-6 shrink-0" />
+                      ) : (
+                        <span className="h-2 w-2 shrink-0 rounded-full bg-ember" />
+                      )}
+                      <span className="font-mono text-sm font-semibold text-ember">
+                        {tech.displayName.trim()}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
           <div className="grid gap-10 md:grid-cols-2 md:items-start">
             <div>
               <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">

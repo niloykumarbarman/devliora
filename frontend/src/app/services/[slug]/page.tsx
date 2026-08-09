@@ -8,9 +8,18 @@ import { fetchServiceBySlug } from "@/lib/services";
 import { fetchHero, resolveImageUrl } from "@/lib/hero";
 import { fetchCaseStudies } from "@/lib/caseStudies";
 import { fetchBlogPosts, type BlogPost } from "@/lib/blogPosts";
+import { fetchTechnologies } from "@/lib/technologies";
 import { API_BASE_URL } from "@/lib/apiConfig";
 import { buildMetadata } from "@/lib/seo";
 import ServiceTabs, { type ServiceTab } from "@/components/sections/ServiceTabs";
+
+async function safeFetchTechnologies() {
+  try {
+    return await fetchTechnologies();
+  } catch {
+    return [];
+  }
+}
 
 async function safeFetchCaseStudies() {
   try {
@@ -436,12 +445,13 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
 
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
-  const [service, hero, caseStudies, blogPosts, testimonial] = await Promise.all([
+  const [service, hero, caseStudies, blogPosts, testimonial, technologies] = await Promise.all([
     fetchServiceBySlug(slug),
     fetchHero(),
     safeFetchCaseStudies(),
     safeFetchBlogPosts(),
     fetchFeaturedTestimonial(),
+    safeFetchTechnologies(),
   ]);
   const blogGridCells = buildBlogGridCells(blogPosts.slice(0, 4));
 
@@ -495,7 +505,7 @@ export default async function ServiceDetailPage({ params }: Props) {
         </section>
 
         {tabs ? (
-          <ServiceTabs tabs={tabs} heroImageUrl={hero?.backgroundImageUrl} />
+          <ServiceTabs tabs={tabs} heroImageUrl={hero?.backgroundImageUrl} technologies={technologies} />
         ) : (
           /* Fallback overview for services without a tab breakdown */
           <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
