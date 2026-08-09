@@ -52,7 +52,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center font-display text-lg font-semibold tracking-tight text-ink">
           {logoUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={resolveImageUrl(logoUrl)} alt="Devliora" className="h-8 w-auto" />
+            <img src={resolveImageUrl(logoUrl)} alt="Devliora" className="h-11 w-auto" />
           ) : (
             <>
               Devliora

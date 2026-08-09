@@ -76,7 +76,7 @@ export default async function Footer() {
               <img
                 src={resolveImageUrl(settings.logoUrl)}
                 alt="Devliora"
-                className="h-8 w-auto"
+                className="h-10 w-auto"
               />
             ) : (
               <p className="font-display text-lg font-semibold">
