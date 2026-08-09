@@ -34,6 +34,20 @@ const gridOverlayStyle = {
     "linear-gradient(to right, color-mix(in srgb, var(--color-paper) 4%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--color-paper) 4%, transparent) 1px, transparent 1px)",
 };
 
+// Secondary checkpoint shown under each roadmap step's dotted drop-line.
+// Only defined where it lines up 1:1 with a service's real includes[] —
+// everything else falls back to the single-tier line (see ServiceDetailPage).
+const ROADMAP_CHECKPOINTS: Record<string, string[]> = {
+  "software-engineering": [
+    "Requirements Review",
+    "UX/UI Testing",
+    "Integration Testing",
+    "Contract Validation",
+    "Regression Testing",
+    "Release Sign-off",
+  ],
+};
+
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
   const service = await fetchServiceBySlug(slug);
@@ -41,6 +55,11 @@ export default async function ServiceDetailPage({ params }: Props) {
   if (!service) {
     notFound();
   }
+
+  const rawCheckpoints = ROADMAP_CHECKPOINTS[service.slug];
+  const checkpoints =
+    rawCheckpoints && rawCheckpoints.length === service.includes.length ? rawCheckpoints : null;
+  const stepCount = service.includes.length;
 
   return (
     <>
@@ -114,31 +133,44 @@ export default async function ServiceDetailPage({ params }: Props) {
                 here is exactly how we get there.
               </p>
 
-              {/* Desktop: zigzag timeline */}
-              <div className="relative mt-24 hidden md:block">
-                <div className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-paper/15" />
+              {/* Desktop: delivery-framework timeline (single line, labels above, optional checkpoint drop-line below) */}
+              <div className="relative mt-28 hidden md:block">
+                {/* dotted stubs extending past the first/last node */}
+                <div
+                  className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
+                  style={{ left: 0, width: `${50 / stepCount}%` }}
+                />
+                <div
+                  className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
+                  style={{ right: 0, width: `${50 / stepCount}%` }}
+                />
+                {/* solid line spanning from the first node's center to the last */}
+                <div
+                  className="absolute top-1/2 h-px -translate-y-1/2 bg-paper/30"
+                  style={{ left: `${50 / stepCount}%`, right: `${50 / stepCount}%` }}
+                />
+
                 <div
                   className="relative grid"
-                  style={{ gridTemplateColumns: `repeat(${service.includes.length}, minmax(0, 1fr))` }}
+                  style={{ gridTemplateColumns: `repeat(${stepCount}, minmax(0, 1fr))` }}
                 >
-                  {service.includes.map((item, i) => {
-                    const isAbove = i % 2 === 0;
-                    const label = (
-                      <div className="mx-auto max-w-[11rem] text-center">
-                        <p className="font-mono text-xs font-semibold tabular-nums text-ember">
-                          {String(i + 1).padStart(2, "0")}
-                        </p>
-                        <p className="mt-1.5 text-sm leading-snug text-paper/70">{item}</p>
-                      </div>
-                    );
-                    return (
-                      <div key={item} className="relative flex flex-col items-center">
-                        {isAbove && <div className="mb-6">{label}</div>}
-                        <span className="h-3 w-3 shrink-0 rounded-full border-2 border-ember bg-ink ring-4 ring-ink" />
-                        {!isAbove && <div className="mt-6">{label}</div>}
-                      </div>
-                    );
-                  })}
+                  {service.includes.map((item, i) => (
+                    <div key={item} className="flex flex-col items-center">
+                      <p className="max-w-[9.5rem] text-center text-sm font-semibold leading-snug text-paper">
+                        {item}
+                      </p>
+                      <span className="mt-4 h-3.5 w-3.5 shrink-0 rounded-full bg-ember ring-4 ring-ink" />
+                      {checkpoints && (
+                        <>
+                          <span className="mt-3 h-8 w-px border-l border-dashed border-paper/30" />
+                          <span className="h-2.5 w-2.5 shrink-0 rounded-full border-2 border-ember bg-ink" />
+                          <p className="mt-3 max-w-[8rem] text-center text-xs text-paper/50">
+                            {checkpoints[i]}
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -146,11 +178,13 @@ export default async function ServiceDetailPage({ params }: Props) {
               <div className="relative mt-14 space-y-8 border-l border-paper/15 pl-8 md:hidden">
                 {service.includes.map((item, i) => (
                   <div key={item} className="relative">
-                    <span className="absolute -left-[2.05rem] top-1 h-3 w-3 rounded-full border-2 border-ember bg-ink" />
-                    <p className="font-mono text-xs font-semibold tabular-nums text-ember">
-                      {String(i + 1).padStart(2, "0")}
-                    </p>
-                    <p className="mt-1.5 text-sm leading-snug text-paper/70">{item}</p>
+                    <span className="absolute -left-[2.05rem] top-1 h-3 w-3 rounded-full bg-ember ring-4 ring-ink" />
+                    <p className="text-sm font-semibold leading-snug text-paper">{item}</p>
+                    {checkpoints && (
+                      <p className="mt-1.5 font-mono text-xs uppercase tracking-wide text-paper/50">
+                        {checkpoints[i]}
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
