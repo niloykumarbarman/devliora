@@ -151,7 +151,7 @@ export default function Navbar() {
           )}
         </Link>
 
-        <ul className="hidden items-center gap-6 md:flex">
+        <ul className="hidden items-center gap-6 lg:flex">
           {PRIMARY_LINKS.map((link) => {
             if (MEGA_LABELS.includes(link.label)) {
               return (
@@ -230,14 +230,14 @@ export default function Navbar() {
 
         <Link
           href="/contact"
-          className="hidden rounded-sm bg-ink px-5 py-2.5 font-mono text-sm text-paper shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-signal hover:shadow-lg hover:shadow-signal/25 md:inline-block"
+          className="hidden rounded-sm bg-ink px-5 py-2.5 font-mono text-sm text-paper shadow-sm transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-signal hover:shadow-lg hover:shadow-signal/25 lg:inline-block"
         >
           Start a project
         </Link>
 
         <button
           type="button"
-          className="md:hidden"
+          className="lg:hidden"
           onClick={() => setOpen((prev) => !prev)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
@@ -268,7 +268,7 @@ export default function Navbar() {
       </nav>
 
       {open && (
-        <div className="border-t border-wire/60 bg-paper md:hidden">
+        <div className="border-t border-wire/60 bg-paper lg:hidden">
           <ul className="flex flex-col gap-1 px-6 py-4">
             {NAV_LINKS.map((link) =>
               MEGA_LABELS.includes(link.label) ? (

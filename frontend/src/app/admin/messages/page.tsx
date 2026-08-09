@@ -107,7 +107,7 @@ export default function AdminContactMessagesPage() {
           <p className="text-graphite/60">No contact messages yet.</p>
         </div>
       ) : (
-        <div className="mt-8 overflow-hidden rounded-xl border border-graphite/10 bg-white shadow-sm">
+        <div className="mt-8 overflow-x-auto rounded-xl border border-graphite/10 bg-white shadow-sm">
           <table className="w-full min-w-[900px] text-left text-sm">
             <thead className="bg-graphite/5 font-mono text-xs uppercase tracking-wider text-graphite/50">
               <tr>

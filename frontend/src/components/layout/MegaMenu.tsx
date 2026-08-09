@@ -53,7 +53,7 @@ export default function MegaMenu({
     <div
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className="absolute inset-x-0 top-full z-40 hidden border-t border-wire/60 bg-paper shadow-lg md:block"
+      className="absolute inset-x-0 top-full z-40 hidden border-t border-wire/60 bg-paper shadow-lg lg:block"
     >
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[1fr_2fr]">
         <div className="relative hidden aspect-[4/5] overflow-hidden rounded-lg bg-wire/10 md:block">
