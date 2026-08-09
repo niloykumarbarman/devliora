@@ -108,6 +108,35 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      scope: {
+        intro: "We cover every stage of web application development with a balance of precision and creativity. Here's an overview of what our web development services include.",
+        items: [
+          {
+            title: "Conceptualization & Ideation",
+            body: "We work with you to shape and refine the idea behind your web application, scoping the project around real business goals and constraints before a line of code is written. Every concept is grounded in what your users and your team actually need.",
+          },
+          {
+            title: "Architecture & Design",
+            body: "We design a scalable, well-structured architecture that forms the backbone of your application, chosen for the access patterns and load it will actually see — not a one-size-fits-all default.",
+          },
+          {
+            title: "Development & Customization",
+            body: "Our engineers build the custom features your business actually needs, rather than bending a generic template to fit. Every layer is written for correctness and long-term maintainability.",
+          },
+          {
+            title: "Integration & Automation",
+            body: "We connect your application with the third-party services and internal systems it depends on, and automate the workflows that would otherwise be manual and error-prone.",
+          },
+          {
+            title: "Testing & Optimization",
+            body: "We test thoroughly for correctness and performance across the application, and optimize it so it stays fast and reliable as usage and complexity grow.",
+          },
+          {
+            title: "Launch & Beyond",
+            body: "We handle deployment carefully and provide ongoing support after launch, so the application keeps running reliably as your needs and traffic change over time.",
+          },
+        ],
+      },
     },
     {
       label: "Mobile",
@@ -163,6 +192,35 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      scope: {
+        intro: "We cover every stage of mobile application development with a balance of precision and creativity. Here's an overview of what our mobile development services include.",
+        items: [
+          {
+            title: "Conceptualization & Ideation",
+            body: "We work with you to shape and refine the idea behind your mobile app, scoping the project around real user needs and business goals before a line of code is written.",
+          },
+          {
+            title: "Architecture & Design",
+            body: "We design a scalable architecture for your mobile app, chosen for the platform, offline behavior, and data patterns it will actually need to handle.",
+          },
+          {
+            title: "Development & Customization",
+            body: "Our engineers build the custom mobile features your product actually needs — native or cross-platform, depending on what fits the requirements best.",
+          },
+          {
+            title: "Integration & Automation",
+            body: "We connect your mobile app with backend services, third-party APIs, and internal systems, automating the workflows that would otherwise be manual.",
+          },
+          {
+            title: "Testing & Optimization",
+            body: "We test across devices, OS versions, and network conditions, and optimize the app so it stays fast, stable, and responsive as it scales.",
+          },
+          {
+            title: "Launch & Beyond",
+            body: "We handle app store submission and release, then provide ongoing support after launch so the app keeps running reliably as your needs evolve.",
+          },
+        ],
+      },
     },
     {
       label: "Enterprise",
@@ -215,6 +273,35 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           {
             title: "Modernization",
             body: "We modernize legacy enterprise systems in place, reducing technical debt and total cost of ownership without disrupting the business.",
+          },
+        ],
+      },
+      scope: {
+        intro: "We cover every stage of enterprise system development with a balance of precision and creativity. Here's an overview of what our enterprise development services include.",
+        items: [
+          {
+            title: "Conceptualization & Ideation",
+            body: "We work with you to shape the scope of your enterprise system around real organizational needs, before committing to an architecture or a build.",
+          },
+          {
+            title: "Architecture & Design",
+            body: "We design architecture that holds up as the organization scales, chosen for the workflows, data volume, and integrations it actually needs to support.",
+          },
+          {
+            title: "Development & Customization",
+            body: "Our engineers build the custom workflows your organization actually needs, rather than forcing your processes into an off-the-shelf product.",
+          },
+          {
+            title: "Integration & Automation",
+            body: "We connect with the enterprise tools and data sources you already run, and automate the workflows that would otherwise depend on manual handoffs.",
+          },
+          {
+            title: "Testing & Optimization",
+            body: "We test thoroughly across the workflows real users depend on, and optimize the system so it stays reliable as data volume and usage grow.",
+          },
+          {
+            title: "Launch & Beyond",
+            body: "We handle rollout carefully and provide ongoing support afterward, so the system keeps running reliably as your organization's needs evolve.",
           },
         ],
       },
@@ -276,7 +363,7 @@ export default async function ServiceDetailPage({ params }: Props) {
         </section>
 
         {tabs ? (
-          <ServiceTabs tabs={tabs} />
+          <ServiceTabs tabs={tabs} heroImageUrl={hero?.backgroundImageUrl} />
         ) : (
           /* Fallback overview for services without a tab breakdown */
           <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">

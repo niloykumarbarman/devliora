@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { resolveImageUrl } from "@/lib/hero";
 
 export type ServiceTabCard = {
   title: string;
@@ -18,15 +19,53 @@ export type ServiceTabRoadmap = {
   steps: ServiceTabRoadmapStep[];
 };
 
+export type ServiceScopeItem = {
+  title: string;
+  body: string;
+};
+
+export type ServiceScope = {
+  intro: string;
+  items: ServiceScopeItem[];
+};
+
 export type ServiceTab = {
   label: string;
   heading: string;
   body: string;
   cards?: ServiceTabCard[];
   roadmap?: ServiceTabRoadmap;
+  scope?: ServiceScope;
 };
 
-export default function ServiceTabs({ tabs }: { tabs: ServiceTab[] }) {
+function ScopeCard({ item }: { item: ServiceScopeItem }) {
+  const [expanded, setExpanded] = useState(false);
+
+  return (
+    <div>
+      <h4 className="font-display text-lg font-semibold leading-snug text-paper">{item.title}</h4>
+      <div className="mt-3 border-t border-paper/15" />
+      <p className={`mt-4 text-sm leading-relaxed text-paper/70 ${expanded ? "" : "line-clamp-3"}`}>
+        {item.body}
+      </p>
+      <button
+        type="button"
+        onClick={() => setExpanded((prev) => !prev)}
+        className="mt-3 font-mono text-xs font-semibold uppercase tracking-wide text-ember transition-colors hover:text-paper"
+      >
+        {expanded ? "Show less" : "Show more"}
+      </button>
+    </div>
+  );
+}
+
+export default function ServiceTabs({
+  tabs,
+  heroImageUrl,
+}: {
+  tabs: ServiceTab[];
+  heroImageUrl?: string;
+}) {
   const [active, setActive] = useState(0);
   const current = tabs[active];
 
@@ -99,6 +138,35 @@ export default function ServiceTabs({ tabs }: { tabs: ServiceTab[] }) {
                   </ul>
                 )}
               </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {current.scope && (
+        <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
+          <div className="grid gap-10 md:grid-cols-2 md:items-center">
+            {heroImageUrl && (
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={resolveImageUrl(heroImageUrl)}
+                  alt=""
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            )}
+            <div>
+              <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+                Comprehensive Scope of Our {current.label} Application Development
+              </h3>
+              <p className="mt-5 text-lg leading-relaxed text-paper/70">{current.scope.intro}</p>
+            </div>
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-3">
+            {current.scope.items.map((item) => (
+              <ScopeCard key={item.title} item={item} />
             ))}
           </div>
         </div>
