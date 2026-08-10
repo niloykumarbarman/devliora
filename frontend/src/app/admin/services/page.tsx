@@ -29,6 +29,10 @@ const emptyForm: ServiceFormPayload = {
   toolsDescription: "",
   toolsTagline: "",
   toolNames: [],
+  processSteps: [],
+  processGroupStart: 0,
+  processGroupCount: 0,
+  processGroupLabel: "",
 };
 
 const fields: FieldConfig<ServiceFormPayload>[] = [
@@ -103,6 +107,32 @@ const fields: FieldConfig<ServiceFormPayload>[] = [
     colSpan: 2,
     placeholder: "One per line — figma, sketch, framer, marvelapp, miro, webflow, rive, abstract, or any other tool name (shows as a text badge if no icon exists)",
   },
+  {
+    key: "processSteps",
+    label: "Process Steps (in order)",
+    type: "stringlist",
+    colSpan: 2,
+    placeholder: "One per line — e.g. UX research, Sketching / brainstorming, Wireframing, Prototyping, Usability testing, Handover & support",
+  },
+  {
+    key: "processGroupStart",
+    label: "Iteration Group: Start Step (0-indexed)",
+    type: "number",
+    placeholder: "e.g. 1 to start at the 2nd step",
+  },
+  {
+    key: "processGroupCount",
+    label: "Iteration Group: Step Count",
+    type: "number",
+    placeholder: "e.g. 4 — set to 0 to hide the dashed box",
+  },
+  {
+    key: "processGroupLabel",
+    label: "Iteration Group: Caption",
+    type: "text",
+    colSpan: 2,
+    placeholder: "e.g. Design iteration",
+  },
 ];
 
 const columns: ColumnConfig<AdminService>[] = [
@@ -156,6 +186,10 @@ export default function AdminServicesPage() {
         toolsDescription: item.toolsDescription,
         toolsTagline: item.toolsTagline,
         toolNames: item.toolNames,
+        processSteps: item.processSteps,
+        processGroupStart: item.processGroupStart,
+        processGroupCount: item.processGroupCount,
+        processGroupLabel: item.processGroupLabel,
       })}
     />
   );

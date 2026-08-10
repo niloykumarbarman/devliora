@@ -23,6 +23,10 @@ export interface AdminService {
   toolsDescription: string;
   toolsTagline: string;
   toolNames: string[];
+  processSteps: string[];
+  processGroupStart: number;
+  processGroupCount: number;
+  processGroupLabel: string;
 }
 
 export interface ServiceFormPayload {
@@ -40,6 +44,10 @@ export interface ServiceFormPayload {
   toolsDescription: string;
   toolsTagline: string;
   toolNames: string[];
+  processSteps: string[];
+  processGroupStart: number;
+  processGroupCount: number;
+  processGroupLabel: string;
 }
 
 export const SERVICES_ADMIN_API_URL = `${API_BASE_URL}/services`;

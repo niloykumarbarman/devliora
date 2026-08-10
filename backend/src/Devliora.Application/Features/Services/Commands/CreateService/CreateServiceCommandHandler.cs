@@ -32,7 +32,11 @@ public class CreateServiceCommandHandler : IRequestHandler<CreateServiceCommand,
             ToolsHeading = request.ToolsHeading,
             ToolsDescription = request.ToolsDescription,
             ToolsTagline = request.ToolsTagline,
-            ToolNames = request.ToolNames
+            ToolNames = request.ToolNames,
+            ProcessSteps = request.ProcessSteps,
+            ProcessGroupStart = request.ProcessGroupStart,
+            ProcessGroupCount = request.ProcessGroupCount,
+            ProcessGroupLabel = request.ProcessGroupLabel
         };
 
         foreach (var highlight in request.Highlights)

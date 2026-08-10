@@ -18,4 +18,8 @@ public class ServiceDto
     public string ToolsDescription { get; set; } = string.Empty;
     public string ToolsTagline { get; set; } = string.Empty;
     public List<string> ToolNames { get; set; } = new();
+    public List<string> ProcessSteps { get; set; } = new();
+    public int ProcessGroupStart { get; set; }
+    public int ProcessGroupCount { get; set; }
+    public string ProcessGroupLabel { get; set; } = string.Empty;
 }

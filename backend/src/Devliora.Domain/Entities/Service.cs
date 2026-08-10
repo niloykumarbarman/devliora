@@ -23,4 +23,13 @@ public class Service : BaseEntity
     public string ToolsDescription { get; set; } = string.Empty;
     public string ToolsTagline { get; set; } = string.Empty;
     public List<string> ToolNames { get; set; } = new();
+
+    // "Process" horizontal timeline: ordered step labels, with an optional
+    // contiguous sub-range (start index + count) drawn as a dashed
+    // "iteration" box — e.g. steps 1-4 of 6 grouped under "Design iteration".
+    // ProcessGroupCount = 0 means no group box is drawn.
+    public List<string> ProcessSteps { get; set; } = new();
+    public int ProcessGroupStart { get; set; }
+    public int ProcessGroupCount { get; set; }
+    public string ProcessGroupLabel { get; set; } = string.Empty;
 }

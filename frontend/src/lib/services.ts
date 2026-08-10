@@ -21,6 +21,10 @@ export interface ServiceDto {
   toolsDescription: string;
   toolsTagline: string;
   toolNames: string[];
+  processSteps: string[];
+  processGroupStart: number;
+  processGroupCount: number;
+  processGroupLabel: string;
 }
 
 export async function fetchServices(): Promise<ServiceDto[]> {

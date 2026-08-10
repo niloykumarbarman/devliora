@@ -110,6 +110,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
+// Interpolates between the site's two accent colors for the Process
+// timeline's dots/line, so a longer step sequence still reads as one
+// smooth ember -> signal gradient rather than two flat halves.
+function lerpAccentColor(t: number): string {
+  const from = [255, 107, 53]; // ember
+  const to = [61, 90, 254]; // signal
+  const [r, g, b] = from.map((c, i) => Math.round(c + (to[i] - c) * t));
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
 const gridOverlayStyle = {
   backgroundImage:
     "linear-gradient(to right, color-mix(in srgb, var(--color-paper) 4%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--color-paper) 4%, transparent) 1px, transparent 1px)",
@@ -596,6 +606,81 @@ export default async function ServiceDetailPage({ params }: Props) {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* "Process" horizontal timeline, admin-managed per service */}
+        {service.processSteps.length > 0 && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <h2 className="font-display text-3xl font-bold text-paper sm:text-4xl">Process</h2>
+
+              <div className="mt-20 overflow-x-auto pb-2">
+                <div
+                  className="relative grid min-w-[640px]"
+                  style={{
+                    gridTemplateColumns: `repeat(${service.processSteps.length}, minmax(100px, 1fr))`,
+                    gridTemplateRows: "1.5rem auto 1.5rem 2.5rem",
+                  }}
+                >
+                  {service.processGroupCount > 0 && (
+                    <div
+                      className="relative rounded-lg border border-dashed border-paper/25"
+                      style={{
+                        gridColumn: `${service.processGroupStart + 1} / ${
+                          service.processGroupStart + service.processGroupCount + 1
+                        }`,
+                        gridRow: "1 / 5",
+                      }}
+                    >
+                      {service.processGroupLabel && (
+                        <span className="absolute inset-x-0 bottom-2 text-center text-xs text-paper/50">
+                          {service.processGroupLabel}
+                        </span>
+                      )}
+                    </div>
+                  )}
+
+                  <div className="self-center" style={{ gridColumn: "1 / -1", gridRow: "3" }}>
+                    <div
+                      className="h-px"
+                      style={{
+                        marginInline: `calc(50% / ${service.processSteps.length})`,
+                        backgroundImage: "linear-gradient(to right, #FF6B35, #3D5AFE)",
+                      }}
+                    />
+                  </div>
+
+                  {service.processSteps.map((step, i) => (
+                    <div
+                      key={`label-${i}`}
+                      className="flex items-end justify-center px-2 pb-4 text-center text-sm text-paper/80"
+                      style={{ gridColumn: `${i + 1}`, gridRow: "2" }}
+                    >
+                      {step}
+                    </div>
+                  ))}
+
+                  {service.processSteps.map((step, i) => (
+                    <div
+                      key={`dot-${i}`}
+                      className="flex justify-center"
+                      style={{ gridColumn: `${i + 1}`, gridRow: "3" }}
+                    >
+                      <span
+                        className="h-3 w-3 rounded-full ring-4 ring-ink"
+                        style={{
+                          backgroundColor: lerpAccentColor(
+                            service.processSteps.length > 1 ? i / (service.processSteps.length - 1) : 0
+                          ),
+                        }}
+                        title={step}
+                      />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </section>

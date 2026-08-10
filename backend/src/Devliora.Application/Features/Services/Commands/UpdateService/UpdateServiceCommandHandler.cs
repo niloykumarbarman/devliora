@@ -37,6 +37,10 @@ public class UpdateServiceCommandHandler : IRequestHandler<UpdateServiceCommand,
         service.ToolsDescription = request.ToolsDescription;
         service.ToolsTagline = request.ToolsTagline;
         service.ToolNames = request.ToolNames;
+        service.ProcessSteps = request.ProcessSteps;
+        service.ProcessGroupStart = request.ProcessGroupStart;
+        service.ProcessGroupCount = request.ProcessGroupCount;
+        service.ProcessGroupLabel = request.ProcessGroupLabel;
         service.UpdatedAt = DateTime.UtcNow;
 
         // Explicit DbSet remove/add (instead of navigation-collection Clear()+Add())

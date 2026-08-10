@@ -22,5 +22,14 @@ public class CreateServiceCommandValidator : AbstractValidator<CreateServiceComm
         RuleFor(x => x.ToolNames).Must(list => list.Count <= 20)
             .WithMessage("ToolNames list cannot have more than 20 items.");
         RuleForEach(x => x.ToolNames).MaximumLength(50);
+        RuleFor(x => x.ProcessSteps).Must(list => list.Count <= 12)
+            .WithMessage("ProcessSteps list cannot have more than 12 items.");
+        RuleForEach(x => x.ProcessSteps).MaximumLength(80);
+        RuleFor(x => x.ProcessGroupStart).GreaterThanOrEqualTo(0);
+        RuleFor(x => x.ProcessGroupCount).GreaterThanOrEqualTo(0);
+        RuleFor(x => x.ProcessGroupLabel).MaximumLength(80);
+        RuleFor(x => x).Must(x => x.ProcessGroupStart + x.ProcessGroupCount <= x.ProcessSteps.Count)
+            .WithMessage("ProcessGroupStart + ProcessGroupCount must not exceed the number of steps.")
+            .WithName("ProcessGroupCount");
     }
 }

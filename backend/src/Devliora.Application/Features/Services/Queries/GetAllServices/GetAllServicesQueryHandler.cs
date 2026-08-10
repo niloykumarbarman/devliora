@@ -47,7 +47,11 @@ public class GetAllServicesQueryHandler : IRequestHandler<GetAllServicesQuery, L
                 ToolsHeading = s.ToolsHeading,
                 ToolsDescription = s.ToolsDescription,
                 ToolsTagline = s.ToolsTagline,
-                ToolNames = s.ToolNames
+                ToolNames = s.ToolNames,
+                ProcessSteps = s.ProcessSteps,
+                ProcessGroupStart = s.ProcessGroupStart,
+                ProcessGroupCount = s.ProcessGroupCount,
+                ProcessGroupLabel = s.ProcessGroupLabel
             })
             .ToListAsync(cancellationToken);
 
