@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Layers, Star } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpDown, Layers, Star } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { fetchServiceBySlug } from "@/lib/services";
@@ -784,6 +784,98 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
             </div>
           </section>
+        )}
+
+        {/* Static "book a call" banner + collaboration diagram — DaaS-specific,
+            not admin-managed, same as the Apple quote block above. */}
+        {service.slug === "digital-design" && (
+          <>
+            <section className="border-t border-paper/10 bg-signal">
+              <div className="mx-auto flex max-w-6xl flex-col sm:flex-row">
+                <div className="flex-1 px-6 py-8 sm:px-10">
+                  <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                    Book a call with our experts and start turning your ideas into reality.
+                  </p>
+                </div>
+                <Link
+                  href="/book-consultation"
+                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+                >
+                  Start Now
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+              </div>
+            </section>
+
+            <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+              <div className="mx-auto max-w-6xl px-6">
+                <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
+                  <div>
+                    <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                      Why settle for less when you can design with the best?
+                    </h2>
+                    <p className="mt-6 inline-block border-b border-paper/25 pb-3 italic text-paper/60">
+                      Direct collaboration, bespoke designs, seamless delivery.
+                    </p>
+                    <p className="mt-6 text-base leading-relaxed text-paper/70">
+                      At Devliora, our in-house team of design professionals brings unmatched
+                      creativity and precision to every project, delivering tailored solutions that
+                      perfectly align with your vision. Skip the agency middleman and work directly
+                      with our experts to achieve design excellence without compromise.
+                    </p>
+                  </div>
+
+                  <div className="flex justify-center lg:justify-end">
+                    <div className="w-full max-w-sm">
+                      <div className="flex items-center gap-3">
+                        <div className="rounded-md bg-gradient-to-r from-[#8B5CF6] to-signal px-4 py-2.5 text-xs font-medium text-paper">
+                          Customer&apos;s brand team
+                        </div>
+                      </div>
+                      <div className="ml-2 flex items-center gap-2 py-2 text-paper/30">
+                        <ArrowUpDown className="h-4 w-4" />
+                      </div>
+                      <div className="w-fit rounded-md border border-signal px-4 py-2.5 text-xs font-medium text-paper">
+                        Digital agency
+                      </div>
+                      <div className="ml-2 flex items-center gap-2 py-2 text-paper/30">
+                        <ArrowUpDown className="h-4 w-4" />
+                      </div>
+
+                      <div className="rounded-lg border border-dashed border-paper/25 p-5">
+                        <p className="text-xs font-medium uppercase tracking-wide text-paper/50">
+                          Devliora team
+                        </p>
+                        <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
+                          {["Design", "PM", "BA", "QA"].map((role) => (
+                            <span
+                              key={role}
+                              className="rounded border border-paper/25 px-3 py-2 text-center text-xs font-medium text-paper/80"
+                            >
+                              {role}
+                            </span>
+                          ))}
+                        </div>
+                        <p className="mt-4 text-xs font-medium uppercase tracking-wide text-paper/50">
+                          Development
+                        </p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {["ASP.NET Core", "React", "Next.js"].map((tech) => (
+                            <span
+                              key={tech}
+                              className="rounded border border-signal/60 px-3 py-1.5 text-xs font-medium text-paper/80"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </>
         )}
 
         {/* Case studies, pulled live from the site's real case-studies data */}
