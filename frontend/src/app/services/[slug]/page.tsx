@@ -1048,7 +1048,10 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section>
         )}
 
-        {/* Why choose us + a real, admin-entered client testimonial */}
+        {/* Why choose us + a real, admin-entered client testimonial.
+            Hidden on Digital Design at request, same as Case Studies/Blog
+            Highlights above — still shown on every other service page. */}
+        {service.slug !== "digital-design" && (
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto grid max-w-6xl gap-16 px-6 md:grid-cols-2">
             <div>
@@ -1125,6 +1128,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             </ul>
           </div>
         </section>
+        )}
 
         {/* Engagement models */}
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
