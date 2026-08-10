@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ArrowUpDown, Layers, Star } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { fetchServiceBySlug, serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
+import { fetchServiceBySlug } from "@/lib/services";
 import { fetchHero, resolveImageUrl } from "@/lib/hero";
 import { fetchCaseStudies } from "@/lib/caseStudies";
 import { fetchBlogPosts, type BlogPost } from "@/lib/blogPosts";
@@ -538,117 +538,43 @@ export default async function ServiceDetailPage({ params }: Props) {
     <>
       <Navbar />
       <main className="bg-ink text-paper">
-        {service.slug === "digital-design" ? (
-          /* Split hero: breadcrumb + heading/tagline/description + static
-             service list on the left, this service's own hero image (set
-             per-service in the admin panel) on the right — requested
-             specifically for this page, distinct from every other service's
-             full-bleed title hero below. */
-          <section className="bg-grain relative overflow-hidden py-16 md:py-20">
-            <div
-              className="pointer-events-none absolute -top-40 left-1/4 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.12] blur-[120px]"
-              style={{ backgroundColor: "var(--color-signal)" }}
+        {/* Hero: full-bleed background image with the service title.
+            Prefers this service's own hero image (set per-service in the
+            admin panel); falls back to the site's shared hero background
+            for services that haven't had one uploaded yet. */}
+        <section className="relative h-[380px] overflow-hidden sm:h-[440px] md:h-[480px]">
+          {(service.heroImageUrl || hero?.backgroundImageUrl) && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="pointer-events-none absolute inset-0 bg-[size:56px_56px] opacity-60" style={gridOverlayStyle} />
+          )}
+          <div className="absolute inset-0 bg-ink/70" />
+          <div className="relative flex h-full items-center justify-center px-6">
+            <h1 className="text-balance text-center font-display text-4xl font-extrabold leading-tight text-paper sm:text-6xl md:text-7xl">
+              {service.title}
+            </h1>
+          </div>
+        </section>
 
-            <div className="relative mx-auto max-w-6xl px-6">
-              <nav className="flex items-center gap-2 font-mono text-sm text-paper/50">
-                <Link href="/" className="transition-colors hover:text-paper">
-                  Home
-                </Link>
-                <span>/</span>
-                <Link href="/services" className="transition-colors hover:text-paper">
-                  Services
-                </Link>
-                <span>/</span>
-                <span className="text-ember">{service.title}</span>
-              </nav>
-
-              <div className="mt-10 grid gap-12 md:grid-cols-2 md:items-center">
-                <div>
-                  <h1 className="text-balance font-display text-4xl font-semibold leading-tight md:text-5xl">
-                    {service.title}
-                  </h1>
-                  <p className="mt-5 inline-block max-w-md border-b border-ember/40 pb-3 italic text-paper/60">
-                    {service.shortDescription}
-                  </p>
-                  <p className="mt-5 max-w-md text-paper/70">{service.fullDescription}</p>
-
-                  <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
-                    {STATIC_SERVICE_LINKS.map((column, colIndex) => (
-                      <div key={colIndex} className="flex flex-col gap-2">
-                        {column.map((link) => (
-                          <Link
-                            key={link.slug}
-                            href={serviceHref(link.slug)}
-                            className={
-                              link.slug === service.slug
-                                ? "font-medium text-paper"
-                                : "font-medium text-ember transition-colors hover:text-paper"
-                            }
-                          >
-                            {link.title}
-                          </Link>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite md:aspect-square">
-                  {(service.heroImageUrl || hero?.backgroundImageUrl) && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
-                      alt=""
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-          </section>
-        ) : (
-          <>
-            {/* Hero: full-bleed background image with the service title.
-                Prefers this service's own hero image (set per-service in the
-                admin panel); falls back to the site's shared hero background
-                for services that haven't had one uploaded yet. */}
-            <section className="relative h-[380px] overflow-hidden sm:h-[440px] md:h-[480px]">
-              {(service.heroImageUrl || hero?.backgroundImageUrl) && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
-                  alt=""
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-              )}
-              <div className="absolute inset-0 bg-ink/70" />
-              <div className="relative flex h-full items-center justify-center px-6">
-                <h1 className="text-balance text-center font-display text-4xl font-extrabold leading-tight text-paper sm:text-6xl md:text-7xl">
-                  {service.title}
-                </h1>
-              </div>
-            </section>
-
-            {/* Breadcrumb bar */}
-            <section className="border-t border-paper/10 py-6">
-              <div className="mx-auto max-w-5xl px-6">
-                <nav className="flex flex-wrap items-center gap-2 font-mono text-sm text-paper/50">
-                  <Link href="/" className="transition-colors hover:text-paper">
-                    Home
-                  </Link>
-                  <span>/</span>
-                  <Link href="/services" className="transition-colors hover:text-paper">
-                    Services
-                  </Link>
-                  <span>/</span>
-                  <span className="text-ember">{service.title}</span>
-                </nav>
-              </div>
-            </section>
-          </>
-        )}
+        {/* Breadcrumb bar */}
+        <section className="border-t border-paper/10 py-6">
+          <div className="mx-auto max-w-5xl px-6">
+            <nav className="flex flex-wrap items-center gap-2 font-mono text-sm text-paper/50">
+              <Link href="/" className="transition-colors hover:text-paper">
+                Home
+              </Link>
+              <span>/</span>
+              <Link href="/services" className="transition-colors hover:text-paper">
+                Services
+              </Link>
+              <span>/</span>
+              <span className="text-ember">{service.title}</span>
+            </nav>
+          </div>
+        </section>
 
         {tabs ? (
           <ServiceTabs tabs={tabs} heroImageUrl={hero?.backgroundImageUrl} technologies={technologies} />
