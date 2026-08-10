@@ -791,15 +791,15 @@ export default async function ServiceDetailPage({ params }: Props) {
         {service.slug === "digital-design" && (
           <>
             <section className="border-t border-paper/10 bg-signal">
-              <div className="mx-auto flex max-w-6xl flex-col sm:flex-row">
-                <div className="flex-1 px-6 py-8 sm:px-10">
+              <div className="flex flex-col sm:flex-row">
+                <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                   <p className="max-w-lg text-lg font-medium leading-snug text-paper">
                     Book a call with our experts and start turning your ideas into reality.
                   </p>
                 </div>
                 <Link
                   href="/book-consultation"
-                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
                 >
                   Start Now
                   <ArrowRight className="h-5 w-5" />
