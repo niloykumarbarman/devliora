@@ -159,12 +159,14 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.Migrate();
     await Devliora.Infrastructure.Data.DbSeeder.SeedAsync(dbContext);
 
-    // Data-fix migrations bypass the app layer, so anything Redis had
-    // cached from before this deploy would otherwise keep serving stale
-    // values for up to its TTL. Drop the one known to have just changed
-    // (see FixHeroSecondaryCtaUrl) so the fix is live immediately.
+    // Data-fix/data-seed migrations bypass the app layer, so anything Redis
+    // had cached from before this deploy would otherwise keep serving stale
+    // values for up to its TTL. Drop the keys known to have just changed
+    // (see FixHeroSecondaryCtaUrl, SeedAdditionalIndustries) so the fix is
+    // live immediately instead of after the cache TTL expires.
     var cache = scope.ServiceProvider.GetRequiredService<ICacheService>();
     await cache.RemoveAsync("hero:content");
+    await cache.RemoveAsync("industries:all");
 }
 
 // Configure the HTTP request pipeline.
