@@ -1,3 +1,4 @@
+using Devliora.Application.Features.Services.Common;
 using MediatR;
 
 namespace Devliora.Application.Features.Services.Commands.UpdateService;
@@ -14,4 +15,5 @@ public class UpdateServiceCommand : IRequest<Unit>
     public string HeroImageUrl { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
     public bool IsActive { get; set; }
+    public List<ServiceHighlightItem> Highlights { get; set; } = new();
 }

@@ -1,5 +1,11 @@
 import { API_BASE_URL } from "./apiConfig";
 
+export interface ServiceHighlight {
+  label: string;
+  description: string;
+  displayOrder: number;
+}
+
 export interface ServiceDto {
   id: string;
   title: string;
@@ -10,6 +16,7 @@ export interface ServiceDto {
   iconUrl: string;
   heroImageUrl: string;
   displayOrder: number;
+  highlights: ServiceHighlight[];
 }
 
 export async function fetchServices(): Promise<ServiceDto[]> {

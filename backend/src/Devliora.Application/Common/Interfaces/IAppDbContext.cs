@@ -6,6 +6,7 @@ namespace Devliora.Application.Common.Interfaces;
 public interface IAppDbContext
 {
     DbSet<Service> Services { get; }
+    DbSet<ServiceHighlight> ServiceHighlights { get; }
     DbSet<Portfolio> Portfolios { get; }
     DbSet<PortfolioImage> PortfolioImages { get; }
     DbSet<PortfolioMetric> PortfolioMetrics { get; }

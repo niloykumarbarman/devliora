@@ -1,3 +1,5 @@
+using Devliora.Application.Features.Services.Common;
+
 namespace Devliora.Application.Features.Services.Queries.GetAllServicesAdmin;
 
 public class AdminServiceDto
@@ -12,4 +14,5 @@ public class AdminServiceDto
     public string HeroImageUrl { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
     public bool IsActive { get; set; }
+    public List<ServiceHighlightItem> Highlights { get; set; } = new();
 }

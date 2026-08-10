@@ -13,4 +13,5 @@ public class Service : BaseEntity
     public string HeroImageUrl { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
     public bool IsActive { get; set; } = true;
+    public ICollection<ServiceHighlight> Highlights { get; set; } = new List<ServiceHighlight>();
 }

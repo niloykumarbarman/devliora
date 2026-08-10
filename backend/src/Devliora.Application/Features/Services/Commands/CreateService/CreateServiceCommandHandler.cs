@@ -31,6 +31,16 @@ public class CreateServiceCommandHandler : IRequestHandler<CreateServiceCommand,
             DisplayOrder = request.DisplayOrder
         };
 
+        foreach (var highlight in request.Highlights)
+        {
+            service.Highlights.Add(new ServiceHighlight
+            {
+                Label = highlight.Label,
+                Description = highlight.Description,
+                DisplayOrder = highlight.DisplayOrder
+            });
+        }
+
         _context.Services.Add(service);
         await _context.SaveChangesAsync(cancellationToken);
         await _cache.RemoveAsync(CacheKey, cancellationToken);

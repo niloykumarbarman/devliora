@@ -24,6 +24,7 @@ const emptyForm: ServiceFormPayload = {
   heroImageUrl: "",
   displayOrder: 0,
   isActive: true,
+  highlights: [],
 };
 
 const fields: FieldConfig<ServiceFormPayload>[] = [
@@ -57,6 +58,18 @@ const fields: FieldConfig<ServiceFormPayload>[] = [
     label: "Includes (bullet points)",
     type: "stringlist",
     colSpan: 2,
+  },
+  {
+    key: "highlights",
+    label: "Highlights (at-a-glance stats)",
+    type: "list",
+    colSpan: 2,
+    listItemLabel: "Highlight",
+    listItemFields: [
+      { key: "label", label: "Label", type: "text", placeholder: "e.g. 21+ Years of Design Expertise" },
+      { key: "description", label: "Description", type: "text", placeholder: "e.g. Decades of experience crafting impactful designs." },
+      { key: "displayOrder", label: "Order", type: "number" },
+    ],
   },
 ];
 
@@ -106,6 +119,7 @@ export default function AdminServicesPage() {
         heroImageUrl: item.heroImageUrl,
         displayOrder: item.displayOrder,
         isActive: item.isActive,
+        highlights: item.highlights,
       })}
     />
   );

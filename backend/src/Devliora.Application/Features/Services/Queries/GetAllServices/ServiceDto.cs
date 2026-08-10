@@ -1,3 +1,5 @@
+using Devliora.Application.Features.Services.Common;
+
 namespace Devliora.Application.Features.Services.Queries.GetAllServices;
 
 public class ServiceDto
@@ -11,4 +13,5 @@ public class ServiceDto
     public string IconUrl { get; set; } = string.Empty;
     public string HeroImageUrl { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
+    public List<ServiceHighlightItem> Highlights { get; set; } = new();
 }

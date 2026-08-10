@@ -1,4 +1,5 @@
 using Devliora.Application.Common.Interfaces;
+using Devliora.Application.Features.Services.Common;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,7 +39,11 @@ public class GetAllServicesQueryHandler : IRequestHandler<GetAllServicesQuery, L
                 Includes = s.Includes,
                 IconUrl = s.IconUrl,
                 HeroImageUrl = s.HeroImageUrl,
-                DisplayOrder = s.DisplayOrder
+                DisplayOrder = s.DisplayOrder,
+                Highlights = s.Highlights
+                    .OrderBy(h => h.DisplayOrder)
+                    .Select(h => new ServiceHighlightItem { Label = h.Label, Description = h.Description, DisplayOrder = h.DisplayOrder })
+                    .ToList()
             })
             .ToListAsync(cancellationToken);
 

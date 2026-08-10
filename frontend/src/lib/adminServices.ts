@@ -1,6 +1,12 @@
 import { adminFetch } from "@/lib/adminAuth";
 import { API_BASE_URL } from "./apiConfig";
 
+export interface AdminServiceHighlight {
+  label: string;
+  description: string;
+  displayOrder: number;
+}
+
 export interface AdminService {
   id: string;
   title: string;
@@ -12,6 +18,7 @@ export interface AdminService {
   heroImageUrl: string;
   displayOrder: number;
   isActive: boolean;
+  highlights: AdminServiceHighlight[];
 }
 
 export interface ServiceFormPayload {
@@ -24,6 +31,7 @@ export interface ServiceFormPayload {
   heroImageUrl: string;
   displayOrder: number;
   isActive: boolean;
+  highlights: AdminServiceHighlight[];
 }
 
 export const SERVICES_ADMIN_API_URL = `${API_BASE_URL}/services`;

@@ -534,6 +534,27 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section>
         )}
 
+        {/* At-a-glance highlights, admin-managed per service */}
+        {service.highlights.length > 0 && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-4xl px-6">
+              <h2 className="font-display text-2xl font-semibold text-paper sm:text-3xl">
+                {service.title} at a glance
+              </h2>
+              <div className="mt-10 grid gap-x-12 gap-y-6 sm:grid-cols-2">
+                {[...service.highlights]
+                  .sort((a, b) => a.displayOrder - b.displayOrder)
+                  .map((highlight, i) => (
+                    <p key={`${highlight.label}-${i}`} className="text-base leading-relaxed text-paper/80">
+                      <span className="font-semibold text-ember">{highlight.label}: </span>
+                      {highlight.description}
+                    </p>
+                  ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* Case studies, pulled live from the site's real case-studies data */}
         {caseStudies.length > 0 && (
           <section className="relative overflow-hidden border-t border-paper/10 bg-graphite py-24 md:py-32">
