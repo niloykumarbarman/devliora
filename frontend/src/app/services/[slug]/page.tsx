@@ -1130,7 +1130,9 @@ export default async function ServiceDetailPage({ params }: Props) {
         </section>
         )}
 
-        {/* Engagement models */}
+        {/* Engagement models. Hidden on Digital Design at request, same as
+            the sections above — still shown on every other service page. */}
+        {service.slug !== "digital-design" && (
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto max-w-6xl px-6">
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">How we engage</p>
@@ -1165,6 +1167,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             </div>
           </div>
         </section>
+        )}
 
         {/* Software essentials */}
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
