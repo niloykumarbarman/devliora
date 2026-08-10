@@ -826,19 +826,43 @@ export default async function ServiceDetailPage({ params }: Props) {
                   </div>
 
                   <div className="flex justify-center lg:justify-end">
-                    <div className="w-full max-w-sm">
-                      <div className="flex items-center gap-3">
-                        <div className="rounded-md bg-gradient-to-r from-[#8B5CF6] to-signal px-4 py-2.5 text-xs font-medium text-paper">
-                          Customer&apos;s brand team
-                        </div>
+                    <div className="relative w-full max-w-sm pl-9">
+                      {/* Bypass connector: Devliora team can be reached
+                          directly, without routing through "Digital agency" —
+                          the visual argument for "skip the agency middleman". */}
+                      <svg
+                        className="pointer-events-none absolute inset-y-2 left-0 h-[calc(100%-1rem)] w-7 text-paper/30"
+                        viewBox="0 0 28 100"
+                        preserveAspectRatio="none"
+                        fill="none"
+                      >
+                        <path
+                          d="M20 97 V14 H6"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          vectorEffect="non-scaling-stroke"
+                        />
+                        <path
+                          d="M11 8 L5 14 L11 20"
+                          stroke="currentColor"
+                          strokeWidth="1.5"
+                          fill="none"
+                          vectorEffect="non-scaling-stroke"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+
+                      <div className="rounded-md bg-gradient-to-r from-[#8B5CF6] to-signal px-4 py-2.5 text-xs font-medium text-paper">
+                        Customer&apos;s brand team
                       </div>
-                      <div className="ml-2 flex items-center gap-2 py-2 text-paper/30">
+                      <div className="flex items-center gap-2 py-2 text-paper/30">
                         <ArrowUpDown className="h-4 w-4" />
                       </div>
                       <div className="w-fit rounded-md border border-signal px-4 py-2.5 text-xs font-medium text-paper">
                         Digital agency
                       </div>
-                      <div className="ml-2 flex items-center gap-2 py-2 text-paper/30">
+                      <div className="flex items-center gap-2 py-2 text-paper/30">
                         <ArrowUpDown className="h-4 w-4" />
                       </div>
 
