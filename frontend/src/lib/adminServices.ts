@@ -19,6 +19,10 @@ export interface AdminService {
   displayOrder: number;
   isActive: boolean;
   highlights: AdminServiceHighlight[];
+  toolsHeading: string;
+  toolsDescription: string;
+  toolsTagline: string;
+  toolNames: string[];
 }
 
 export interface ServiceFormPayload {
@@ -32,6 +36,10 @@ export interface ServiceFormPayload {
   displayOrder: number;
   isActive: boolean;
   highlights: AdminServiceHighlight[];
+  toolsHeading: string;
+  toolsDescription: string;
+  toolsTagline: string;
+  toolNames: string[];
 }
 
 export const SERVICES_ADMIN_API_URL = `${API_BASE_URL}/services`;

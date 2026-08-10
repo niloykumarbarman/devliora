@@ -43,7 +43,11 @@ public class GetAllServicesQueryHandler : IRequestHandler<GetAllServicesQuery, L
                 Highlights = s.Highlights
                     .OrderBy(h => h.DisplayOrder)
                     .Select(h => new ServiceHighlightItem { Label = h.Label, Description = h.Description, DisplayOrder = h.DisplayOrder })
-                    .ToList()
+                    .ToList(),
+                ToolsHeading = s.ToolsHeading,
+                ToolsDescription = s.ToolsDescription,
+                ToolsTagline = s.ToolsTagline,
+                ToolNames = s.ToolNames
             })
             .ToListAsync(cancellationToken);
 

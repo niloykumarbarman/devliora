@@ -25,6 +25,10 @@ const emptyForm: ServiceFormPayload = {
   displayOrder: 0,
   isActive: true,
   highlights: [],
+  toolsHeading: "",
+  toolsDescription: "",
+  toolsTagline: "",
+  toolNames: [],
 };
 
 const fields: FieldConfig<ServiceFormPayload>[] = [
@@ -70,6 +74,34 @@ const fields: FieldConfig<ServiceFormPayload>[] = [
       { key: "description", label: "Description", type: "text", placeholder: "e.g. Decades of experience crafting impactful designs." },
       { key: "displayOrder", label: "Order", type: "number" },
     ],
+  },
+  {
+    key: "toolsHeading",
+    label: "Tools Section Heading",
+    type: "text",
+    colSpan: 2,
+    placeholder: "e.g. Power up your workflow with DaaS",
+  },
+  {
+    key: "toolsDescription",
+    label: "Tools Section Description",
+    type: "textarea",
+    colSpan: 2,
+    placeholder: "e.g. Streamline your creative process with an all-in-one DaaS solution...",
+  },
+  {
+    key: "toolsTagline",
+    label: "Tools Section Tagline",
+    type: "text",
+    colSpan: 2,
+    placeholder: "e.g. Instant access to top design tools, expert guidance, and seamless collaboration.",
+  },
+  {
+    key: "toolNames",
+    label: "Tool Icons",
+    type: "stringlist",
+    colSpan: 2,
+    placeholder: "One per line — figma, sketch, framer, marvelapp, miro, webflow, rive, abstract, or any other tool name (shows as a text badge if no icon exists)",
   },
 ];
 
@@ -120,6 +152,10 @@ export default function AdminServicesPage() {
         displayOrder: item.displayOrder,
         isActive: item.isActive,
         highlights: item.highlights,
+        toolsHeading: item.toolsHeading,
+        toolsDescription: item.toolsDescription,
+        toolsTagline: item.toolsTagline,
+        toolNames: item.toolNames,
       })}
     />
   );

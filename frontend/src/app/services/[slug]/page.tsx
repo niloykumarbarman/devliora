@@ -11,6 +11,8 @@ import { fetchBlogPosts, type BlogPost } from "@/lib/blogPosts";
 import { fetchTechnologies } from "@/lib/technologies";
 import { API_BASE_URL } from "@/lib/apiConfig";
 import { buildMetadata } from "@/lib/seo";
+import { getTechIcon } from "@/lib/techIcons";
+import TechBrandIcon from "@/components/TechBrandIcon";
 import ServiceTabs, { type ServiceTab } from "@/components/sections/ServiceTabs";
 
 async function safeFetchTechnologies() {
@@ -550,6 +552,46 @@ export default async function ServiceDetailPage({ params }: Props) {
                       {highlight.description}
                     </p>
                   ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* "Tools we work with", admin-managed per service */}
+        {service.toolNames.length > 0 && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-4xl px-6">
+              <div className="grid gap-8 sm:grid-cols-2 sm:gap-12">
+                {service.toolsHeading && (
+                  <h2 className="text-balance font-display text-2xl font-semibold text-paper sm:text-3xl">
+                    {service.toolsHeading}
+                  </h2>
+                )}
+                {service.toolsDescription && (
+                  <p className="text-base leading-relaxed text-paper/70">{service.toolsDescription}</p>
+                )}
+              </div>
+
+              {service.toolsTagline && (
+                <p className="mt-8 max-w-md border-b border-paper/15 pb-6 text-base italic leading-relaxed text-paper/60">
+                  {service.toolsTagline}
+                </p>
+              )}
+
+              <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-6">
+                {service.toolNames.map((name) => {
+                  const icon = getTechIcon(name);
+                  return icon ? (
+                    <TechBrandIcon key={name} name={name} className="h-9 w-9 shrink-0" />
+                  ) : (
+                    <span
+                      key={name}
+                      className="rounded-full border border-paper/15 px-3 py-1.5 text-xs font-medium text-paper/70"
+                    >
+                      {name}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           </section>

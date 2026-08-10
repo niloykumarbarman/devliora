@@ -28,7 +28,11 @@ public class CreateServiceCommandHandler : IRequestHandler<CreateServiceCommand,
             Includes = request.Includes,
             IconUrl = request.IconUrl,
             HeroImageUrl = request.HeroImageUrl,
-            DisplayOrder = request.DisplayOrder
+            DisplayOrder = request.DisplayOrder,
+            ToolsHeading = request.ToolsHeading,
+            ToolsDescription = request.ToolsDescription,
+            ToolsTagline = request.ToolsTagline,
+            ToolNames = request.ToolNames
         };
 
         foreach (var highlight in request.Highlights)

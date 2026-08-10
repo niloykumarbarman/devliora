@@ -14,4 +14,8 @@ public class CreateServiceCommand : IRequest<Guid>
     public string HeroImageUrl { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
     public List<ServiceHighlightItem> Highlights { get; set; } = new();
+    public string ToolsHeading { get; set; } = string.Empty;
+    public string ToolsDescription { get; set; } = string.Empty;
+    public string ToolsTagline { get; set; } = string.Empty;
+    public List<string> ToolNames { get; set; } = new();
 }

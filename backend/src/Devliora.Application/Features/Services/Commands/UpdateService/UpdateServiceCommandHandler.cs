@@ -33,6 +33,10 @@ public class UpdateServiceCommandHandler : IRequestHandler<UpdateServiceCommand,
         service.HeroImageUrl = request.HeroImageUrl;
         service.DisplayOrder = request.DisplayOrder;
         service.IsActive = request.IsActive;
+        service.ToolsHeading = request.ToolsHeading;
+        service.ToolsDescription = request.ToolsDescription;
+        service.ToolsTagline = request.ToolsTagline;
+        service.ToolNames = request.ToolNames;
         service.UpdatedAt = DateTime.UtcNow;
 
         // Explicit DbSet remove/add (instead of navigation-collection Clear()+Add())

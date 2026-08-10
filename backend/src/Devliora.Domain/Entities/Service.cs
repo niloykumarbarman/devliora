@@ -14,4 +14,13 @@ public class Service : BaseEntity
     public int DisplayOrder { get; set; }
     public bool IsActive { get; set; } = true;
     public ICollection<ServiceHighlight> Highlights { get; set; } = new List<ServiceHighlight>();
+
+    // "Tools we work with" section: heading/description (2-column intro),
+    // an italic tagline underneath, and a row of tool brand icons
+    // (ToolNames entries are lowercase techIcons.ts keys; anything with
+    // no matching icon renders as a plain text badge instead).
+    public string ToolsHeading { get; set; } = string.Empty;
+    public string ToolsDescription { get; set; } = string.Empty;
+    public string ToolsTagline { get; set; } = string.Empty;
+    public List<string> ToolNames { get; set; } = new();
 }

@@ -17,6 +17,10 @@ export interface ServiceDto {
   heroImageUrl: string;
   displayOrder: number;
   highlights: ServiceHighlight[];
+  toolsHeading: string;
+  toolsDescription: string;
+  toolsTagline: string;
+  toolNames: string[];
 }
 
 export async function fetchServices(): Promise<ServiceDto[]> {
