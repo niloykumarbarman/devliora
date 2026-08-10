@@ -31,5 +31,10 @@ public class CreateServiceCommandValidator : AbstractValidator<CreateServiceComm
         RuleFor(x => x).Must(x => x.ProcessGroupStart + x.ProcessGroupCount <= x.ProcessSteps.Count)
             .WithMessage("ProcessGroupStart + ProcessGroupCount must not exceed the number of steps.")
             .WithName("ProcessGroupCount");
+        RuleFor(x => x.IndustriesHeading).MaximumLength(200);
+        RuleFor(x => x.IndustriesTagline).MaximumLength(300);
+        RuleFor(x => x.IndustriesDescription).MaximumLength(600);
+        RuleFor(x => x.IndustryCards).Must(list => list.Count <= 8)
+            .WithMessage("IndustryCards list cannot have more than 8 items.");
     }
 }

@@ -51,7 +51,14 @@ public class GetAllServicesQueryHandler : IRequestHandler<GetAllServicesQuery, L
                 ProcessSteps = s.ProcessSteps,
                 ProcessGroupStart = s.ProcessGroupStart,
                 ProcessGroupCount = s.ProcessGroupCount,
-                ProcessGroupLabel = s.ProcessGroupLabel
+                ProcessGroupLabel = s.ProcessGroupLabel,
+                IndustriesHeading = s.IndustriesHeading,
+                IndustriesTagline = s.IndustriesTagline,
+                IndustriesDescription = s.IndustriesDescription,
+                IndustryCards = s.IndustryCards
+                    .OrderBy(c => c.DisplayOrder)
+                    .Select(c => new ServiceIndustryCardItem { ImageUrl = c.ImageUrl, Title = c.Title, Description = c.Description, DisplayOrder = c.DisplayOrder })
+                    .ToList()
             })
             .ToListAsync(cancellationToken);
 

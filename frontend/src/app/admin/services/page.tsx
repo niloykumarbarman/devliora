@@ -33,6 +33,10 @@ const emptyForm: ServiceFormPayload = {
   processGroupStart: 0,
   processGroupCount: 0,
   processGroupLabel: "",
+  industriesHeading: "",
+  industriesTagline: "",
+  industriesDescription: "",
+  industryCards: [],
 };
 
 const fields: FieldConfig<ServiceFormPayload>[] = [
@@ -133,6 +137,40 @@ const fields: FieldConfig<ServiceFormPayload>[] = [
     colSpan: 2,
     placeholder: "e.g. Design iteration",
   },
+  {
+    key: "industriesHeading",
+    label: "Industries Section Heading",
+    type: "text",
+    colSpan: 2,
+    placeholder: "e.g. Crafting exceptional {UI/UX} across industries — wrap a phrase in {curly braces} to color it",
+  },
+  {
+    key: "industriesTagline",
+    label: "Industries Section Tagline",
+    type: "text",
+    colSpan: 2,
+    placeholder: "e.g. Tailored experiences, industry-specific insights, lasting impact.",
+  },
+  {
+    key: "industriesDescription",
+    label: "Industries Section Description",
+    type: "textarea",
+    colSpan: 2,
+    placeholder: "e.g. Our design expertise spans a diverse range of industries...",
+  },
+  {
+    key: "industryCards",
+    label: "Industry Cards",
+    type: "list",
+    colSpan: 2,
+    listItemLabel: "Card",
+    listItemFields: [
+      { key: "imageUrl", label: "Image", type: "image" },
+      { key: "title", label: "Title", type: "text", placeholder: "e.g. UI/UX Design" },
+      { key: "description", label: "Description", type: "text", placeholder: "e.g. Skilled designers ready to shape intuitive digital experiences." },
+      { key: "displayOrder", label: "Order", type: "number" },
+    ],
+  },
 ];
 
 const columns: ColumnConfig<AdminService>[] = [
@@ -190,6 +228,10 @@ export default function AdminServicesPage() {
         processGroupStart: item.processGroupStart,
         processGroupCount: item.processGroupCount,
         processGroupLabel: item.processGroupLabel,
+        industriesHeading: item.industriesHeading,
+        industriesTagline: item.industriesTagline,
+        industriesDescription: item.industriesDescription,
+        industryCards: item.industryCards,
       })}
     />
   );

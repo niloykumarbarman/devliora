@@ -41,6 +41,9 @@ public class UpdateServiceCommandHandler : IRequestHandler<UpdateServiceCommand,
         service.ProcessGroupStart = request.ProcessGroupStart;
         service.ProcessGroupCount = request.ProcessGroupCount;
         service.ProcessGroupLabel = request.ProcessGroupLabel;
+        service.IndustriesHeading = request.IndustriesHeading;
+        service.IndustriesTagline = request.IndustriesTagline;
+        service.IndustriesDescription = request.IndustriesDescription;
         service.UpdatedAt = DateTime.UtcNow;
 
         // Explicit DbSet remove/add (instead of navigation-collection Clear()+Add())
@@ -60,6 +63,23 @@ public class UpdateServiceCommandHandler : IRequestHandler<UpdateServiceCommand,
                 Label = highlight.Label,
                 Description = highlight.Description,
                 DisplayOrder = highlight.DisplayOrder
+            });
+        }
+
+        var existingCards = await _context.ServiceIndustryCards
+            .Where(c => c.ServiceId == service.Id)
+            .ToListAsync(cancellationToken);
+        _context.ServiceIndustryCards.RemoveRange(existingCards);
+
+        foreach (var card in request.IndustryCards)
+        {
+            _context.ServiceIndustryCards.Add(new ServiceIndustryCard
+            {
+                ServiceId = service.Id,
+                ImageUrl = card.ImageUrl,
+                Title = card.Title,
+                Description = card.Description,
+                DisplayOrder = card.DisplayOrder
             });
         }
 

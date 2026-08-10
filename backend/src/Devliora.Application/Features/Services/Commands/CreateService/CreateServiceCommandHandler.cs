@@ -36,7 +36,10 @@ public class CreateServiceCommandHandler : IRequestHandler<CreateServiceCommand,
             ProcessSteps = request.ProcessSteps,
             ProcessGroupStart = request.ProcessGroupStart,
             ProcessGroupCount = request.ProcessGroupCount,
-            ProcessGroupLabel = request.ProcessGroupLabel
+            ProcessGroupLabel = request.ProcessGroupLabel,
+            IndustriesHeading = request.IndustriesHeading,
+            IndustriesTagline = request.IndustriesTagline,
+            IndustriesDescription = request.IndustriesDescription
         };
 
         foreach (var highlight in request.Highlights)
@@ -46,6 +49,17 @@ public class CreateServiceCommandHandler : IRequestHandler<CreateServiceCommand,
                 Label = highlight.Label,
                 Description = highlight.Description,
                 DisplayOrder = highlight.DisplayOrder
+            });
+        }
+
+        foreach (var card in request.IndustryCards)
+        {
+            service.IndustryCards.Add(new ServiceIndustryCard
+            {
+                ImageUrl = card.ImageUrl,
+                Title = card.Title,
+                Description = card.Description,
+                DisplayOrder = card.DisplayOrder
             });
         }
 

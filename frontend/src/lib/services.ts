@@ -6,6 +6,13 @@ export interface ServiceHighlight {
   displayOrder: number;
 }
 
+export interface ServiceIndustryCard {
+  imageUrl: string;
+  title: string;
+  description: string;
+  displayOrder: number;
+}
+
 export interface ServiceDto {
   id: string;
   title: string;
@@ -25,6 +32,10 @@ export interface ServiceDto {
   processGroupStart: number;
   processGroupCount: number;
   processGroupLabel: string;
+  industriesHeading: string;
+  industriesTagline: string;
+  industriesDescription: string;
+  industryCards: ServiceIndustryCard[];
 }
 
 export async function fetchServices(): Promise<ServiceDto[]> {

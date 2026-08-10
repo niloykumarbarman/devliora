@@ -24,4 +24,8 @@ public class UpdateServiceCommand : IRequest<Unit>
     public int ProcessGroupStart { get; set; }
     public int ProcessGroupCount { get; set; }
     public string ProcessGroupLabel { get; set; } = string.Empty;
+    public string IndustriesHeading { get; set; } = string.Empty;
+    public string IndustriesTagline { get; set; } = string.Empty;
+    public string IndustriesDescription { get; set; } = string.Empty;
+    public List<ServiceIndustryCardItem> IndustryCards { get; set; } = new();
 }

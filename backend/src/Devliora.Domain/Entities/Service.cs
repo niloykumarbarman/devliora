@@ -32,4 +32,12 @@ public class Service : BaseEntity
     public int ProcessGroupStart { get; set; }
     public int ProcessGroupCount { get; set; }
     public string ProcessGroupLabel { get; set; } = string.Empty;
+
+    // "Crafting exceptional ... across industries" image-card grid:
+    // heading (wrap a segment in {curly braces} to render it in the
+    // ember accent color), italic tagline, description, then the cards.
+    public string IndustriesHeading { get; set; } = string.Empty;
+    public string IndustriesTagline { get; set; } = string.Empty;
+    public string IndustriesDescription { get; set; } = string.Empty;
+    public ICollection<ServiceIndustryCard> IndustryCards { get; set; } = new List<ServiceIndustryCard>();
 }

@@ -7,6 +7,13 @@ export interface AdminServiceHighlight {
   displayOrder: number;
 }
 
+export interface AdminServiceIndustryCard {
+  imageUrl: string;
+  title: string;
+  description: string;
+  displayOrder: number;
+}
+
 export interface AdminService {
   id: string;
   title: string;
@@ -27,6 +34,10 @@ export interface AdminService {
   processGroupStart: number;
   processGroupCount: number;
   processGroupLabel: string;
+  industriesHeading: string;
+  industriesTagline: string;
+  industriesDescription: string;
+  industryCards: AdminServiceIndustryCard[];
 }
 
 export interface ServiceFormPayload {
@@ -48,6 +59,10 @@ export interface ServiceFormPayload {
   processGroupStart: number;
   processGroupCount: number;
   processGroupLabel: string;
+  industriesHeading: string;
+  industriesTagline: string;
+  industriesDescription: string;
+  industryCards: AdminServiceIndustryCard[];
 }
 
 export const SERVICES_ADMIN_API_URL = `${API_BASE_URL}/services`;
