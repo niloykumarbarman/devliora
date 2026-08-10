@@ -69,3 +69,25 @@ export function serviceHref(slug: string): string {
   return hasDetailPage(slug) ? `/services/${slug}` : `/services#${slug}`;
 }
 
+// Static snapshot of the site's real services (name + slug), split into two
+// columns — used by the "Engineering Services"-style hero (both the
+// /services listing page and the Digital Design detail page reuse this
+// same list rather than duplicating it).
+export const STATIC_SERVICE_LINKS: { title: string; slug: string }[][] = [
+  [
+    { title: "Software Engineering", slug: "software-engineering" },
+    { title: "API Design & Integration", slug: "api-design-integration" },
+    { title: "Cloud Infrastructure & DevOps", slug: "cloud-infrastructure-devops" },
+    { title: "Performance & Reliability Engineering", slug: "performance-reliability-engineering" },
+    { title: "Software Resource Rental", slug: "software-resource-rental" },
+    { title: "Software Quality Assurance", slug: "software-quality-assurance" },
+  ],
+  [
+    { title: "Digital Design", slug: "digital-design" },
+    { title: "IT Consulting", slug: "it-consulting" },
+    { title: "Digital Marketing", slug: "digital-marketing" },
+    { title: "IT Maintenance & Support", slug: "it-maintenance-support" },
+    { title: "Staff Augmentation", slug: "staff-augmentation" },
+  ],
+];
+
