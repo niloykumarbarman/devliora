@@ -15,7 +15,8 @@ import { getTechIcon } from "@/lib/techIcons";
 import TechBrandIcon from "@/components/TechBrandIcon";
 import ServiceTabs, { type ServiceTab } from "@/components/sections/ServiceTabs";
 import ClientSpotlight, { type ClientSpotlightItem } from "@/components/sections/ClientSpotlight";
-import { fetchPortfolios, fetchPortfolioBySlug } from "@/lib/portfolios";
+import FeaturedWorkSplit from "@/components/sections/FeaturedWorkSplit";
+import { fetchPortfolios, fetchPortfolioBySlug, type Portfolio } from "@/lib/portfolios";
 
 async function safeFetchTechnologies() {
   try {
@@ -34,31 +35,38 @@ async function safeFetchCaseStudies() {
 }
 
 // Real, admin-managed featured work — same data /portfolio pulls from.
-// The list endpoint doesn't include metrics, so fetch full detail for
-// just the (small) featured set to pull each one's headline stat.
-async function safeFetchClientSpotlight(): Promise<ClientSpotlightItem[]> {
+// Fetched once and split across two differently-styled sections
+// (ClientSpotlight, FeaturedWorkSplit) so they don't repeat each other.
+async function safeFetchFeaturedPortfolios() {
   try {
     const all = await fetchPortfolios();
-    const featured = all.filter((p) => p.isFeatured).slice(0, 2);
-    const details = await Promise.all(featured.map((p) => fetchPortfolioBySlug(p.slug)));
-    return featured.map((p, i) => {
-      const detail = details[i];
-      const topMetric = detail
-        ? [...detail.metrics].sort((a, b) => a.displayOrder - b.displayOrder)[0]
-        : undefined;
-      return {
-        slug: p.slug,
-        title: p.title,
-        summary: p.summary,
-        thumbnailUrl: p.thumbnailUrl,
-        industry: p.industry,
-        metricValue: topMetric?.value ?? null,
-        metricLabel: topMetric?.label ?? null,
-      };
-    });
+    return all.filter((p) => p.isFeatured);
   } catch {
     return [];
   }
+}
+
+// The list endpoint doesn't include metrics, so fetch full detail for
+// just this small slice to pull each one's headline stat.
+async function toClientSpotlightItems(portfolios: Portfolio[]): Promise<ClientSpotlightItem[]> {
+  const details = await Promise.all(
+    portfolios.map((p) => fetchPortfolioBySlug(p.slug).catch(() => null))
+  );
+  return portfolios.map((p, i) => {
+    const detail = details[i];
+    const topMetric = detail
+      ? [...detail.metrics].sort((a, b) => a.displayOrder - b.displayOrder)[0]
+      : undefined;
+    return {
+      slug: p.slug,
+      title: p.title,
+      summary: p.summary,
+      thumbnailUrl: p.thumbnailUrl,
+      industry: p.industry,
+      metricValue: topMetric?.value ?? null,
+      metricLabel: topMetric?.label ?? null,
+    };
+  });
 }
 
 async function safeFetchBlogPosts() {
@@ -501,7 +509,7 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
 
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
-  const [service, hero, caseStudies, blogPosts, testimonial, technologies, clientSpotlight] =
+  const [service, hero, caseStudies, blogPosts, testimonial, technologies, featuredPortfolios] =
     await Promise.all([
       fetchServiceBySlug(slug),
       fetchHero(),
@@ -509,13 +517,16 @@ export default async function ServiceDetailPage({ params }: Props) {
       safeFetchBlogPosts(),
       fetchFeaturedTestimonial(),
       safeFetchTechnologies(),
-      safeFetchClientSpotlight(),
+      safeFetchFeaturedPortfolios(),
     ]);
   const blogGridCells = buildBlogGridCells(blogPosts.slice(0, 4));
 
   if (!service) {
     notFound();
   }
+
+  const clientSpotlight = await toClientSpotlightItems(featuredPortfolios.slice(0, 2));
+  const featuredWorkSplit = featuredPortfolios.slice(2, 4);
 
   const rawCheckpoints = ROADMAP_CHECKPOINTS[service.slug];
   const checkpoints =
@@ -935,6 +946,8 @@ export default async function ServiceDetailPage({ params }: Props) {
         )}
 
         <ClientSpotlight items={clientSpotlight} />
+
+        <FeaturedWorkSplit items={featuredWorkSplit} />
 
         {/* Case studies, pulled live from the site's real case-studies data */}
         {caseStudies.length > 0 && (
