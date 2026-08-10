@@ -7,7 +7,16 @@
       "Bash(xargs -I{} sh -c 'echo ==={}; cat {}')",
       "Bash(xargs -I{} sh -c 'echo {}; cat {}')",
       "Bash(dotnet --version)",
-      "Bash(dotnet tool *)"
+      "Bash(dotnet tool *)",
+      "Bash(python3 -c ' *)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" https://devliora.com/industries/tax-trade --max-time 10)",
+      "Bash(curl -s https://devliora.com/api/industries/gaming --max-time 10)",
+      "Bash(curl -s https://devliora.com/api/services --max-time 10)",
+      "Bash(python3 -m json.tool)",
+      "Bash(git commit -m ' *)",
+      "Bash(git commit --amend -m ' *)",
+      "Bash(git switch *)",
+      "Bash(git commit *)"
     ]
   }
 }

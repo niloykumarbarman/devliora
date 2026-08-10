@@ -469,12 +469,15 @@ export default async function ServiceDetailPage({ params }: Props) {
     <>
       <Navbar />
       <main className="bg-ink text-paper">
-        {/* Hero: full-bleed background image with the service title */}
+        {/* Hero: full-bleed background image with the service title.
+            Prefers this service's own hero image (set per-service in the
+            admin panel); falls back to the site's shared hero background
+            for services that haven't had one uploaded yet. */}
         <section className="relative h-[380px] overflow-hidden sm:h-[440px] md:h-[480px]">
-          {hero?.backgroundImageUrl && (
+          {(service.heroImageUrl || hero?.backgroundImageUrl) && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={resolveImageUrl(hero.backgroundImageUrl)}
+              src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
               alt=""
               className="absolute inset-0 h-full w-full object-cover"
             />

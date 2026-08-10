@@ -10,5 +10,6 @@ public class CreateServiceCommand : IRequest<Guid>
     public string FullDescription { get; set; } = string.Empty;
     public List<string> Includes { get; set; } = new();
     public string IconUrl { get; set; } = string.Empty;
+    public string HeroImageUrl { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
 }

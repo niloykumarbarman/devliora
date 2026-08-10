@@ -27,6 +27,7 @@ public class CreateServiceCommandHandler : IRequestHandler<CreateServiceCommand,
             FullDescription = request.FullDescription,
             Includes = request.Includes,
             IconUrl = request.IconUrl,
+            HeroImageUrl = request.HeroImageUrl,
             DisplayOrder = request.DisplayOrder
         };
 

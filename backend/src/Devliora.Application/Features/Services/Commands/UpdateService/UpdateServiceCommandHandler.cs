@@ -29,6 +29,7 @@ public class UpdateServiceCommandHandler : IRequestHandler<UpdateServiceCommand,
         service.FullDescription = request.FullDescription;
         service.Includes = request.Includes;
         service.IconUrl = request.IconUrl;
+        service.HeroImageUrl = request.HeroImageUrl;
         service.DisplayOrder = request.DisplayOrder;
         service.IsActive = request.IsActive;
         service.UpdatedAt = DateTime.UtcNow;

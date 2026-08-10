@@ -21,6 +21,7 @@ const emptyForm: ServiceFormPayload = {
   fullDescription: "",
   includes: [],
   iconUrl: "",
+  heroImageUrl: "",
   displayOrder: 0,
   isActive: true,
 };
@@ -29,6 +30,12 @@ const fields: FieldConfig<ServiceFormPayload>[] = [
   { key: "title", label: "Title", type: "text", required: true, colSpan: 2 },
   { key: "slug", label: "Slug", type: "text", required: true },
   { key: "iconUrl", label: "Icon URL", type: "image" },
+  {
+    key: "heroImageUrl",
+    label: "Hero Image (detail page banner)",
+    type: "image",
+    colSpan: 2,
+  },
   { key: "displayOrder", label: "Display Order", type: "number" },
   { key: "isActive", label: "Active", type: "checkbox" },
   {
@@ -96,6 +103,7 @@ export default function AdminServicesPage() {
         fullDescription: item.fullDescription,
         includes: item.includes,
         iconUrl: item.iconUrl,
+        heroImageUrl: item.heroImageUrl,
         displayOrder: item.displayOrder,
         isActive: item.isActive,
       })}

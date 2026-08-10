@@ -8,6 +8,7 @@ export interface ServiceDto {
   fullDescription: string;
   includes: string[];
   iconUrl: string;
+  heroImageUrl: string;
   displayOrder: number;
 }
 
@@ -32,7 +33,7 @@ export async function fetchServiceBySlug(slug: string): Promise<ServiceDto | nul
 
 // Services with a full dedicated /services/[slug] breakdown page.
 // Everything else links to the #slug anchor on the /services listing page.
-const DETAIL_PAGE_SLUGS = new Set(["software-engineering"]);
+const DETAIL_PAGE_SLUGS = new Set(["software-engineering", "digital-design"]);
 
 export function hasDetailPage(slug: string): boolean {
   return DETAIL_PAGE_SLUGS.has(slug);

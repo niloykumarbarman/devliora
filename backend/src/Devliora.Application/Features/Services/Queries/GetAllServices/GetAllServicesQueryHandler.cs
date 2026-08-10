@@ -37,6 +37,7 @@ public class GetAllServicesQueryHandler : IRequestHandler<GetAllServicesQuery, L
                 FullDescription = s.FullDescription,
                 Includes = s.Includes,
                 IconUrl = s.IconUrl,
+                HeroImageUrl = s.HeroImageUrl,
                 DisplayOrder = s.DisplayOrder
             })
             .ToListAsync(cancellationToken);

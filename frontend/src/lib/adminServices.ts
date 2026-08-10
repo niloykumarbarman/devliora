@@ -9,6 +9,7 @@ export interface AdminService {
   fullDescription: string;
   includes: string[];
   iconUrl: string;
+  heroImageUrl: string;
   displayOrder: number;
   isActive: boolean;
 }
@@ -20,6 +21,7 @@ export interface ServiceFormPayload {
   fullDescription: string;
   includes: string[];
   iconUrl: string;
+  heroImageUrl: string;
   displayOrder: number;
   isActive: boolean;
 }
