@@ -9,8 +9,6 @@ import { SOLUTIONS } from "@/lib/solutions";
 import { slugify } from "@/lib/slugify";
 import type { ExploreService } from "@/lib/useExploreMenuData";
 
-const SERVICES_COLUMN_LIMIT = 6;
-
 type MegaMenuProps = {
   open: boolean;
   services: ExploreService[];
@@ -41,9 +39,9 @@ export default function MegaMenu({
 }: MegaMenuProps) {
   if (!open) return null;
 
-  const visibleServices = [...services]
-    .sort((a, b) => a.displayOrder - b.displayOrder)
-    .slice(0, SERVICES_COLUMN_LIMIT);
+  // Show every active service — previously capped at 6, which silently
+  // hid anything past that (e.g. Digital Design at position 7).
+  const visibleServices = [...services].sort((a, b) => a.displayOrder - b.displayOrder);
 
   const visibleCategories = CATEGORY_ORDER.filter(
     (id) => (technologyCounts[id] ?? 0) > 0 || !loaded

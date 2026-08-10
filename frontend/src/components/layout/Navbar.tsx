@@ -31,7 +31,6 @@ const NAV_LINKS = [
 const MORE_LABELS = ["Case Studies", "About", "Blog"];
 const MEGA_LABELS = ["Services"];
 const INDUSTRIES_LABEL = "Industries";
-const SERVICES_MENU_LIMIT = 6;
 const PRIMARY_LINKS = NAV_LINKS.filter((link) => !MORE_LABELS.includes(link.label));
 const MORE_LINKS = NAV_LINKS.filter((link) => MORE_LABELS.includes(link.label));
 
@@ -117,9 +116,11 @@ export default function Navbar() {
     industriesCloseTimer.current = setTimeout(() => setIndustriesOpen(false), 150);
   };
 
-  const visibleMobileServices = [...exploreMenu.services]
-    .sort((a, b) => a.displayOrder - b.displayOrder)
-    .slice(0, SERVICES_MENU_LIMIT);
+  // Show every active service — previously capped at 6, which silently
+  // hid anything past that (e.g. Digital Design at position 7).
+  const visibleMobileServices = [...exploreMenu.services].sort(
+    (a, b) => a.displayOrder - b.displayOrder
+  );
 
   const visibleMobileCategories = CATEGORY_ORDER.filter(
     (id) => (exploreMenu.technologyCounts[id] ?? 0) > 0 || !exploreMenu.loaded
