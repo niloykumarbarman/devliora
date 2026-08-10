@@ -1169,7 +1169,9 @@ export default async function ServiceDetailPage({ params }: Props) {
         </section>
         )}
 
-        {/* Software essentials */}
+        {/* Software essentials. Hidden on Digital Design at request, same
+            as the sections above — still shown on every other service page. */}
+        {service.slug !== "digital-design" && (
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto max-w-6xl px-6">
             <h2 className="font-display text-3xl font-semibold leading-tight sm:text-4xl">
@@ -1218,6 +1220,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             </div>
           </div>
         </section>
+        )}
 
         {/* Roadmap, built from the service's own includes[] */}
         {service.includes.length > 0 && (
