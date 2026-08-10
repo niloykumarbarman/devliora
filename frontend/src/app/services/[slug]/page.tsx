@@ -994,8 +994,10 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section>
         )}
 
-        {/* Blog Highlights, pulled live from the site's real blog posts */}
-        {blogGridCells.length > 0 && (
+        {/* Blog Highlights, pulled live from the site's real blog posts.
+            Hidden on Digital Design at request, same as Case Studies above —
+            still shown on every other service page. */}
+        {blogGridCells.length > 0 && service.slug !== "digital-design" && (
           <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
             <div className="mx-auto max-w-6xl px-6 text-center">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">From the blog</p>
