@@ -581,15 +581,19 @@ export default async function ServiceDetailPage({ params }: Props) {
               <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-6">
                 {service.toolNames.map((name) => {
                   const icon = getTechIcon(name);
-                  return icon ? (
-                    <TechBrandIcon key={name} name={name} className="h-9 w-9 shrink-0" />
-                  ) : (
-                    <span
+                  return (
+                    <div
                       key={name}
-                      className="rounded-full border border-paper/15 px-3 py-1.5 text-xs font-medium text-paper/70"
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-paper/95 shadow-sm"
                     >
-                      {name}
-                    </span>
+                      {icon ? (
+                        <TechBrandIcon name={name} className="h-6 w-6" />
+                      ) : (
+                        <span className="px-1 text-center text-[0.6rem] font-semibold leading-tight text-ink/70">
+                          {name}
+                        </span>
+                      )}
+                    </div>
                   );
                 })}
               </div>
