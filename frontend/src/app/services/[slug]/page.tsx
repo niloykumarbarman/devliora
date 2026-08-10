@@ -949,8 +949,11 @@ export default async function ServiceDetailPage({ params }: Props) {
 
         <FeaturedWorkSplit items={featuredWorkSplit} />
 
-        {/* Case studies, pulled live from the site's real case-studies data */}
-        {caseStudies.length > 0 && (
+        {/* Case studies, pulled live from the site's real case-studies data.
+            Hidden on Digital Design at request — ClientSpotlight and
+            FeaturedWorkSplit above already cover "proof of work" on that
+            page. Still shown on every other service page. */}
+        {caseStudies.length > 0 && service.slug !== "digital-design" && (
           <section className="relative overflow-hidden border-t border-paper/10 bg-graphite py-24 md:py-32">
             <div className="mx-auto max-w-6xl px-6">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">Case studies</p>
