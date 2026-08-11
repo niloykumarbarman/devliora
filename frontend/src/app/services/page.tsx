@@ -3,7 +3,6 @@ import { buildMetadata } from "@/lib/seo";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ServicesHero from "@/components/sections/ServicesHero";
-import ServicesDetailList from "@/components/sections/ServicesDetailList";
 import ServicesCTA from "@/components/sections/ServicesCTA";
 
 export const metadata: Metadata = buildMetadata({
@@ -19,7 +18,6 @@ export default function ServicesPage() {
       <Navbar />
       <main>
         <ServicesHero />
-        <ServicesDetailList />
         <ServicesCTA />
       </main>
       <Footer />
