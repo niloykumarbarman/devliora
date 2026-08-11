@@ -796,15 +796,15 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
 
               <div className="mt-14 flex items-center gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ember/15 text-ember">
-                  <Zap className="h-4 w-4" />
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ember text-ink">
+                  <Zap className="h-5 w-5" fill="currentColor" />
                 </span>
-                <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-paper">
+                <p className="text-base font-bold uppercase tracking-wide text-paper">
                   Key Digital Solutions
                 </p>
               </div>
 
-              <ul className="mt-8 grid grid-cols-1 gap-x-12 gap-y-4 sm:grid-cols-2">
+              <ul className="mt-6 flex max-w-xs flex-col gap-4">
                 {[
                   "Social Media Management",
                   "Content Creation & Curation",
@@ -812,8 +812,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   "Email Marketing Automation",
                   "Analytics & Reporting Dashboards",
                 ].map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-base text-paper/80">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ember" />
+                  <li key={item} className="text-base text-paper/80">
                     {item}
                   </li>
                 ))}
