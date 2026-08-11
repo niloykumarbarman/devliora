@@ -32,6 +32,8 @@ import TechBrandIcon from "@/components/TechBrandIcon";
 import ServiceTabs, { type ServiceTab } from "@/components/sections/ServiceTabs";
 import ClientSpotlight, { type ClientSpotlightItem } from "@/components/sections/ClientSpotlight";
 import FeaturedWorkSplit from "@/components/sections/FeaturedWorkSplit";
+import PartnerSpotlight from "@/components/sections/PartnerSpotlight";
+import QualityManagement from "@/components/sections/QualityManagement";
 import { fetchPortfolios, fetchPortfolioBySlug, type Portfolio } from "@/lib/portfolios";
 
 async function safeFetchTechnologies() {
@@ -911,28 +913,32 @@ export default async function ServiceDetailPage({ params }: Props) {
             The quote is a real, publicly-cited Meta statistic (not a
             Devliora claim), so it's safe to state as-is. */}
         {service.slug === "digital-marketing" && (
-          <section className="relative overflow-hidden border-t border-paper/10 bg-graphite/20 py-16 md:py-20">
-            <div className="mx-auto flex max-w-4xl flex-col items-start gap-8 px-6 sm:flex-row sm:items-center sm:justify-between">
-              <div>
-                <p className="text-balance text-xl font-semibold leading-snug text-ember sm:text-2xl">
-                  &ldquo;More than 200 million businesses use our platforms to reach customers.&rdquo;
-                </p>
-                <p className="mt-4 max-w-lg text-paper/70">
-                  Facebook and Instagram remain the world&apos;s most widely used channels for
-                  digital marketing and brand visibility.
-                </p>
-                <p className="mt-4 font-display text-2xl font-bold text-paper">Meta</p>
-              </div>
-              <div className="flex shrink-0 gap-4">
-                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-paper/95 shadow-sm">
-                  <TechBrandIcon name="facebook" className="h-8 w-8" />
-                </div>
-                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-paper/95 shadow-sm">
-                  <TechBrandIcon name="instagram" className="h-8 w-8" />
-                </div>
-              </div>
-            </div>
-          </section>
+          <PartnerSpotlight
+            quote="More than 200 million businesses use our platforms to reach customers."
+            description="Facebook and Instagram remain the world's most widely used channels for digital marketing and brand visibility."
+            name="Meta"
+            icons={["facebook", "instagram"]}
+          />
+        )}
+
+        {/* "Accenture" spotlight — IT Consulting only, static. The quote
+            frames a real, widely-cited industry-research theme (not a
+            Devliora claim), same reasoning as the Meta spotlight above. */}
+        {service.slug === "it-consulting" && (
+          <PartnerSpotlight
+            quote="Every business is becoming a digital business."
+            description="Accenture's global research highlights how enterprises depend on IT consulting partners to modernize systems and drive digital transformation."
+            name="Accenture"
+            icons={["accenture"]}
+          />
+        )}
+
+        {/* "Quality management" — IT Consulting only, static. Same shared
+            component the /services page uses, since this page's
+            reference has the identical heading and bullets, just a
+            differently-worded description paragraph. */}
+        {service.slug === "it-consulting" && (
+          <QualityManagement description="We are a quality-driven software development organization, committed to maintaining strong engineering standards. By following proven processes and established quality and information security frameworks, solutions are designed to be reliable, secure, and sustainable over time." />
         )}
 
         {/* "Key Digital Solutions" / Pricing / Timeline — Digital Marketing

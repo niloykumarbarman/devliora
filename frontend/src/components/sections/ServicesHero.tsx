@@ -8,10 +8,10 @@ import { ArrowRight, Briefcase, Users } from "lucide-react";
 import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
 import { serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
-import { fetchPartners, type PartnerDto } from "@/lib/partners";
 import { SOLUTIONS } from "@/lib/solutions";
 import { slugify } from "@/lib/slugify";
 import { API_BASE_URL } from "@/lib/apiConfig";
+import QualityManagement from "@/components/sections/QualityManagement";
 
 // Static two-column tech list per explicit request, matching the reference
 // exactly. Double-check these against /admin/technologies before launch —
@@ -39,15 +39,6 @@ const TECH_COLUMNS: string[][] = [
     "eCommerce",
     "Python",
   ],
-];
-
-// Generic capability claims (no fabricated numbers/credentials attached) —
-// safe to state as Devliora's own practice, unlike the reference's
-// third-party review-platform logos, which we swap for real Partners data.
-const QUALITY_BULLETS: string[] = [
-  "Quality management and information security compliance",
-  "Rigorous testing and validation at every development stage",
-  "Proactive system performance monitoring and coordination",
 ];
 
 // Same two engagement models already offered in the per-service "Engagement
@@ -112,7 +103,6 @@ export default function ServicesHero() {
   const [techImageUrl, setTechImageUrl] = useState("");
   const [solutionsImageUrl, setSolutionsImageUrl] = useState("");
   const [testimonial, setTestimonial] = useState<Testimonial | null>(null);
-  const [partners, setPartners] = useState<PartnerDto[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -125,9 +115,6 @@ export default function ServicesHero() {
     });
     fetchFeaturedTestimonial().then((data) => {
       if (!cancelled) setTestimonial(data);
-    });
-    fetchPartners().then((data) => {
-      if (!cancelled) setPartners(data);
     });
     return () => {
       cancelled = true;
@@ -363,67 +350,11 @@ export default function ServicesHero() {
         </div>
       </section>
 
-      {/* "Quality management": heading, description (genericized to
-          Devliora, the reference names the source company directly),
-          and 3 generic capability bullets — no fabricated numbers or
-          credentials attached, so safe to state as Devliora's own. The
-          reference's Clutch/Glassdoor/G2/GoodFirms row is swapped for
-          Devliora's real, admin-managed Partners logos instead. */}
-      <section className="relative overflow-hidden bg-ink py-16 text-paper md:py-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <motion.h2
-            {...fadeUp(0)}
-            className="text-balance font-display text-4xl font-semibold leading-tight md:text-5xl"
-          >
-            Quality management
-          </motion.h2>
-
-          <div className="mt-10 grid gap-10 md:grid-cols-2 md:gap-16">
-            <motion.p {...fadeUp(1)} className="max-w-md text-paper/70">
-              Devliora is a quality-driven software development company,
-              committed to setting and maintaining high standards in
-              engineering practices. We follow proven processes and comply
-              with established quality and information security frameworks
-              to ensure every solution is robust, secure, and built to
-              last.
-            </motion.p>
-
-            <motion.ul {...fadeUp(2)} className="flex flex-col gap-5">
-              {QUALITY_BULLETS.map((bullet) => (
-                <li key={bullet} className="flex items-start gap-3">
-                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ember" />
-                  <span className="font-semibold text-ember">{bullet}</span>
-                </li>
-              ))}
-            </motion.ul>
-          </div>
-
-          {partners.length > 0 && (
-            <motion.div
-              {...fadeUp(3)}
-              className="mt-16 flex flex-wrap items-center justify-center gap-x-14 gap-y-8 border-t border-paper/10 pt-12"
-            >
-              {partners.slice(0, 6).map((partner) =>
-                partner.logoUrl ? (
-                  <div key={partner.id} className="relative h-10 w-28 md:h-12">
-                    <Image
-                      src={resolveImageUrl(partner.logoUrl)}
-                      alt={partner.name}
-                      fill
-                      sizes="112px"
-                      className="object-contain opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"
-                    />
-                  </div>
-                ) : (
-                  <span key={partner.id} className="font-mono text-sm text-paper/50">
-                    {partner.name}
-                  </span>
-                ),
-              )}
-            </motion.div>
-          )}
-        </div>
-      </section>
+      {/* "Quality management" — extracted to a shared component now that
+          the IT Consulting page reference needs the same heading and
+          bullets. Devliora-specific paragraph passed in here; the
+          reference names the source company directly, this one doesn't. */}
+      <QualityManagement description="Devliora is a quality-driven software development company, committed to setting and maintaining high standards in engineering practices. We follow proven processes and comply with established quality and information security frameworks to ensure every solution is robust, secure, and built to last." />
 
       {/* "Want tech that's ahead of the game?" banner — solid single-tone
           split (unlike the earlier CTA, the reference has no dark overlay

@@ -288,6 +288,14 @@ export const techIcons: Record<string, TechIcon> = {
     path: "M14.314 0L2.3 12 6 15.7 21.684.013h-7.357zm.014 11.072L7.857 17.53l6.47 6.47H21.7l-6.46-6.468 6.46-6.46h-7.37z",
     title: "Flutter",
   },
+  // Accenture, used by the IT Consulting page's PartnerSpotlight (real,
+  // publicly-cited industry-research framing, not a Devliora claim —
+  // same reasoning as the Digital Marketing page's Meta spotlight).
+  accenture: {
+    hex: "A100FF",
+    path: "m.66 16.95 13.242-4.926L.66 6.852V0l22.68 9.132v5.682L.66 24Z",
+    title: "Accenture",
+  },
 };
 
 /**
