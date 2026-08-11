@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight, Layers, LayoutGrid } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 import { serviceHref } from "@/lib/services";
@@ -56,11 +57,12 @@ export default function MegaMenu({
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[1fr_2fr]">
         <div className="relative hidden aspect-[4/5] overflow-hidden rounded-lg bg-wire/10 md:block">
           {imageUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={resolveImageUrl(imageUrl)}
               alt=""
-              className="absolute inset-0 h-full w-full object-cover"
+              fill
+              sizes="(min-width: 768px) 33vw, 0px"
+              className="object-cover"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-graphite/30">
@@ -77,10 +79,11 @@ export default function MegaMenu({
                 <li key={service.id}>
                   <Link href={serviceHref(service.slug)} onClick={onNavigate} className={linkClass}>
                     {service.iconUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={resolveImageUrl(service.iconUrl)}
                         alt=""
+                        width={16}
+                        height={16}
                         className="h-4 w-4 shrink-0 object-contain"
                       />
                     ) : (

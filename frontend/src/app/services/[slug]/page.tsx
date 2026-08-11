@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight, ArrowUpDown, Clock, DollarSign, Layers, Star, Zap } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
@@ -597,11 +598,13 @@ export default async function ServiceDetailPage({ params }: Props) {
 
                 <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite md:aspect-square">
                   {(service.heroImageUrl || hero?.backgroundImageUrl) && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
                       alt=""
-                      className="absolute inset-0 h-full w-full object-cover"
+                      fill
+                      priority
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover"
                     />
                   )}
                 </div>
@@ -616,11 +619,13 @@ export default async function ServiceDetailPage({ params }: Props) {
                 for services that haven't had one uploaded yet. */}
             <section className="relative h-[380px] overflow-hidden sm:h-[440px] md:h-[480px]">
               {(service.heroImageUrl || hero?.backgroundImageUrl) && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
                   alt=""
-                  className="absolute inset-0 h-full w-full object-cover"
+                  fill
+                  priority
+                  sizes="100vw"
+                  className="object-cover"
                 />
               )}
               <div className="absolute inset-0 bg-ink/70" />
@@ -658,10 +663,11 @@ export default async function ServiceDetailPage({ params }: Props) {
             <div className="mx-auto max-w-4xl px-6">
               <div className="flex items-center gap-4">
                 {service.iconUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={resolveImageUrl(service.iconUrl)}
                     alt=""
+                    width={32}
+                    height={32}
                     className="h-8 w-8 shrink-0 object-contain"
                   />
                 ) : (
@@ -899,11 +905,12 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
                 <div className="relative min-h-[260px] flex-1">
                   {(service.heroImageUrl || hero?.backgroundImageUrl) && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <Image
                       src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
                       alt=""
-                      className="absolute inset-0 h-full w-full object-cover"
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover"
                     />
                   )}
                 </div>
@@ -1270,11 +1277,12 @@ export default async function ServiceDetailPage({ params }: Props) {
                       className="group relative aspect-[3/4] overflow-hidden rounded-lg bg-graphite"
                     >
                       {card.imageUrl && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
+                        <Image
                           src={resolveImageUrl(card.imageUrl)}
                           alt=""
-                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                          fill
+                          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
                         />
                       )}
                       <div className="absolute inset-x-0 bottom-0 bg-ink/90 p-4">
@@ -1441,11 +1449,12 @@ export default async function ServiceDetailPage({ params }: Props) {
                     className="group relative block aspect-[3/4] overflow-hidden rounded-lg bg-ink"
                   >
                     {study.coverImageUrl && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={resolveImageUrl(study.coverImageUrl)}
                         alt=""
-                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        fill
+                        sizes="(min-width: 1024px) 25vw, 50vw"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
                       />
                     )}
                     <div className="absolute inset-x-0 bottom-0 bg-ink/90 p-4">
@@ -1481,11 +1490,12 @@ export default async function ServiceDetailPage({ params }: Props) {
                 cell.type === "image" ? (
                   <div key={`${cell.post.id}-image-${i}`} className="relative h-64 overflow-hidden sm:h-72">
                     {cell.post.coverImageUrl && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={resolveImageUrl(cell.post.coverImageUrl)}
                         alt=""
-                        className="absolute inset-0 h-full w-full object-cover"
+                        fill
+                        sizes="(min-width: 1024px) 25vw, 50vw"
+                        className="object-cover"
                       />
                     )}
                   </div>
@@ -1541,10 +1551,11 @@ export default async function ServiceDetailPage({ params }: Props) {
                   </p>
                   <div className="mt-6 flex items-center gap-3">
                     {testimonial.clientPhotoUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={resolveImageUrl(testimonial.clientPhotoUrl)}
                         alt=""
+                        width={44}
+                        height={44}
                         className="h-11 w-11 shrink-0 rounded-full object-cover"
                       />
                     ) : (

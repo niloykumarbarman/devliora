@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { resolveImageUrl } from "@/lib/hero";
 import type { TechnologyDto } from "@/lib/technologies";
 import { getTechIcon } from "@/lib/techIcons";
@@ -160,11 +161,12 @@ export default function ServiceTabs({
           <div className="grid gap-10 md:grid-cols-2 md:items-center">
             {heroImageUrl && (
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src={resolveImageUrl(heroImageUrl)}
                   alt=""
-                  className="h-full w-full object-cover"
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover"
                 />
               </div>
             )}

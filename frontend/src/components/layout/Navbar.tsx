@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { fetchSiteSettings } from "@/lib/siteSettings";
@@ -136,11 +137,13 @@ export default function Navbar() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center font-display text-lg font-semibold tracking-tight text-ink">
           {logoUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
             <span className="relative block h-11 w-[213px] overflow-hidden">
-              <img
+              <Image
                 src={resolveImageUrl(logoUrl)}
                 alt="Devliora"
+                width={334}
+                height={472}
+                priority
                 className="absolute -left-[56px] -top-[202px] h-[472px] w-[334px] max-w-none"
               />
             </span>

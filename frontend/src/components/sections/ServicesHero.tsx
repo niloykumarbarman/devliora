@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, Briefcase, Users } from "lucide-react";
 import { fetchSiteSettings } from "@/lib/siteSettings";
@@ -159,8 +160,7 @@ export default function ServicesHero() {
       <section className="relative overflow-hidden bg-ink text-paper">
         <div className="relative flex h-[280px] items-center justify-center sm:h-[340px] md:h-[380px]">
           {bannerImageUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={bannerImageUrl} alt="" className="absolute inset-0 h-full w-full object-cover" />
+            <Image src={bannerImageUrl} alt="" fill priority sizes="100vw" className="object-cover" />
           ) : (
             <div
               className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.18] blur-[120px]"
@@ -248,8 +248,13 @@ export default function ServicesHero() {
               className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite md:aspect-square"
             >
               {engineeringImageUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={engineeringImageUrl} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                <Image
+                  src={engineeringImageUrl}
+                  alt=""
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover"
+                />
               )}
             </motion.div>
           </div>
@@ -287,8 +292,13 @@ export default function ServicesHero() {
             <div>
               <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite">
                 {techImageUrl && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={techImageUrl} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                  <Image
+                    src={techImageUrl}
+                    alt=""
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
                 )}
               </div>
 
@@ -298,10 +308,11 @@ export default function ServicesHero() {
                   <p className="mt-3 text-paper/80">{testimonial.quote}</p>
                   <div className="mt-5 flex items-center gap-3">
                     {testimonial.clientPhotoUrl && (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <Image
                         src={resolveImageUrl(testimonial.clientPhotoUrl)}
                         alt=""
+                        width={40}
+                        height={40}
                         className="h-10 w-10 rounded-full object-cover"
                       />
                     )}
@@ -394,13 +405,15 @@ export default function ServicesHero() {
             >
               {partners.slice(0, 6).map((partner) =>
                 partner.logoUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    key={partner.id}
-                    src={resolveImageUrl(partner.logoUrl)}
-                    alt={partner.name}
-                    className="h-10 w-auto object-contain opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0 md:h-12"
-                  />
+                  <div key={partner.id} className="relative h-10 w-28 md:h-12">
+                    <Image
+                      src={resolveImageUrl(partner.logoUrl)}
+                      alt={partner.name}
+                      fill
+                      sizes="112px"
+                      className="object-contain opacity-60 grayscale transition-all hover:opacity-100 hover:grayscale-0"
+                    />
+                  </div>
                 ) : (
                   <span key={partner.id} className="font-mono text-sm text-paper/50">
                     {partner.name}
@@ -549,8 +562,13 @@ export default function ServicesHero() {
               className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite md:aspect-square"
             >
               {solutionsImageUrl && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={solutionsImageUrl} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                <Image
+                  src={solutionsImageUrl}
+                  alt=""
+                  fill
+                  sizes="(min-width: 768px) 50vw, 100vw"
+                  className="object-cover"
+                />
               )}
             </motion.div>
           </div>

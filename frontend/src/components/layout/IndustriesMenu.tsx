@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Building2 } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 import type { IndustryDto } from "@/lib/industries";
@@ -35,11 +36,12 @@ export default function IndustriesMenu({
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[1.3fr_1fr]">
         <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-wire/10">
           {imageUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={resolveImageUrl(imageUrl)}
               alt=""
-              className="absolute inset-0 h-full w-full object-cover"
+              fill
+              sizes="(min-width: 768px) 40vw, 0px"
+              className="object-cover"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-graphite/30">

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
 import { fetchCaseStudies, type CaseStudy } from "@/lib/caseStudies";
 import { resolveImageUrl } from "@/lib/hero";
@@ -114,12 +115,15 @@ export default function CaseStudiesList() {
                   >
                     <Link href={`/case-studies/${study.slug}`}>
                       {study.coverImageUrl && (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={resolveImageUrl(study.coverImageUrl)}
-                          alt=""
-                          className="mb-6 h-48 w-full rounded-lg object-cover"
-                        />
+                        <div className="relative mb-6 h-48 w-full overflow-hidden rounded-lg">
+                          <Image
+                            src={resolveImageUrl(study.coverImageUrl)}
+                            alt=""
+                            fill
+                            sizes="(min-width: 768px) 800px, 100vw"
+                            className="object-cover"
+                          />
+                        </div>
                       )}
                       <div className="flex flex-wrap items-center gap-3">
                       <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-signal">

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, Phone } from "lucide-react";
 import { fetchSiteSettings } from "@/lib/siteSettings";
 import { fetchOfficeLocations } from "@/lib/officeLocations";
@@ -72,11 +73,13 @@ export default async function Footer() {
         <div className="grid gap-12 md:grid-cols-[2fr_1fr_1fr_1fr_1fr]">
           <div>
             {settings?.logoUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
               <span className="relative block h-10 w-[194px] overflow-hidden">
-                <img
+                <Image
                   src={resolveImageUrl(settings.logoUrl)}
                   alt="Devliora"
+                  width={304}
+                  height={429}
+                  loading="lazy"
                   className="absolute -left-[51px] -top-[184px] h-[429px] w-[304px] max-w-none"
                 />
               </span>
