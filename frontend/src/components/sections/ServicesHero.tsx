@@ -8,6 +8,8 @@ import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
 import { serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
 import { fetchPartners, type PartnerDto } from "@/lib/partners";
+import { SOLUTIONS } from "@/lib/solutions";
+import { slugify } from "@/lib/slugify";
 import { API_BASE_URL } from "@/lib/apiConfig";
 
 // Static two-column tech list per explicit request, matching the reference
@@ -65,6 +67,16 @@ const PRICING_MODELS = [
     quote:
       "A partnership model with a fully committed team working as an extension of your staff, giving you stability, expertise, and cost efficiency for long-term projects.",
   },
+];
+
+// The reference's "Our talent pool" stats (90%/70%/35%, 20+ countries,
+// Dhaka HQ) are specific numbers about that company's own team — not
+// Devliora's. Per standing policy, kept as qualitative capability
+// statements instead of invented percentages.
+const TALENT_HIGHLIGHTS = [
+  { title: "Formally trained", body: "Engineers with backgrounds in Computer Science, Software Engineering, or related fields." },
+  { title: "Senior-led", body: "Every project pairs hands-on engineers with senior technical oversight." },
+  { title: "Built for continuity", body: "We stay engaged well beyond launch, not just through delivery." },
 ];
 
 type Testimonial = {
@@ -426,6 +438,104 @@ export default function ServicesHero() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* "Global delivery" + "Our talent pool": the reference names the
+          source company, a country count, and a headquarters city, plus
+          three specific team-composition percentages — none of that is
+          Devliora's real data, so this is generic delivery-approach copy
+          and qualitative (non-numeric) team highlights instead. */}
+      <section className="relative overflow-hidden bg-ink py-16 text-paper md:py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="grid gap-12 md:grid-cols-2 md:gap-16">
+            <motion.div {...fadeUp(0)}>
+              <h2 className="text-balance font-display text-4xl font-semibold leading-tight md:text-5xl">
+                Global delivery
+              </h2>
+              <p className="mt-5 max-w-md text-paper/70">
+                Devliora delivers software engineering and consulting
+                services built around each client&apos;s actual working
+                setup — remote-first, timezone-aware, and structured for
+                clear, direct communication throughout. We combine careful
+                engineering practice with modern tooling to create
+                reliable, maintainable solutions.
+              </p>
+            </motion.div>
+
+            <motion.div {...fadeUp(1)}>
+              <h2 className="text-balance font-display text-4xl font-semibold leading-tight md:text-5xl">
+                Our talent pool
+              </h2>
+              <div className="mt-8 grid grid-cols-1 gap-8 sm:grid-cols-3">
+                {TALENT_HIGHLIGHTS.map((item) => (
+                  <div key={item.title} className="border-t-2 border-ember pt-4">
+                    <p className="font-display text-xl font-bold leading-tight text-paper">
+                      {item.title}
+                    </p>
+                    <p className="mt-2 text-sm text-paper/60">{item.body}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* "Tailored Solutions": heading/tagline/description and the link
+          list are static; per explicit request, the image on the right
+          reuses the same admin-managed Services image the rest of this
+          page already pulls from SiteSettings.ServicesImageUrl. Link list
+          is the site's own real Solutions offerings, not the reference's. */}
+      <section className="bg-grain relative overflow-hidden bg-ink py-16 text-paper md:py-20">
+        <div className="relative mx-auto max-w-6xl px-6">
+          <div className="grid gap-12 md:grid-cols-2 md:items-center">
+            <div>
+              <motion.h2
+                {...fadeUp(0)}
+                className="text-balance font-display text-4xl font-semibold leading-tight md:text-5xl"
+              >
+                Tailored Solutions
+              </motion.h2>
+
+              <motion.p
+                {...fadeUp(1)}
+                className="mt-5 inline-block max-w-md border-b border-ember/40 pb-3 italic text-paper/60"
+              >
+                Tailored Solutions for Tomorrow&apos;s Challenges
+              </motion.p>
+
+              <motion.p {...fadeUp(2)} className="mt-5 max-w-md text-paper/70">
+                We believe in solutions that fit like a glove. Our bespoke
+                approach means we listen, understand, and deliver precisely
+                what your business needs to thrive in a competitive
+                landscape. No cookie-cutter templates here — just
+                personalized strategies that solve your unique problems.
+              </motion.p>
+
+              <motion.div {...fadeUp(3)} className="mt-8 flex flex-col gap-3">
+                {SOLUTIONS.map((solution) => (
+                  <Link
+                    key={solution.id}
+                    href={`/solutions#${slugify(solution.title)}`}
+                    className="w-fit font-medium text-ember transition-colors hover:text-paper"
+                  >
+                    {solution.title}
+                  </Link>
+                ))}
+              </motion.div>
+            </div>
+
+            <motion.div
+              {...fadeUp(2)}
+              className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite md:aspect-square"
+            >
+              {heroImageUrl && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={heroImageUrl} alt="" className="absolute inset-0 h-full w-full object-cover" />
+              )}
+            </motion.div>
           </div>
         </div>
       </section>
