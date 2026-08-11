@@ -2,7 +2,22 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, ArrowUpDown, Clock, DollarSign, Layers, Star, Zap } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpDown,
+  BrainCircuit,
+  Blocks,
+  CircleDollarSign,
+  Clock,
+  Cloud,
+  DollarSign,
+  Glasses,
+  Layers,
+  Network,
+  Star,
+  Zap,
+} from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { fetchServiceBySlug, serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
@@ -733,6 +748,70 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
             </div>
           </section>
+        )}
+
+        {/* "Strategic IT consulting" + industry focus areas + "Get Started"
+            CTA — IT Consulting only, static. Generic technology-domain
+            copy, no fabricated claims. The 6 focus areas are outline
+            concept icons (not brand logos), so these use lucide-react
+            rather than simple-icons brand marks. */}
+        {service.slug === "it-consulting" && (
+          <>
+            <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+              <div className="mx-auto max-w-6xl px-6">
+                <div className="grid gap-12 md:grid-cols-2">
+                  <div>
+                    <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                      Strategic IT consulting
+                    </h2>
+                    <p className="mt-5 inline-block max-w-md border-b border-paper/30 pb-3 italic text-paper/60">
+                      Aligned solutions, industry-focused, future-ready
+                    </p>
+                  </div>
+                  <p className="text-paper/70">
+                    Stay ahead with technology-driven strategies tailored to your business needs.
+                    Our IT consulting services help you select and implement solutions that
+                    improve operations and support growth. The focus is on practical guidance,
+                    informed decisions, and long-term value.
+                  </p>
+                </div>
+
+                <div className="mt-16 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-6">
+                  {[
+                    { icon: Blocks, label: "Blockchain Technology" },
+                    { icon: Glasses, label: "Augmented Reality" },
+                    { icon: BrainCircuit, label: "Artificial Intelligence" },
+                    { icon: Network, label: "Internet of Things" },
+                    { icon: Cloud, label: "Cloud Computing" },
+                    { icon: CircleDollarSign, label: "FinTech" },
+                  ].map((item) => (
+                    <div key={item.label} className="flex flex-col items-center text-center">
+                      <item.icon className="h-10 w-10 text-paper" strokeWidth={1.25} />
+                      <p className="mt-4 text-sm text-paper/80">{item.label}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            <section className="border-t border-paper/10 bg-signal">
+              <div className="flex flex-col sm:flex-row">
+                <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+                  <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                    Transform your business with cutting-edge IT solutions and tailored
+                    strategies.
+                  </p>
+                </div>
+                <Link
+                  href="/contact"
+                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                >
+                  Get Started
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+              </div>
+            </section>
+          </>
         )}
 
         {tabs ? (
