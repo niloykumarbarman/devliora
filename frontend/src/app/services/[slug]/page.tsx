@@ -1701,6 +1701,30 @@ export default async function ServiceDetailPage({ params }: Props) {
           </>
         )}
 
+        {/* "Explore Now" CTA banner — IT Consulting only, static, same
+            full-bleed pattern as the other CTA banners on this page.
+            Positioned right before ClientSpotlight to match the
+            reference's order. */}
+        {service.slug === "it-consulting" && (
+          <section className="border-t border-paper/10 bg-signal">
+            <div className="flex flex-col sm:flex-row">
+              <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  Discover how our expert consulting can streamline your software implementation
+                  and tech choices.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+              >
+                Explore Now
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </section>
+        )}
+
         <ClientSpotlight items={clientSpotlight} />
 
         {/* Skipped here for Digital Marketing — already rendered higher up,
