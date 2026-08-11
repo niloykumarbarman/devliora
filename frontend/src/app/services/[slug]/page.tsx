@@ -1735,10 +1735,11 @@ export default async function ServiceDetailPage({ params }: Props) {
         {/* Case studies, pulled live from the site's real case-studies data.
             Hidden on Digital Design at request — ClientSpotlight and
             FeaturedWorkSplit above already cover "proof of work" on that
-            page. Also hidden on Digital Marketing at request (the case
-            studies shown are all engineering-flavored, not marketing).
+            page. Also hidden on Digital Marketing and IT Consulting at
+            request (the case studies shown are all engineering-flavored,
+            not marketing or consulting).
             Still shown on every other service page. */}
-        {caseStudies.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && (
+        {caseStudies.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && (
           <section className="relative overflow-hidden border-t border-paper/10 bg-graphite py-24 md:py-32">
             <div className="mx-auto max-w-6xl px-6">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">Case studies</p>
@@ -1781,10 +1782,11 @@ export default async function ServiceDetailPage({ params }: Props) {
         )}
 
         {/* Blog Highlights, pulled live from the site's real blog posts.
-            Hidden on Digital Design and Digital Marketing at request, same
-            as Case Studies above — still shown on every other service
+            Hidden on Digital Design, Digital Marketing, and IT Consulting
+            at request, same as Case Studies above — still shown on every
+            other service
             page. */}
-        {blogGridCells.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && (
+        {blogGridCells.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && (
           <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
             <div className="mx-auto max-w-6xl px-6 text-center">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">From the blog</p>
@@ -1837,10 +1839,10 @@ export default async function ServiceDetailPage({ params }: Props) {
         )}
 
         {/* Why choose us + a real, admin-entered client testimonial.
-            Hidden on Digital Design and Digital Marketing at request, same
-            as Case Studies/Blog Highlights above — still shown on every
-            other service page. */}
-        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && (
+            Hidden on Digital Design, Digital Marketing, and IT Consulting
+            at request, same as Case Studies/Blog Highlights above — still
+            shown on every other service page. */}
+        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && (
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto grid max-w-6xl gap-16 px-6 md:grid-cols-2">
             <div>
@@ -1923,9 +1925,10 @@ export default async function ServiceDetailPage({ params }: Props) {
         {/* Engagement models. Hidden on Digital Design at request; also
             hidden on Digital Marketing since it already has its own
             "Pricing" column (Time & Material/Dedicated Team) in the
-            Solutions/Pricing/Timeline section above — still shown on
+            Solutions/Pricing/Timeline section above; also hidden on IT
+            Consulting at request — still shown on
             every other service page. */}
-        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && (
+        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && (
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto max-w-6xl px-6">
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">How we engage</p>
@@ -1962,10 +1965,10 @@ export default async function ServiceDetailPage({ params }: Props) {
         </section>
         )}
 
-        {/* Software essentials. Hidden on Digital Design and Digital
-            Marketing at request, same as the sections above — still shown
-            on every other service page. */}
-        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && (
+        {/* Software essentials. Hidden on Digital Design, Digital
+            Marketing, and IT Consulting at request, same as the sections
+            above — still shown on every other service page. */}
+        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && (
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto max-w-6xl px-6">
             <h2 className="font-display text-3xl font-semibold leading-tight sm:text-4xl">
@@ -2020,10 +2023,10 @@ export default async function ServiceDetailPage({ params }: Props) {
             "From code to launch" / "Delivery framework" — software-
             engineering-specific copy that doesn't fit Digital Marketing
             even when its own includes[] happens to list marketing tasks
-            (SEO, paid ads, etc.). Hidden on Digital Design and Digital
-            Marketing at request, same as the sections above — still
-            shown on every other service page. */}
-        {service.includes.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && (
+            (SEO, paid ads, etc.). Hidden on Digital Design, Digital
+            Marketing, and IT Consulting at request, same as the sections
+            above — still shown on every other service page. */}
+        {service.includes.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && (
           <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
             <div
               className="pointer-events-none absolute inset-0 bg-[size:56px_56px] opacity-60"
