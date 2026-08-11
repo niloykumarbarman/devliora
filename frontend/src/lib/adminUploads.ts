@@ -1,4 +1,4 @@
-import { getAdminToken } from "@/lib/adminAuth";
+import { getAdminToken, clearAdminToken } from "@/lib/adminAuth";
 import { API_BASE_URL } from "./apiConfig";
 
 export const UPLOADS_API_URL = `${API_BASE_URL}/uploads`;
@@ -29,6 +29,20 @@ export async function uploadImage(file: File): Promise<string> {
   });
 
   if (!res.ok) {
+    // adminFetch (used for every other admin API call) clears the stored
+    // token and redirects to /admin/login on a 401. Uploads deliberately
+    // bypass adminFetch (see comment above), so without this they'd fail
+    // with an inline "Upload failed: 401" and leave the user stuck on a
+    // page that still looks logged in, with every other button silently
+    // failing the same way.
+    if (res.status === 401) {
+      clearAdminToken();
+      if (typeof window !== "undefined") {
+        window.location.href = "/admin/login";
+      }
+      throw new Error("Session expired. Redirecting to login...");
+    }
+
     let message = `Upload failed: ${res.status}`;
     try {
       const data = await res.json();
