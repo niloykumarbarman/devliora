@@ -1003,7 +1003,25 @@ export default async function ServiceDetailPage({ params }: Props) {
                         key="center-icon"
                         className="flex h-24 w-24 items-center justify-center sm:h-28 sm:w-28"
                       >
-                        <Glasses className="h-12 w-12 text-paper/60" strokeWidth={1.25} />
+                        {/* Hand-drawn approximation of the reference's bespoke
+                            line art (a side-profile face wearing an AR/VR
+                            headset) — not a redrawn copy of their exact
+                            artwork, but closer than a generic lucide icon. */}
+                        <svg
+                          viewBox="0 0 100 100"
+                          className="h-14 w-14 text-paper/60"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth={2.2}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          role="img"
+                          aria-label="Person wearing an AR/VR headset"
+                        >
+                          <path d="M 23 40 C 22 26, 32 15, 47 14 C 59 13.5, 68 21, 69 31 L 69 47 C 69 51, 67 55, 63 58 C 60 63, 55 66.5, 49 68 C 44 69, 39 68, 35 65 C 29 60, 24 52, 23 44 C 22.7 42.7, 22.8 41.3, 23 40 Z" />
+                          <rect x="45" y="29" width="25" height="16" rx="6.5" />
+                          <path d="M 47 28 C 40 19, 31 16, 23 19" />
+                        </svg>
                       </div>
                     ),
                   )}
