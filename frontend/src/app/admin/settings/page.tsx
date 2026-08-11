@@ -17,11 +17,19 @@ export default function AdminSettingsPage() {
   const [portfolioHeroImageUrl, setPortfolioHeroImageUrl] = useState("");
   const [industriesImageUrl, setIndustriesImageUrl] = useState("");
   const [servicesImageUrl, setServicesImageUrl] = useState("");
+  const [servicesBannerImageUrl, setServicesBannerImageUrl] = useState("");
+  const [servicesEngineeringImageUrl, setServicesEngineeringImageUrl] = useState("");
+  const [servicesTechImageUrl, setServicesTechImageUrl] = useState("");
+  const [servicesSolutionsImageUrl, setServicesSolutionsImageUrl] = useState("");
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [uploadingHero, setUploadingHero] = useState(false);
   const [uploadingIndustries, setUploadingIndustries] = useState(false);
   const [uploadingServices, setUploadingServices] = useState(false);
+  const [uploadingServicesBanner, setUploadingServicesBanner] = useState(false);
+  const [uploadingServicesEngineering, setUploadingServicesEngineering] = useState(false);
+  const [uploadingServicesTech, setUploadingServicesTech] = useState(false);
+  const [uploadingServicesSolutions, setUploadingServicesSolutions] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -39,6 +47,10 @@ export default function AdminSettingsPage() {
           setPortfolioHeroImageUrl(data.portfolioHeroImageUrl);
           setIndustriesImageUrl(data.industriesImageUrl);
           setServicesImageUrl(data.servicesImageUrl);
+          setServicesBannerImageUrl(data.servicesBannerImageUrl);
+          setServicesEngineeringImageUrl(data.servicesEngineeringImageUrl);
+          setServicesTechImageUrl(data.servicesTechImageUrl);
+          setServicesSolutionsImageUrl(data.servicesSolutionsImageUrl);
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load site settings.");
@@ -121,6 +133,78 @@ export default function AdminSettingsPage() {
     }
   };
 
+  const handleServicesBannerFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingServicesBanner(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setServicesBannerImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload services page banner image.");
+    } finally {
+      setUploadingServicesBanner(false);
+    }
+  };
+
+  const handleServicesEngineeringFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingServicesEngineering(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setServicesEngineeringImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload Engineering Services image.");
+    } finally {
+      setUploadingServicesEngineering(false);
+    }
+  };
+
+  const handleServicesTechFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingServicesTech(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setServicesTechImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload Advanced Technologies image.");
+    } finally {
+      setUploadingServicesTech(false);
+    }
+  };
+
+  const handleServicesSolutionsFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingServicesSolutions(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setServicesSolutionsImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload Tailored Solutions image.");
+    } finally {
+      setUploadingServicesSolutions(false);
+    }
+  };
+
   const handleSave = async () => {
     if (!settingsId) return;
     setSaving(true);
@@ -134,6 +218,10 @@ export default function AdminSettingsPage() {
         portfolioHeroImageUrl,
         industriesImageUrl,
         servicesImageUrl,
+        servicesBannerImageUrl,
+        servicesEngineeringImageUrl,
+        servicesTechImageUrl,
+        servicesSolutionsImageUrl,
       });
       setSuccess(true);
     } catch (err) {
@@ -296,7 +384,7 @@ export default function AdminSettingsPage() {
           <label className={labelClass}>Services Menu Image</label>
           <p className="mt-1 text-xs text-graphite/50">
             Shown next to the Services/Technologies/Solutions columns in the navbar&apos;s
-            Services dropdown.
+            Services dropdown only. The /services page itself has its own 4 images below.
           </p>
           <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
             {servicesImageUrl ? (
@@ -327,6 +415,158 @@ export default function AdminSettingsPage() {
               className="hidden"
               onChange={handleServicesFileChange}
               disabled={uploadingServices}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Services Page — Title Banner Image</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            The full-bleed &quot;Services&quot; title banner at the top of /services.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {servicesBannerImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(servicesBannerImageUrl)}
+                alt="Services page banner preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No banner image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingServicesBanner ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingServicesBanner ? "Uploading..." : "Upload banner image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleServicesBannerFileChange}
+              disabled={uploadingServicesBanner}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Services Page — &quot;Engineering Services&quot; Image</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            The image next to the &quot;Engineering Services&quot; heading and service list.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {servicesEngineeringImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(servicesEngineeringImageUrl)}
+                alt="Engineering Services preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingServicesEngineering ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingServicesEngineering ? "Uploading..." : "Upload image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleServicesEngineeringFileChange}
+              disabled={uploadingServicesEngineering}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Services Page — &quot;Advanced Technologies&quot; Image</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            The image above the &quot;Customer Voice&quot; testimonial in the Advanced Technologies section.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {servicesTechImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(servicesTechImageUrl)}
+                alt="Advanced Technologies preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingServicesTech ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingServicesTech ? "Uploading..." : "Upload image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleServicesTechFileChange}
+              disabled={uploadingServicesTech}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Services Page — &quot;Tailored Solutions&quot; Image</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            The image next to the &quot;Tailored Solutions&quot; heading and solutions list.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {servicesSolutionsImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(servicesSolutionsImageUrl)}
+                alt="Tailored Solutions preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingServicesSolutions ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingServicesSolutions ? "Uploading..." : "Upload image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleServicesSolutionsFileChange}
+              disabled={uploadingServicesSolutions}
             />
           </label>
         </div>

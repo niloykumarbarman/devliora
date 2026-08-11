@@ -8,6 +8,10 @@ export interface SiteSettingsDto {
   portfolioHeroImageUrl: string;
   industriesImageUrl: string;
   servicesImageUrl: string;
+  servicesBannerImageUrl: string;
+  servicesEngineeringImageUrl: string;
+  servicesTechImageUrl: string;
+  servicesSolutionsImageUrl: string;
 }
 
 export const SITE_SETTINGS_API_URL = `${API_BASE_URL}/site-settings`;

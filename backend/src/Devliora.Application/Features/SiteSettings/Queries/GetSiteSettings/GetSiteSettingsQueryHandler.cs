@@ -41,7 +41,11 @@ public class GetSiteSettingsQueryHandler : IRequestHandler<GetSiteSettingsQuery,
                 SiteName = "Devliora",
                 PortfolioHeroImageUrl = "",
                 IndustriesImageUrl = "",
-                ServicesImageUrl = ""
+                ServicesImageUrl = "",
+                ServicesBannerImageUrl = "",
+                ServicesEngineeringImageUrl = "",
+                ServicesTechImageUrl = "",
+                ServicesSolutionsImageUrl = ""
             };
             _context.SiteSettings.Add(settings);
             await _context.SaveChangesAsync(cancellationToken);
@@ -54,7 +58,11 @@ public class GetSiteSettingsQueryHandler : IRequestHandler<GetSiteSettingsQuery,
             SiteName = settings.SiteName,
             PortfolioHeroImageUrl = settings.PortfolioHeroImageUrl,
             IndustriesImageUrl = settings.IndustriesImageUrl,
-            ServicesImageUrl = settings.ServicesImageUrl
+            ServicesImageUrl = settings.ServicesImageUrl,
+            ServicesBannerImageUrl = settings.ServicesBannerImageUrl,
+            ServicesEngineeringImageUrl = settings.ServicesEngineeringImageUrl,
+            ServicesTechImageUrl = settings.ServicesTechImageUrl,
+            ServicesSolutionsImageUrl = settings.ServicesSolutionsImageUrl
         };
 
         await _cache.SetAsync(CacheKey, result, TimeSpan.FromMinutes(5), cancellationToken);

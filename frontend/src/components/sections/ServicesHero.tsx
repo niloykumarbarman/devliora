@@ -103,16 +103,24 @@ async function fetchFeaturedTestimonial(): Promise<Testimonial | null> {
 
 export default function ServicesHero() {
   const shouldReduceMotion = useReducedMotion();
-  const [heroImageUrl, setHeroImageUrl] = useState("");
+  // Four independent, admin-editable images (Site Settings) — one per
+  // image slot on this page, per explicit request (not a single reused
+  // image anymore).
+  const [bannerImageUrl, setBannerImageUrl] = useState("");
+  const [engineeringImageUrl, setEngineeringImageUrl] = useState("");
+  const [techImageUrl, setTechImageUrl] = useState("");
+  const [solutionsImageUrl, setSolutionsImageUrl] = useState("");
   const [testimonial, setTestimonial] = useState<Testimonial | null>(null);
   const [partners, setPartners] = useState<PartnerDto[]>([]);
 
   useEffect(() => {
     let cancelled = false;
     fetchSiteSettings().then((data) => {
-      if (!cancelled && data?.servicesImageUrl) {
-        setHeroImageUrl(resolveImageUrl(data.servicesImageUrl));
-      }
+      if (cancelled || !data) return;
+      if (data.servicesBannerImageUrl) setBannerImageUrl(resolveImageUrl(data.servicesBannerImageUrl));
+      if (data.servicesEngineeringImageUrl) setEngineeringImageUrl(resolveImageUrl(data.servicesEngineeringImageUrl));
+      if (data.servicesTechImageUrl) setTechImageUrl(resolveImageUrl(data.servicesTechImageUrl));
+      if (data.servicesSolutionsImageUrl) setSolutionsImageUrl(resolveImageUrl(data.servicesSolutionsImageUrl));
     });
     fetchFeaturedTestimonial().then((data) => {
       if (!cancelled) setTestimonial(data);
@@ -142,9 +150,9 @@ export default function ServicesHero() {
           block, not just the breadcrumb. */}
       <section className="relative overflow-hidden bg-ink text-paper">
         <div className="relative flex h-[280px] items-center justify-center sm:h-[340px] md:h-[380px]">
-          {heroImageUrl ? (
+          {bannerImageUrl ? (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={heroImageUrl} alt="" className="absolute inset-0 h-full w-full object-cover" />
+            <img src={bannerImageUrl} alt="" className="absolute inset-0 h-full w-full object-cover" />
           ) : (
             <div
               className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.18] blur-[120px]"
@@ -230,9 +238,9 @@ export default function ServicesHero() {
               {...fadeUp(2)}
               className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite md:aspect-square"
             >
-              {heroImageUrl && (
+              {engineeringImageUrl && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={heroImageUrl} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                <img src={engineeringImageUrl} alt="" className="absolute inset-0 h-full w-full object-cover" />
               )}
             </motion.div>
           </div>
@@ -262,16 +270,16 @@ export default function ServicesHero() {
 
       {/* "Advanced Technologies": heading/tagline/description + the site's
           own real Technologies list (admin-managed, not copied from any
-          reference) on the right, and on the left the same hero image
-          again plus a real featured client testimonial underneath. */}
+          reference) on the right, and on the left its own admin-editable
+          image plus a real featured client testimonial underneath. */}
       <section className="relative overflow-hidden bg-ink py-16 text-paper md:py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid gap-12 md:grid-cols-2">
             <div>
               <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite">
-                {heroImageUrl && (
+                {techImageUrl && (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={heroImageUrl} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                  <img src={techImageUrl} alt="" className="absolute inset-0 h-full w-full object-cover" />
                 )}
               </div>
 
@@ -484,10 +492,10 @@ export default function ServicesHero() {
       </section>
 
       {/* "Tailored Solutions": heading/tagline/description and the link
-          list are static; per explicit request, the image on the right
-          reuses the same admin-managed Services image the rest of this
-          page already pulls from SiteSettings.ServicesImageUrl. Link list
-          is the site's own real Solutions offerings, not the reference's. */}
+          list are static; the image on the right is its own independent
+          admin-editable field (SiteSettings.ServicesSolutionsImageUrl).
+          Link list is the site's own real Solutions offerings, not the
+          reference's. */}
       <section className="bg-grain relative overflow-hidden bg-ink py-16 text-paper md:py-20">
         <div className="relative mx-auto max-w-6xl px-6">
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
@@ -531,9 +539,9 @@ export default function ServicesHero() {
               {...fadeUp(2)}
               className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite md:aspect-square"
             >
-              {heroImageUrl && (
+              {solutionsImageUrl && (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={heroImageUrl} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                <img src={solutionsImageUrl} alt="" className="absolute inset-0 h-full w-full object-cover" />
               )}
             </motion.div>
           </div>
