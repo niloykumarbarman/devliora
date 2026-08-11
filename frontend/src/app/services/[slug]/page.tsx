@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, ArrowUpDown, Layers, Star, Zap } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpDown, Clock, DollarSign, Layers, Star, Zap } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { fetchServiceBySlug, serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
@@ -770,14 +770,18 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section>
         )}
 
-        {/* "Key Digital Solutions" — Digital Marketing only, static.
-            Reworked from the KAZ reference: its Pricing and Limitations
-            columns quoted that company's own specific (and partly
-            joke/humor) plan pricing, not a real Devliora offering, so
-            only the generic capability list carries over. */}
+        {/* "Key Digital Solutions" / Pricing / Timeline — Digital Marketing
+            only, static, 3 columns matching the reference's layout.
+            Reworked from the KAZ reference: its Pricing column quoted
+            that company's own specific pricing ($180/person/year etc.),
+            and its Limitations column was joke/humor copy about that
+            plan — neither is Devliora's real offering. Pricing here
+            reuses the same Time & Material / Dedicated Team engagement
+            models already on the /services page; Limitations is
+            replaced with a real Timeline column instead. */}
         {service.slug === "digital-marketing" && (
           <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
-            <div className="mx-auto max-w-4xl px-6">
+            <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-10 md:grid-cols-2 md:gap-16">
                 <div>
                   <h2 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
@@ -795,28 +799,59 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </p>
               </div>
 
-              <div className="mt-14 flex items-center gap-3">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ember text-ink">
-                  <Zap className="h-5 w-5" fill="currentColor" />
-                </span>
-                <p className="text-base font-bold uppercase tracking-wide text-paper">
-                  Key Digital Solutions
-                </p>
-              </div>
-
-              <ul className="mt-6 flex max-w-xs flex-col gap-4">
+              <div className="mt-14 grid grid-cols-1 gap-12 sm:grid-cols-3 sm:gap-8">
                 {[
-                  "Social Media Management",
-                  "Content Creation & Curation",
-                  "SEO Optimization",
-                  "Email Marketing Automation",
-                  "Analytics & Reporting Dashboards",
-                ].map((item) => (
-                  <li key={item} className="text-base text-paper/80">
-                    {item}
-                  </li>
+                  {
+                    icon: Zap,
+                    label: "Key Digital Solutions",
+                    items: [
+                      "Social Media Management",
+                      "Content Creation & Curation",
+                      "SEO Optimization",
+                      "Email Marketing Automation",
+                      "Analytics & Reporting Dashboards",
+                    ],
+                  },
+                  {
+                    icon: DollarSign,
+                    label: "Pricing",
+                    items: [
+                      "Time & Material — billed for actual hours and effort",
+                      "Dedicated Team — an extension of your in-house team",
+                      "Fixed-price for well-scoped campaigns",
+                      "Monthly retainers for ongoing management",
+                    ],
+                  },
+                  {
+                    icon: Clock,
+                    label: "Timeline",
+                    items: [
+                      "Onboarding & strategy: 1–2 weeks",
+                      "Campaign setup & launch: 2–3 weeks",
+                      "Ongoing optimization, reviewed monthly",
+                      "Regular performance reporting",
+                    ],
+                  },
+                ].map((col) => (
+                  <div key={col.label}>
+                    <div className="flex items-center gap-3">
+                      <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ember text-ink">
+                        <col.icon className="h-5 w-5" strokeWidth={2.25} />
+                      </span>
+                      <p className="text-base font-bold uppercase tracking-wide text-paper">
+                        {col.label}
+                      </p>
+                    </div>
+                    <ul className="mt-6 flex flex-col gap-4">
+                      {col.items.map((item) => (
+                        <li key={item} className="text-base text-paper/80">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           </section>
         )}
