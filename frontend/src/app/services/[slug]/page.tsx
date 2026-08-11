@@ -655,9 +655,92 @@ export default async function ServiceDetailPage({ params }: Props) {
           </>
         )}
 
+        {/* IT Consulting only, static. Reworked from the reference: it
+            claimed "Since 2004" and three specific stats (30% faster
+            implementation, 85%/90% client-outcome rates) — none of that
+            is Devliora's real history or data, so this restates the same
+            value propositions as generic capability claims instead,
+            keeping the reference's layout and the ember-highlight
+            treatment on the callout phrases. Tool icons fetched and
+            verified from simple-icons the same way as the Digital
+            Marketing page's tools. */}
+        {service.slug === "it-consulting" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="grid gap-12 md:grid-cols-2">
+                <div>
+                  <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                    Expert IT consulting, tailored for you
+                  </h2>
+                  <p className="mt-5 inline-block max-w-md border-b border-ember/40 pb-3 italic text-paper/60">
+                    Smart solutions, tailored strategies, and proven success.
+                  </p>
+                  <div className="mt-6 flex flex-col gap-4 text-paper/80">
+                    <p>
+                      We create software roadmaps that{" "}
+                      <span className="font-semibold text-ember">
+                        reduce implementation time and risk
+                      </span>
+                      , ensuring smooth transitions and optimized investments.
+                    </p>
+                    <p>
+                      Our tech advisory services{" "}
+                      <span className="font-semibold text-ember">
+                        help you evaluate platforms objectively
+                      </span>
+                      , so you invest in the right one the first time.
+                    </p>
+                    <p>
+                      We guide businesses toward{" "}
+                      <span className="font-semibold text-ember">
+                        the ideal CRM, ERP, or custom solution
+                      </span>{" "}
+                      for their specific needs — not just the most popular one.
+                    </p>
+                  </div>
+                </div>
+                <p className="text-paper/70">
+                  We help organizations streamline operations, improve services, and launch new
+                  digital products. Our IT consulting services focus on shaping practical
+                  technology environments that align with business goals, strengthen
+                  capabilities, and support better customer experiences.
+                </p>
+              </div>
+
+              <div className="mt-14 flex flex-wrap items-center gap-x-8 gap-y-6">
+                {[
+                  { slug: "nodejs", label: "Node.js" },
+                  { slug: "php", label: "PHP" },
+                  { slug: "laravel", label: "Laravel" },
+                  { slug: "react", label: "React" },
+                  { slug: "angular", label: "Angular" },
+                  { slug: "java", label: "Java" },
+                  { slug: "flutter", label: "Flutter" },
+                ].map((tool) => {
+                  const icon = getTechIcon(tool.slug);
+                  return (
+                    <div
+                      key={tool.slug}
+                      className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-paper/95 shadow-sm"
+                    >
+                      {icon ? (
+                        <TechBrandIcon name={tool.slug} className="h-8 w-8" />
+                      ) : (
+                        <span className="px-1 text-center text-[0.65rem] font-semibold leading-tight text-ink/70">
+                          {tool.label}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        )}
+
         {tabs ? (
           <ServiceTabs tabs={tabs} heroImageUrl={hero?.backgroundImageUrl} technologies={technologies} />
-        ) : (
+        ) : service.slug === "it-consulting" ? null : (
           /* Fallback overview for services without a tab breakdown */
           <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-4xl px-6">
