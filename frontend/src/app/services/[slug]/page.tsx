@@ -947,11 +947,15 @@ export default async function ServiceDetailPage({ params }: Props) {
 
         {/* "Empower your business with smart tech solutions" — IT
             Consulting only, static. Generic technology-capability terms,
-            no fabricated claims. The reference's center graphic is
-            bespoke line art (a person in a VR headset) — approximated
-            here with a lucide icon rather than redrawn. Its left/right/
-            up/down arrows read as carousel controls for rotating
-            capability sets; kept as plain decorative chevrons since
+            no fabricated claims. Circles sit on a true radial layout
+            (trig-computed positions, not a CSS grid) with a gradient
+            ring border, matching the reference more closely per
+            follow-up request. The reference's center graphic is bespoke
+            line art (a person in a VR headset) — approximated with a
+            hand-drawn SVG (drafted and checked with cairosvg before
+            committing) rather than redrawn from their original asset.
+            Its arrow/bracket controls read as carousel chrome for
+            rotating capability sets; kept as plain decoration since
             there's no second set of terms to rotate through. */}
         {service.slug === "it-consulting" && (
           <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
@@ -972,59 +976,84 @@ export default async function ServiceDetailPage({ params }: Props) {
                   </p>
                 </div>
 
-                <div className="relative mx-auto grid w-full max-w-xl grid-cols-3 grid-rows-3 place-items-center gap-4 py-8 sm:gap-7">
-                  <ChevronUp className="absolute left-1/2 top-0 h-5 w-5 -translate-x-1/2 text-paper/30" />
-                  <ChevronDown className="absolute bottom-0 left-1/2 h-5 w-5 -translate-x-1/2 text-paper/30" />
-                  <ChevronLeft className="absolute left-0 top-1/2 h-5 w-5 -translate-y-1/2 text-paper/30" />
-                  <ChevronRight className="absolute right-0 top-1/2 h-5 w-5 -translate-y-1/2 text-paper/30" />
+                <div className="relative mx-auto aspect-square w-full max-w-lg">
+                  {/* corner brackets framing the center icon */}
+                  {[0, 90, 180, 270].map((deg) => (
+                    <svg
+                      key={deg}
+                      viewBox="0 0 20 20"
+                      className="absolute left-1/2 top-1/2 h-4 w-4 text-paper/30"
+                      style={{
+                        transform: `translate(-50%, -50%) rotate(${deg}deg) translate(-34px, -34px)`,
+                      }}
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                      strokeLinecap="round"
+                    >
+                      <path d="M2 10 V2 H10" />
+                    </svg>
+                  ))}
 
+                  <ChevronUp className="absolute left-1/2 top-[38%] h-4 w-4 -translate-x-1/2 -translate-y-1/2 text-paper/30" />
+                  <ChevronDown className="absolute left-1/2 top-[62%] h-4 w-4 -translate-x-1/2 -translate-y-1/2 text-paper/30" />
+                  <ChevronLeft className="absolute left-[38%] top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 text-paper/30" />
+                  <ChevronRight className="absolute left-[62%] top-1/2 h-4 w-4 -translate-x-1/2 -translate-y-1/2 text-paper/30" />
+
+                  {/* center icon */}
+                  <div className="absolute left-1/2 top-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center sm:h-24 sm:w-24">
+                    <svg
+                      viewBox="0 0 100 100"
+                      className="h-14 w-14 text-paper/70 sm:h-16 sm:w-16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={2.2}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      role="img"
+                      aria-label="Person wearing an AR/VR headset"
+                    >
+                      <path d="M 23 40 C 22 26, 32 15, 47 14 C 59 13.5, 68 21, 69 31 L 69 47 C 69 51, 67 55, 63 58 C 60 63, 55 66.5, 49 68 C 44 69, 39 68, 35 65 C 29 60, 24 52, 23 44 C 22.7 42.7, 22.8 41.3, 23 40 Z" />
+                      <path d="M 41 67 L 38 80" />
+                      <rect x="45" y="29" width="25" height="16" rx="6.5" />
+                      <path d="M 47 28 C 40 19, 31 16, 23 19" />
+                    </svg>
+                  </div>
+
+                  {/* 8 capability circles, positioned radially (0deg = top,
+                      clockwise) around the center. */}
                   {[
-                    { label: "Big data & analytics", tone: "border-blue-400/70" },
-                    { label: "Computer vision", tone: "border-violet-400/70" },
-                    { label: "Personalization solutions", tone: "border-violet-400/70" },
-                    { label: "IoT & edge computing", tone: "border-violet-400/70" },
-                    null,
-                    { label: "AR/VR/MR", tone: "border-violet-400/70" },
-                    { label: "Blockchain", tone: "border-violet-400/70" },
-                    { label: "Enterprise AI", tone: "border-blue-400/70" },
-                    { label: "Intelligent process automation", tone: "border-violet-400/70" },
-                  ].map((item) =>
-                    item ? (
+                    { label: "Computer vision", angle: 0 },
+                    { label: "Personalization solutions", angle: 45 },
+                    { label: "AR/VR/MR", angle: 90 },
+                    { label: "Intelligent process automation", angle: 135 },
+                    { label: "Enterprise AI", angle: 180 },
+                    { label: "Blockchain", angle: 225 },
+                    { label: "IoT & edge computing", angle: 270 },
+                    { label: "Big data & analytics", angle: 315 },
+                  ].map((item) => {
+                    const rad = (item.angle * Math.PI) / 180;
+                    const radius = 38;
+                    const left = 50 + radius * Math.sin(rad);
+                    const top = 50 - radius * Math.cos(rad);
+                    return (
                       <div
                         key={item.label}
-                        className={`flex h-28 w-28 shrink-0 items-center justify-center rounded-full border-2 ${item.tone} bg-ink p-3 text-center sm:h-36 sm:w-36`}
+                        className="absolute flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full p-[2px] sm:h-28 sm:w-28"
+                        style={{
+                          left: `${left}%`,
+                          top: `${top}%`,
+                          backgroundImage: "linear-gradient(135deg, #a78bfa, #60a5fa)",
+                        }}
                       >
-                        <span className="text-sm font-medium leading-snug text-paper">
-                          {item.label}
-                        </span>
+                        <div className="flex h-full w-full items-center justify-center rounded-full bg-ink p-3 text-center">
+                          <span className="text-xs font-medium leading-snug text-paper">
+                            {item.label}
+                          </span>
+                        </div>
                       </div>
-                    ) : (
-                      <div
-                        key="center-icon"
-                        className="flex h-28 w-28 items-center justify-center sm:h-36 sm:w-36"
-                      >
-                        {/* Hand-drawn approximation of the reference's bespoke
-                            line art (a side-profile face wearing an AR/VR
-                            headset) — not a redrawn copy of their exact
-                            artwork, but closer than a generic lucide icon. */}
-                        <svg
-                          viewBox="0 0 100 100"
-                          className="h-16 w-16 text-paper/60"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth={2.2}
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          role="img"
-                          aria-label="Person wearing an AR/VR headset"
-                        >
-                          <path d="M 23 40 C 22 26, 32 15, 47 14 C 59 13.5, 68 21, 69 31 L 69 47 C 69 51, 67 55, 63 58 C 60 63, 55 66.5, 49 68 C 44 69, 39 68, 35 65 C 29 60, 24 52, 23 44 C 22.7 42.7, 22.8 41.3, 23 40 Z" />
-                          <rect x="45" y="29" width="25" height="16" rx="6.5" />
-                          <path d="M 47 28 C 40 19, 31 16, 23 19" />
-                        </svg>
-                      </div>
-                    ),
-                  )}
+                    );
+                  })}
                 </div>
               </div>
             </div>
