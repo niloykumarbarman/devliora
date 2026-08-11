@@ -62,7 +62,7 @@ export async function fetchServiceBySlug(slug: string): Promise<ServiceDto | nul
 // link to a #slug anchor on that page, but the section with those anchor
 // targets (ServicesDetailList) was removed, so linking to #slug would just
 // silently fail to scroll. Plain /services is the correct fallback now.
-const DETAIL_PAGE_SLUGS = new Set(["software-engineering", "digital-design"]);
+const DETAIL_PAGE_SLUGS = new Set(["software-engineering", "digital-design", "digital-marketing"]);
 
 export function hasDetailPage(slug: string): boolean {
   return DETAIL_PAGE_SLUGS.has(slug);
