@@ -972,11 +972,11 @@ export default async function ServiceDetailPage({ params }: Props) {
                   </p>
                 </div>
 
-                <div className="relative mx-auto grid w-full max-w-md grid-cols-3 grid-rows-3 place-items-center gap-3 py-6 sm:gap-5">
-                  <ChevronUp className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 text-paper/30" />
-                  <ChevronDown className="absolute bottom-0 left-1/2 h-4 w-4 -translate-x-1/2 text-paper/30" />
-                  <ChevronLeft className="absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-paper/30" />
-                  <ChevronRight className="absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-paper/30" />
+                <div className="relative mx-auto grid w-full max-w-xl grid-cols-3 grid-rows-3 place-items-center gap-4 py-8 sm:gap-7">
+                  <ChevronUp className="absolute left-1/2 top-0 h-5 w-5 -translate-x-1/2 text-paper/30" />
+                  <ChevronDown className="absolute bottom-0 left-1/2 h-5 w-5 -translate-x-1/2 text-paper/30" />
+                  <ChevronLeft className="absolute left-0 top-1/2 h-5 w-5 -translate-y-1/2 text-paper/30" />
+                  <ChevronRight className="absolute right-0 top-1/2 h-5 w-5 -translate-y-1/2 text-paper/30" />
 
                   {[
                     { label: "Big data & analytics", tone: "border-blue-400/70" },
@@ -992,16 +992,16 @@ export default async function ServiceDetailPage({ params }: Props) {
                     item ? (
                       <div
                         key={item.label}
-                        className={`flex h-24 w-24 shrink-0 items-center justify-center rounded-full border-2 ${item.tone} bg-ink p-3 text-center sm:h-28 sm:w-28`}
+                        className={`flex h-28 w-28 shrink-0 items-center justify-center rounded-full border-2 ${item.tone} bg-ink p-3 text-center sm:h-36 sm:w-36`}
                       >
-                        <span className="text-xs font-medium leading-snug text-paper">
+                        <span className="text-sm font-medium leading-snug text-paper">
                           {item.label}
                         </span>
                       </div>
                     ) : (
                       <div
                         key="center-icon"
-                        className="flex h-24 w-24 items-center justify-center sm:h-28 sm:w-28"
+                        className="flex h-28 w-28 items-center justify-center sm:h-36 sm:w-36"
                       >
                         {/* Hand-drawn approximation of the reference's bespoke
                             line art (a side-profile face wearing an AR/VR
@@ -1009,7 +1009,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                             artwork, but closer than a generic lucide icon. */}
                         <svg
                           viewBox="0 0 100 100"
-                          className="h-14 w-14 text-paper/60"
+                          className="h-16 w-16 text-paper/60"
                           fill="none"
                           stroke="currentColor"
                           strokeWidth={2.2}
