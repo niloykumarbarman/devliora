@@ -8,6 +8,10 @@ import {
   ArrowUpDown,
   BrainCircuit,
   Blocks,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronUp,
   CircleDollarSign,
   Clock,
   Cloud,
@@ -939,6 +943,74 @@ export default async function ServiceDetailPage({ params }: Props) {
             differently-worded description paragraph. */}
         {service.slug === "it-consulting" && (
           <QualityManagement description="We are a quality-driven software development organization, committed to maintaining strong engineering standards. By following proven processes and established quality and information security frameworks, solutions are designed to be reliable, secure, and sustainable over time." />
+        )}
+
+        {/* "Empower your business with smart tech solutions" — IT
+            Consulting only, static. Generic technology-capability terms,
+            no fabricated claims. The reference's center graphic is
+            bespoke line art (a person in a VR headset) — approximated
+            here with a lucide icon rather than redrawn. Its left/right/
+            up/down arrows read as carousel controls for rotating
+            capability sets; kept as plain decorative chevrons since
+            there's no second set of terms to rotate through. */}
+        {service.slug === "it-consulting" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="grid gap-16 md:grid-cols-2 md:items-center">
+                <div>
+                  <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                    Empower your business with smart tech solutions
+                  </h2>
+                  <p className="mt-5 inline-block max-w-md border-b border-ember/40 pb-3 italic text-paper/60">
+                    Leverage AI, blockchain, and IoT, effortlessly, securely, and effectively.
+                  </p>
+                  <p className="mt-5 max-w-md text-paper/70">
+                    We integrate emerging technologies such as AI, blockchain, and AR/VR into
+                    existing IT environments with a focus on stability and long-term value. The
+                    approach supports smooth adoption and helps organizations apply innovation
+                    where it creates practical advantage.
+                  </p>
+                </div>
+
+                <div className="relative mx-auto grid w-full max-w-md grid-cols-3 grid-rows-3 place-items-center gap-3 py-6 sm:gap-5">
+                  <ChevronUp className="absolute left-1/2 top-0 h-4 w-4 -translate-x-1/2 text-paper/30" />
+                  <ChevronDown className="absolute bottom-0 left-1/2 h-4 w-4 -translate-x-1/2 text-paper/30" />
+                  <ChevronLeft className="absolute left-0 top-1/2 h-4 w-4 -translate-y-1/2 text-paper/30" />
+                  <ChevronRight className="absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-paper/30" />
+
+                  {[
+                    { label: "Big data & analytics", tone: "border-blue-400/70" },
+                    { label: "Computer vision", tone: "border-violet-400/70" },
+                    { label: "Personalization solutions", tone: "border-violet-400/70" },
+                    { label: "IoT & edge computing", tone: "border-violet-400/70" },
+                    null,
+                    { label: "AR/VR/MR", tone: "border-violet-400/70" },
+                    { label: "Blockchain", tone: "border-violet-400/70" },
+                    { label: "Enterprise AI", tone: "border-blue-400/70" },
+                    { label: "Intelligent process automation", tone: "border-violet-400/70" },
+                  ].map((item) =>
+                    item ? (
+                      <div
+                        key={item.label}
+                        className={`flex h-24 w-24 shrink-0 items-center justify-center rounded-full border-2 ${item.tone} bg-ink p-3 text-center sm:h-28 sm:w-28`}
+                      >
+                        <span className="text-xs font-medium leading-snug text-paper">
+                          {item.label}
+                        </span>
+                      </div>
+                    ) : (
+                      <div
+                        key="center-icon"
+                        className="flex h-24 w-24 items-center justify-center sm:h-28 sm:w-28"
+                      >
+                        <Glasses className="h-12 w-12 text-paper/60" strokeWidth={1.25} />
+                      </div>
+                    ),
+                  )}
+                </div>
+              </div>
+            </div>
+          </section>
         )}
 
         {/* "Key Digital Solutions" / Pricing / Timeline — Digital Marketing
