@@ -856,6 +856,84 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section>
         )}
 
+        {/* "Boost Visibility" CTA banner — Digital Marketing only, static,
+            same full-bleed calc()-padding pattern as the /services page
+            CTA banners (no max-w wrapper, so the two-tone split doesn't
+            leave a mismatched color strip on wide screens). */}
+        {service.slug === "digital-marketing" && (
+          <section className="border-t border-paper/10 bg-signal">
+            <div className="flex flex-col sm:flex-row">
+              <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  Elevate your online presence with targeted digital marketing strategies.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+              >
+                Boost Visibility
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </section>
+        )}
+
+        {/* "Our digital marketing services" — Digital Marketing only,
+            static. Generic process/capability copy, no fabricated
+            claims, so kept close to the reference. Image reuses the
+            same service.heroImageUrl already used elsewhere on this
+            page rather than adding another dedicated field. */}
+        {service.slug === "digital-marketing" && (
+          <section className="relative overflow-hidden border-t border-paper/10">
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="flex flex-col">
+                <div className="bg-graphite/40 px-6 py-14 sm:px-10 md:py-16">
+                  <h2 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+                    Our digital marketing services
+                  </h2>
+                  <p className="mt-5 max-w-md text-paper/70">
+                    We build digital marketing strategies that empower your business to drive
+                    engagement, increase brand visibility, and maximize return on investment.
+                  </p>
+                </div>
+                <div className="relative min-h-[260px] flex-1">
+                  {(service.heroImageUrl || hero?.backgroundImageUrl) && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
+                      alt=""
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="bg-ink px-6 py-14 sm:px-10 md:py-16">
+                <p className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-paper">
+                  Services include:
+                </p>
+                <ul className="mt-8 flex flex-col gap-5">
+                  {[
+                    "Assess your business goals and market landscape",
+                    "Define key performance indicators (KPIs) and metrics",
+                    "Develop a comprehensive digital marketing plan",
+                    "Implement and optimize marketing campaigns",
+                    "Leverage data analytics for insights",
+                    "Enhance brand presence across channels",
+                    "Continuous monitoring and strategy adjustment",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-3 text-paper/80">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ember" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* "Process" horizontal timeline, admin-managed per service */}
         {service.processSteps.length > 0 && (
           <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
