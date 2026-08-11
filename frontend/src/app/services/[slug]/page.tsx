@@ -725,12 +725,12 @@ export default async function ServiceDetailPage({ params }: Props) {
                   return (
                     <div
                       key={name}
-                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-paper/95 shadow-sm"
+                      className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-paper/95 shadow-sm"
                     >
                       {icon ? (
-                        <TechBrandIcon name={name} className="h-6 w-6" />
+                        <TechBrandIcon name={name} className="h-8 w-8" />
                       ) : (
-                        <span className="px-1 text-center text-[0.6rem] font-semibold leading-tight text-ink/70">
+                        <span className="px-1 text-center text-[0.65rem] font-semibold leading-tight text-ink/70">
                           {name}
                         </span>
                       )}
