@@ -934,6 +934,128 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section>
         )}
 
+        {/* "Drive Conversions" CTA banner — Digital Marketing only, static,
+            same full-bleed pattern as the other CTA banners on this page. */}
+        {service.slug === "digital-marketing" && (
+          <section className="border-t border-paper/10 bg-signal">
+            <div className="flex flex-col sm:flex-row">
+              <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  Transform clicks into customers with our data-driven marketing solutions.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+              >
+                Drive Conversions
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </section>
+        )}
+
+        {/* "Our digital marketing project roadmap" — Digital Marketing
+            only, static. Visually distinct from the generic
+            service.processSteps timeline above/below (which only shows a
+            short label per step): this one needs a numbered index plus a
+            full description under each step, so it's bespoke markup
+            rather than an extension of that shared component. Reuses the
+            same lerpAccentColor gradient dots for visual consistency. */}
+        {service.slug === "digital-marketing" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                Our digital marketing project roadmap
+              </h2>
+
+              <div className="mt-20 overflow-x-auto pb-2">
+                {(() => {
+                  const roadmapSteps = [
+                    {
+                      title: "Strategy Development",
+                      description:
+                        "Defining goals, target audiences, and key performance indicators (KPIs) to guide your marketing efforts.",
+                    },
+                    {
+                      title: "Creative Design",
+                      description:
+                        "Crafting engaging content and visual assets, including brand design, ad creatives, and campaign materials.",
+                    },
+                    {
+                      title: "Campaign Execution",
+                      description:
+                        "Implementing and managing campaigns across various channels, including social media, email, and paid advertising.",
+                    },
+                    {
+                      title: "Performance Analysis",
+                      description:
+                        "Monitoring campaign performance, analyzing data, and optimizing strategies based on insights and metrics.",
+                    },
+                  ];
+                  return (
+                    <div
+                      className="relative grid min-w-[720px]"
+                      style={{
+                        gridTemplateColumns: `repeat(${roadmapSteps.length}, minmax(140px, 1fr))`,
+                        gridTemplateRows: "auto 1.5rem auto",
+                      }}
+                    >
+                      <div className="self-center" style={{ gridColumn: "1 / -1", gridRow: "2" }}>
+                        <div
+                          className="h-px"
+                          style={{
+                            marginInline: `calc(50% / ${roadmapSteps.length})`,
+                            backgroundImage: "linear-gradient(to right, #FF6B35, #3D5AFE)",
+                          }}
+                        />
+                      </div>
+
+                      {roadmapSteps.map((step, i) => (
+                        <div
+                          key={`label-${step.title}`}
+                          className="flex items-center gap-2 px-2 pb-6"
+                          style={{ gridColumn: `${i + 1}`, gridRow: "1" }}
+                        >
+                          <span className="font-display text-2xl font-bold text-ember">{i + 1}</span>
+                          <span className="font-semibold text-paper">{step.title}</span>
+                        </div>
+                      ))}
+
+                      {roadmapSteps.map((step, i) => (
+                        <div
+                          key={`dot-${step.title}`}
+                          className="flex justify-center"
+                          style={{ gridColumn: `${i + 1}`, gridRow: "2" }}
+                        >
+                          <span
+                            className="h-3 w-3 rounded-full ring-4 ring-ink"
+                            style={{
+                              backgroundColor: lerpAccentColor(
+                                roadmapSteps.length > 1 ? i / (roadmapSteps.length - 1) : 0,
+                              ),
+                            }}
+                          />
+                        </div>
+                      ))}
+
+                      {roadmapSteps.map((step, i) => (
+                        <div
+                          key={`desc-${step.title}`}
+                          className="px-2 pt-6 text-sm leading-relaxed text-paper/70"
+                          style={{ gridColumn: `${i + 1}`, gridRow: "3" }}
+                        >
+                          {step.description}
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })()}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* "Process" horizontal timeline, admin-managed per service */}
         {service.processSteps.length > 0 && (
           <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
