@@ -247,14 +247,22 @@ export default function AdminSettingsPage() {
       </span>
       <h1 className="mt-2 text-3xl font-semibold text-graphite">Site Settings</h1>
 
-      {error && (
-        <div className="mt-6 rounded-lg border border-ember/40 bg-ember/10 px-4 py-3 text-sm text-ember">
-          {error}
-        </div>
-      )}
-      {success && (
-        <div className="mt-6 rounded-lg border border-signal/40 bg-signal/10 px-4 py-3 text-sm text-signal">
-          Site settings saved.
+      {/* Sticky, not just inline: this form is now long (8 image upload
+          fields), so an error/success message anchored only at the top
+          scrolls out of view while working on fields further down — a
+          failed upload there looked like it silently did nothing. */}
+      {(error || success) && (
+        <div className="sticky top-4 z-20 mt-6">
+          {error && (
+            <div className="rounded-lg border border-ember/40 bg-ember/10 px-4 py-3 text-sm text-ember shadow-md backdrop-blur-sm">
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="rounded-lg border border-signal/40 bg-signal/10 px-4 py-3 text-sm text-signal shadow-md backdrop-blur-sm">
+              Site settings saved.
+            </div>
+          )}
         </div>
       )}
 
