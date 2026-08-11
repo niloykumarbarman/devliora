@@ -58,7 +58,10 @@ export async function fetchServiceBySlug(slug: string): Promise<ServiceDto | nul
 }
 
 // Services with a full dedicated /services/[slug] breakdown page.
-// Everything else links to the #slug anchor on the /services listing page.
+// Everything else links to the /services listing page itself — it used to
+// link to a #slug anchor on that page, but the section with those anchor
+// targets (ServicesDetailList) was removed, so linking to #slug would just
+// silently fail to scroll. Plain /services is the correct fallback now.
 const DETAIL_PAGE_SLUGS = new Set(["software-engineering", "digital-design"]);
 
 export function hasDetailPage(slug: string): boolean {
@@ -66,7 +69,7 @@ export function hasDetailPage(slug: string): boolean {
 }
 
 export function serviceHref(slug: string): string {
-  return hasDetailPage(slug) ? `/services/${slug}` : `/services#${slug}`;
+  return hasDetailPage(slug) ? `/services/${slug}` : "/services";
 }
 
 // Static snapshot of the site's real services (name + slug), split into two

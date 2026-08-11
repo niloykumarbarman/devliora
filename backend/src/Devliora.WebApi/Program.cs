@@ -163,12 +163,13 @@ using (var scope = app.Services.CreateScope())
     // had cached from before this deploy would otherwise keep serving stale
     // values for up to its TTL. Drop the keys known to have just changed
     // (see FixHeroSecondaryCtaUrl, SeedAdditionalIndustries,
-    // SeedDigitalDesignHighlights) so the fix is live immediately instead
-    // of after the cache TTL expires.
+    // SeedDigitalDesignHighlights, AddServicesPageImages) so the fix is
+    // live immediately instead of after the cache TTL expires.
     var cache = scope.ServiceProvider.GetRequiredService<ICacheService>();
     await cache.RemoveAsync("hero:content");
     await cache.RemoveAsync("industries:all");
     await cache.RemoveAsync("services:all");
+    await cache.RemoveAsync("site-settings");
 }
 
 // Configure the HTTP request pipeline.

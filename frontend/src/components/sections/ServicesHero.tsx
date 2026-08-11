@@ -133,12 +133,20 @@ export default function ServicesHero() {
     };
   }, []);
 
+  // whileInView (not animate) so sections below the fold reveal on scroll,
+  // matching the rest of the site's convention (ClientSpotlight,
+  // FeaturedWorkSplit, ServicesCTA, etc.) — with `animate`, everything on
+  // this long page was fading in within ~1s of page load regardless of
+  // scroll position, so content far down the page (Pricing models, Global
+  // delivery, Tailored Solutions) was already fully visible before the
+  // user ever scrolled to it.
   const fadeUp = (i: number) =>
     shouldReduceMotion
       ? {}
       : {
           initial: { opacity: 0, y: 24 },
-          animate: { opacity: 1, y: 0 },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: { once: true, margin: "-60px" },
           transition: { duration: 0.5, delay: i * 0.08 },
         };
 
@@ -177,8 +185,9 @@ export default function ServicesHero() {
       </section>
 
       {/* "Engineering Services" content block: heading, tagline,
-          description, the static two-column service list, and the same
-          hero image again on the right (reused, not a second field). */}
+          description, the static two-column service list, and its own
+          admin-editable image (SiteSettings.ServicesEngineeringImageUrl)
+          on the right. */}
       <section className="bg-grain relative overflow-hidden bg-ink py-16 text-paper md:py-20">
         <div
           className="pointer-events-none absolute -top-40 left-1/4 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.12] blur-[120px]"
