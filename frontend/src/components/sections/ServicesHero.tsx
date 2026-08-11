@@ -7,8 +7,35 @@ import { ArrowRight } from "lucide-react";
 import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
 import { serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
-import { fetchTechnologies, type TechnologyDto } from "@/lib/technologies";
 import { API_BASE_URL } from "@/lib/apiConfig";
+
+// Static two-column tech list per explicit request, matching the reference
+// exactly. Double-check these against /admin/technologies before launch —
+// a few (PHP, iOS/Android, Flutter, VR, SQL Server) aren't in the site's
+// admin-managed Technologies list today, so confirm they're real
+// capabilities before this goes out representing Devliora's stack.
+const TECH_COLUMNS: string[][] = [
+  [
+    ".NET Development",
+    "Java Development",
+    "PHP Development",
+    "Node.js Development",
+    "Flutter Development",
+    "Frontend Development",
+    "SQL Server Development",
+    "MySQL Development",
+  ],
+  [
+    "AWS Development",
+    "Azure Development",
+    "iOS Development",
+    "Android Development",
+    "AI Development",
+    "VR Development",
+    "eCommerce",
+    "Python",
+  ],
+];
 
 type Testimonial = {
   id: string;
@@ -35,7 +62,6 @@ async function fetchFeaturedTestimonial(): Promise<Testimonial | null> {
 export default function ServicesHero() {
   const shouldReduceMotion = useReducedMotion();
   const [heroImageUrl, setHeroImageUrl] = useState("");
-  const [technologies, setTechnologies] = useState<TechnologyDto[]>([]);
   const [testimonial, setTestimonial] = useState<Testimonial | null>(null);
 
   useEffect(() => {
@@ -44,9 +70,6 @@ export default function ServicesHero() {
       if (!cancelled && data?.servicesImageUrl) {
         setHeroImageUrl(resolveImageUrl(data.servicesImageUrl));
       }
-    });
-    fetchTechnologies().then((data) => {
-      if (!cancelled) setTechnologies(data);
     });
     fetchFeaturedTestimonial().then((data) => {
       if (!cancelled) setTestimonial(data);
@@ -64,12 +87,6 @@ export default function ServicesHero() {
           animate: { opacity: 1, y: 0 },
           transition: { duration: 0.5, delay: i * 0.08 },
         };
-
-  const techColumns: TechnologyDto[][] = [[], []];
-  [...technologies]
-    .sort((a, b) => a.displayOrder - b.displayOrder)
-    .slice(0, 12)
-    .forEach((tech, i) => techColumns[i % 2].push(tech));
 
   return (
     <>
@@ -256,19 +273,17 @@ export default function ServicesHero() {
                 to cloud computing and beyond.
               </p>
 
-              {technologies.length > 0 && (
-                <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
-                  {techColumns.map((column, colIndex) => (
-                    <div key={colIndex} className="flex flex-col gap-2">
-                      {column.map((tech) => (
-                        <span key={tech.id} className="font-medium text-ember">
-                          {(tech.displayName || tech.name).trim()}
-                        </span>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              )}
+              <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
+                {TECH_COLUMNS.map((column, colIndex) => (
+                  <div key={colIndex} className="flex flex-col gap-2">
+                    {column.map((tech) => (
+                      <span key={tech} className="font-medium text-ember">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
