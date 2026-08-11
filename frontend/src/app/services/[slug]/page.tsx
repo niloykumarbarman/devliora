@@ -1125,6 +1125,13 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section>
         )}
 
+        {/* Featured work, moved up to sit right after the CTA above —
+            matching the reference's page order exactly, per explicit
+            request. Same real data/component as the shared render
+            further down; that later one is skipped for this service
+            (see the guard below) so it isn't shown twice on one page. */}
+        {service.slug === "digital-marketing" && <FeaturedWorkSplit items={featuredWorkSplit} />}
+
         {/* "Process" horizontal timeline, admin-managed per service */}
         {service.processSteps.length > 0 && (
           <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
@@ -1404,7 +1411,10 @@ export default async function ServiceDetailPage({ params }: Props) {
 
         <ClientSpotlight items={clientSpotlight} />
 
-        <FeaturedWorkSplit items={featuredWorkSplit} />
+        {/* Skipped here for Digital Marketing — already rendered higher up,
+            right after the "Maximize Reach" CTA, to match the reference's
+            page order (see above). */}
+        {service.slug !== "digital-marketing" && <FeaturedWorkSplit items={featuredWorkSplit} />}
 
         {/* Case studies, pulled live from the site's real case-studies data.
             Hidden on Digital Design at request — ClientSpotlight and
