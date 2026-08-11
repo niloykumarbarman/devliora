@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, ArrowUpDown, Layers, Star } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpDown, Layers, Star, Zap } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { fetchServiceBySlug, serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
@@ -738,6 +738,86 @@ export default async function ServiceDetailPage({ params }: Props) {
                   );
                 })}
               </div>
+            </div>
+          </section>
+        )}
+
+        {/* "Meta" platform spotlight — Digital Marketing only, static.
+            The quote is a real, publicly-cited Meta statistic (not a
+            Devliora claim), so it's safe to state as-is. */}
+        {service.slug === "digital-marketing" && (
+          <section className="relative overflow-hidden border-t border-paper/10 bg-graphite/20 py-16 md:py-20">
+            <div className="mx-auto flex max-w-4xl flex-col items-start gap-8 px-6 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-balance text-xl font-semibold leading-snug text-ember sm:text-2xl">
+                  &ldquo;More than 200 million businesses use our platforms to reach customers.&rdquo;
+                </p>
+                <p className="mt-4 max-w-lg text-paper/70">
+                  Facebook and Instagram remain the world&apos;s most widely used channels for
+                  digital marketing and brand visibility.
+                </p>
+                <p className="mt-4 font-display text-2xl font-bold text-paper">Meta</p>
+              </div>
+              <div className="flex shrink-0 gap-4">
+                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-paper/95 shadow-sm">
+                  <TechBrandIcon name="facebook" className="h-8 w-8" />
+                </div>
+                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-paper/95 shadow-sm">
+                  <TechBrandIcon name="instagram" className="h-8 w-8" />
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* "Key Digital Solutions" — Digital Marketing only, static.
+            Reworked from the KAZ reference: its Pricing and Limitations
+            columns quoted that company's own specific (and partly
+            joke/humor) plan pricing, not a real Devliora offering, so
+            only the generic capability list carries over. */}
+        {service.slug === "digital-marketing" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-4xl px-6">
+              <div className="grid gap-10 md:grid-cols-2 md:gap-16">
+                <div>
+                  <h2 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+                    Smart marketing, tailored to your goals.
+                  </h2>
+                  <p className="mt-4 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+                    No cookie-cutter campaigns — strategy built around what actually moves your
+                    business.
+                  </p>
+                </div>
+                <p className="text-base leading-relaxed text-paper/70">
+                  Devliora&apos;s marketing team builds and runs campaigns around your actual
+                  goals — brand visibility, lead generation, or conversion — using the channels
+                  and tools that make sense for your audience, not a generic playbook.
+                </p>
+              </div>
+
+              <div className="mt-14 flex items-center gap-3">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-ember/15 text-ember">
+                  <Zap className="h-4 w-4" />
+                </span>
+                <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-paper">
+                  Key Digital Solutions
+                </p>
+              </div>
+
+              <ul className="mt-8 grid grid-cols-1 gap-x-12 gap-y-4 sm:grid-cols-2">
+                {[
+                  "Social Media Management",
+                  "Content Creation & Curation",
+                  "SEO Optimization",
+                  "Email Marketing Automation",
+                  "Analytics & Reporting Dashboards",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-base text-paper/80">
+                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ember" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
             </div>
           </section>
         )}
