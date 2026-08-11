@@ -552,15 +552,15 @@ export default async function ServiceDetailPage({ params }: Props) {
             <div className="pointer-events-none absolute inset-0 bg-[size:56px_56px] opacity-60" style={gridOverlayStyle} />
 
             <div className="relative mx-auto max-w-6xl px-6">
-              <nav className="flex items-center gap-2 font-mono text-sm text-paper/50">
-                <Link href="/" className="transition-colors hover:text-paper">
+              <nav className="flex items-center gap-2 font-mono text-sm">
+                <Link href="/" className="text-paper/80 transition-colors hover:text-paper">
                   Home
                 </Link>
-                <span>/</span>
-                <Link href="/services" className="transition-colors hover:text-paper">
+                <span className="text-paper/30">/</span>
+                <Link href="/services" className="text-paper/80 transition-colors hover:text-paper">
                   Services
                 </Link>
-                <span>/</span>
+                <span className="text-paper/30">/</span>
                 <span className="text-ember">{service.title}</span>
               </nav>
 
@@ -634,15 +634,15 @@ export default async function ServiceDetailPage({ params }: Props) {
             {/* Breadcrumb bar */}
             <section className="border-t border-paper/10 py-6">
               <div className="mx-auto max-w-5xl px-6">
-                <nav className="flex flex-wrap items-center gap-2 font-mono text-sm text-paper/50">
-                  <Link href="/" className="transition-colors hover:text-paper">
+                <nav className="flex flex-wrap items-center gap-2 font-mono text-sm">
+                  <Link href="/" className="text-paper/80 transition-colors hover:text-paper">
                     Home
                   </Link>
-                  <span>/</span>
-                  <Link href="/services" className="transition-colors hover:text-paper">
+                  <span className="text-paper/30">/</span>
+                  <Link href="/services" className="text-paper/80 transition-colors hover:text-paper">
                     Services
                   </Link>
-                  <span>/</span>
+                  <span className="text-paper/30">/</span>
                   <span className="text-ember">{service.title}</span>
                 </nav>
               </div>

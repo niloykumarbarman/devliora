@@ -57,7 +57,7 @@ export default function ServicesHero() {
 
         <div className="relative border-t border-paper/10 bg-ink">
           <div className="mx-auto flex max-w-6xl items-center gap-2 px-6 py-6 font-mono text-sm">
-            <Link href="/" className="text-paper/70 transition-colors hover:text-paper">
+            <Link href="/" className="text-paper/80 transition-colors hover:text-paper">
               Home
             </Link>
             <span className="text-paper/30">/</span>
