@@ -655,13 +655,11 @@ export default async function ServiceDetailPage({ params }: Props) {
           </>
         )}
 
-        {/* IT Consulting only, static. Reworked from the reference: it
-            claimed "Since 2004" and three specific stats (30% faster
-            implementation, 85%/90% client-outcome rates) — none of that
-            is Devliora's real history or data, so this restates the same
-            value propositions as generic capability claims instead,
-            keeping the reference's layout and the ember-highlight
-            treatment on the callout phrases. Tool icons fetched and
+        {/* IT Consulting only, static. NOTE: "Since 2004" and the three
+            stats below (30%/85%/90%) are the KAZ reference's own claims,
+            not verified Devliora history or data — kept only because the
+            user explicitly asked for them verbatim after being told
+            they're not real Devliora figures. Tool icons fetched and
             verified from simple-icons the same way as the Digital
             Marketing page's tools. */}
         {service.slug === "it-consulting" && (
@@ -679,31 +677,30 @@ export default async function ServiceDetailPage({ params }: Props) {
                     <p>
                       We create software roadmaps that{" "}
                       <span className="font-semibold text-ember">
-                        reduce implementation time and risk
+                        cut implementation time by 30%
                       </span>
                       , ensuring smooth transitions and optimized investments.
                     </p>
                     <p>
                       Our tech advisory services{" "}
                       <span className="font-semibold text-ember">
-                        help you evaluate platforms objectively
-                      </span>
-                      , so you invest in the right one the first time.
+                        helped 85% of clients select the best platform
+                      </span>{" "}
+                      for long-term success.
                     </p>
                     <p>
-                      We guide businesses toward{" "}
                       <span className="font-semibold text-ember">
-                        the ideal CRM, ERP, or custom solution
-                      </span>{" "}
-                      for their specific needs — not just the most popular one.
+                        Over 90% of businesses we consult find the ideal CRM
+                      </span>
+                      , ERP, or custom solution for their specific needs.
                     </p>
                   </div>
                 </div>
                 <p className="text-paper/70">
-                  We help organizations streamline operations, improve services, and launch new
-                  digital products. Our IT consulting services focus on shaping practical
-                  technology environments that align with business goals, strengthen
-                  capabilities, and support better customer experiences.
+                  Since 2004, we&apos;ve helped organizations streamline operations, improve
+                  services, and launch new digital products. Our IT consulting services focus on
+                  shaping practical technology environments that align with business goals,
+                  strengthen capabilities, and support better customer experiences.
                 </p>
               </div>
 
