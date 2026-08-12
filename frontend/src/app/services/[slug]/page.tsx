@@ -29,6 +29,7 @@ import {
   MousePointerClick,
   Network,
   Server,
+  Shield,
   Star,
   Users,
   Workflow,
@@ -1354,6 +1355,217 @@ export default async function ServiceDetailPage({ params }: Props) {
             component the /services page uses (identical two engagement
             models, same copy). */}
         {service.slug === "staff-augmentation" && <PricingModels />}
+
+        {/* "Software quality assurance" intro + testing roadmap — Software
+            Quality Assurance only, static. Generic process copy, no
+            fabricated claims. The reference's timeline has 5 numbered
+            milestones (Analysis/Design/Development/Deployment/Support)
+            plus an unlabeled 6th phase ("Stabilization", shown with a
+            hollow dot instead of a number) sitting between Development
+            and Deployment — kept as a 6-column list with a dashed
+            connector line rather than true trig-positioned dots, since
+            it's a straight line, not a radial layout. */}
+        {service.slug === "software-quality-assurance" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="grid gap-12 md:grid-cols-2">
+                <div>
+                  <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                    Software quality assurance
+                  </h2>
+                  <p className="mt-5 inline-block max-w-md border-b border-ember/40 pb-3 italic text-paper/60">
+                    Rigorous testing, flawless results, guaranteed quality—every time.
+                  </p>
+                </div>
+                <p className="text-paper/70">
+                  Our QA team performs thorough testing throughout each stage of development to
+                  ensure the software meets quality standards and aligns with both functional and
+                  non-functional requirements. The focus is on delivering a reliable, well-tested
+                  product that&apos;s ready for real-world use.
+                </p>
+              </div>
+
+              <div className="mt-16 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-6">
+                {[
+                  {
+                    number: "1",
+                    phase: "Analysis",
+                    subtitle: "Requirements testing",
+                    items: ["Requirements Testing"],
+                    filled: true,
+                  },
+                  {
+                    number: "2",
+                    phase: "Design",
+                    subtitle: "UX/UI testing",
+                    items: ["Prototype Testing", "Usability Testing"],
+                    filled: true,
+                  },
+                  {
+                    number: "3",
+                    phase: "Development",
+                    subtitle: "Ongoing testing",
+                    items: [
+                      "Compatibility Testing",
+                      "Web Service Testing",
+                      "Functional Testing",
+                      "Security Testing",
+                      "Performance Audit",
+                      "Test Automation",
+                    ],
+                    filled: true,
+                  },
+                  {
+                    number: null,
+                    phase: null,
+                    subtitle: "Stabilization",
+                    items: ["Regression Testing", "End-To-End Testing"],
+                    filled: false,
+                  },
+                  {
+                    number: "4",
+                    phase: "Deployment",
+                    subtitle: "Acceptance testing",
+                    items: ["Upgrade Testing", "Migration Testing"],
+                    filled: true,
+                  },
+                  {
+                    number: "5",
+                    phase: "Support",
+                    subtitle: "Production support",
+                    items: ["Reproducing Issues", "Identifying Causes Of Issues"],
+                    filled: true,
+                  },
+                ].map((step) => (
+                  <div key={step.subtitle} className="relative pt-5">
+                    <div className="absolute left-0 top-0 h-px w-full border-t border-dashed border-paper/25" />
+                    <span
+                      className={`absolute left-0 top-0 h-2.5 w-2.5 -translate-y-1/2 rounded-full ${
+                        step.filled ? "bg-ember" : "border-2 border-ember bg-ink"
+                      }`}
+                    />
+                    {step.number && (
+                      <p className="flex items-baseline gap-1.5">
+                        <span className="font-display text-lg font-bold text-ember">{step.number}</span>
+                        <span className="font-semibold text-paper">{step.phase}</span>
+                      </p>
+                    )}
+                    <p className={`font-semibold text-paper ${step.number ? "mt-2" : ""}`}>{step.subtitle}</p>
+                    <ul className="mt-2 flex flex-col gap-1">
+                      {step.items.map((item) => (
+                        <li key={item} className="text-sm leading-snug text-paper/70">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* "Ensure flawless performance with our QA expertise" CTA banner —
+            Software Quality Assurance only, static, same two-line-capable
+            bg-signal pattern as the page's other CTA banners (single line
+            here). */}
+        {service.slug === "software-quality-assurance" && (
+          <section className="border-t border-paper/10 bg-signal">
+            <div className="flex flex-col sm:flex-row">
+              <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  Ensure flawless performance with our QA expertise.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+              >
+                Test Perfect
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </section>
+        )}
+
+        {/* "Proactive risk management" — Software Quality Assurance only,
+            static. Generic risk-framework copy, no fabricated claims. The
+            reference's diagram is a compass layout (center icon, 4 items
+            at cardinal points connected by lines). Built as a 3x3 CSS
+            grid instead of trig-positioned absolute lines — the it's
+            only 4 cardinal points (not 8 like the IT Consulting radial
+            diagram), and the grid keeps every label contained within its
+            own cell so nothing can overflow on narrow viewports. */}
+        {service.slug === "software-quality-assurance" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="grid gap-16 md:grid-cols-2 md:items-center">
+                <div>
+                  <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                    Proactive risk management
+                  </h2>
+                  <p className="mt-5 inline-block max-w-md border-b border-ember/40 pb-3 italic text-paper/60">
+                    Identifying risks, assessing impacts, and mitigating threats—ensuring your
+                    project&apos;s success
+                  </p>
+                  <p className="mt-5 max-w-md text-paper/70">
+                    We employ a structured risk management framework to identify, assess, and
+                    mitigate potential risks throughout the development lifecycle. This proactive
+                    approach helps maintain software quality, protect delivery timelines, and
+                    reduce uncertainty,{" "}
+                    <span className="text-ember">
+                      ensuring projects progress with stability and control
+                    </span>
+                    .
+                  </p>
+                </div>
+
+                <div className="mx-auto grid w-full max-w-md grid-cols-3 grid-rows-3 items-center justify-items-center gap-x-4 gap-y-6 sm:gap-x-6">
+                  <div />
+                  <div className="text-center">
+                    <p className="font-semibold text-paper">1. Identification</p>
+                    <p className="mt-1 text-xs leading-snug text-paper/60">
+                      Risk Committee review and Risk Owner appointment
+                    </p>
+                  </div>
+                  <div />
+
+                  <div className="text-right">
+                    <p className="font-semibold text-paper">4. Reporting &amp; Monitoring</p>
+                    <p className="mt-1 text-xs leading-snug text-paper/60">
+                      Registration of risk attributes and ongoing review
+                    </p>
+                  </div>
+                  <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full border-2 border-signal bg-ink sm:h-28 sm:w-28">
+                    <div className="relative flex h-10 w-10 items-center justify-center">
+                      <Shield className="h-10 w-10 text-signal" strokeWidth={1.5} />
+                      <Star
+                        className="absolute h-3.5 w-3.5 text-signal"
+                        strokeWidth={1.5}
+                        fill="currentColor"
+                      />
+                    </div>
+                  </div>
+                  <div className="text-left">
+                    <p className="font-semibold text-paper">2. Measurement</p>
+                    <p className="mt-1 text-xs leading-snug text-paper/60">
+                      Definition of metrics used to track identified risks
+                    </p>
+                  </div>
+
+                  <div />
+                  <div className="text-center">
+                    <p className="font-semibold text-paper">3. Mitigation</p>
+                    <p className="mt-1 text-xs leading-snug text-paper/60">
+                      Creation and execution of a mitigation plan
+                    </p>
+                  </div>
+                  <div />
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* "Comprehensive multi-tier software support services" — IT
             Maintenance & Support only, static. Generic capability copy

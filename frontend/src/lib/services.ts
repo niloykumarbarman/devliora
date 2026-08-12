@@ -69,6 +69,7 @@ const DETAIL_PAGE_SLUGS = new Set([
   "it-consulting",
   "it-maintenance-support",
   "staff-augmentation",
+  "software-quality-assurance",
 ]);
 
 export function hasDetailPage(slug: string): boolean {
