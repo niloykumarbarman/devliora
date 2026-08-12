@@ -1553,7 +1553,11 @@ export default async function ServiceDetailPage({ params }: Props) {
             request (the earlier 3x3-grid version had no connecting
             lines). Since only 4 cardinal directions are needed (not 8
             radial angles), the spokes are hardcoded vertical/horizontal
-            segments rather than trig-computed. */}
+            segments rather than trig-computed. "2. Measurement" has no
+            body text under its label — that matches the reference
+            exactly (an earlier draft had invented a description there;
+            removed per explicit request to copy only what's actually
+            there, not add anything extra). */}
         {service.slug === "software-quality-assurance" && (
           <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
@@ -1606,9 +1610,6 @@ export default async function ServiceDetailPage({ params }: Props) {
                   />
                   <div className="absolute left-[86%] top-1/2 w-40 -translate-y-1/2 text-left sm:w-48">
                     <p className="font-semibold text-paper">2. Measurement</p>
-                    <p className="mt-1 text-sm leading-snug text-paper/60">
-                      Definition of metrics used to track identified risks
-                    </p>
                   </div>
 
                   {/* bottom spoke: 3. Mitigation */}
