@@ -1729,10 +1729,13 @@ export default async function ServiceDetailPage({ params }: Props) {
                 )}
               </div>
 
-              <div className="mt-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+              <div className="mt-14 flex flex-wrap items-center justify-center gap-x-12 gap-y-8">
                 {["postman", "apachejmeter", "selenium", "appium"].map((key) => (
-                  <div key={key} className="flex h-10 items-center opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0">
-                    <TechBrandIcon name={key} className="h-8 w-8" />
+                  <div
+                    key={key}
+                    className="flex h-14 items-center opacity-80 grayscale transition-all hover:opacity-100 hover:grayscale-0 sm:h-16"
+                  >
+                    <TechBrandIcon name={key} className="h-12 w-12 sm:h-14 sm:w-14" />
                   </div>
                 ))}
               </div>
