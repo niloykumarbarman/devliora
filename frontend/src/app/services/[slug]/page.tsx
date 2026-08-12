@@ -13,11 +13,16 @@ import {
   ChevronRight,
   ChevronUp,
   CircleDollarSign,
+  ClipboardCheck,
   Clock,
   Cloud,
   DollarSign,
   Glasses,
+  HandCoins,
+  HeartHandshake,
   Layers,
+  Milestone,
+  MousePointerClick,
   Network,
   Star,
   Zap,
@@ -953,6 +958,108 @@ export default async function ServiceDetailPage({ params }: Props) {
                 Get Started
                 <ArrowRight className="h-5 w-5" />
               </Link>
+            </div>
+          </section>
+        )}
+
+        {/* "IT support and maintenance roadmap" — IT Maintenance & Support
+            only, static. Generic process description, no fabricated
+            claims. 5 icon-cards in a row (no connecting line/numbering in
+            the reference, unlike the Digital Marketing roadmap). Icons
+            are generic concept marks, not brand logos, so lucide-react
+            rather than simple-icons. */}
+        {service.slug === "it-maintenance-support" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="grid gap-10 md:grid-cols-2 md:items-start">
+                <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                  IT support and maintenance roadmap
+                </h2>
+                <p className="text-paper/70">
+                  When managing IT infrastructure, we follow a structured, step-by-step approach
+                  to design and implement a maintenance strategy aligned with specific
+                  operational needs.
+                </p>
+              </div>
+
+              <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
+                {[
+                  {
+                    icon: ClipboardCheck,
+                    title: "System Audit",
+                    body: "We begin by examining your software architecture and code, reviewing documentation, and performing functional and performance tests.",
+                  },
+                  {
+                    icon: HandCoins,
+                    title: "Maintenance Proposal",
+                    body: "Based on our audit, we define the scope of services required and outline objectives and requirements.",
+                  },
+                  {
+                    icon: Milestone,
+                    title: "Roadmap Development",
+                    body: "Our team then creates a detailed, milestone-driven maintenance strategy, including the practices and tools to be used, for your approval.",
+                  },
+                  {
+                    icon: HeartHandshake,
+                    title: "Project Handover",
+                    body: "Once the strategy is approved, we assign roles and responsibilities, and begin implementing the agreed-upon steps.",
+                  },
+                  {
+                    icon: MousePointerClick,
+                    title: "Ongoing Support & Maintenance",
+                    body: "We continuously address issues, perform updates, and release new features as needed, providing regular status reports on progress.",
+                  },
+                ].map((step) => (
+                  <div key={step.title}>
+                    <step.icon className="h-8 w-8 text-ember" strokeWidth={1.5} />
+                    <h3 className="mt-4 font-semibold text-paper">{step.title}</h3>
+                    <p className="mt-2 text-sm leading-relaxed text-paper/70">{step.body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* "Service delivery models" — IT Maintenance & Support only,
+            static. Generic engagement-model descriptions, no fabricated
+            claims. */}
+        {service.slug === "it-maintenance-support" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="grid gap-10 md:grid-cols-2 md:items-start">
+                <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                  Service delivery models
+                </h2>
+                <p className="text-paper/70">
+                  Select the level of software support and maintenance that best aligns with
+                  your project requirements and business environment.
+                </p>
+              </div>
+
+              <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-3">
+                {[
+                  {
+                    title: "Managed Support",
+                    body: "For a fixed fee, engage our dedicated support team to monitor the health and stability of your software ecosystem around the clock. We conduct scheduled maintenance and provide prompt fixes for any complexity.",
+                  },
+                  {
+                    title: "Pay-As-You-Go Support",
+                    body: "Utilize our professional technicians, engineers, or consultants to supplement your in-house maintenance team as needed. This model allows you to access services for a specified duration, paying only for the resources consumed.",
+                  },
+                  {
+                    title: "Emergency Support",
+                    body: "If you experience a sudden, disruptive software issue or a security breach, our support team is ready to assist. Count on swift team mobilization and extensive expertise in resolving security incidents and critical outages.",
+                  },
+                ].map((model) => (
+                  <div key={model.title} className="border-t border-paper/25 pt-5">
+                    <h3 className="font-display text-xl font-semibold text-paper">
+                      {model.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-paper/70">{model.body}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
         )}
