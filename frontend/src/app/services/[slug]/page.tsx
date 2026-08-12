@@ -1200,7 +1200,10 @@ export default async function ServiceDetailPage({ params }: Props) {
             quote="More than 200 million businesses use our platforms to reach customers."
             description="Facebook and Instagram remain the world's most widely used channels for digital marketing and brand visibility."
             name="Meta"
-            icons={["facebook", "instagram"]}
+            icons={[
+              { key: "facebook", label: "Facebook" },
+              { key: "instagram", label: "Instagram" },
+            ]}
           />
         )}
 
@@ -1212,8 +1215,96 @@ export default async function ServiceDetailPage({ params }: Props) {
             quote="Every business is becoming a digital business."
             description="Accenture's global research highlights how enterprises depend on IT consulting partners to modernize systems and drive digital transformation."
             name="Accenture"
-            icons={["accenture"]}
+            icons={[{ key: "accenture", label: "Accenture" }]}
           />
+        )}
+
+        {/* "IBM" spotlight — IT Maintenance & Support only, static. The
+            quote frames a real, publicly-known IT-operations theme (not
+            a Devliora claim), same reasoning as the spotlights above.
+            IBM's simple-icons SVG resolves on the CDN but isn't in the
+            current searchable index — same trademark-pull pattern as
+            Java/Marketo elsewhere on the site — so it falls back to the
+            text-badge UI. */}
+        {service.slug === "it-maintenance-support" && (
+          <PartnerSpotlight
+            quote="Proactive systems reduce downtime before it impacts business."
+            description="IBM's modern IT operations model emphasizes predictive, always-on support to keep critical infrastructure running smoothly."
+            name="IBM"
+            icons={[{ key: "ibm", label: "IBM" }]}
+          />
+        )}
+
+        {/* "Meet your support dream team" — IT Maintenance & Support only,
+            static. NOTE: the reference's "Diverse Portfolio" card claimed
+            "over 21 years of experience" — that's the KAZ reference's own
+            company history, not Devliora's, so reworded to a generic
+            capability statement per explicit request (the other two
+            cards were already generic, kept as-is). */}
+        {service.slug === "it-maintenance-support" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="grid gap-10 md:grid-cols-2 md:items-start">
+                <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                  Meet your support dream team.
+                </h2>
+                <p className="text-paper/70">
+                  Welcome to a team with deep technical expertise focused on keeping your
+                  software running effectively. We combine experience and care to support
+                  reliable operations, so you can stay focused on growing your business.
+                </p>
+              </div>
+
+              <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-3">
+                {[
+                  {
+                    title: "Diverse Portfolio",
+                    body: "Our dynamic team has mastered the art of maintaining software ecosystems across a variety of industries. From healthcare to entertainment, we've got the know-how to keep your systems thriving!",
+                  },
+                  {
+                    title: "Continuous Operation",
+                    body: "By applying modern DevOps practices, our teams ensure maintenance activities—from routine updates to feature releases—are carried out smoothly, supporting stable and uninterrupted operations.",
+                  },
+                  {
+                    title: "Tailored Deliverables",
+                    body: "We believe in a personalized approach! That's why we craft custom support SLAs with each client, outlining our commitments on service hours, software coverage, response times, and ticket priorities, all designed to meet your unique needs.",
+                  },
+                ].map((item) => (
+                  <div key={item.title} className="border-t border-paper/25 pt-5">
+                    <h3 className="font-display text-xl font-semibold text-ember">
+                      {item.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-paper/70">{item.body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* "Learn More" CTA banner — IT Maintenance & Support only, static,
+            two-line text stack like the "Contact Us" CTA below, same
+            full-bleed pattern otherwise. */}
+        {service.slug === "it-maintenance-support" && (
+          <section className="border-t border-paper/10 bg-signal">
+            <div className="flex flex-col sm:flex-row">
+              <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  Discover how our maintenance strategies drive growth.
+                </p>
+                <p className="mt-1 max-w-lg text-sm text-paper/70">
+                  Looking to Optimize Your Software Performance?
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+              >
+                Learn More
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </section>
         )}
 
         {/* "Quality management" — IT Consulting only, static. Same shared
