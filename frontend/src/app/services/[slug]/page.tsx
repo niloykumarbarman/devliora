@@ -1141,6 +1141,73 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section>
         )}
 
+        {/* "Transform your development team for success" CTA banner —
+            Staff Augmentation only, static, same two-line bg-signal
+            pattern as the page's other CTA banners. */}
+        {service.slug === "staff-augmentation" && (
+          <section className="border-t border-paper/10 bg-signal">
+            <div className="flex flex-col sm:flex-row">
+              <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  Transform your development team for success.
+                </p>
+                <p className="mt-1 max-w-lg text-sm text-paper/70">Looking for skilled experts?</p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+              >
+                Explore Options
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </section>
+        )}
+
+        {/* "Engineering Excellence" — Staff Augmentation only, static.
+            NOTE: the reference attributes a specific quote — "One of the
+            best software companies to work for in Bangladesh" — to
+            Glassdoor. That's KAZ's own (unverified) third-party rating
+            claim, not Devliora's, so per explicit request this is
+            replaced with a generic engineering-culture statement rather
+            than fabricating a Glassdoor citation — same reasoning
+            already applied to the Quality management section's
+            Clutch/Glassdoor/G2/GoodFirms row elsewhere on the site. */}
+        {service.slug === "staff-augmentation" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-5xl px-6">
+              <div className="grid gap-8 md:grid-cols-[auto_1fr] md:items-center md:gap-16">
+                <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                  Engineering Excellence
+                </h2>
+                <div className="flex items-start gap-4">
+                  <span className="font-display text-5xl leading-none text-ember">&ldquo;</span>
+                  <p className="text-balance text-xl font-medium leading-snug text-paper sm:text-2xl">
+                    Building a culture where technical excellence and continuous learning go
+                    hand in hand, so every engineer we place is set up to do their best work.
+                  </p>
+                  <span className="font-display text-5xl leading-none text-ember">&rdquo;</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* "Microsoft" PartnerSpotlight — Staff Augmentation only, static.
+            Same shared component as the Meta/Accenture/IBM spotlights.
+            Kept verbatim per explicit request. Microsoft's simple-icons
+            SVG resolves on the CDN but isn't in the current searchable
+            index — same trademark-pull pattern as IBM/Java/Marketo — so
+            it falls back to the text-badge UI. */}
+        {service.slug === "staff-augmentation" && (
+          <PartnerSpotlight
+            quote="We rely on thousands of external specialists to accelerate product development."
+            description="Microsoft uses large-scale external engineering talent to extend internal teams and ship products faster across multiple divisions."
+            name="Microsoft"
+            icons={[{ key: "microsoft", label: "Microsoft" }]}
+          />
+        )}
+
         {/* "Comprehensive multi-tier software support services" — IT
             Maintenance & Support only, static. Generic capability copy
             (L1/L2/L3 is a standard industry term, not a fabricated
