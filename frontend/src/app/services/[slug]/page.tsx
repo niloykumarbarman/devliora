@@ -1546,12 +1546,14 @@ export default async function ServiceDetailPage({ params }: Props) {
 
         {/* "Proactive risk management" — Software Quality Assurance only,
             static. Generic risk-framework copy, no fabricated claims. The
-            reference's diagram is a compass layout (center icon, 4 items
-            at cardinal points connected by lines). Built as a 3x3 CSS
-            grid instead of trig-positioned absolute lines — the it's
-            only 4 cardinal points (not 8 like the IT Consulting radial
-            diagram), and the grid keeps every label contained within its
-            own cell so nothing can overflow on narrow viewports. */}
+            diagram is a true compass layout — center gradient-bordered
+            circle (same gradient-via-padding-wrapper technique as the IT
+            Consulting radial diagram) with 4 straight spokes to cardinal
+            points, matching the reference more closely per follow-up
+            request (the earlier 3x3-grid version had no connecting
+            lines). Since only 4 cardinal directions are needed (not 8
+            radial angles), the spokes are hardcoded vertical/horizontal
+            segments rather than trig-computed. */}
         {service.slug === "software-quality-assurance" && (
           <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
@@ -1576,47 +1578,87 @@ export default async function ServiceDetailPage({ params }: Props) {
                   </p>
                 </div>
 
-                <div className="mx-auto grid w-full max-w-md grid-cols-3 grid-rows-3 items-center justify-items-center gap-x-4 gap-y-6 sm:gap-x-6">
-                  <div />
-                  <div className="text-center">
+                <div className="relative mx-auto aspect-square w-full max-w-lg py-10">
+                  {/* top spoke: 1. Identification */}
+                  <div
+                    className="absolute left-1/2 top-[18%] h-[16%] w-px -translate-x-1/2"
+                    style={{ backgroundImage: "linear-gradient(to bottom, #a78bfa, #60a5fa)" }}
+                  />
+                  <span
+                    className="absolute left-1/2 top-[34%] h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                    style={{ backgroundColor: "#a78bfa" }}
+                  />
+                  <div className="absolute left-1/2 top-0 w-40 -translate-x-1/2 text-center sm:w-48">
                     <p className="font-semibold text-paper">1. Identification</p>
-                    <p className="mt-1 text-xs leading-snug text-paper/60">
+                    <p className="mt-1 text-sm leading-snug text-paper/60">
                       Risk Committee review and Risk Owner appointment
                     </p>
                   </div>
-                  <div />
 
-                  <div className="text-right">
-                    <p className="font-semibold text-paper">4. Reporting &amp; Monitoring</p>
-                    <p className="mt-1 text-xs leading-snug text-paper/60">
-                      Registration of risk attributes and ongoing review
-                    </p>
-                  </div>
-                  <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-full border-2 border-signal bg-ink sm:h-28 sm:w-28">
-                    <div className="relative flex h-10 w-10 items-center justify-center">
-                      <Shield className="h-10 w-10 text-signal" strokeWidth={1.5} />
-                      <Star
-                        className="absolute h-3.5 w-3.5 text-signal"
-                        strokeWidth={1.5}
-                        fill="currentColor"
-                      />
-                    </div>
-                  </div>
-                  <div className="text-left">
+                  {/* right spoke: 2. Measurement */}
+                  <div
+                    className="absolute left-[66%] top-1/2 h-px w-[16%] -translate-y-1/2"
+                    style={{ backgroundImage: "linear-gradient(to right, #8b9bf6, #60a5fa)" }}
+                  />
+                  <span
+                    className="absolute left-[82%] top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                    style={{ backgroundColor: "#60a5fa" }}
+                  />
+                  <div className="absolute left-[86%] top-1/2 w-40 -translate-y-1/2 text-left sm:w-48">
                     <p className="font-semibold text-paper">2. Measurement</p>
-                    <p className="mt-1 text-xs leading-snug text-paper/60">
+                    <p className="mt-1 text-sm leading-snug text-paper/60">
                       Definition of metrics used to track identified risks
                     </p>
                   </div>
 
-                  <div />
-                  <div className="text-center">
+                  {/* bottom spoke: 3. Mitigation */}
+                  <div
+                    className="absolute left-1/2 top-[66%] h-[16%] w-px -translate-x-1/2"
+                    style={{ backgroundColor: "#60a5fa" }}
+                  />
+                  <span
+                    className="absolute left-1/2 top-[66%] h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                    style={{ backgroundColor: "#60a5fa" }}
+                  />
+                  <div className="absolute bottom-0 left-1/2 w-40 -translate-x-1/2 text-center sm:w-48">
                     <p className="font-semibold text-paper">3. Mitigation</p>
-                    <p className="mt-1 text-xs leading-snug text-paper/60">
+                    <p className="mt-1 text-sm leading-snug text-paper/60">
                       Creation and execution of a mitigation plan
                     </p>
                   </div>
-                  <div />
+
+                  {/* left spoke: 4. Reporting & Monitoring */}
+                  <div
+                    className="absolute left-[18%] top-1/2 h-px w-[16%] -translate-y-1/2"
+                    style={{ backgroundImage: "linear-gradient(to left, #8b9bf6, #60a5fa)" }}
+                  />
+                  <span
+                    className="absolute left-[18%] top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                    style={{ backgroundColor: "#60a5fa" }}
+                  />
+                  <div className="absolute right-[86%] top-1/2 w-40 -translate-y-1/2 text-right sm:w-48">
+                    <p className="font-semibold text-paper">4. Reporting &amp; Monitoring</p>
+                    <p className="mt-1 text-sm leading-snug text-paper/60">
+                      Registration of risk attributes and ongoing review
+                    </p>
+                  </div>
+
+                  {/* center circle */}
+                  <div
+                    className="absolute left-1/2 top-1/2 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full p-[2px] sm:h-28 sm:w-28"
+                    style={{ backgroundImage: "linear-gradient(135deg, #a78bfa, #60a5fa)" }}
+                  >
+                    <div className="flex h-full w-full items-center justify-center rounded-full bg-ink">
+                      <div className="relative flex h-9 w-9 items-center justify-center">
+                        <Shield className="h-9 w-9 text-signal" strokeWidth={1.5} />
+                        <Star
+                          className="absolute h-3.5 w-3.5 text-signal"
+                          strokeWidth={1.5}
+                          fill="currentColor"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
