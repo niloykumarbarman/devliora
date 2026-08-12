@@ -2584,7 +2584,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             request (the case studies shown are all engineering-flavored,
             not marketing or consulting).
             Still shown on every other service page. */}
-        {caseStudies.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && (
+        {caseStudies.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && (
           <section className="relative overflow-hidden border-t border-paper/10 bg-graphite py-24 md:py-32">
             <div className="mx-auto max-w-6xl px-6">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">Case studies</p>
@@ -2631,7 +2631,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             at request, same as Case Studies above — still shown on every
             other service
             page. */}
-        {blogGridCells.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && (
+        {blogGridCells.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && (
           <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
             <div className="mx-auto max-w-6xl px-6 text-center">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">From the blog</p>
@@ -2687,7 +2687,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             Hidden on Digital Design, Digital Marketing, and IT Consulting
             at request, same as Case Studies/Blog Highlights above — still
             shown on every other service page. */}
-        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && (
+        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && (
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto grid max-w-6xl gap-16 px-6 md:grid-cols-2">
             <div>
@@ -2773,7 +2773,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             Solutions/Pricing/Timeline section above; also hidden on IT
             Consulting at request — still shown on
             every other service page. */}
-        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && (
+        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && (
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto max-w-6xl px-6">
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">How we engage</p>
@@ -2813,7 +2813,7 @@ export default async function ServiceDetailPage({ params }: Props) {
         {/* Software essentials. Hidden on Digital Design, Digital
             Marketing, and IT Consulting at request, same as the sections
             above — still shown on every other service page. */}
-        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && (
+        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && (
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto max-w-6xl px-6">
             <h2 className="font-display text-3xl font-semibold leading-tight sm:text-4xl">
@@ -2871,7 +2871,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             (SEO, paid ads, etc.). Hidden on Digital Design, Digital
             Marketing, and IT Consulting at request, same as the sections
             above — still shown on every other service page. */}
-        {service.includes.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && (
+        {service.includes.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && (
           <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
             <div
               className="pointer-events-none absolute inset-0 bg-[size:56px_56px] opacity-60"
