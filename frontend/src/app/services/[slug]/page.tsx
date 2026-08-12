@@ -820,9 +820,80 @@ export default async function ServiceDetailPage({ params }: Props) {
           </>
         )}
 
+        {/* "Comprehensive multi-tier software support services" — IT
+            Maintenance & Support only, static. Generic capability copy
+            (L1/L2/L3 is a standard industry term, not a fabricated
+            Devliora claim). Image reuses service.heroImageUrl, same
+            pattern as Digital Marketing's "Our digital marketing
+            services" split section — no new dedicated field. */}
+        {service.slug === "it-maintenance-support" && (
+          <section className="relative overflow-hidden border-t border-paper/10">
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="flex flex-col">
+                <div className="bg-graphite/40 px-6 py-14 sm:px-10 md:py-16">
+                  <h2 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+                    Comprehensive multi-tier software support services
+                  </h2>
+                  <p className="mt-5 max-w-md text-paper/70">
+                    To tackle your software challenges effectively, we offer three tailored
+                    support packages, each designed with varying levels of coverage across L1,
+                    L2, and L3 tiers of technical support.
+                  </p>
+                </div>
+                <div className="relative min-h-[260px] flex-1">
+                  {(service.heroImageUrl || hero?.backgroundImageUrl) && (
+                    <Image
+                      src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
+                      alt=""
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover"
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="bg-ink px-6 py-14 sm:px-10 md:py-16">
+                <p className="font-mono text-sm font-semibold uppercase tracking-[0.2em] text-paper">
+                  Services include:
+                </p>
+                <ul className="mt-8 flex flex-col gap-6">
+                  {[
+                    {
+                      title: "User-Level Support",
+                      body: "We quickly resolve user-facing issues and minor glitches before they escalate.",
+                    },
+                    {
+                      title: "Comprehensive Troubleshooting",
+                      body: "We diagnose and fix system bugs, handling critical configurations and updates.",
+                    },
+                    {
+                      title: "Advanced Diagnostics",
+                      body: "Our experts dive into code to resolve complex issues and optimize performance.",
+                    },
+                    {
+                      title: "Proactive Maintenance",
+                      body: "We prevent disruptions with regular updates and proactive fixes.",
+                    },
+                    {
+                      title: "Performance Enhancement",
+                      body: "We optimize your system and add new features for improved efficiency.",
+                    },
+                  ].map((item) => (
+                    <li key={item.title}>
+                      <p className="font-semibold text-ember">{item.title}</p>
+                      <p className="mt-1.5 text-paper/70">{item.body}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </section>
+        )}
+
         {tabs ? (
           <ServiceTabs tabs={tabs} heroImageUrl={hero?.backgroundImageUrl} technologies={technologies} />
-        ) : service.slug === "it-consulting" ? null : (
+        ) : service.slug === "it-consulting" || service.slug === "it-maintenance-support" ? null : (
           /* Fallback overview for services without a tab breakdown */
           <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-4xl px-6">

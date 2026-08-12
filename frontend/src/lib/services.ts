@@ -67,6 +67,7 @@ const DETAIL_PAGE_SLUGS = new Set([
   "digital-design",
   "digital-marketing",
   "it-consulting",
+  "it-maintenance-support",
 ]);
 
 export function hasDetailPage(slug: string): boolean {
