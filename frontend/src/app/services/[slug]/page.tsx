@@ -1698,11 +1698,15 @@ export default async function ServiceDetailPage({ params }: Props) {
 
         {/* Testing-automation step chain + tools row — Software Quality
             Assurance only, static. Generic process copy, no fabricated
-            claims. Reference shows 5 real tool logos here; only Postman
-            and Apache JMeter were identifiable/verified from the
-            screenshot (added to techIcons.ts), the other 3 were too
-            small to confidently identify, so they're left off entirely
-            per explicit request rather than guessed. */}
+            claims. Reference shows 5 real tool logos in this order:
+            Postman, [unidentified], Apache JMeter, Selenium, Appium —
+            4 of 5 confirmed and added to techIcons.ts by rendering
+            candidate SVGs and comparing against a higher-res follow-up
+            screenshot. The 2nd icon (gray diamond outline with a
+            stylized "S") couldn't be matched to anything in the
+            simple-icons catalog after checking soapui, saucelabs,
+            testrail, swagger, and others — left off rather than
+            guessed. */}
         {service.slug === "software-quality-assurance" && (
           <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
@@ -1726,7 +1730,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
 
               <div className="mt-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
-                {["postman", "apachejmeter"].map((key) => (
+                {["postman", "apachejmeter", "selenium", "appium"].map((key) => (
                   <div key={key} className="flex h-10 items-center opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0">
                     <TechBrandIcon name={key} className="h-8 w-8" />
                   </div>
