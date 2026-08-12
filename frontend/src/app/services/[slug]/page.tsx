@@ -50,6 +50,7 @@ import ClientSpotlight, { type ClientSpotlightItem } from "@/components/sections
 import FeaturedWorkSplit from "@/components/sections/FeaturedWorkSplit";
 import PartnerSpotlight from "@/components/sections/PartnerSpotlight";
 import QualityManagement from "@/components/sections/QualityManagement";
+import ExpandableServiceCards from "@/components/sections/ExpandableServiceCards";
 import { fetchPortfolios, fetchPortfolioBySlug, type Portfolio } from "@/lib/portfolios";
 
 async function safeFetchTechnologies() {
@@ -1067,6 +1068,76 @@ export default async function ServiceDetailPage({ params }: Props) {
                   </div>
                 ))}
               </div>
+            </div>
+          </section>
+        )}
+
+        {/* "Our Staff Augmentation Services" — Staff Augmentation only,
+            static. Generic capability copy (company name swapped to
+            Devliora; the reference's per-card body text is cut off by
+            its own "Show more" truncation in the screenshot, so these
+            are written out in full rather than guessed verbatim). Image
+            reuses service.heroImageUrl, same pattern as the Digital
+            Marketing and IT Maintenance split sections. Cards use the
+            same "Show more"/"Show less" interaction as ServiceTabs.tsx's
+            ScopeCard, extracted into ExpandableServiceCards since this
+            is the first place outside ServiceTabs that needs it. */}
+        {service.slug === "staff-augmentation" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="grid gap-10 md:grid-cols-2 md:items-center">
+                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                  {(service.heroImageUrl || hero?.backgroundImageUrl) && (
+                    <Image
+                      src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
+                      alt=""
+                      fill
+                      sizes="(min-width: 768px) 50vw, 100vw"
+                      className="object-cover"
+                    />
+                  )}
+                </div>
+                <div>
+                  <h2 className="text-balance font-display text-3xl font-bold uppercase leading-tight text-paper sm:text-4xl">
+                    Our Staff Augmentation Services
+                  </h2>
+                  <p className="mt-5 text-paper/70">
+                    At Devliora, we help teams scale with the right talent at the right time.
+                    Here&apos;s a snapshot of how our staff augmentation services support your
+                    delivery goals.
+                  </p>
+                </div>
+              </div>
+
+              <ExpandableServiceCards
+                cards={[
+                  {
+                    title: "Consulting",
+                    description:
+                      "We work with you to understand skill gaps, team structure, and project needs, helping you define the right roles before we begin sourcing talent.",
+                  },
+                  {
+                    title: "Talent Matching",
+                    description:
+                      "Our team sources and assigns engineers based on technical fit, experience, and team dynamics, so new hires integrate smoothly from day one.",
+                  },
+                  {
+                    title: "Flexible Team Extension",
+                    description:
+                      "Scale your team up or down as needed with dedicated professionals who integrate directly into your existing workflows and tools.",
+                  },
+                  {
+                    title: "Delivery & Collaboration Support",
+                    description:
+                      "We ensure our augmented team members follow your processes, quality standards, and communication practices throughout the engagement.",
+                  },
+                  {
+                    title: "Long-Term Engagement Options",
+                    description:
+                      "Whether for short-term needs or extended collaboration, we offer flexible engagement models that adapt as your project evolves.",
+                  },
+                ]}
+              />
             </div>
           </section>
         )}
