@@ -914,7 +914,11 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
                 <div className="mx-auto h-6 w-px bg-paper/25" />
 
-                <div className="flex">
+                {/* Below sm, 3 categories x 2 subs each squeezes into
+                    unreadably narrow columns, so the connector-line tree
+                    is desktop/tablet only and mobile gets a simple
+                    stacked list instead (no lines, just spacing). */}
+                <div className="hidden sm:flex">
                   {[
                     {
                       title: "People",
@@ -973,6 +977,53 @@ export default async function ServiceDetailPage({ params }: Props) {
                             </div>
                           ))}
                         </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-8 flex flex-col gap-10 sm:hidden">
+                  {[
+                    {
+                      title: "People",
+                      icon: Users,
+                      subs: [
+                        { title: "Teams", leaves: ["Team Productivity", "Knowledge Accumulation"] },
+                        { title: "Individuals", leaves: ["Technological Skills", "Domain Experience"] },
+                      ],
+                    },
+                    {
+                      title: "Infrastructure",
+                      icon: Server,
+                      subs: [
+                        { title: "Hardware", leaves: ["Devices", "Networks"] },
+                        { title: "Software", leaves: ["Test Automation", "IDEs"] },
+                      ],
+                    },
+                    {
+                      title: "Processes",
+                      icon: Workflow,
+                      subs: [
+                        { title: "Integration", leaves: ["In-House/Offshore", "Process Optimization"] },
+                        { title: "Alignment", leaves: ["Seamless Communication", "Methodologies Adjustment"] },
+                      ],
+                    },
+                  ].map((cat) => (
+                    <div key={cat.title} className="flex flex-col items-center text-center">
+                      <cat.icon className="h-7 w-7 text-ember" strokeWidth={1.5} />
+                      <p className="mt-2 font-semibold text-paper">{cat.title}</p>
+
+                      <div className="mt-6 grid w-full grid-cols-2 gap-x-4 gap-y-2 border-t border-paper/15 pt-4">
+                        {cat.subs.map((sub) => (
+                          <div key={sub.title} className="flex flex-col items-center gap-1.5">
+                            <p className="text-sm font-medium text-paper">{sub.title}</p>
+                            {sub.leaves.map((leaf) => (
+                              <p key={leaf} className="text-xs leading-snug text-paper/60">
+                                {leaf}
+                              </p>
+                            ))}
+                          </div>
+                        ))}
                       </div>
                     </div>
                   ))}
@@ -1181,13 +1232,17 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
                   Engineering Excellence
                 </h2>
-                <div className="flex items-start gap-4">
-                  <span className="font-display text-5xl leading-none text-ember">&ldquo;</span>
+                <div className="flex items-start gap-2 sm:gap-4">
+                  <span className="shrink-0 font-display text-3xl leading-none text-ember sm:text-5xl">
+                    &ldquo;
+                  </span>
                   <p className="text-balance text-xl font-medium leading-snug text-paper sm:text-2xl">
                     Building a culture where technical excellence and continuous learning go
                     hand in hand, so every engineer we place is set up to do their best work.
                   </p>
-                  <span className="font-display text-5xl leading-none text-ember">&rdquo;</span>
+                  <span className="shrink-0 font-display text-3xl leading-none text-ember sm:text-5xl">
+                    &rdquo;
+                  </span>
                 </div>
               </div>
             </div>
