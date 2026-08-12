@@ -891,6 +891,72 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section>
         )}
 
+        {/* "Our numbers at a glance" — IT Maintenance & Support only,
+            static. NOTE: these 4 stats (99.9%/25+/15-Minute/30%) are the
+            KAZ reference's own claims, not verified Devliora figures —
+            kept verbatim per explicit request, same as the IT Consulting
+            page's numbers. Built as bespoke markup rather than the
+            generic service.highlights section since that one has no
+            description-paragraph slot. */}
+        {service.slug === "it-maintenance-support" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-4xl px-6">
+              <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                Our numbers at a glance
+              </h2>
+              <p className="mt-5 max-w-xl text-paper/70">
+                Explore the results of our IT maintenance and support solutions that empower
+                businesses across industries.
+              </p>
+
+              <div className="mt-10 grid gap-x-12 gap-y-6 sm:grid-cols-2">
+                {[
+                  {
+                    label: "99.9% Uptime",
+                    body: "Ensuring minimal downtime for your operations",
+                  },
+                  { label: "25+ Industries", body: "Tailored support for diverse sectors." },
+                  {
+                    label: "15-Minute Response",
+                    body: "Swiftly addressing critical issues.",
+                  },
+                  {
+                    label: "30% Cost Savings",
+                    body: "Optimized strategies that reduce expenses.",
+                  },
+                ].map((item) => (
+                  <p key={item.label} className="text-base leading-relaxed text-paper/80">
+                    <span className="font-semibold text-ember">{item.label}: </span>
+                    {item.body}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* "Get Started" CTA banner — IT Maintenance & Support only,
+            static, same full-bleed pattern as the other CTA banners on
+            this page. */}
+        {service.slug === "it-maintenance-support" && (
+          <section className="border-t border-paper/10 bg-signal">
+            <div className="flex flex-col sm:flex-row">
+              <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  Our dedicated team ensures your software runs smoothly.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+              >
+                Get Started
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </section>
+        )}
+
         {tabs ? (
           <ServiceTabs tabs={tabs} heroImageUrl={hero?.backgroundImageUrl} technologies={technologies} />
         ) : service.slug === "it-consulting" || service.slug === "it-maintenance-support" ? null : (
