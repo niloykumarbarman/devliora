@@ -1073,10 +1073,9 @@ export default async function ServiceDetailPage({ params }: Props) {
         )}
 
         {/* "Our Staff Augmentation Services" — Staff Augmentation only,
-            static. Generic capability copy (company name swapped to
-            Devliora; the reference's per-card body text is cut off by
-            its own "Show more" truncation in the screenshot, so these
-            are written out in full rather than guessed verbatim). Image
+            static. Generic capability copy, company name swapped to
+            Devliora — the reference's card body text was confirmed
+            verbatim once the "Show more" state was screenshotted. Image
             reuses service.heroImageUrl, same pattern as the Digital
             Marketing and IT Maintenance split sections. Cards use the
             same "Show more"/"Show less" interaction as ServiceTabs.tsx's
@@ -1114,27 +1113,27 @@ export default async function ServiceDetailPage({ params }: Props) {
                   {
                     title: "Consulting",
                     description:
-                      "We work with you to understand skill gaps, team structure, and project needs, helping you define the right roles before we begin sourcing talent.",
+                      "We work with you to understand skill gaps, team structure, and project needs, helping you define roles, timelines, and engagement models that align with your business objectives and delivery plans.",
                   },
                   {
                     title: "Talent Matching",
                     description:
-                      "Our team sources and assigns engineers based on technical fit, experience, and team dynamics, so new hires integrate smoothly from day one.",
+                      "Our team sources and assigns engineers based on technical fit, experience, and team compatibility, ensuring a smooth extension of your in-house team with minimal ramp-up time.",
                   },
                   {
                     title: "Flexible Team Extension",
                     description:
-                      "Scale your team up or down as needed with dedicated professionals who integrate directly into your existing workflows and tools.",
+                      "Scale your team up or down as needed with dedicated professionals who integrate seamlessly into your workflows, tools, and communication processes.",
                   },
                   {
                     title: "Delivery & Collaboration Support",
                     description:
-                      "We ensure our augmented team members follow your processes, quality standards, and communication practices throughout the engagement.",
+                      "We ensure our augmented team members follow your processes, quality standards, and delivery expectations while maintaining clear communication and accountability.",
                   },
                   {
                     title: "Long-Term Engagement Options",
                     description:
-                      "Whether for short-term needs or extended collaboration, we offer flexible engagement models that adapt as your project evolves.",
+                      "Whether for short-term needs or extended collaboration, we offer flexible engagement models that adapt as your projects, priorities, and timelines evolve.",
                   },
                 ]}
               />
