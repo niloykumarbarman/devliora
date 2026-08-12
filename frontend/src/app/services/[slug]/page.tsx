@@ -1360,11 +1360,13 @@ export default async function ServiceDetailPage({ params }: Props) {
             Quality Assurance only, static. Generic process copy, no
             fabricated claims. The reference's timeline has 5 numbered
             milestones (Analysis/Design/Development/Deployment/Support)
-            plus an unlabeled 6th phase ("Stabilization", shown with a
-            hollow dot instead of a number) sitting between Development
-            and Deployment — kept as a 6-column list with a dashed
-            connector line rather than true trig-positioned dots, since
-            it's a straight line, not a radial layout. */}
+            plus an unlabeled 6th phase ("Stabilization", hollow dot, no
+            number) sitting between Development and Deployment. Built
+            with the same 3-row CSS-grid technique as the Digital
+            Marketing roadmap (dashed stub + solid line spanning row 2,
+            dots per column) rather than a per-column border, so the line
+            reads as one continuous connector instead of 6 separate
+            segments. */}
         {service.slug === "software-quality-assurance" && (
           <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
@@ -1385,8 +1387,8 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </p>
               </div>
 
-              <div className="mt-16 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 lg:grid-cols-6">
-                {[
+              {(() => {
+                const steps = [
                   {
                     number: "1",
                     phase: "Analysis",
@@ -1436,31 +1438,85 @@ export default async function ServiceDetailPage({ params }: Props) {
                     items: ["Reproducing Issues", "Identifying Causes Of Issues"],
                     filled: true,
                   },
-                ].map((step) => (
-                  <div key={step.subtitle} className="relative pt-5">
-                    <div className="absolute left-0 top-0 h-px w-full border-t border-dashed border-paper/25" />
-                    <span
-                      className={`absolute left-0 top-0 h-2.5 w-2.5 -translate-y-1/2 rounded-full ${
-                        step.filled ? "bg-ember" : "border-2 border-ember bg-ink"
-                      }`}
-                    />
-                    {step.number && (
-                      <p className="flex items-baseline gap-1.5">
-                        <span className="font-display text-lg font-bold text-ember">{step.number}</span>
-                        <span className="font-semibold text-paper">{step.phase}</span>
-                      </p>
-                    )}
-                    <p className={`font-semibold text-paper ${step.number ? "mt-2" : ""}`}>{step.subtitle}</p>
-                    <ul className="mt-2 flex flex-col gap-1">
-                      {step.items.map((item) => (
-                        <li key={item} className="text-sm leading-snug text-paper/70">
-                          {item}
-                        </li>
+                ];
+                const stub = 100 / (steps.length * 2);
+
+                return (
+                  <div className="mt-16 overflow-x-auto pb-2">
+                    <div
+                      className="relative grid min-w-[820px]"
+                      style={{
+                        gridTemplateColumns: `repeat(${steps.length}, minmax(120px, 1fr))`,
+                        gridTemplateRows: "auto 1.75rem auto",
+                      }}
+                    >
+                      {/* continuous line: dashed stub, solid, dashed stub */}
+                      <div
+                        className="flex items-center self-center"
+                        style={{ gridColumn: "1 / -1", gridRow: "2" }}
+                      >
+                        <div
+                          className="h-px shrink-0 border-t border-dashed border-paper/30"
+                          style={{ width: `${stub}%` }}
+                        />
+                        <div className="h-px flex-1 bg-paper/30" />
+                        <div
+                          className="h-px shrink-0 border-t border-dashed border-paper/30"
+                          style={{ width: `${stub}%` }}
+                        />
+                      </div>
+
+                      {steps.map((step, i) => (
+                        <div
+                          key={`label-${step.subtitle}`}
+                          className="flex items-baseline gap-1.5 px-2 pb-4"
+                          style={{ gridColumn: `${i + 1}`, gridRow: "1" }}
+                        >
+                          {step.number && (
+                            <>
+                              <span className="font-display text-lg font-bold text-ember">
+                                {step.number}
+                              </span>
+                              <span className="font-semibold text-paper">{step.phase}</span>
+                            </>
+                          )}
+                        </div>
                       ))}
-                    </ul>
+
+                      {steps.map((step, i) => (
+                        <div
+                          key={`dot-${step.subtitle}`}
+                          className="flex justify-center"
+                          style={{ gridColumn: `${i + 1}`, gridRow: "2" }}
+                        >
+                          <span
+                            className={`h-3.5 w-3.5 rounded-full ring-4 ring-ink ${
+                              step.filled ? "bg-ember" : "border-2 border-ember bg-ink"
+                            }`}
+                          />
+                        </div>
+                      ))}
+
+                      {steps.map((step, i) => (
+                        <div
+                          key={`body-${step.subtitle}`}
+                          className="px-2 pt-4"
+                          style={{ gridColumn: `${i + 1}`, gridRow: "3" }}
+                        >
+                          <p className="font-semibold text-paper">{step.subtitle}</p>
+                          <ul className="mt-2 flex flex-col gap-1">
+                            {step.items.map((item) => (
+                              <li key={item} className="text-sm leading-snug text-paper/70">
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
                   </div>
-                ))}
-              </div>
+                );
+              })()}
             </div>
           </section>
         )}
