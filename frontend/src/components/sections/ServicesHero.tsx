@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, Briefcase, Users } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
 import { serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
@@ -12,6 +12,7 @@ import { SOLUTIONS } from "@/lib/solutions";
 import { slugify } from "@/lib/slugify";
 import { API_BASE_URL } from "@/lib/apiConfig";
 import QualityManagement from "@/components/sections/QualityManagement";
+import PricingModels from "@/components/sections/PricingModels";
 
 // Static two-column tech list per explicit request, matching the reference
 // exactly. Double-check these against /admin/technologies before launch —
@@ -39,26 +40,6 @@ const TECH_COLUMNS: string[][] = [
     "eCommerce",
     "Python",
   ],
-];
-
-// Same two engagement models already offered in the per-service "Engagement
-// models" section (services/[slug]/page.tsx) — reworded here to match this
-// card layout, not new claims.
-const PRICING_MODELS = [
-  {
-    icon: Briefcase,
-    title: "Time & Material",
-    body: "In this model, you pay for the actual hours worked on your project, along with any agreed expenses. It's well-suited for Agile development, where scope and priorities evolve over time. The flexibility allows you to scale the team size and adjust workloads as your project grows.",
-    quote:
-      "A pay-as-you-go model where you're billed for actual hours and effort, ideal for Agile projects with changing scope and shifting priorities.",
-  },
-  {
-    icon: Users,
-    title: "Dedicated Team",
-    body: "This model gives you a hand-picked team of engineers working exclusively on your project. Engagement typically starts from part-time equivalents and can expand as needed. It's the most effective choice for long-term projects, giving you the expertise you need without the overhead of managing in-house staff.",
-    quote:
-      "A partnership model with a fully committed team working as an extension of your staff, giving you stability, expertise, and cost efficiency for long-term projects.",
-  },
 ];
 
 // The reference's "Our talent pool" stats (90%/70%/35%, 20+ countries,
@@ -376,32 +357,9 @@ export default function ServicesHero() {
         </div>
       </section>
 
-      {/* "Pricing models": same two engagement models already offered on
-          the per-service "Engagement models" section, just reworded to
-          this icon-card layout — not new business claims. */}
-      <section className="relative overflow-hidden bg-ink py-16 text-paper md:py-20">
-        <div className="mx-auto max-w-6xl px-6">
-          <motion.h2
-            {...fadeUp(0)}
-            className="text-balance font-display text-4xl font-semibold leading-tight md:text-5xl"
-          >
-            Pricing models
-          </motion.h2>
-
-          <div className="mt-12 grid gap-12 md:grid-cols-2 md:gap-16">
-            {PRICING_MODELS.map((model, i) => (
-              <motion.div key={model.title} {...fadeUp(i + 1)}>
-                <model.icon className="h-9 w-9 text-ember" strokeWidth={1.75} />
-                <h3 className="mt-5 font-display text-2xl font-semibold text-ember">{model.title}</h3>
-                <p className="mt-4 max-w-md text-paper/70">{model.body}</p>
-                <div className="mt-6 max-w-md rounded-lg border border-paper/10 bg-graphite/40 p-6">
-                  <p className="italic text-paper/70">{model.quote}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* "Pricing models" — extracted to a shared component now that the
+          Staff Augmentation page reference needs the identical section. */}
+      <PricingModels />
 
       {/* "Global delivery" + "Our talent pool": the reference names the
           source company, a country count, and a headquarters city, plus

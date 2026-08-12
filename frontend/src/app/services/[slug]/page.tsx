@@ -51,6 +51,7 @@ import FeaturedWorkSplit from "@/components/sections/FeaturedWorkSplit";
 import PartnerSpotlight from "@/components/sections/PartnerSpotlight";
 import QualityManagement from "@/components/sections/QualityManagement";
 import ExpandableServiceCards from "@/components/sections/ExpandableServiceCards";
+import PricingModels from "@/components/sections/PricingModels";
 import { fetchPortfolios, fetchPortfolioBySlug, type Portfolio } from "@/lib/portfolios";
 
 async function safeFetchTechnologies() {
@@ -1207,6 +1208,97 @@ export default async function ServiceDetailPage({ params }: Props) {
             icons={[{ key: "microsoft", label: "Microsoft" }]}
           />
         )}
+
+        {/* "Tailored tech solutions for every industry" — Staff
+            Augmentation only, static. Generic capability copy, real
+            technology/domain names (not fabricated claims). 4 plain
+            columns, same divider-under-header style as the "Seamless
+            Collaboration" icon columns above. */}
+        {service.slug === "staff-augmentation" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="grid gap-10 md:grid-cols-2">
+                <div>
+                  <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                    Tailored tech solutions for every industry
+                  </h2>
+                  <p className="mt-5 inline-block max-w-md border-b border-ember/40 pb-3 italic text-paper/60">
+                    Proven expertise, industry knowledge, tailored results.
+                  </p>
+                </div>
+                <p className="text-paper/70 md:pt-2">
+                  Across industries, we build custom solutions tailored to the needs of
+                  healthcare, telecom, finance, automotive, and retail. The focus is on smooth
+                  integration and operational efficiency. From concept through execution,
+                  technology is applied to support meaningful outcomes.
+                </p>
+              </div>
+
+              <div className="mt-16 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
+                {[
+                  { title: "Programming languages", items: ["Java", ".NET", "C++", "Python", "C#", "PHP"] },
+                  { title: "Platforms", items: ["Office 365", "SPA Commerce", "SharePoint", "Salesforce", "Atlassian"] },
+                  {
+                    title: "Technologies",
+                    items: [
+                      "Cloud",
+                      "Machine Learning",
+                      "Internet of Things",
+                      "Augmented & Virtual Reality",
+                      "Cybersecurity",
+                      "Blockchain",
+                    ],
+                  },
+                  { title: "Domains", items: ["Healthcare", "Telecom", "Finance", "Automotive", "Retail"] },
+                ].map((col) => (
+                  <div key={col.title}>
+                    <p className="font-semibold text-ember">{col.title}</p>
+                    <div className="mt-2 border-t border-paper/15" />
+                    <div className="mt-4 flex flex-col gap-3">
+                      {col.items.map((item) => (
+                        <p key={item} className="text-paper/80">
+                          {item}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* "Enhance your team's capabilities and efficiency" CTA banner —
+            Staff Augmentation only, static. NOTE: the reference uses a
+            magenta/pink background here, but that color isn't part of
+            Devliora's palette (ink/paper/graphite/signal/ember/wire), so
+            this stays on bg-signal for brand consistency with every
+            other CTA banner on the site rather than introducing an
+            off-brand one-off color. */}
+        {service.slug === "staff-augmentation" && (
+          <section className="border-t border-paper/10 bg-signal">
+            <div className="flex flex-col sm:flex-row">
+              <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  Enhance your team&apos;s capabilities and efficiency.
+                </p>
+                <p className="mt-1 max-w-lg text-sm text-paper/70">Want to scale up?</p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+              >
+                Get Started
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </section>
+        )}
+
+        {/* "Pricing models" — Staff Augmentation only. Same shared
+            component the /services page uses (identical two engagement
+            models, same copy). */}
+        {service.slug === "staff-augmentation" && <PricingModels />}
 
         {/* "Comprehensive multi-tier software support services" — IT
             Maintenance & Support only, static. Generic capability copy
