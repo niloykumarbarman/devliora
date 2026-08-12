@@ -1666,6 +1666,76 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section>
         )}
 
+        {/* "Quality management" — Software Quality Assurance only. Same
+            shared component the /services, IT Consulting, and IT
+            Maintenance & Support pages use — this reference has the
+            identical heading and bullets too. */}
+        {service.slug === "software-quality-assurance" && (
+          <QualityManagement description="Devliora is a quality-driven software development company, committed to setting and maintaining high standards in engineering practices. We follow proven processes and comply with established quality and information security frameworks to ensure every solution is robust, secure, and built to last." />
+        )}
+
+        {/* "Boost your software's reliability with precision QA" CTA
+            banner — Software Quality Assurance only, static, same
+            bg-signal pattern as the page's other CTA banners. */}
+        {service.slug === "software-quality-assurance" && (
+          <section className="border-t border-paper/10 bg-signal">
+            <div className="flex flex-col sm:flex-row">
+              <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  Boost your software&apos;s reliability with precision QA.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+              >
+                Assure Quality
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </section>
+        )}
+
+        {/* Testing-automation step chain + tools row — Software Quality
+            Assurance only, static. Generic process copy, no fabricated
+            claims. Reference shows 5 real tool logos here; only Postman
+            and Apache JMeter were identifiable/verified from the
+            screenshot (added to techIcons.ts), the other 3 were too
+            small to confidently identify, so they're left off entirely
+            per explicit request rather than guessed. */}
+        {service.slug === "software-quality-assurance" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
+                {["Testing scope definition", "Automation tools selection", "Testing framework development", "Framework implementation", "Test automation monitoring & support"].map(
+                  (step, i, steps) => (
+                    <div key={step} className="flex items-center gap-2 sm:gap-3">
+                      <div
+                        className={`w-40 rounded-lg border-2 px-4 py-4 text-center text-sm font-medium text-paper sm:w-44 ${
+                          i % 2 === 0 ? "border-signal" : "border-[#a78bfa]"
+                        }`}
+                      >
+                        {step}
+                      </div>
+                      {i < steps.length - 1 && (
+                        <ChevronRight className="h-5 w-5 shrink-0 text-paper/40" />
+                      )}
+                    </div>
+                  ),
+                )}
+              </div>
+
+              <div className="mt-14 flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
+                {["postman", "apachejmeter"].map((key) => (
+                  <div key={key} className="flex h-10 items-center opacity-70 grayscale transition-all hover:opacity-100 hover:grayscale-0">
+                    <TechBrandIcon name={key} className="h-8 w-8" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* "Comprehensive multi-tier software support services" — IT
             Maintenance & Support only, static. Generic capability copy
             (L1/L2/L3 is a standard industry term, not a fabricated
