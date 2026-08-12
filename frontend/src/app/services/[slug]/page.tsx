@@ -24,7 +24,10 @@ import {
   Milestone,
   MousePointerClick,
   Network,
+  Server,
   Star,
+  Users,
+  Workflow,
   Zap,
 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
@@ -823,6 +826,134 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
             </section>
           </>
+        )}
+
+        {/* "Unmatched Experience in IT Solutions and Innovation" — Staff
+            Augmentation only, static. NOTE: the reference's 4 stats
+            (20+ years, 10+ industry leaders, 100+ developers, 200+
+            deliveries) are the KAZ reference's own claims, not verified
+            Devliora figures — kept verbatim per explicit request, same
+            as the IT Consulting and IT Maintenance pages' numbers.
+            Built as bespoke markup (not the generic service.highlights
+            section) since the reference has no colon after each label,
+            just an inline sentence. */}
+        {service.slug === "staff-augmentation" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-4xl px-6">
+              <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                Unmatched Experience in IT Solutions and Innovation
+              </h2>
+
+              <div className="mt-10 grid gap-x-12 gap-y-8 sm:grid-cols-2">
+                {[
+                  { plain: "", ember: "20+ years", tail: " in custom software development and engineering" },
+                  {
+                    plain: "10+ industry leaders trust our ",
+                    ember: "IT solutions, including Microsoft, AWS, and Google Cloud",
+                    tail: "",
+                  },
+                  { plain: "", ember: "100+ experienced", tail: " developers across diverse technologies" },
+                  {
+                    plain: "Dedicated Centers of Excellence in ",
+                    ember: "FinTech, Healthcare, Retail, and Manufacturing",
+                    tail: "",
+                  },
+                  { plain: "", ember: "200+", tail: " successful software deliveries worldwide" },
+                  {
+                    plain: "Continuous innovation through company-wide ",
+                    ember: "R&D initiatives",
+                    tail: "",
+                  },
+                ].map((item, i) => (
+                  <p key={i} className="text-base leading-relaxed text-paper/80">
+                    {item.plain}
+                    <span className="font-semibold text-ember">{item.ember}</span>
+                    {item.tail}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* "Empowering your dedicated development team for success" —
+            Staff Augmentation only, static. Generic capability copy, no
+            fabricated claims. The org-chart is a 3-tier breakdown
+            (Dedicated Development Center -> People/Infrastructure/
+            Processes -> 2 sub-areas each -> 2 leaf items each), built
+            with plain border lines rather than a diagramming library. */}
+        {service.slug === "staff-augmentation" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="grid gap-10 md:grid-cols-2 md:items-start">
+                <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                  Empowering your dedicated development team for success
+                </h2>
+                <p className="text-paper/70">
+                  We build skilled teams with the right expertise, infrastructure, and processes
+                  to support productivity and clear communication, aligned with project goals.
+                  Collaboration is structured, transparent, and responsive. This ensures teams
+                  integrate smoothly and deliver consistently over time.
+                </p>
+              </div>
+
+              <div className="mt-16">
+                <div className="text-center">
+                  <p className="font-semibold text-paper">Dedicated Development Center</p>
+                  <div className="mx-auto mt-3 h-6 w-px bg-paper/25" />
+                </div>
+
+                <div className="grid grid-cols-1 gap-y-12 border-t border-paper/25 pt-8 sm:grid-cols-3 sm:gap-x-6">
+                  {[
+                    {
+                      title: "People",
+                      icon: Users,
+                      subs: [
+                        { title: "Teams", leaves: ["Team Productivity", "Knowledge Accumulation"] },
+                        { title: "Individuals", leaves: ["Technological Skills", "Domain Experience"] },
+                      ],
+                    },
+                    {
+                      title: "Infrastructure",
+                      icon: Server,
+                      subs: [
+                        { title: "Hardware", leaves: ["Devices", "Networks"] },
+                        { title: "Software", leaves: ["Test Automation", "IDEs"] },
+                      ],
+                    },
+                    {
+                      title: "Processes",
+                      icon: Workflow,
+                      subs: [
+                        { title: "Integration", leaves: ["In-House/Offshore", "Process Optimization"] },
+                        { title: "Alignment", leaves: ["Seamless Communication", "Methodologies Adjustment"] },
+                      ],
+                    },
+                  ].map((cat) => (
+                    <div key={cat.title} className="flex flex-col items-center text-center">
+                      <cat.icon className="h-7 w-7 text-ember" strokeWidth={1.5} />
+                      <p className="mt-2 border-t border-paper/25 pt-3 font-semibold text-paper">
+                        {cat.title}
+                      </p>
+
+                      <div className="mt-8 grid w-full grid-cols-2 gap-x-4 gap-y-2 border-t border-paper/15 pt-4">
+                        {cat.subs.map((sub) => (
+                          <div key={sub.title} className="flex flex-col items-center gap-2">
+                            <p className="text-sm font-medium text-paper">{sub.title}</p>
+                            {sub.leaves.map((leaf) => (
+                              <p key={leaf} className="text-xs leading-snug text-paper/60">
+                                {leaf}
+                              </p>
+                            ))}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
         )}
 
         {/* "Comprehensive multi-tier software support services" — IT
