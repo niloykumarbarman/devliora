@@ -402,27 +402,27 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         items: [
           {
             title: "Conceptualization & Ideation",
-            body: "We work with you to shape and refine the idea behind your web application, scoping the project around real business goals and constraints before a line of code is written. Every concept is grounded in what your users and your team actually need.",
+            body: "We collaborate with you to brainstorm and refine innovative ideas. Detailed project scopes and timelines are crafted to align with your vision.",
           },
           {
             title: "Architecture & Design",
-            body: "We design a scalable, well-structured architecture that forms the backbone of your application, chosen for the access patterns and load it will actually see — not a one-size-fits-all default.",
+            body: "Our team creates scalable and robust architectures that form the backbone of your application. Engaging and responsive designs ensure a seamless user experience across devices.",
           },
           {
             title: "Development & Customization",
-            body: "Our engineers build the custom features your business actually needs, rather than bending a generic template to fit. Every layer is written for correctness and long-term maintainability.",
+            body: "Our expert developers build custom features tailored to your specific business needs. We employ cutting-edge technologies to ensure high performance and security.",
           },
           {
             title: "Integration & Automation",
-            body: "We connect your application with the third-party services and internal systems it depends on, and automate the workflows that would otherwise be manual and error-prone.",
+            body: "Seamless integration with third-party services and APIs enhances functionality. Automation of repetitive tasks increases efficiency and reduces operational costs.",
           },
           {
             title: "Testing & Optimization",
-            body: "We test thoroughly for correctness and performance across the application, and optimize it so it stays fast and reliable as usage and complexity grow.",
+            body: "Comprehensive testing ensures bug-free, optimized performance. Continuous performance monitoring and tuning maintain peak efficiency.",
           },
           {
             title: "Launch & Beyond",
-            body: "We handle deployment carefully and provide ongoing support after launch, so the application keeps running reliably as your needs and traffic change over time.",
+            body: "We handle strategic deployment for a successful launch. Ongoing support and iterative enhancements keep your application ahead of the curve.",
           },
         ],
       },
