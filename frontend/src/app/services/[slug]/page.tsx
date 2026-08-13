@@ -236,6 +236,32 @@ const RING_DOT_POSITIONS = [
   { top: "25%", left: "6.7%" },
 ];
 
+// Eight evenly spaced points (45° apart, starting at top, clockwise)
+// around the "engagement team" ring on Performance & Reliability
+// Engineering — each carries which side its label sits on, since a label
+// centered above/below only reads cleanly at the top/bottom points.
+const TEAM_ROLE_POSITIONS: { top: string; left: string; side: "top" | "right" | "bottom" | "left" }[] = [
+  { top: "0%", left: "50%", side: "top" },
+  { top: "14.6%", left: "85.4%", side: "right" },
+  { top: "50%", left: "100%", side: "right" },
+  { top: "85.4%", left: "85.4%", side: "right" },
+  { top: "100%", left: "50%", side: "bottom" },
+  { top: "85.4%", left: "14.6%", side: "left" },
+  { top: "50%", left: "0%", side: "left" },
+  { top: "14.6%", left: "14.6%", side: "left" },
+];
+
+const PERFORMANCE_ENGAGEMENT_TEAM = [
+  "Developers",
+  "UX/UI designer",
+  "DevOps engineer",
+  "QA engineers",
+  "Architect/Team lead",
+  "Project manager",
+  "Business analyst",
+  "Account manager",
+];
+
 // Generic, non-platform-specific capability copy — same content
 // regardless of which tab (Web/Mobile/Enterprise) is active, since this
 // section sits below the tabs as a shared block, not inside them.
@@ -3178,6 +3204,111 @@ export default async function ServiceDetailPage({ params }: Props) {
         )}
 
         <ClientSpotlight items={clientSpotlight} />
+
+        {/* "Top-tier engineers..." CTA banner + "Our performance testing
+            engagement models" — Performance & Reliability Engineering
+            only, static. Bespoke rather than the generic Engagement
+            Models / Software Essentials sections (both hidden for this
+            slug above) because the reference's version is specific to
+            performance testing, not a generic pricing-model list. Team
+            roles are a generic team-composition description, not a
+            fabricated claim about staffing levels. CTA stays on
+            bg-signal, not the reference's actual slate-blue, matching
+            every other CTA banner on the site. */}
+        {service.slug === "performance-reliability-engineering" && (
+          <>
+            <section className="border-t border-paper/10 bg-signal">
+              <div className="flex flex-col sm:flex-row">
+                <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+                  <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                    Top-tier engineers skilled in JMeter and performance testing. Ready to
+                    elevate your project?
+                  </p>
+                </div>
+                <Link
+                  href="/contact"
+                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                >
+                  Get Talent
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+              </div>
+            </section>
+
+            <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+              <div className="mx-auto max-w-6xl px-6">
+                <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                  Our performance testing engagement models
+                </h2>
+
+                <div className="mt-14 grid gap-16 md:grid-cols-2 md:items-center">
+                  <div>
+                    <h3 className="font-display text-xl font-semibold text-signal">
+                      Full performance audit
+                    </h3>
+                    <p className="mt-4 text-paper/70">
+                      We undertake the entire process of performance testing, from test
+                      planning and environment setup to load simulation and analysis, with
+                      full responsibility for findings quality and remediation reporting.
+                    </p>
+
+                    <p className="mt-8 font-semibold text-paper">Why opt for a full performance audit:</p>
+                    <ul className="mt-4 space-y-3">
+                      {[
+                        "End-to-end test ownership with zero internal overhead",
+                        "Faster bottleneck discovery and remediation roadmap",
+                        "An independent perspective on your platform's breaking points",
+                        "Access to distributed AWS testing infrastructure you don't need to build",
+                      ].map((item) => (
+                        <li key={item} className="flex items-start gap-3 text-paper/80">
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-signal" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="relative mx-auto hidden aspect-square w-full max-w-md md:block">
+                    <div className="absolute inset-[15%] rounded-full border border-dashed border-paper/30" />
+                    <div
+                      className="absolute inset-[27%] rounded-full p-[2px]"
+                      style={{ backgroundImage: "linear-gradient(135deg, #a78bfa, #60a5fa)" }}
+                    >
+                      <div className="flex h-full w-full items-center justify-center rounded-full bg-ink">
+                        <Users className="h-9 w-9 text-signal" strokeWidth={1.5} />
+                      </div>
+                    </div>
+
+                    {TEAM_ROLE_POSITIONS.map((pos, i) => {
+                      const dot = <span key="dot" className="h-2.5 w-2.5 shrink-0 rounded-full bg-ember" />;
+                      const label = (
+                        <span key="label" className="text-sm text-paper/80">
+                          {PERFORMANCE_ENGAGEMENT_TEAM[i]}
+                        </span>
+                      );
+                      // Outside-the-ring direction differs per point: top/bottom
+                      // stack vertically (label above or below the dot), the
+                      // rest sit beside the dot, label away from the ring.
+                      const flexClass =
+                        pos.side === "top" || pos.side === "bottom" ? "flex-col gap-2" : "flex-row gap-2.5";
+                      const children =
+                        pos.side === "top" || pos.side === "left" ? [label, dot] : [dot, label];
+                      return (
+                        <div
+                          key={PERFORMANCE_ENGAGEMENT_TEAM[i]}
+                          className={`absolute flex -translate-x-1/2 -translate-y-1/2 items-center whitespace-nowrap ${flexClass}`}
+                          style={{ top: `calc(${pos.top} * 0.7 + 15%)`, left: `calc(${pos.left} * 0.7 + 15%)` }}
+                        >
+                          {children}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </section>
+          </>
+        )}
 
         {/* "Guarantee your software's success with our thorough QA" CTA
             banner — Software Quality Assurance only, static. Positioned
