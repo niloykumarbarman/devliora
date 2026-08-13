@@ -214,6 +214,17 @@ const gridOverlayStyle = {
     "linear-gradient(to right, color-mix(in srgb, var(--color-paper) 4%, transparent) 1px, transparent 1px), linear-gradient(to bottom, color-mix(in srgb, var(--color-paper) 4%, transparent) 1px, transparent 1px)",
 };
 
+// Fallback background for an industry card with no uploaded image yet —
+// a brand-color gradient (cycled by card index) instead of a flat gray
+// box, so the grid doesn't look empty while a real photo is pending.
+// Not a stand-in for any specific reference photo, just decorative color.
+const INDUSTRY_CARD_FALLBACK_GRADIENTS = [
+  "linear-gradient(135deg, #FF6B35, #3D5AFE)",
+  "linear-gradient(135deg, #3D5AFE, #a78bfa)",
+  "linear-gradient(135deg, #60a5fa, #3D5AFE)",
+  "linear-gradient(135deg, #FF6B35, #a78bfa)",
+];
+
 // Six evenly spaced points around the "Software essentials" decorative
 // ring (top, then clockwise), as percentages of the ring's own box.
 const RING_DOT_POSITIONS = [
@@ -2900,13 +2911,21 @@ export default async function ServiceDetailPage({ params }: Props) {
                       key={`${card.title}-${i}`}
                       className="group relative aspect-[3/4] overflow-hidden rounded-lg bg-graphite"
                     >
-                      {card.imageUrl && (
+                      {card.imageUrl ? (
                         <Image
                           src={resolveImageUrl(card.imageUrl)}
                           alt=""
                           fill
                           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      ) : (
+                        <div
+                          className="absolute inset-0 opacity-60 transition-opacity duration-300 group-hover:opacity-75"
+                          style={{
+                            backgroundImage:
+                              INDUSTRY_CARD_FALLBACK_GRADIENTS[i % INDUSTRY_CARD_FALLBACK_GRADIENTS.length],
+                          }}
                         />
                       )}
                       <div className="absolute inset-x-0 bottom-0 bg-ink/90 p-4">
