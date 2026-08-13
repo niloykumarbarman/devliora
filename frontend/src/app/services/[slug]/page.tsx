@@ -691,6 +691,44 @@ export default async function ServiceDetailPage({ params }: Props) {
           </>
         )}
 
+        {/* "Key facts at a glance" — Performance & Reliability Engineering
+            only, static. NOTE: the reference's facts included specific
+            claimed figures ("3,600+ concurrent users simulated per test",
+            "1 master, 6 slave servers", "1-2 weeks setup", "82% of
+            findings traced to infrastructure and application layer") —
+            KAZ's own reported numbers, not verified Devliora data. Per
+            explicit request these are reworded to qualitative capability
+            statements instead of invented figures. */}
+        {service.slug === "performance-reliability-engineering" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                Key facts at a glance
+              </h2>
+              <p className="mt-5 max-w-2xl text-paper/70">
+                With hands-on experience in distributed load testing, our team brings deep
+                expertise across web, APIs, e-commerce, and Magento platforms, helping projects
+                move forward with confidence and deliver performance-ready solutions.
+              </p>
+
+              <div className="mt-10 grid grid-cols-1 gap-x-16 gap-y-5 sm:grid-cols-2">
+                {[
+                  "End-to-end performance testing partner",
+                  "Fast test setup with early, actionable results",
+                  "Distributed load testing on real cloud infrastructure",
+                  "Simulates realistic concurrent user loads per test",
+                  "Experience across web, API, e-commerce, and Magento platforms",
+                  "Findings mapped to infrastructure and application-layer root causes",
+                ].map((fact) => (
+                  <p key={fact} className="font-semibold text-paper">
+                    {fact}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* IT Consulting only, static. NOTE: "Since 2004" and the three
             stats below (30%/85%/90%) are the KAZ reference's own claims,
             not verified Devliora history or data — kept only because the
