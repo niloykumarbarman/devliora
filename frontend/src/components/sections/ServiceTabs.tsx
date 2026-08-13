@@ -193,17 +193,22 @@ export default function ServiceTabs({
               <h3 className="font-display text-2xl font-semibold text-paper">
                 Technologies we work with
               </h3>
-              <div className="mt-6 grid grid-cols-2 gap-x-10 gap-y-5 sm:grid-cols-4">
+              <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
                 {technologies.map((tech) => {
-                  const hasIcon = !!getTechIcon(tech.name);
+                  const icon = getTechIcon(tech.name);
                   return (
-                    <div key={tech.id} className="flex items-center gap-2.5">
-                      {hasIcon ? (
-                        <TechBrandIcon name={tech.name} className="h-6 w-6 shrink-0" />
-                      ) : (
-                        <span className="h-2 w-2 shrink-0 rounded-full bg-ember" />
-                      )}
-                      <span className="font-mono text-sm font-semibold text-ember">
+                    <div key={tech.id} className="flex items-center gap-3">
+                      <div
+                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
+                        style={{ backgroundColor: icon ? `#${icon.hex}` : "var(--color-ember)" }}
+                      >
+                        {icon ? (
+                          <TechBrandIcon name={tech.name} color="#fff" className="h-5 w-5" />
+                        ) : (
+                          <span className="h-2 w-2 rounded-full bg-paper" />
+                        )}
+                      </div>
+                      <span className="font-mono text-sm font-semibold text-paper">
                         {tech.displayName.trim()}
                       </span>
                     </div>
