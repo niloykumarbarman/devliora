@@ -2,7 +2,18 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Code2, Database, Lightbulb, MonitorSmartphone, Package, Rows3, Search, Star } from "lucide-react";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Code2,
+  Database,
+  Lightbulb,
+  MonitorSmartphone,
+  Package,
+  Rows3,
+  Search,
+  Star,
+} from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 import type { TechnologyDto } from "@/lib/technologies";
 import { getTechIcon } from "@/lib/techIcons";
@@ -72,6 +83,24 @@ export type ServiceReviewQuote = {
   source: string;
 };
 
+// Only "Years in Operation" is a real, verified Devliora figure. The
+// rest of the KAZ reference's stats (countries, savings, launches,
+// company count) are that company's own claims, not something we can
+// state about Devliora — so this stays a single honest stat rather
+// than the reference's full 5-stat grid. See ServiceImpactStat.
+export type ServiceImpactStat = {
+  value: string;
+  label: string;
+  tagline?: string;
+};
+
+export type ServiceImpact = {
+  ctaText: string;
+  heading: string;
+  tagline: string;
+  stats: ServiceImpactStat[];
+};
+
 export type ServiceTab = {
   label: string;
   heading: string;
@@ -81,6 +110,7 @@ export type ServiceTab = {
   roadmap?: ServiceTabRoadmap;
   reviewQuote?: ServiceReviewQuote;
   scope?: ServiceScope;
+  impact?: ServiceImpact;
   techIntro?: ServiceTechIntro;
 };
 
@@ -329,6 +359,56 @@ export default function ServiceTabs({
             ))}
           </div>
         </div>
+      )}
+
+      {current.impact && (
+        <>
+          {/* CTA banner — generic, no factual claims, so it's kept
+              verbatim from the reference like the site's other
+              bg-signal CTA banners. */}
+          <div className="mt-20 bg-signal md:mt-28">
+            <div className="mx-auto flex max-w-6xl flex-col sm:flex-row sm:items-center">
+              <div className="flex-1 px-6 py-8 sm:py-10">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  {current.impact.ctaText}
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+              >
+                Get Started
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </div>
+
+          <div className="mx-auto mt-20 max-w-6xl px-6 text-center md:mt-28">
+            <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+              {current.impact.heading}
+            </h3>
+            <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+              {current.impact.tagline}
+            </p>
+
+            <div className="mt-14 flex flex-wrap justify-center gap-x-16 gap-y-10">
+              {current.impact.stats.map((stat) => (
+                <div key={stat.label} className="max-w-[14rem]">
+                  <p className="font-display text-5xl font-extrabold tabular-nums text-ember">
+                    {stat.value}
+                  </p>
+                  <p className="mt-2 font-semibold text-paper">{stat.label}</p>
+                  {stat.tagline && (
+                    <>
+                      <div className="mx-auto mt-3 w-10 border-t border-paper/20" />
+                      <p className="mt-3 text-sm italic text-paper/60">{stat.tagline}</p>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
       )}
 
       {current.techIntro && (

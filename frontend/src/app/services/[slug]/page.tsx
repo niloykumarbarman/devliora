@@ -426,6 +426,23 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      // Web tab only, per explicit request. Only "Years in Operation" is
+      // a real, verified Devliora figure — the reference's other stats
+      // (countries, savings, launches, company count) are that
+      // company's own claims and are deliberately left out rather than
+      // fabricated for Devliora. See ServiceImpact/ServiceImpactStat.
+      impact: {
+        ctaText: "Ready to turn ideas into reality?",
+        heading: "Our Impact in Numbers",
+        tagline: "A track record built one project at a time.",
+        stats: [
+          {
+            value: "10",
+            label: "Years in Operation",
+            tagline: "Building lasting partnerships",
+          },
+        ],
+      },
       techIntro: {
         heading: "Powering your web vision with cutting-edge tech",
         tagline: "Bringing web ideas to life with next-gen tech.",
