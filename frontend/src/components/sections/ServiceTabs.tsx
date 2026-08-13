@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Code2, Database, FileText, LayoutTemplate, Lightbulb, Package, Search } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 import type { TechnologyDto } from "@/lib/technologies";
 import { getTechIcon } from "@/lib/techIcons";
@@ -10,6 +11,33 @@ import TechBrandIcon from "@/components/TechBrandIcon";
 export type ServiceTabCard = {
   title: string;
   body: string;
+};
+
+// React components (including icon components) can't be passed as
+// props from a Server Component (this data is defined in page.tsx)
+// into a Client Component like this one — only serializable data
+// crosses that boundary. So each step carries a string key instead,
+// and the actual icon component is looked up here, client-side.
+const APPROACH_ICONS = {
+  lightbulb: Lightbulb,
+  layout: LayoutTemplate,
+  code: Code2,
+  database: Database,
+  filetext: FileText,
+  search: Search,
+  package: Package,
+} as const;
+
+export type ServiceApproachIconKey = keyof typeof APPROACH_ICONS;
+
+export type ServiceApproachStep = {
+  iconKey: ServiceApproachIconKey;
+  title: string;
+};
+
+export type ServiceApproach = {
+  tagline: string;
+  steps: ServiceApproachStep[];
 };
 
 export type ServiceTabRoadmapStep = {
@@ -44,6 +72,7 @@ export type ServiceTab = {
   heading: string;
   body: string;
   cards?: ServiceTabCard[];
+  approach?: ServiceApproach;
   roadmap?: ServiceTabRoadmap;
   scope?: ServiceScope;
   techIntro?: ServiceTechIntro;
@@ -122,6 +151,96 @@ export default function ServiceTabs({
           </div>
         )}
       </div>
+
+      {current.approach && current.approach.steps.length > 1 && (
+        <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
+          <h3 className="text-balance font-display text-2xl font-semibold leading-tight text-paper sm:text-3xl">
+            Our approach to exceptional {current.label.toLowerCase()} development
+          </h3>
+          <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+            {current.approach.tagline}
+          </p>
+
+          {/* Desktop: zigzag icon timeline. Points and the connecting
+              polyline share the same 0-100 coordinate space (viewBox
+              "0 0 100 100" with preserveAspectRatio="none" stretches to
+              fill the container exactly like the % positions below), so
+              the line always meets the circles regardless of container
+              width. */}
+          <div className="relative mt-28 hidden h-64 md:block">
+            <svg
+              className="absolute inset-0 h-full w-full"
+              viewBox="0 0 100 100"
+              preserveAspectRatio="none"
+              aria-hidden="true"
+            >
+              <polyline
+                points={current.approach.steps
+                  .map((_, i) => {
+                    const x = (i / (current.approach!.steps.length - 1)) * 100;
+                    const y = i % 2 === 0 ? 78 : 22;
+                    return `${x},${y}`;
+                  })
+                  .join(" ")}
+                fill="none"
+                stroke="var(--color-paper)"
+                strokeOpacity="0.25"
+                strokeWidth="0.6"
+              />
+            </svg>
+
+            {current.approach.steps.map((step, i) => {
+              const isHigh = i % 2 === 1;
+              const x = (i / (current.approach!.steps.length - 1)) * 100;
+              const y = isHigh ? 22 : 78;
+              const Icon = APPROACH_ICONS[step.iconKey];
+              const label = (
+                <div className="max-w-[7rem] text-center">
+                  <p className="font-mono text-xs font-semibold tabular-nums text-ember">
+                    {String(i + 1).padStart(2, "0")}
+                  </p>
+                  <p className="mt-0.5 text-xs font-semibold uppercase leading-snug tracking-wide text-paper">
+                    {step.title}
+                  </p>
+                </div>
+              );
+              return (
+                <div
+                  key={step.title}
+                  className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
+                  style={{ left: `${x}%`, top: `${y}%` }}
+                >
+                  {isHigh && <div className="mb-3">{label}</div>}
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-ember bg-ink">
+                    <Icon className="h-6 w-6 text-ember" strokeWidth={1.5} />
+                  </div>
+                  {!isHigh && <div className="mt-3">{label}</div>}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Mobile: plain vertical list */}
+          <div className="mt-14 space-y-6 md:hidden">
+            {current.approach.steps.map((step, i) => {
+              const Icon = APPROACH_ICONS[step.iconKey];
+              return (
+                <div key={step.title} className="flex items-center gap-4">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-ember bg-ink">
+                    <Icon className="h-5 w-5 text-ember" strokeWidth={1.5} />
+                  </span>
+                  <div>
+                    <p className="font-mono text-xs font-semibold tabular-nums text-ember">
+                      {String(i + 1).padStart(2, "0")}
+                    </p>
+                    <p className="text-sm font-semibold text-paper">{step.title}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {current.roadmap && (
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">

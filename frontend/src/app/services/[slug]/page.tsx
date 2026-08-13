@@ -46,7 +46,10 @@ import { API_BASE_URL } from "@/lib/apiConfig";
 import { buildMetadata } from "@/lib/seo";
 import { getTechIcon } from "@/lib/techIcons";
 import TechBrandIcon from "@/components/TechBrandIcon";
-import ServiceTabs, { type ServiceTab } from "@/components/sections/ServiceTabs";
+import ServiceTabs, {
+  type ServiceTab,
+  type ServiceApproachStep,
+} from "@/components/sections/ServiceTabs";
 import ClientSpotlight, { type ClientSpotlightItem } from "@/components/sections/ClientSpotlight";
 import FeaturedWorkSplit from "@/components/sections/FeaturedWorkSplit";
 import PartnerSpotlight from "@/components/sections/PartnerSpotlight";
@@ -262,6 +265,23 @@ const PERFORMANCE_ENGAGEMENT_TEAM = [
   "Account manager",
 ];
 
+// Generic delivery-lifecycle stages for the "Our approach" zigzag
+// timeline inside each tab. Same 7 stages regardless of platform — this
+// is a standard SDLC shape, not a claim specific to Web/Mobile/
+// Enterprise — so it's defined once and reused across all three tabs'
+// approach.steps. iconKey (not the icon component itself) because this
+// data crosses the server->client boundary into ServiceTabs, which
+// can't receive component/function props — see ServiceTabs.tsx.
+const APPROACH_STEPS: ServiceApproachStep[] = [
+  { iconKey: "lightbulb", title: "Ideation" },
+  { iconKey: "layout", title: "Wireframe/Mockups" },
+  { iconKey: "code", title: "Prototype" },
+  { iconKey: "database", title: "Development" },
+  { iconKey: "filetext", title: "Data/Content" },
+  { iconKey: "search", title: "Quality Assurance" },
+  { iconKey: "package", title: "Delivery" },
+];
+
 // Generic, non-platform-specific capability copy — same content
 // regardless of which tab (Web/Mobile/Enterprise) is active, since this
 // section sits below the tabs as a shared block, not inside them.
@@ -329,6 +349,10 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           body: "Careful, incremental migration of aging web systems onto modern, maintainable architecture — without disrupting the business that depends on them.",
         },
       ],
+      approach: {
+        tagline: "Crafting well-built web applications, one deliberate decision at a time.",
+        steps: APPROACH_STEPS,
+      },
       roadmap: {
         tagline: "Crafting web experiences that are fast, secure, and built to grow with your business.",
         steps: [
@@ -418,6 +442,10 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           body: "Refreshing aging mobile apps with modern interfaces, updated code, and improved performance and stability.",
         },
       ],
+      approach: {
+        tagline: "Crafting well-built mobile apps, one deliberate decision at a time.",
+        steps: APPROACH_STEPS,
+      },
       roadmap: {
         tagline: "Building secure, feature-rich mobile experiences that move your business forward.",
         steps: [
@@ -507,6 +535,10 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           body: "Migrating aging enterprise systems onto modern, maintainable architecture without disrupting business continuity.",
         },
       ],
+      approach: {
+        tagline: "Crafting well-built enterprise systems, one deliberate decision at a time.",
+        steps: APPROACH_STEPS,
+      },
       roadmap: {
         tagline: "Building enterprise systems that are secure, integrated, and built to scale with your organization.",
         steps: [
