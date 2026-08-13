@@ -740,6 +740,99 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section>
         )}
 
+        {/* "More solutions designed to deliver meaningful outcomes" —
+            Performance & Reliability Engineering only, static. Generic
+            capability copy, no fabricated claims. 5-item 2-column grid,
+            each with an arrow-accented title + underline + description —
+            distinct enough from every other generic per-service section
+            (highlights/toolNames/processSteps) that it's built as bespoke
+            markup rather than stretched onto one of those. */}
+        {service.slug === "performance-reliability-engineering" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="grid gap-12 md:grid-cols-2">
+                <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                  {renderHighlightedHeading("{More solutions} designed to deliver meaningful outcomes.")}
+                </h2>
+                <p className="text-paper/70">
+                  Our teams combine thoughtful design with dependable engineering. From
+                  cross-platform applications using Flutter to clean frontend interfaces and
+                  reliable database solutions with SQL Server and MySQL, we support a wide range
+                  of needs. Our cloud specialists design scalable, secure AWS environments that
+                  enable teams to build and iterate with confidence.
+                </p>
+              </div>
+
+              <div className="mt-16 grid gap-x-16 gap-y-12 sm:grid-cols-2">
+                {[
+                  {
+                    title: "Flutter Development",
+                    body: "Craft beautiful, high-performance apps with our Flutter experts, ready to bring your vision to life across all platforms.",
+                  },
+                  {
+                    title: "Frontend Development",
+                    body: "Deliver stunning, user-centric interfaces with our seasoned frontend developers who blend creativity with code.",
+                  },
+                  {
+                    title: "SQL Server Development",
+                    body: "Optimize your data management with our skilled SQL Server developers, ensuring robust and scalable database solutions.",
+                  },
+                  {
+                    title: "MySQL Development",
+                    body: "Leverage the strength of MySQL with our developers who excel at building efficient and reliable databases.",
+                  },
+                  {
+                    title: "AWS Development",
+                    body: "Scale effortlessly with our AWS experts, mastering cloud solutions tailored to your business needs.",
+                  },
+                ].map((item) => (
+                  <div key={item.title}>
+                    <div className="flex items-center gap-2 border-b border-paper/15 pb-3">
+                      <h3 className="font-semibold text-ember">{item.title}</h3>
+                      <ArrowRight className="h-4 w-4 shrink-0 text-ember" />
+                    </div>
+                    <p className="mt-4 text-paper/70">{item.body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* "Engineering Excellence" — Performance & Reliability Engineering
+            only, static. Kept verbatim with the Glassdoor attribution per
+            explicit request (unlike the same section on the Staff
+            Augmentation page, where the equivalent Glassdoor quote was
+            genericized — this choice is per-instance, not a standing
+            policy). */}
+        {service.slug === "performance-reliability-engineering" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-5xl px-6">
+              <div className="grid gap-8 md:grid-cols-[auto_1fr] md:items-start md:gap-16">
+                <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                  Engineering Excellence
+                </h2>
+                <div>
+                  <div className="flex items-start gap-2 sm:gap-4">
+                    <span className="shrink-0 font-display text-3xl leading-none text-ember sm:text-5xl">
+                      &ldquo;
+                    </span>
+                    <p className="text-balance text-xl font-medium leading-snug text-paper sm:text-2xl">
+                      Supportive management and a collaborative work culture.
+                    </p>
+                    <span className="shrink-0 font-display text-3xl leading-none text-ember sm:text-5xl">
+                      &rdquo;
+                    </span>
+                  </div>
+                  <p className="mt-6 text-right font-display text-2xl font-bold uppercase tracking-wide text-paper/60">
+                    &lsquo;GLASSDOOR&rsquo;
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* IT Consulting only, static. NOTE: "Since 2004" and the three
             stats below (30%/85%/90%) are the KAZ reference's own claims,
             not verified Devliora history or data — kept only because the
