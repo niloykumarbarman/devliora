@@ -389,6 +389,14 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      // Web tab only, per explicit request — same per-instance treatment
+      // as the "Engineering Excellence" Glassdoor quote on the
+      // Performance & Reliability page: kept verbatim rather than
+      // genericized, since the request was specifically to reproduce it.
+      reviewQuote: {
+        text: "Exceptional software quality and attention to detail.",
+        source: "Glassdoor",
+      },
       scope: {
         intro: "We cover every stage of web application development with a balance of precision and creativity. Here's an overview of what our web development services include.",
         items: [

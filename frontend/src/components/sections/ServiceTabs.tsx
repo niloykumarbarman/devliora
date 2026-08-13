@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Code2, Database, Lightbulb, MonitorSmartphone, Package, Rows3, Search } from "lucide-react";
+import { Code2, Database, Lightbulb, MonitorSmartphone, Package, Rows3, Search, Star } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 import type { TechnologyDto } from "@/lib/technologies";
 import { getTechIcon } from "@/lib/techIcons";
@@ -67,6 +67,11 @@ export type ServiceTechIntro = {
   body: string;
 };
 
+export type ServiceReviewQuote = {
+  text: string;
+  source: string;
+};
+
 export type ServiceTab = {
   label: string;
   heading: string;
@@ -74,6 +79,7 @@ export type ServiceTab = {
   cards?: ServiceTabCard[];
   approach?: ServiceApproach;
   roadmap?: ServiceTabRoadmap;
+  reviewQuote?: ServiceReviewQuote;
   scope?: ServiceScope;
   techIntro?: ServiceTechIntro;
 };
@@ -271,6 +277,26 @@ export default function ServiceTabs({
                 )}
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {current.reviewQuote && (
+        <div className="mt-20 bg-graphite py-16 md:mt-28">
+          <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <p className="text-balance text-xl font-medium leading-snug text-paper sm:text-2xl">
+                &ldquo;{current.reviewQuote.text}&rdquo;
+              </p>
+              <div className="mt-4 flex gap-1 text-green-500">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star key={i} className="h-5 w-5" fill="currentColor" strokeWidth={0} />
+                ))}
+              </div>
+            </div>
+            <p className="shrink-0 font-display text-2xl font-bold uppercase tracking-wide text-paper/60">
+              &lsquo;{current.reviewQuote.source}&rsquo;
+            </p>
           </div>
         </div>
       )}
