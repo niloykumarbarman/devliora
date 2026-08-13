@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Code2, Database, FileText, LayoutTemplate, Lightbulb, Package, Search } from "lucide-react";
+import { Code2, Database, Lightbulb, MonitorSmartphone, Package, Rows3, Search } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 import type { TechnologyDto } from "@/lib/technologies";
 import { getTechIcon } from "@/lib/techIcons";
@@ -20,10 +20,10 @@ export type ServiceTabCard = {
 // and the actual icon component is looked up here, client-side.
 const APPROACH_ICONS = {
   lightbulb: Lightbulb,
-  layout: LayoutTemplate,
+  wireframe: Rows3,
+  prototype: MonitorSmartphone,
   code: Code2,
   database: Database,
-  filetext: FileText,
   search: Search,
   package: Package,
 } as const;
@@ -184,7 +184,7 @@ export default function ServiceTabs({
                   .join(" ")}
                 fill="none"
                 stroke="var(--color-paper)"
-                strokeOpacity="0.25"
+                strokeOpacity="0.7"
                 strokeWidth="0.6"
               />
             </svg>
@@ -211,7 +211,7 @@ export default function ServiceTabs({
                   style={{ left: `${x}%`, top: `${y}%` }}
                 >
                   {isHigh && <div className="mb-3">{label}</div>}
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-ember bg-ink">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full border-2 border-paper bg-ink">
                     <Icon className="h-6 w-6 text-ember" strokeWidth={1.5} />
                   </div>
                   {!isHigh && <div className="mt-3">{label}</div>}
@@ -226,7 +226,7 @@ export default function ServiceTabs({
               const Icon = APPROACH_ICONS[step.iconKey];
               return (
                 <div key={step.title} className="flex items-center gap-4">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-ember bg-ink">
+                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-paper bg-ink">
                     <Icon className="h-5 w-5 text-ember" strokeWidth={1.5} />
                   </span>
                   <div>

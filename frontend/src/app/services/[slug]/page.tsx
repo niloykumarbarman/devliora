@@ -274,10 +274,10 @@ const PERFORMANCE_ENGAGEMENT_TEAM = [
 // can't receive component/function props — see ServiceTabs.tsx.
 const APPROACH_STEPS: ServiceApproachStep[] = [
   { iconKey: "lightbulb", title: "Ideation" },
-  { iconKey: "layout", title: "Wireframe/Mockups" },
-  { iconKey: "code", title: "Prototype" },
-  { iconKey: "database", title: "Development" },
-  { iconKey: "filetext", title: "Data/Content" },
+  { iconKey: "wireframe", title: "Wireframe/Mockups" },
+  { iconKey: "prototype", title: "Prototype" },
+  { iconKey: "code", title: "Development" },
+  { iconKey: "database", title: "Data/Content" },
   { iconKey: "search", title: "Quality Assurance" },
   { iconKey: "package", title: "Delivery" },
 ];
