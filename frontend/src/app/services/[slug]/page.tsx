@@ -37,7 +37,8 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { fetchServiceBySlug, serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
+import { fetchServiceBySlug, fetchServices, serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
+import { fetchIndustries } from "@/lib/industries";
 import { fetchHero, resolveImageUrl } from "@/lib/hero";
 import { fetchCaseStudies } from "@/lib/caseStudies";
 import { fetchBlogPosts, type BlogPost } from "@/lib/blogPosts";
@@ -640,16 +641,27 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
 
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
-  const [service, hero, caseStudies, blogPosts, testimonial, technologies, featuredPortfolios] =
-    await Promise.all([
-      fetchServiceBySlug(slug),
-      fetchHero(),
-      safeFetchCaseStudies(),
-      safeFetchBlogPosts(),
-      fetchFeaturedTestimonial(),
-      safeFetchTechnologies(),
-      safeFetchFeaturedPortfolios(),
-    ]);
+  const [
+    service,
+    hero,
+    caseStudies,
+    blogPosts,
+    testimonial,
+    technologies,
+    featuredPortfolios,
+    allServices,
+    industries,
+  ] = await Promise.all([
+    fetchServiceBySlug(slug),
+    fetchHero(),
+    safeFetchCaseStudies(),
+    safeFetchBlogPosts(),
+    fetchFeaturedTestimonial(),
+    safeFetchTechnologies(),
+    safeFetchFeaturedPortfolios(),
+    fetchServices(),
+    fetchIndustries(),
+  ]);
   const blogGridCells = buildBlogGridCells(blogPosts.slice(0, 4));
 
   if (!service) {
@@ -663,7 +675,46 @@ export default async function ServiceDetailPage({ params }: Props) {
   const checkpoints =
     rawCheckpoints && rawCheckpoints.length === service.includes.length ? rawCheckpoints : null;
   const stepCount = service.includes.length;
-  const tabs = SERVICE_TABS[service.slug];
+
+  // The "Years in Operation" stat is the only one hardcoded in
+  // SERVICE_TABS (it's not derived from any API); the rest of the
+  // "Our Impact in Numbers" grid is filled out here with real, live
+  // counts from Devliora's own data instead of copying the reference's
+  // fabricated figures (35 countries, $100M savings, etc.) — same
+  // 5-column layout, honest numbers.
+  const tabs = SERVICE_TABS[service.slug]?.map((tab) =>
+    tab.impact
+      ? {
+          ...tab,
+          impact: {
+            ...tab.impact,
+            stats: [
+              ...tab.impact.stats,
+              {
+                value: `${allServices.length}`,
+                label: "Services Offered",
+                tagline: "Full-cycle software delivery",
+              },
+              {
+                value: `${industries.length}`,
+                label: "Industries Served",
+                tagline: "Domain-aware engineering",
+              },
+              {
+                value: `${technologies.length}`,
+                label: "Technologies We Use",
+                tagline: "A modern, proven stack",
+              },
+              {
+                value: `${caseStudies.length}`,
+                label: "Case Studies Delivered",
+                tagline: "Real, documented outcomes",
+              },
+            ],
+          },
+        }
+      : tab
+  );
 
   return (
     <>
