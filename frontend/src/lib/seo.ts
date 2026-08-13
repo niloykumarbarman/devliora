@@ -73,6 +73,11 @@ export function organizationJsonLd() {
     "@type": "Organization",
     name: siteConfig.name,
     url: siteConfig.url,
+    // Static favicon asset rather than the admin-managed logo in
+    // SiteSettings, so this doesn't require an API call from the root
+    // layout (which renders on every page) and can't go stale/broken if
+    // that upload is ever cleared.
+    logo: `${siteConfig.url}/favicon-512.png`,
     description: siteConfig.description,
     email: siteConfig.contactEmail,
     telephone: siteConfig.contactPhone,
@@ -82,6 +87,20 @@ export function organizationJsonLd() {
       telephone: siteConfig.contactPhone,
       contactType: "customer service",
     },
+  };
+}
+
+/**
+ * WebSite structured data (separate from Organization) — helps Google
+ * associate the "Devliora" brand query directly with this domain for
+ * brand-name search results.
+ */
+export function websiteJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteConfig.name,
+    url: siteConfig.url,
   };
 }
 

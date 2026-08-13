@@ -3304,6 +3304,20 @@ export default async function ServiceDetailPage({ params }: Props) {
                       );
                     })}
                   </div>
+
+                  {/* Mobile: the ring is decorative and hidden below md, but
+                      the team composition itself is real content, so it
+                      gets a plain chip list instead of just disappearing. */}
+                  <div className="flex flex-wrap gap-2 md:hidden">
+                    {PERFORMANCE_ENGAGEMENT_TEAM.map((role) => (
+                      <span
+                        key={role}
+                        className="rounded-full border border-paper/15 px-3 py-1.5 text-sm text-paper/80"
+                      >
+                        {role}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </section>

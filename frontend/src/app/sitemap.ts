@@ -1,6 +1,10 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/lib/seo";
 import { fetchBlogPosts } from "@/lib/blogPosts";
+import { fetchServices } from "@/lib/services";
+import { fetchCaseStudies } from "@/lib/caseStudies";
+import { fetchPortfolios } from "@/lib/portfolios";
+import { fetchIndustries } from "@/lib/industries";
 
 const STATIC_ROUTES: { path: string; priority: number }[] = [
   { path: "", priority: 1.0 },
@@ -19,6 +23,22 @@ const STATIC_ROUTES: { path: string; priority: number }[] = [
   { path: "/terms", priority: 0.3 },
 ];
 
+// Every dynamic detail route is fetched from the live API rather than
+// hardcoded, so the sitemap stays correct as content is added via the
+// admin panel. Each fetch is independently try/caught so one API being
+// slow or briefly down doesn't drop the rest of the sitemap.
+async function detailRouteEntries<T>(
+  fetcher: () => Promise<T[]>,
+  toEntry: (item: T) => MetadataRoute.Sitemap[number]
+): Promise<MetadataRoute.Sitemap> {
+  try {
+    const items = await fetcher();
+    return items.map(toEntry);
+  } catch {
+    return [];
+  }
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map(
     ({ path, priority }) => ({
@@ -29,22 +49,46 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
-  // Blog posts are dynamic content served from the live API, so they are
-  // fetched here rather than hardcoded. If the API is unreachable (e.g. at
-  // build time with no backend running), fall back to the static routes
-  // only instead of failing the whole sitemap.
-  let blogEntries: MetadataRoute.Sitemap = [];
-  try {
-    const posts = await fetchBlogPosts();
-    blogEntries = posts.map((post) => ({
-      url: `${siteConfig.url}/blog/${post.slug}`,
-      lastModified: post.publishedAt ? new Date(post.publishedAt) : new Date(),
-      changeFrequency: "yearly",
-      priority: 0.5,
-    }));
-  } catch {
-    // Swallow errors so a temporarily-down API doesn't break the sitemap.
-  }
+  const [blogEntries, serviceEntries, caseStudyEntries, portfolioEntries, industryEntries] =
+    await Promise.all([
+      detailRouteEntries(fetchBlogPosts, (post) => ({
+        url: `${siteConfig.url}/blog/${post.slug}`,
+        lastModified: post.publishedAt ? new Date(post.publishedAt) : new Date(),
+        changeFrequency: "yearly",
+        priority: 0.5,
+      })),
+      detailRouteEntries(fetchServices, (service) => ({
+        url: `${siteConfig.url}/services/${service.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.7,
+      })),
+      detailRouteEntries(fetchCaseStudies, (study) => ({
+        url: `${siteConfig.url}/case-studies/${study.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "yearly",
+        priority: 0.5,
+      })),
+      detailRouteEntries(fetchPortfolios, (project) => ({
+        url: `${siteConfig.url}/portfolio/${project.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "yearly",
+        priority: 0.5,
+      })),
+      detailRouteEntries(fetchIndustries, (industry) => ({
+        url: `${siteConfig.url}/industries/${industry.slug}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.5,
+      })),
+    ]);
 
-  return [...staticEntries, ...blogEntries];
+  return [
+    ...staticEntries,
+    ...blogEntries,
+    ...serviceEntries,
+    ...caseStudyEntries,
+    ...portfolioEntries,
+    ...industryEntries,
+  ];
 }

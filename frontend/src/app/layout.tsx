@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { buildMetadata, organizationJsonLd, siteConfig } from "@/lib/seo";
+import { buildMetadata, organizationJsonLd, websiteJsonLd, siteConfig } from "@/lib/seo";
 import Analytics from "@/components/Analytics";
 import AssistantChat from "@/components/AssistantChat";
 
@@ -60,6 +60,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationJsonLd()),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteJsonLd()),
           }}
         />
         {children}
