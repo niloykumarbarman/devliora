@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 import type { TechnologyDto } from "@/lib/technologies";
+import type { CaseStudy } from "@/lib/caseStudies";
 import { getTechIcon } from "@/lib/techIcons";
 import TechBrandIcon from "@/components/TechBrandIcon";
 
@@ -101,6 +102,16 @@ export type ServiceImpact = {
   stats: ServiceImpactStat[];
 };
 
+// Heading is two-tone in the reference ("Success Stats" in ember,
+// "That Speak Volumes" in white) — split into two strings instead of
+// one so ServiceTabs can render the color split without parsing markup.
+export type ServiceCaseStudiesIntro = {
+  highlight: string;
+  rest: string;
+  tagline: string;
+  body: string;
+};
+
 export type ServiceTab = {
   label: string;
   heading: string;
@@ -111,6 +122,7 @@ export type ServiceTab = {
   reviewQuote?: ServiceReviewQuote;
   scope?: ServiceScope;
   impact?: ServiceImpact;
+  caseStudiesIntro?: ServiceCaseStudiesIntro;
   techIntro?: ServiceTechIntro;
 };
 
@@ -139,10 +151,12 @@ export default function ServiceTabs({
   tabs,
   heroImageUrl,
   technologies = [],
+  caseStudies = [],
 }: {
   tabs: ServiceTab[];
   heroImageUrl?: string;
   technologies?: TechnologyDto[];
+  caseStudies?: CaseStudy[];
 }) {
   const [active, setActive] = useState(0);
   const current = tabs[active];
@@ -409,6 +423,53 @@ export default function ServiceTabs({
             </div>
           </div>
         </>
+      )}
+
+      {current.caseStudiesIntro && caseStudies.length > 0 && (
+        <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
+          <h3 className="text-balance font-display text-3xl font-semibold leading-tight sm:text-4xl">
+            <span className="text-ember">{current.caseStudiesIntro.highlight}</span>{" "}
+            <span className="text-paper">{current.caseStudiesIntro.rest}</span>
+          </h3>
+          <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+            {current.caseStudiesIntro.tagline}
+          </p>
+          <p className="mt-5 max-w-2xl text-lg leading-relaxed text-paper/70">
+            {current.caseStudiesIntro.body}
+          </p>
+
+          {/* Same card treatment as the page-level "Real results, real
+              impact" case studies grid — real Devliora case studies
+              (image, industry, results), not the reference's
+              per-card claims. */}
+          <div className="mt-14 grid grid-cols-2 gap-6 lg:grid-cols-4">
+            {caseStudies.slice(0, 4).map((study) => (
+              <Link
+                key={study.id}
+                href={`/case-studies/${study.slug}`}
+                className="group relative block aspect-[3/4] overflow-hidden rounded-lg bg-ink"
+              >
+                {study.coverImageUrl && (
+                  <Image
+                    src={resolveImageUrl(study.coverImageUrl)}
+                    alt=""
+                    fill
+                    sizes="(min-width: 1024px) 25vw, 50vw"
+                    className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                )}
+                <div className="absolute inset-x-0 bottom-0 bg-ink/90 p-4">
+                  <p className="font-mono text-xs font-semibold uppercase tracking-wide text-ember">
+                    &middot; {study.industry}
+                  </p>
+                  <p className="mt-1.5 line-clamp-2 text-sm leading-snug text-paper/80">
+                    {study.results}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
       )}
 
       {current.techIntro && (

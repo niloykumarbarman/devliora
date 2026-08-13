@@ -444,6 +444,16 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      // Shown on all three tabs so switching tabs doesn't lose the case
+      // studies section — see the note above the far-down "Real
+      // results, real impact" section (now hidden on this slug to
+      // avoid showing the same case studies twice on one page).
+      caseStudiesIntro: {
+        highlight: "Success Stats",
+        rest: "That Speak Volumes",
+        tagline: "Real Results, Real Impact, The Devliora Cases.",
+        body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
+      },
       techIntro: {
         heading: "Powering your web vision with cutting-edge tech",
         tagline: "Bringing web ideas to life with next-gen tech.",
@@ -537,6 +547,12 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      caseStudiesIntro: {
+        highlight: "Success Stats",
+        rest: "That Speak Volumes",
+        tagline: "Real Results, Real Impact, The Devliora Cases.",
+        body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
+      },
       techIntro: {
         heading: "Powering your mobile vision with cutting-edge tech",
         tagline: "Bringing mobile ideas to life with next-gen tech.",
@@ -629,6 +645,12 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
             body: "We handle rollout carefully and provide ongoing support afterward, so the system keeps running reliably as your organization's needs evolve.",
           },
         ],
+      },
+      caseStudiesIntro: {
+        highlight: "Success Stats",
+        rest: "That Speak Volumes",
+        tagline: "Real Results, Real Impact, The Devliora Cases.",
+        body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
       },
       techIntro: {
         heading: "Powering your enterprise vision with cutting-edge tech",
@@ -2294,7 +2316,12 @@ export default async function ServiceDetailPage({ params }: Props) {
         )}
 
         {tabs ? (
-          <ServiceTabs tabs={tabs} heroImageUrl={hero?.backgroundImageUrl} technologies={technologies} />
+          <ServiceTabs
+            tabs={tabs}
+            heroImageUrl={hero?.backgroundImageUrl}
+            technologies={technologies}
+            caseStudies={caseStudies}
+          />
         ) : service.slug === "it-consulting" ||
           service.slug === "it-maintenance-support" ||
           service.slug === "digital-design" ||
@@ -3533,9 +3560,12 @@ export default async function ServiceDetailPage({ params }: Props) {
             FeaturedWorkSplit above already cover "proof of work" on that
             page. Also hidden on Digital Marketing and IT Consulting at
             request (the case studies shown are all engineering-flavored,
-            not marketing or consulting).
+            not marketing or consulting). Hidden on Software Engineering
+            since ServiceTabs now renders the same case studies higher up
+            (right after "Our Impact in Numbers", per the reference's
+            page order) — showing them twice would be redundant.
             Still shown on every other service page. */}
-        {caseStudies.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && (
+        {caseStudies.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && service.slug !== "software-engineering" && (
           <section className="relative overflow-hidden border-t border-paper/10 bg-graphite py-24 md:py-32">
             <div className="mx-auto max-w-6xl px-6">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">Case studies</p>
