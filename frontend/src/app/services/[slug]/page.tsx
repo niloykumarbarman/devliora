@@ -1743,6 +1743,93 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section>
         )}
 
+        {/* "Guarantee your software's success with our thorough QA" CTA
+            banner — Software Quality Assurance only, static. NOTE: the
+            reference uses a magenta/pink background here too, same
+            off-brand-color reasoning as the page's earlier CTA — stays
+            on bg-signal for consistency with every other CTA banner on
+            the site. */}
+        {service.slug === "software-quality-assurance" && (
+          <section className="border-t border-paper/10 bg-signal">
+            <div className="flex flex-col sm:flex-row">
+              <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  Guarantee your software&apos;s success with our thorough QA.
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+              >
+                QA Ready
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </section>
+        )}
+
+        {/* "Seamless testing management" — Software Quality Assurance
+            only, static. Generic process copy, no fabricated claims. Each
+            phase is a label + a 3-column item grid (CSS grid auto-flow
+            naturally wraps a phase's 4th item to a new row under column
+            1, matching the reference's "Role distribution" / "Performance
+            optimization" / "Testing team exit" placement). */}
+        {service.slug === "software-quality-assurance" && (
+          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="grid gap-10 md:grid-cols-2">
+                <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                  Seamless testing management
+                </h2>
+                <p className="text-paper/70">
+                  Entrust your quality assessment to us, and we&apos;ll execute your custom
+                  testing strategy with precision, keeping you informed on progress and results
+                  every step of the way.
+                </p>
+              </div>
+
+              <div className="mt-16 flex flex-col">
+                {[
+                  {
+                    title: "Discovery",
+                    items: ["Business objectives", "Project goals, specifics, and risks", "Current QA-related issues"],
+                  },
+                  {
+                    title: "Strategy",
+                    items: ["Methods and tools", "Deliverables", "Roadmap and timeline", "Role distribution"],
+                  },
+                  {
+                    title: "Transition",
+                    items: ["Environment setup", "Test cases", "Knowledge transfer"],
+                  },
+                  {
+                    title: "Delivery",
+                    items: ["Test execution", "Monitoring", "Issue management", "Performance optimization"],
+                  },
+                  {
+                    title: "Reporting and Exit",
+                    items: ["Testing reports", "Results evaluation", "Assessment", "Testing team exit"],
+                  },
+                ].map((phase) => (
+                  <div
+                    key={phase.title}
+                    className="grid grid-cols-1 gap-y-3 border-b border-paper/15 py-8 first:pt-0 md:grid-cols-4 md:gap-x-6"
+                  >
+                    <p className="font-semibold text-ember">{phase.title}</p>
+                    <div className="grid grid-cols-1 gap-x-6 gap-y-3 sm:grid-cols-3 md:col-span-3">
+                      {phase.items.map((item) => (
+                        <p key={item} className="text-paper/80">
+                          {item}
+                        </p>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* "Comprehensive multi-tier software support services" — IT
             Maintenance & Support only, static. Generic capability copy
             (L1/L2/L3 is a standard industry term, not a fabricated
