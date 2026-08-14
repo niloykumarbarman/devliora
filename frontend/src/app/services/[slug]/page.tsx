@@ -60,6 +60,7 @@ import QualityManagement from "@/components/sections/QualityManagement";
 import ExpandableServiceCards from "@/components/sections/ExpandableServiceCards";
 import PricingModels from "@/components/sections/PricingModels";
 import { fetchPortfolios, fetchPortfolioBySlug, type Portfolio } from "@/lib/portfolios";
+import { fetchPartners } from "@/lib/partners";
 
 async function safeFetchTechnologies() {
   try {
@@ -72,6 +73,14 @@ async function safeFetchTechnologies() {
 async function safeFetchCaseStudies() {
   try {
     return await fetchCaseStudies();
+  } catch {
+    return [];
+  }
+}
+
+async function safeFetchPartners() {
+  try {
+    return await fetchPartners();
   } catch {
     return [];
   }
@@ -393,6 +402,7 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       },
       roadmap: {
         tagline: "Crafting web experiences that are fast, secure, and built to grow with your business.",
+        body: "At Devliora, we build web applications with a clear focus on usability, reliability, and your business goals. From early idea shaping to UX/UI design, development, testing, and ongoing support, our team stays involved throughout the entire process. With over a decade of experience, we understand how to create applications that run smoothly and adapt well to your needs.",
         steps: [
           {
             title: "Development",
@@ -616,6 +626,7 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       },
       roadmap: {
         tagline: "Building secure, feature-rich mobile experiences that move your business forward.",
+        body: "At Devliora, we build mobile applications with a clear focus on usability, reliability, and your business goals. From early idea shaping to UX/UI design, development, testing, and ongoing support, our team stays involved throughout the entire process. With over a decade of experience, we understand how to create apps that run smoothly and adapt well to your needs.",
         steps: [
           {
             title: "Development",
@@ -650,6 +661,13 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      // Mobile tab, mirroring the Web tab's reviewQuote treatment — the
+      // reference's own quote for this tab, reproduced verbatim as a
+      // design element rather than genericized.
+      reviewQuote: {
+        text: "Delivered our project faster than expected without compromising quality.",
+        source: "Glassdoor",
+      },
       scope: {
         intro: "We cover every stage of mobile application development with a balance of precision and creativity. Here's an overview of what our mobile development services include.",
         items: [
@@ -679,11 +697,58 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      // Mobile tab, mirroring Web's impact block. Same real, verified
+      // figure ("10" Years in Operation) — not platform-specific, so
+      // reused as-is rather than inventing a mobile-only stat.
+      impact: {
+        ctaText: "Ready to turn ideas into reality?",
+        heading: "Our Impact in Numbers",
+        tagline: "A track record built one project at a time.",
+        stats: [
+          {
+            value: "10",
+            label: "Years in Operation",
+            tagline: "Building lasting partnerships",
+          },
+        ],
+      },
       caseStudiesIntro: {
         highlight: "Success Stats",
         rest: "That Speak Volumes",
         tagline: "Real Results, Real Impact, The Devliora Cases.",
         body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
+      },
+      // Mobile tab, mirroring Web's "Reliable Solutions with Thoughtful
+      // Engineering" capabilities section — same structure, reworded for
+      // mobile-specific engineering concerns (cross-platform reach,
+      // device-level security, etc.) rather than duplicated verbatim.
+      capabilities: {
+        before: "Reliable Mobile Solutions with",
+        highlight: "Thoughtful",
+        after: "Engineering",
+        body: "From consumer-facing apps to complex mobile platforms, our engineering practice focuses on clarity, performance, and long-term stability. We design mobile software with careful attention to security, maintainability, and your specific needs, ensuring smooth integration and room for future evolution.",
+        items: [
+          {
+            title: "Cross-platform reach",
+            body: "We build apps that run dependably across iOS and Android, giving your users a consistent experience regardless of device.",
+          },
+          {
+            title: "Streamlined development flow",
+            body: "Our streamlined mobile engineering workflows and toolkits help shorten development cycles while maintaining clean, reliable output.",
+          },
+          {
+            title: "Security-first approach",
+            body: "Security principles are applied from the ground up, protecting user data and device-level access throughout the app's lifecycle.",
+          },
+          {
+            title: "Designed to scale",
+            body: "Our apps grow naturally with your user base, staying fast and stable even as usage and feature demands increase.",
+          },
+          {
+            title: "Versatile engineering toolkit",
+            body: "We draw from a wide range of native and cross-platform tools and frameworks to support functionality and ensure a smooth build process.",
+          },
+        ],
       },
       whyChooseUs: {
         ctaText: "Ready to turn ideas into reality?",
@@ -714,10 +779,32 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         extraCards: WHY_CHOOSE_US_EXTRA_CARDS,
         closingCta: WHY_CHOOSE_US_CLOSING_CTA,
       },
+      // Mobile tab, mirroring Web's "From Code to Launch" delivery
+      // framework — generic SDLC-stage copy, same 6 steps, reworded from
+      // "software's lifecycle" to "mobile app's lifecycle".
+      deliveryFramework: {
+        highlight: "From Code to Launch",
+        rest: "Devliora's Complete Delivery Framework",
+        tagline: "Crafting Solutions with Care – We Build, You Excel!",
+        body: "Devliora drives the entire development process, from initial concept to final deployment. Whether starting from scratch or stepping in at any stage of your mobile app's lifecycle, we ensure seamless execution. We also provide ongoing post-launch support, offering long-term maintenance and updates to keep your apps running smoothly.",
+        steps: [
+          { title: "Analysis", checkpoint: "Requirements Testing" },
+          { title: "Design", checkpoint: "UX/UI Testing" },
+          { title: "Development" },
+          { title: "Quality Assurance", checkpoint: "Stabilization" },
+          { title: "Deployment", checkpoint: "Acceptance testing" },
+          { title: "Support" },
+        ],
+      },
       techIntro: {
+        ctaText: "Ready to turn ideas into reality?",
         heading: "Powering your mobile vision with cutting-edge tech",
         tagline: "Bringing mobile ideas to life with next-gen tech.",
         body: "Our mobile application development approach focuses on thoughtful use of modern technologies to build reliable, well-designed apps. Across iOS and Android, we combine practical engineering with considered design to address your specific requirements. Our team works with current tools and frameworks to ensure long-term maintainability — from native to hybrid and cross-platform, we support the full journey from concept to launch.",
+        // Same real Web/Mobile/Enterprise tab toggle as the Web tab (see
+        // note on that tab's techIntro) — not the reference's fake
+        // Web/Mobile/Desktop platform filter.
+        showTabToggle: true,
       },
     },
     {
@@ -744,6 +831,7 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       },
       roadmap: {
         tagline: "Building enterprise systems that are secure, integrated, and built to scale with your organization.",
+        body: "At Devliora, we build enterprise systems with a clear focus on usability, reliability, and your business goals. From early idea shaping to architecture, development, testing, and ongoing support, our team stays involved throughout the entire process. With over a decade of experience, we understand how to create systems that run smoothly and adapt well to your organization's needs.",
         steps: [
           {
             title: "Development",
@@ -863,6 +951,7 @@ export default async function ServiceDetailPage({ params }: Props) {
     featuredPortfolios,
     allServices,
     industries,
+    partners,
   ] = await Promise.all([
     fetchServiceBySlug(slug),
     fetchHero(),
@@ -873,6 +962,7 @@ export default async function ServiceDetailPage({ params }: Props) {
     safeFetchFeaturedPortfolios(),
     fetchServices(),
     fetchIndustries(),
+    safeFetchPartners(),
   ]);
   const blogGridCells = buildBlogGridCells(blogPosts.slice(0, 4));
 
@@ -2512,6 +2602,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             technologies={technologies}
             caseStudies={caseStudies}
             testimonial={testimonial}
+            clientLogos={partners}
           />
         ) : service.slug === "it-consulting" ||
           service.slug === "it-maintenance-support" ||
