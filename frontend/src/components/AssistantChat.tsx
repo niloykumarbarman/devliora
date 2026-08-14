@@ -18,6 +18,11 @@ const DOT_GRID_STYLE: React.CSSProperties = {
 
 const TOOLTIP_DISMISSED_KEY = "devliora-assistant-tooltip-dismissed";
 const TOOLTIP_SHOW_DELAY_MS = 1500;
+// On small screens the tooltip's fixed bottom-right position can sit
+// on top of hero/body text for as long as it's up — auto-hide it
+// (not a permanent dismiss, just visual) so it doesn't linger over
+// content the visitor is trying to read.
+const TOOLTIP_AUTO_HIDE_MS = 8000;
 
 interface CallbackFormState {
   fullName: string;
@@ -79,12 +84,18 @@ export default function AssistantChat() {
     if (typeof window === "undefined") return;
     if (window.localStorage.getItem(TOOLTIP_DISMISSED_KEY)) return;
 
-    const timeout = setTimeout(() => {
+    const showTimeout = setTimeout(() => {
       setShowTooltip(true);
     }, TOOLTIP_SHOW_DELAY_MS);
 
-    return () => clearTimeout(timeout);
+    return () => clearTimeout(showTimeout);
   }, []);
+
+  useEffect(() => {
+    if (!showTooltip) return;
+    const hideTimeout = setTimeout(() => setShowTooltip(false), TOOLTIP_AUTO_HIDE_MS);
+    return () => clearTimeout(hideTimeout);
+  }, [showTooltip]);
 
   function dismissTooltip() {
     setShowTooltip(false);
@@ -167,7 +178,7 @@ export default function AssistantChat() {
   }
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
       <AnimatePresence>
         {showTooltip && !isOpen && (
           <motion.div
@@ -175,7 +186,7 @@ export default function AssistantChat() {
             animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.96 }}
             transition={panelTransition}
-            className="relative max-w-[15rem] rounded-2xl rounded-br-sm border border-wire bg-paper px-4 py-3 text-sm text-ink shadow-2xl"
+            className="relative max-w-[12rem] rounded-2xl rounded-br-sm border border-wire bg-paper px-4 py-3 text-sm text-ink shadow-2xl sm:max-w-[15rem]"
             role="status"
           >
             <button
