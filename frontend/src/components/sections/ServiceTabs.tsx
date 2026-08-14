@@ -84,6 +84,26 @@ export type ServiceReviewQuote = {
   source: string;
 };
 
+// Purely descriptive, generic engineering-capability copy — no client
+// facts or figures involved, so unlike ServiceImpact this can be
+// adapted closely from the reference without a fabrication concern.
+export type ServiceCapability = {
+  title: string;
+  body: string;
+};
+
+// Heading highlights one word/phrase in the middle ("Reliable
+// Solutions with **Thoughtful** Engineering"), so it's split into
+// three parts instead of a highlight-prefix pattern like
+// ServiceCaseStudiesIntro.
+export type ServiceCapabilitiesIntro = {
+  before: string;
+  highlight: string;
+  after: string;
+  body: string;
+  items: ServiceCapability[];
+};
+
 // Only "Years in Operation" is a real, verified Devliora figure. The
 // rest of the KAZ reference's stats (countries, savings, launches,
 // company count) are that company's own claims, not something we can
@@ -123,6 +143,7 @@ export type ServiceTab = {
   scope?: ServiceScope;
   impact?: ServiceImpact;
   caseStudiesIntro?: ServiceCaseStudiesIntro;
+  capabilities?: ServiceCapabilitiesIntro;
   techIntro?: ServiceTechIntro;
 };
 
@@ -467,6 +488,30 @@ export default function ServiceTabs({
                   </p>
                 </div>
               </Link>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {current.capabilities && (
+        <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
+          <div className="grid gap-10 md:grid-cols-2 md:items-start">
+            <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+              {current.capabilities.before} <span className="text-ember">{current.capabilities.highlight}</span>{" "}
+              {current.capabilities.after}
+            </h3>
+            <p className="text-lg leading-relaxed text-paper/70">{current.capabilities.body}</p>
+          </div>
+
+          <div className="mt-16 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-3">
+            {current.capabilities.items.map((item) => (
+              <div key={item.title}>
+                <h4 className="font-display text-lg font-semibold leading-snug text-ember">
+                  {item.title}
+                </h4>
+                <div className="mt-3 border-t border-paper/15" />
+                <p className="mt-4 text-sm leading-relaxed text-paper/70">{item.body}</p>
+              </div>
             ))}
           </div>
         </div>

@@ -454,6 +454,38 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         tagline: "Real Results, Real Impact, The Devliora Cases.",
         body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
       },
+      // Web tab only, per explicit request. Purely descriptive
+      // engineering-capability copy — no client facts/figures, so kept
+      // close to the reference the same way the Comprehensive Scope
+      // cards were.
+      capabilities: {
+        before: "Reliable Solutions with",
+        highlight: "Thoughtful",
+        after: "Engineering",
+        body: "From complex business systems to scalable, everyday web applications, our engineering practice focuses on clarity, performance, and long-term stability. We design software with careful attention to security, maintainability, and your specific needs, ensuring smooth integration and room for future evolution.",
+        items: [
+          {
+            title: "Flexible deployment options",
+            body: "We build software that runs dependably across different operating systems and environments, giving teams a consistent experience wherever they work.",
+          },
+          {
+            title: "Streamlined development flow",
+            body: "Our streamlined engineering workflows and toolkits help shorten development cycles while maintaining clean, reliable output.",
+          },
+          {
+            title: "Security-first approach",
+            body: "Security principles are applied from the ground up, helping protect your systems and data throughout the entire lifecycle.",
+          },
+          {
+            title: "Designed to scale",
+            body: "Our solutions grow naturally with your business, staying stable and efficient even as user needs and workloads increase.",
+          },
+          {
+            title: "Versatile engineering toolkit",
+            body: "We draw from a wide range of engineering tools, frameworks, and practices to support functionality and ensure a smooth build process.",
+          },
+        ],
+      },
       techIntro: {
         heading: "Powering your web vision with cutting-edge tech",
         tagline: "Bringing web ideas to life with next-gen tech.",
