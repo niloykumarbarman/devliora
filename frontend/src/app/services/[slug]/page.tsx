@@ -576,10 +576,15 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           { title: "Support" },
         ],
       },
+      // Heading/tagline/body match the reference; "our in-house R&D" is
+      // reworded to "continuous learning" since it implies a formal R&D
+      // department Devliora doesn't have — same reasoning as the
+      // "CTO office" / "Centers of Excellence" rewrite above.
       techIntro: {
-        heading: "Powering your web vision with cutting-edge tech",
-        tagline: "Bringing web ideas to life with next-gen tech.",
-        body: "Our web application development approach focuses on thoughtful use of modern technologies to build reliable, well-designed applications. We combine practical engineering with considered design to address your specific requirements, using current tools and frameworks that support long-term maintainability — from front-end to back-end, we support the full journey from concept to launch.",
+        ctaText: "Ready to turn ideas into reality?",
+        heading: "Technologies we work with",
+        tagline: "Driven by a mix of cutting-edge tech, endless innovation, and continuous learning.",
+        body: "We leverage a wide range of technologies to build powerful, customized solutions tailored to your needs. Our team uses proven tools and methodologies to stay current with the tech landscape, aiming for reliable, future-ready software.",
       },
     },
     {

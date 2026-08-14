@@ -77,6 +77,9 @@ export type ServiceTechIntro = {
   heading: string;
   tagline: string;
   body: string;
+  // Optional recurring CTA banner shown right above this section, same
+  // bg-signal pattern as the other CTA banners in this file.
+  ctaText?: string;
 };
 
 export type ServiceReviewQuote = {
@@ -764,13 +767,41 @@ export default function ServiceTabs({
       )}
 
       {current.techIntro && (
-        <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
-          {technologies.length > 0 && (
-            <div className="mb-16">
-              <h3 className="font-display text-2xl font-semibold text-paper">
-                Technologies we work with
-              </h3>
-              <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
+        <>
+          {current.techIntro.ctaText && (
+            <div className="mt-20 bg-signal md:mt-28">
+              <div className="mx-auto flex max-w-6xl flex-col sm:flex-row sm:items-center">
+                <div className="flex-1 px-6 py-8 sm:py-10">
+                  <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                    {current.techIntro.ctaText}
+                  </p>
+                </div>
+                <Link
+                  href="/contact"
+                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+                >
+                  Get Started
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+              </div>
+            </div>
+          )}
+
+          <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
+            <div className="grid gap-10 md:grid-cols-2 md:items-start">
+              <div>
+                <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+                  {current.techIntro.heading}
+                </h3>
+                <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+                  {current.techIntro.tagline}
+                </p>
+              </div>
+              <p className="text-lg leading-relaxed text-paper/70">{current.techIntro.body}</p>
+            </div>
+
+            {technologies.length > 0 && (
+              <div className="mt-16 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
                 {technologies.map((tech) => {
                   const icon = getTechIcon(tech.name);
                   return (
@@ -792,21 +823,9 @@ export default function ServiceTabs({
                   );
                 })}
               </div>
-            </div>
-          )}
-
-          <div className="grid gap-10 md:grid-cols-2 md:items-start">
-            <div>
-              <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
-                {current.techIntro.heading}
-              </h3>
-              <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
-                {current.techIntro.tagline}
-              </p>
-            </div>
-            <p className="text-lg leading-relaxed text-paper/70">{current.techIntro.body}</p>
+            )}
           </div>
-        </div>
+        </>
       )}
     </section>
   );
