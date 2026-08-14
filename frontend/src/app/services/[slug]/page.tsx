@@ -3800,10 +3800,12 @@ export default async function ServiceDetailPage({ params }: Props) {
 
         {/* Blog Highlights, pulled live from the site's real blog posts.
             Hidden on Digital Design, Digital Marketing, and IT Consulting
-            at request, same as Case Studies above — still shown on every
-            other service
+            at request, same as Case Studies above. Hidden on Software
+            Engineering at request too — the tab-specific sections above
+            now cover this page in full, so the older page-level sections
+            are redundant there — still shown on every other service
             page. */}
-        {blogGridCells.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && (
+        {blogGridCells.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && service.slug !== "software-engineering" && (
           <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
             <div className="mx-auto max-w-6xl px-6 text-center">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">From the blog</p>
@@ -3947,9 +3949,10 @@ export default async function ServiceDetailPage({ params }: Props) {
             hidden on Digital Marketing since it already has its own
             "Pricing" column (Time & Material/Dedicated Team) in the
             Solutions/Pricing/Timeline section above; also hidden on IT
-            Consulting at request — still shown on
-            every other service page. */}
-        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && (
+            Consulting and Software Engineering at request (redundant
+            with the tab-specific sections above on the latter) — still
+            shown on every other service page. */}
+        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && service.slug !== "software-engineering" && (
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto max-w-6xl px-6">
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">How we engage</p>
@@ -3987,9 +3990,10 @@ export default async function ServiceDetailPage({ params }: Props) {
         )}
 
         {/* Software essentials. Hidden on Digital Design, Digital
-            Marketing, and IT Consulting at request, same as the sections
-            above — still shown on every other service page. */}
-        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && (
+            Marketing, IT Consulting, and Software Engineering at
+            request, same as the sections above — still shown on every
+            other service page. */}
+        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && service.slug !== "software-engineering" && (
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto max-w-6xl px-6">
             <h2 className="font-display text-3xl font-semibold leading-tight sm:text-4xl">
@@ -4045,9 +4049,13 @@ export default async function ServiceDetailPage({ params }: Props) {
             engineering-specific copy that doesn't fit Digital Marketing
             even when its own includes[] happens to list marketing tasks
             (SEO, paid ads, etc.). Hidden on Digital Design, Digital
-            Marketing, and IT Consulting at request, same as the sections
-            above — still shown on every other service page. */}
-        {service.includes.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && (
+            Marketing, and IT Consulting at request. Also hidden on
+            Software Engineering itself — the Web tab's own
+            deliveryFramework section (ServiceTabs) now covers this same
+            "From code to launch" concept, so this page-level version
+            would be redundant there — still shown on every other
+            service page. */}
+        {service.includes.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && service.slug !== "software-engineering" && (
           <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
             <div
               className="pointer-events-none absolute inset-0 bg-[size:56px_56px] opacity-60"
