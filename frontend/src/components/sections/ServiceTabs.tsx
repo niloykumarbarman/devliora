@@ -25,6 +25,17 @@ export type ServiceTabCard = {
   body: string;
 };
 
+// Real, admin-entered partner logos (same /partners data as the
+// homepage's Partners section) — not the reference's own named clients
+// (Oxfam, UNICEF, World Bank, etc.), which would misrepresent them as
+// Devliora's.
+export type ServiceClientLogo = {
+  id: string;
+  name: string;
+  logoUrl: string;
+  websiteUrl?: string;
+};
+
 // React components (including icon components) can't be passed as
 // props from a Server Component (this data is defined in page.tsx)
 // into a Client Component like this one — only serializable data
@@ -60,6 +71,9 @@ export type ServiceTabRoadmapStep = {
 
 export type ServiceTabRoadmap = {
   tagline: string;
+  // Intro paragraph shown beside the heading, same two-column layout as
+  // ServiceTechIntro below.
+  body: string;
   steps: ServiceTabRoadmapStep[];
 };
 
@@ -241,12 +255,14 @@ export default function ServiceTabs({
   technologies = [],
   caseStudies = [],
   testimonial = null,
+  clientLogos = [],
 }: {
   tabs: ServiceTab[];
   heroImageUrl?: string;
   technologies?: TechnologyDto[];
   caseStudies?: CaseStudy[];
   testimonial?: ServiceTestimonial | null;
+  clientLogos?: ServiceClientLogo[];
 }) {
   const [active, setActive] = useState(0);
   const current = tabs[active];
@@ -291,6 +307,39 @@ export default function ServiceTabs({
           </div>
         )}
       </div>
+
+      {clientLogos.length > 0 && (
+        <div className="mt-20 bg-gradient-to-r from-ember to-ink py-16 md:mt-28">
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-14 gap-y-10 px-6">
+            {clientLogos.map((partner) => {
+              const logo = (
+                <div className="relative h-8 w-[120px] opacity-80 grayscale brightness-0 invert transition-opacity hover:opacity-100 md:h-10 md:w-[140px]">
+                  <Image
+                    src={resolveImageUrl(partner.logoUrl)}
+                    alt={partner.name}
+                    fill
+                    sizes="140px"
+                    className="object-contain"
+                  />
+                </div>
+              );
+              return partner.websiteUrl ? (
+                <a
+                  key={partner.id}
+                  href={partner.websiteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  aria-label={partner.name}
+                >
+                  {logo}
+                </a>
+              ) : (
+                <div key={partner.id}>{logo}</div>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       {current.approach && current.approach.steps.length > 1 && (
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
@@ -384,12 +433,17 @@ export default function ServiceTabs({
 
       {current.roadmap && (
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
-          <h3 className="text-balance font-display text-2xl font-semibold leading-tight text-paper sm:text-3xl">
-            Full-cycle {current.label.toLowerCase()} development roadmap
-          </h3>
-          <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
-            {current.roadmap.tagline}
-          </p>
+          <div className="grid gap-10 md:grid-cols-2 md:items-start">
+            <div>
+              <h3 className="text-balance font-display text-2xl font-semibold leading-tight text-paper sm:text-3xl">
+                Full-cycle {current.label.toLowerCase()} development roadmap
+              </h3>
+              <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+                {current.roadmap.tagline}
+              </p>
+            </div>
+            <p className="text-lg leading-relaxed text-paper/70">{current.roadmap.body}</p>
+          </div>
 
           <div className="mt-14 grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
             {current.roadmap.steps.map((step, i) => (
