@@ -585,6 +585,11 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         heading: "Technologies we work with",
         tagline: "Driven by a mix of cutting-edge tech, endless innovation, and continuous learning.",
         body: "We leverage a wide range of technologies to build powerful, customized solutions tailored to your needs. Our team uses proven tools and methodologies to stay current with the tech landscape, aiming for reliable, future-ready software.",
+        // Reference has a Web/Mobile/Desktop toggle here; we show the
+        // site's own real tabs (Web/Mobile/Enterprise — no Desktop
+        // track) instead of a fake platform filter. See
+        // ServiceTechIntro.showTabToggle in ServiceTabs.tsx.
+        showTabToggle: true,
       },
     },
     {

@@ -80,6 +80,13 @@ export type ServiceTechIntro = {
   // Optional recurring CTA banner shown right above this section, same
   // bg-signal pattern as the other CTA banners in this file.
   ctaText?: string;
+  // The reference has a Web/Mobile/Desktop pill toggle here that swaps
+  // the icon grid per platform — we don't have per-platform-tagged
+  // technology data to back that, and Devliora doesn't offer a Desktop
+  // track at all, so instead of a fake/non-functional toggle, this
+  // reuses the site's own real tabs: clicking a pill actually switches
+  // the active tab above, same tech list, honest interaction.
+  showTabToggle?: boolean;
 };
 
 export type ServiceReviewQuote = {
@@ -822,6 +829,24 @@ export default function ServiceTabs({
                     </div>
                   );
                 })}
+              </div>
+            )}
+
+            {current.techIntro.showTabToggle && tabs.length > 1 && (
+              <div className="mt-16 flex flex-wrap gap-2">
+                {tabs.map((tab, i) => (
+                  <button
+                    key={tab.label}
+                    type="button"
+                    onClick={() => setActive(i)}
+                    aria-pressed={i === active}
+                    className={`rounded-full px-6 py-2.5 font-mono text-sm font-semibold transition-colors ${
+                      i === active ? "bg-ember text-ink" : "text-paper/60 hover:text-paper"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
               </div>
             )}
           </div>
