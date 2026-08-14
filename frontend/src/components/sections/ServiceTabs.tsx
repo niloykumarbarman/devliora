@@ -142,6 +142,23 @@ export type ServiceWhyChooseUs = {
   closingCta?: ServiceClosingCta;
 };
 
+// A step's checkpoint is optional (the reference only drops a
+// sub-label under 4 of its 6 steps — Development and Support get none)
+// unlike the page-level "Delivery framework" section further down,
+// where every step shares the same checkpoints-or-none toggle.
+export type ServiceDeliveryFrameworkStep = {
+  title: string;
+  checkpoint?: string;
+};
+
+export type ServiceDeliveryFramework = {
+  highlight: string;
+  rest: string;
+  tagline: string;
+  body: string;
+  steps: ServiceDeliveryFrameworkStep[];
+};
+
 // Only "Years in Operation" is a real, verified Devliora figure. The
 // rest of the KAZ reference's stats (countries, savings, launches,
 // company count) are that company's own claims, not something we can
@@ -183,6 +200,7 @@ export type ServiceTab = {
   caseStudiesIntro?: ServiceCaseStudiesIntro;
   capabilities?: ServiceCapabilitiesIntro;
   whyChooseUs?: ServiceWhyChooseUs;
+  deliveryFramework?: ServiceDeliveryFramework;
   techIntro?: ServiceTechIntro;
 };
 
@@ -667,6 +685,82 @@ export default function ServiceTabs({
             </div>
           )}
         </>
+      )}
+
+      {current.deliveryFramework && (
+        <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
+          <div className="grid gap-10 md:grid-cols-2 md:items-start">
+            <div>
+              <h3 className="text-balance font-display text-3xl font-semibold leading-tight sm:text-4xl">
+                <span className="text-ember">{current.deliveryFramework.highlight}</span>
+                <br />
+                <span className="text-paper">{current.deliveryFramework.rest}</span>
+              </h3>
+              <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+                {current.deliveryFramework.tagline}
+              </p>
+            </div>
+            <p className="text-lg leading-relaxed text-paper/70">{current.deliveryFramework.body}</p>
+          </div>
+
+          {/* Desktop: straight horizontal timeline, same dashed-line +
+              optional-checkpoint pattern as the page-level "Delivery
+              framework" section further down, but here each step
+              carries its own optional checkpoint instead of an
+              all-or-nothing array. */}
+          <div className="relative mt-28 hidden md:block">
+            <div
+              className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
+              style={{ left: 0, width: `${50 / current.deliveryFramework.steps.length}%` }}
+            />
+            <div
+              className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
+              style={{ right: 0, width: `${50 / current.deliveryFramework.steps.length}%` }}
+            />
+            <div
+              className="absolute top-1/2 h-px -translate-y-1/2 bg-paper/30"
+              style={{
+                left: `${50 / current.deliveryFramework.steps.length}%`,
+                right: `${50 / current.deliveryFramework.steps.length}%`,
+              }}
+            />
+            <div
+              className="relative grid"
+              style={{ gridTemplateColumns: `repeat(${current.deliveryFramework.steps.length}, minmax(0, 1fr))` }}
+            >
+              {current.deliveryFramework.steps.map((step) => (
+                <div key={step.title} className="flex flex-col items-center">
+                  <p className="max-w-[9.5rem] text-center text-sm font-semibold leading-snug text-paper">
+                    {step.title}
+                  </p>
+                  <span className="mt-4 h-3.5 w-3.5 shrink-0 rounded-full bg-ember ring-4 ring-ink" />
+                  {step.checkpoint && (
+                    <>
+                      <span className="mt-3 h-8 w-px border-l border-dashed border-paper/30" />
+                      <span className="h-2.5 w-2.5 shrink-0 rounded-full border-2 border-ember bg-ink" />
+                      <p className="mt-3 max-w-[8rem] text-center text-xs text-paper/50">{step.checkpoint}</p>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile: vertical timeline */}
+          <div className="relative mt-14 space-y-8 border-l border-paper/15 pl-8 md:hidden">
+            {current.deliveryFramework.steps.map((step) => (
+              <div key={step.title} className="relative">
+                <span className="absolute -left-[2.05rem] top-1 h-3 w-3 rounded-full bg-ember ring-4 ring-ink" />
+                <p className="text-sm font-semibold leading-snug text-paper">{step.title}</p>
+                {step.checkpoint && (
+                  <p className="mt-1.5 font-mono text-xs uppercase tracking-wide text-paper/50">
+                    {step.checkpoint}
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
       )}
 
       {current.techIntro && (

@@ -558,6 +558,24 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         extraCards: WHY_CHOOSE_US_EXTRA_CARDS,
         closingCta: WHY_CHOOSE_US_CLOSING_CTA,
       },
+      // Web tab only, per explicit request. Distinct from the
+      // page-level "Delivery framework" section further down (which
+      // lists this service's actual deliverables from service.includes)
+      // — this one is generic SDLC-stage copy, same as the reference.
+      deliveryFramework: {
+        highlight: "From Code to Launch",
+        rest: "Devliora's Complete Delivery Framework",
+        tagline: "Crafting Solutions with Care – We Build, You Excel!",
+        body: "Devliora drives the entire development process, from initial concept to final deployment. Whether starting from scratch or stepping in at any stage of your software's lifecycle, we ensure seamless execution. We also provide ongoing post-launch support, offering long-term maintenance and updates to keep your solutions running smoothly.",
+        steps: [
+          { title: "Analysis", checkpoint: "Requirements Testing" },
+          { title: "Design", checkpoint: "UX/UI Testing" },
+          { title: "Development" },
+          { title: "Quality Assurance", checkpoint: "Stabilization" },
+          { title: "Deployment", checkpoint: "Acceptance testing" },
+          { title: "Support" },
+        ],
+      },
       techIntro: {
         heading: "Powering your web vision with cutting-edge tech",
         tagline: "Bringing web ideas to life with next-gen tech.",
