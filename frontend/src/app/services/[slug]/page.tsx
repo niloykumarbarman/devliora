@@ -50,6 +50,8 @@ import TechBrandIcon from "@/components/TechBrandIcon";
 import ServiceTabs, {
   type ServiceTab,
   type ServiceApproachStep,
+  type ServiceCapability,
+  type ServiceClosingCta,
 } from "@/components/sections/ServiceTabs";
 import ClientSpotlight, { type ClientSpotlightItem } from "@/components/sections/ClientSpotlight";
 import FeaturedWorkSplit from "@/components/sections/FeaturedWorkSplit";
@@ -282,6 +284,41 @@ const APPROACH_STEPS: ServiceApproachStep[] = [
   { iconKey: "search", title: "Quality Assurance" },
   { iconKey: "package", title: "Delivery" },
 ];
+
+// Reused across all three Software Engineering tabs' whyChooseUs block.
+// Two of the reference's four cards ("Commitment to Customer Success"
+// and its second "Quality Management" card) claimed specific org
+// structures Devliora doesn't have — a dedicated executive advisory
+// program, a CTO office, multiple "Centers of Excellence" — so those
+// two are reworded to the same honest substance without inventing
+// formal structures. The other two are generic and kept close to the
+// reference. The second card was also retitled ("Continuous
+// Innovation") since the reference oddly reuses "Quality Management"
+// as the title of both the 1st and 4th card.
+const WHY_CHOOSE_US_EXTRA_CARDS: ServiceCapability[] = [
+  {
+    title: "Quality Management",
+    body: "We follow a structured quality management approach that maintains high standards across our services and software delivery.",
+  },
+  {
+    title: "Security Management",
+    body: "Our security practices protect the confidentiality and integrity of information throughout the entire Software Development Life Cycle (SDLC).",
+  },
+  {
+    title: "Commitment to Customer Success",
+    body: "We stay closely involved throughout your project, with senior team members available as advisors to help keep it on track toward a successful outcome.",
+  },
+  {
+    title: "Continuous Innovation",
+    body: "We continuously evaluate new tools, frameworks, and practices, testing and integrating the ones that genuinely improve how we build and deliver software.",
+  },
+];
+
+const WHY_CHOOSE_US_CLOSING_CTA: ServiceClosingCta = {
+  text: "Schedule a free consultation with our software development experts.",
+  buttonText: "Book now",
+  href: "/book-consultation",
+};
 
 // Generic, non-platform-specific capability copy — same content
 // regardless of which tab (Web/Mobile/Enterprise) is active, since this
@@ -518,6 +555,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
             body: "We stay involved after launch, so your application keeps running reliably as your needs change.",
           },
         ],
+        extraCards: WHY_CHOOSE_US_EXTRA_CARDS,
+        closingCta: WHY_CHOOSE_US_CLOSING_CTA,
       },
       techIntro: {
         heading: "Powering your web vision with cutting-edge tech",
@@ -644,6 +683,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
             body: "We stay involved after launch, so your application keeps running reliably as your needs change.",
           },
         ],
+        extraCards: WHY_CHOOSE_US_EXTRA_CARDS,
+        closingCta: WHY_CHOOSE_US_CLOSING_CTA,
       },
       techIntro: {
         heading: "Powering your mobile vision with cutting-edge tech",
@@ -770,6 +811,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
             body: "We stay involved after launch, so your application keeps running reliably as your needs change.",
           },
         ],
+        extraCards: WHY_CHOOSE_US_EXTRA_CARDS,
+        closingCta: WHY_CHOOSE_US_CLOSING_CTA,
       },
       techIntro: {
         heading: "Powering your enterprise vision with cutting-edge tech",

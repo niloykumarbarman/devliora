@@ -124,11 +124,22 @@ export type ServiceWhyChooseUsReason = {
 // (with photo) who is that company's own client — copying it verbatim
 // would misattribute a real person's words to Devliora. This renders
 // the site's actual admin-entered testimonial in that slot instead.
+export type ServiceClosingCta = {
+  text: string;
+  buttonText: string;
+  href: string;
+};
+
 export type ServiceWhyChooseUs = {
   ctaText: string;
   heading: string;
   tagline: string;
   reasons: ServiceWhyChooseUsReason[];
+  // Extra 4-card row below the reasons list — same title/body pattern
+  // as ServiceTabCard, but rendered here since it belongs to this
+  // section's own layout, not the top-of-tab intro cards.
+  extraCards?: ServiceCapability[];
+  closingCta?: ServiceClosingCta;
 };
 
 // Only "Years in Operation" is a real, verified Devliora figure. The
@@ -620,6 +631,41 @@ export default function ServiceTabs({
               ))}
             </ul>
           </div>
+
+          {current.whyChooseUs.extraCards && current.whyChooseUs.extraCards.length > 0 && (
+            <div className="mx-auto mt-16 max-w-6xl px-6">
+              <div className="grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+                {current.whyChooseUs.extraCards.map((item) => (
+                  <div key={item.title}>
+                    <h4 className="font-display text-lg font-semibold leading-snug text-paper">
+                      {item.title}
+                    </h4>
+                    <div className="mt-3 border-t border-paper/15" />
+                    <p className="mt-4 text-sm leading-relaxed text-paper/70">{item.body}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {current.whyChooseUs.closingCta && (
+            <div className="mt-16 bg-signal md:mt-20">
+              <div className="mx-auto flex max-w-6xl flex-col sm:flex-row sm:items-center">
+                <div className="flex-1 px-6 py-8 sm:py-10">
+                  <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                    {current.whyChooseUs.closingCta.text}
+                  </p>
+                </div>
+                <Link
+                  href={current.whyChooseUs.closingCta.href}
+                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+                >
+                  {current.whyChooseUs.closingCta.buttonText}
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+              </div>
+            </div>
+          )}
         </>
       )}
 
