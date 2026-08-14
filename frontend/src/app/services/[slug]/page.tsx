@@ -60,7 +60,6 @@ import QualityManagement from "@/components/sections/QualityManagement";
 import ExpandableServiceCards from "@/components/sections/ExpandableServiceCards";
 import PricingModels from "@/components/sections/PricingModels";
 import { fetchPortfolios, fetchPortfolioBySlug, type Portfolio } from "@/lib/portfolios";
-import { fetchPartners } from "@/lib/partners";
 
 async function safeFetchTechnologies() {
   try {
@@ -73,14 +72,6 @@ async function safeFetchTechnologies() {
 async function safeFetchCaseStudies() {
   try {
     return await fetchCaseStudies();
-  } catch {
-    return [];
-  }
-}
-
-async function safeFetchPartners() {
-  try {
-    return await fetchPartners();
   } catch {
     return [];
   }
@@ -951,7 +942,6 @@ export default async function ServiceDetailPage({ params }: Props) {
     featuredPortfolios,
     allServices,
     industries,
-    partners,
   ] = await Promise.all([
     fetchServiceBySlug(slug),
     fetchHero(),
@@ -962,7 +952,6 @@ export default async function ServiceDetailPage({ params }: Props) {
     safeFetchFeaturedPortfolios(),
     fetchServices(),
     fetchIndustries(),
-    safeFetchPartners(),
   ]);
   const blogGridCells = buildBlogGridCells(blogPosts.slice(0, 4));
 
@@ -2602,7 +2591,6 @@ export default async function ServiceDetailPage({ params }: Props) {
             technologies={technologies}
             caseStudies={caseStudies}
             testimonial={testimonial}
-            clientLogos={partners}
           />
         ) : service.slug === "it-consulting" ||
           service.slug === "it-maintenance-support" ||
