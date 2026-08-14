@@ -659,32 +659,33 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         text: "Delivered our project faster than expected without compromising quality.",
         source: "Glassdoor",
       },
+      // Unlike the Web tab (whose Comprehensive Scope walks through
+      // SDLC stages — already covered for Mobile by the roadmap section
+      // above), the reference's Mobile page uses this slot for cost
+      // factors instead, so this list is intentionally different in
+      // shape from the Web tab's, not just reworded.
       scope: {
-        intro: "We cover every stage of mobile application development with a balance of precision and creativity. Here's an overview of what our mobile development services include.",
+        intro: "Mobile app development costs vary based on a number of factors. Here's an overview of what shapes the cost of your mobile application.",
         items: [
           {
-            title: "Conceptualization & Ideation",
-            body: "We work with you to shape and refine the idea behind your mobile app, scoping the project around real user needs and business goals before a line of code is written.",
+            title: "Functionality and Features",
+            body: "The app's logic, feature set, and complexity heavily influence cost — the more moving parts, the more engineering effort required.",
           },
           {
-            title: "Architecture & Design",
-            body: "We design a scalable architecture for your mobile app, chosen for the platform, offline behavior, and data patterns it will actually need to handle.",
+            title: "App Design",
+            body: "UX research, prototyping, visual design, animations, and branding requirements all factor into the design budget.",
           },
           {
-            title: "Development & Customization",
-            body: "Our engineers build the custom mobile features your product actually needs — native or cross-platform, depending on what fits the requirements best.",
+            title: "Platform",
+            body: "Native apps for iOS and Android require separate teams and higher cost, while a cross-platform approach is generally more cost-effective.",
           },
           {
-            title: "Integration & Automation",
-            body: "We connect your mobile app with backend services, third-party APIs, and internal systems, automating the workflows that would otherwise be manual.",
+            title: "Team",
+            body: "Cost is also shaped by the size, expertise, and composition of the development team — project managers, developers, QA, and designers.",
           },
           {
-            title: "Testing & Optimization",
-            body: "We test across devices, OS versions, and network conditions, and optimize the app so it stays fast, stable, and responsive as it scales.",
-          },
-          {
-            title: "Launch & Beyond",
-            body: "We handle app store submission and release, then provide ongoing support after launch so the app keeps running reliably as your needs evolve.",
+            title: "APIs",
+            body: "Integrating third-party services — payments, social logins, mapping, and similar — adds to the overall scope and cost.",
           },
         ],
       },
