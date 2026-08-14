@@ -486,6 +486,39 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      // Shown on all three tabs so switching tabs doesn't lose it (same
+      // reasoning as caseStudiesIntro above). The reasons list matches
+      // the far-down page-level "Why choose us" section verbatim (now
+      // hidden on this slug) rather than the reference's current
+      // wording, since that section's copy was already vetted to avoid
+      // the reference's fabricated "20+ years" claim.
+      whyChooseUs: {
+        ctaText: "Ready to turn ideas into reality?",
+        heading: "Why Choose Devliora for Your Web Application Development Needs?",
+        tagline: "Unmatched Expertise and Dedication",
+        reasons: [
+          {
+            title: "Client-Centric Approach",
+            body: "Our process starts with understanding your actual business needs, not fitting you into a template.",
+          },
+          {
+            title: "Thoughtful Engineering",
+            body: "We choose architecture and technologies based on your real requirements, not what's trending.",
+          },
+          {
+            title: "Direct Communication",
+            body: "You work directly with the team building your software — no layers of account management in between.",
+          },
+          {
+            title: "Comprehensive Services",
+            body: "From initial architecture through deployment and beyond, we handle the full lifecycle.",
+          },
+          {
+            title: "Dedicated Support",
+            body: "We stay involved after launch, so your application keeps running reliably as your needs change.",
+          },
+        ],
+      },
       techIntro: {
         heading: "Powering your web vision with cutting-edge tech",
         tagline: "Bringing web ideas to life with next-gen tech.",
@@ -585,6 +618,33 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         tagline: "Real Results, Real Impact, The Devliora Cases.",
         body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
       },
+      whyChooseUs: {
+        ctaText: "Ready to turn ideas into reality?",
+        heading: "Why Choose Devliora for Your Mobile Application Development Needs?",
+        tagline: "Unmatched Expertise and Dedication",
+        reasons: [
+          {
+            title: "Client-Centric Approach",
+            body: "Our process starts with understanding your actual business needs, not fitting you into a template.",
+          },
+          {
+            title: "Thoughtful Engineering",
+            body: "We choose architecture and technologies based on your real requirements, not what's trending.",
+          },
+          {
+            title: "Direct Communication",
+            body: "You work directly with the team building your software — no layers of account management in between.",
+          },
+          {
+            title: "Comprehensive Services",
+            body: "From initial architecture through deployment and beyond, we handle the full lifecycle.",
+          },
+          {
+            title: "Dedicated Support",
+            body: "We stay involved after launch, so your application keeps running reliably as your needs change.",
+          },
+        ],
+      },
       techIntro: {
         heading: "Powering your mobile vision with cutting-edge tech",
         tagline: "Bringing mobile ideas to life with next-gen tech.",
@@ -683,6 +743,33 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         rest: "That Speak Volumes",
         tagline: "Real Results, Real Impact, The Devliora Cases.",
         body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
+      },
+      whyChooseUs: {
+        ctaText: "Ready to turn ideas into reality?",
+        heading: "Why Choose Devliora for Your Enterprise System Integration Needs?",
+        tagline: "Unmatched Expertise and Dedication",
+        reasons: [
+          {
+            title: "Client-Centric Approach",
+            body: "Our process starts with understanding your actual business needs, not fitting you into a template.",
+          },
+          {
+            title: "Thoughtful Engineering",
+            body: "We choose architecture and technologies based on your real requirements, not what's trending.",
+          },
+          {
+            title: "Direct Communication",
+            body: "You work directly with the team building your software — no layers of account management in between.",
+          },
+          {
+            title: "Comprehensive Services",
+            body: "From initial architecture through deployment and beyond, we handle the full lifecycle.",
+          },
+          {
+            title: "Dedicated Support",
+            body: "We stay involved after launch, so your application keeps running reliably as your needs change.",
+          },
+        ],
       },
       techIntro: {
         heading: "Powering your enterprise vision with cutting-edge tech",
@@ -2353,6 +2440,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             heroImageUrl={hero?.backgroundImageUrl}
             technologies={technologies}
             caseStudies={caseStudies}
+            testimonial={testimonial}
           />
         ) : service.slug === "it-consulting" ||
           service.slug === "it-maintenance-support" ||
@@ -3698,9 +3786,13 @@ export default async function ServiceDetailPage({ params }: Props) {
 
         {/* Why choose us + a real, admin-entered client testimonial.
             Hidden on Digital Design, Digital Marketing, and IT Consulting
-            at request, same as Case Studies/Blog Highlights above — still
-            shown on every other service page. */}
-        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && (
+            at request, same as Case Studies/Blog Highlights above. Hidden
+            on Software Engineering since ServiceTabs now renders the same
+            testimonial higher up (right after "Reliable Solutions with
+            Thoughtful Engineering", per the reference's page order) —
+            showing it twice would be redundant.
+            Still shown on every other service page. */}
+        {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && service.slug !== "software-engineering" && (
         <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto grid max-w-6xl gap-16 px-6 md:grid-cols-2">
             <div>

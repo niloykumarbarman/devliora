@@ -104,6 +104,33 @@ export type ServiceCapabilitiesIntro = {
   items: ServiceCapability[];
 };
 
+// Minimal shape of the real, admin-entered testimonial fetched in
+// page.tsx (kept local instead of importing the page's own type, since
+// route files aren't meant to be imported from).
+export type ServiceTestimonial = {
+  clientName: string;
+  clientTitle: string;
+  clientCompany: string;
+  clientPhotoUrl: string;
+  quote: string;
+};
+
+export type ServiceWhyChooseUsReason = {
+  title: string;
+  body: string;
+};
+
+// The reference's "Customer Voice" card quotes a named, real person
+// (with photo) who is that company's own client — copying it verbatim
+// would misattribute a real person's words to Devliora. This renders
+// the site's actual admin-entered testimonial in that slot instead.
+export type ServiceWhyChooseUs = {
+  ctaText: string;
+  heading: string;
+  tagline: string;
+  reasons: ServiceWhyChooseUsReason[];
+};
+
 // Only "Years in Operation" is a real, verified Devliora figure. The
 // rest of the KAZ reference's stats (countries, savings, launches,
 // company count) are that company's own claims, not something we can
@@ -144,6 +171,7 @@ export type ServiceTab = {
   impact?: ServiceImpact;
   caseStudiesIntro?: ServiceCaseStudiesIntro;
   capabilities?: ServiceCapabilitiesIntro;
+  whyChooseUs?: ServiceWhyChooseUs;
   techIntro?: ServiceTechIntro;
 };
 
@@ -173,11 +201,13 @@ export default function ServiceTabs({
   heroImageUrl,
   technologies = [],
   caseStudies = [],
+  testimonial = null,
 }: {
   tabs: ServiceTab[];
   heroImageUrl?: string;
   technologies?: TechnologyDto[];
   caseStudies?: CaseStudy[];
+  testimonial?: ServiceTestimonial | null;
 }) {
   const [active, setActive] = useState(0);
   const current = tabs[active];
@@ -515,6 +545,82 @@ export default function ServiceTabs({
             ))}
           </div>
         </div>
+      )}
+
+      {current.whyChooseUs && (
+        <>
+          <div className="mt-20 bg-signal md:mt-28">
+            <div className="mx-auto flex max-w-6xl flex-col sm:flex-row sm:items-center">
+              <div className="flex-1 px-6 py-8 sm:py-10">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  {current.whyChooseUs.ctaText}
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+              >
+                Get Started
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </div>
+
+          <div className="mx-auto mt-20 grid max-w-6xl gap-16 px-6 md:mt-28 md:grid-cols-2">
+            <div>
+              <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+                {current.whyChooseUs.heading}
+              </h3>
+              <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+                {current.whyChooseUs.tagline}
+              </p>
+
+              {testimonial && (
+                <div className="mt-12 rounded-2xl border border-ember/20 bg-ember/10 p-8">
+                  <h4 className="font-display text-xl font-semibold text-paper">Customer Voice</h4>
+                  <p className="mt-4 text-lg leading-relaxed text-paper/80">
+                    &ldquo;{testimonial.quote.replace(/^[“"]|[”"]$/g, "")}&rdquo;
+                  </p>
+                  <div className="mt-6 flex items-center gap-3">
+                    {testimonial.clientPhotoUrl ? (
+                      <Image
+                        src={resolveImageUrl(testimonial.clientPhotoUrl)}
+                        alt=""
+                        width={44}
+                        height={44}
+                        className="h-11 w-11 shrink-0 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ember/20 text-ember">
+                        <Star className="h-5 w-5" />
+                      </div>
+                    )}
+                    <div>
+                      <p className="font-semibold text-paper">{testimonial.clientName}</p>
+                      <p className="text-sm text-paper/60">
+                        {testimonial.clientTitle}
+                        {testimonial.clientCompany && (
+                          <>
+                            , <span className="text-ember">{testimonial.clientCompany}</span>
+                          </>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <ul className="space-y-8">
+              {current.whyChooseUs.reasons.map((item) => (
+                <li key={item.title}>
+                  <span className="font-semibold text-ember">{item.title}:</span>{" "}
+                  <span className="text-paper/80">{item.body}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </>
       )}
 
       {current.techIntro && (
