@@ -983,28 +983,33 @@ export default function ServiceTabs({
             </div>
 
             {technologies.length > 0 && (
-              <div className="mt-16 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
-                {technologies.map((tech) => {
-                  const icon = getTechIcon(tech.name);
-                  return (
-                    <div key={tech.id} className="flex items-center gap-3">
-                      <div
-                        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
-                        style={{ backgroundColor: icon ? `#${icon.hex}` : "var(--color-ember)" }}
-                      >
-                        {icon ? (
-                          <TechBrandIcon name={tech.name} color="#fff" className="h-5 w-5" />
-                        ) : (
-                          <span className="h-2 w-2 rounded-full bg-paper" />
-                        )}
+              <>
+                <p className="mt-16 font-mono text-xs font-semibold uppercase tracking-wide text-paper/50">
+                  Quality Management
+                </p>
+                <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
+                  {technologies.map((tech) => {
+                    const icon = getTechIcon(tech.name);
+                    return (
+                      <div key={tech.id} className="flex items-center gap-3">
+                        <div
+                          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
+                          style={{ backgroundColor: icon ? `#${icon.hex}` : "var(--color-ember)" }}
+                        >
+                          {icon ? (
+                            <TechBrandIcon name={tech.name} color="#fff" className="h-5 w-5" />
+                          ) : (
+                            <span className="h-2 w-2 rounded-full bg-paper" />
+                          )}
+                        </div>
+                        <span className="font-mono text-sm font-semibold text-paper">
+                          {tech.displayName.trim()}
+                        </span>
                       </div>
-                      <span className="font-mono text-sm font-semibold text-paper">
-                        {tech.displayName.trim()}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              </>
             )}
 
             {current.techIntro.showTabToggle && tabs.length > 1 && (
