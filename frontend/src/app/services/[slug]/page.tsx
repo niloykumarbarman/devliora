@@ -894,6 +894,46 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         },
         ctaText: "Unlock new possibilities with our tailored desktop solutions.",
       },
+      // Desktop tab only, matching the reference's own page. Its
+      // "For business users" list also included "TypeScript" — a tech
+      // stack name, not a business-app category — which reads as a
+      // content-authoring error on their side, so it's left out here
+      // rather than reproduced. "Colaboration" is also corrected to
+      // "Collaboration".
+      targetUsers: {
+        heading: "Desktop apps for your target users",
+        tagline: "Crafting desktop experiences that engage, empower, and elevate your users.",
+        body: "At Devliora, we excel in developing both enterprise and consumer-facing desktop applications. For every unique user group, we tailor feature sets and user experiences that perfectly align with their needs and preferences.",
+        groups: [
+          {
+            heading: "For business users",
+            items: [
+              "Digital workplace",
+              "HR management",
+              "Business process management",
+              "Digital content",
+              "CRM",
+              "Collaboration",
+              "Enterprise resource planning",
+              "Business intelligence",
+            ],
+          },
+          {
+            heading: "For consumers",
+            items: [
+              "Customer portals",
+              "Employee portals",
+              "Ecommerce portals",
+              "Healthcare portals",
+              "eLearning portals",
+              "Project management",
+              "B2B portals",
+              "Finance managers",
+            ],
+          },
+        ],
+        ctaText: "Ready to turn ideas into reality?",
+      },
       approach: {
         tagline: "Crafting well-built desktop applications, one deliberate decision at a time.",
         steps: APPROACH_STEPS,

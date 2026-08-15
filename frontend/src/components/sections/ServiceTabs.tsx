@@ -141,6 +141,19 @@ export type ServiceSecuritySection = {
   ctaText: string;
 };
 
+export type ServiceTargetUsersGroup = {
+  heading: string;
+  items: string[];
+};
+
+export type ServiceTargetUsersSection = {
+  heading: string;
+  tagline: string;
+  body: string;
+  groups: ServiceTargetUsersGroup[];
+  ctaText: string;
+};
+
 // Purely descriptive, generic engineering-capability copy — no client
 // facts or figures involved, so unlike ServiceImpact this can be
 // adapted closely from the reference without a fabrication concern.
@@ -270,6 +283,7 @@ export type ServiceTab = {
   body: string;
   cards?: ServiceTabCard[];
   security?: ServiceSecuritySection;
+  targetUsers?: ServiceTargetUsersSection;
   approach?: ServiceApproach;
   roadmap?: ServiceTabRoadmap;
   reviewQuote?: ServiceReviewQuote;
@@ -507,6 +521,54 @@ export default function ServiceTabs({
         </>
         );
       })()}
+
+      {current.targetUsers && (
+        <>
+          <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
+            <div className="grid gap-10 md:grid-cols-2 md:items-start">
+              <div>
+                <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+                  {current.targetUsers.heading}
+                </h3>
+                <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+                  {current.targetUsers.tagline}
+                </p>
+              </div>
+              <p className="text-lg leading-relaxed text-paper/70">{current.targetUsers.body}</p>
+            </div>
+
+            {current.targetUsers.groups.map((group) => (
+              <div key={group.heading} className="mt-14">
+                <h4 className="font-display text-xl font-bold text-ember">{group.heading}</h4>
+                <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-4">
+                  {group.items.map((item) => (
+                    <p key={item} className="text-sm font-semibold text-paper">
+                      {item}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-20 bg-signal md:mt-28">
+            <div className="mx-auto flex max-w-6xl flex-col sm:flex-row sm:items-center">
+              <div className="flex-1 px-6 py-8 sm:py-10">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  {current.targetUsers.ctaText}
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+              >
+                Get Started
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </div>
+        </>
+      )}
 
       {current.approach && current.approach.steps.length > 1 && (
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
