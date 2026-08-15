@@ -427,47 +427,59 @@ export default function ServiceTabs({
         )}
       </div>
 
-      {current.security && (
+      {current.security && (() => {
+        const security = current.security;
+        const sourceIcon = getTechIcon(security.stat.source);
+        return (
         <>
           <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
             <div className="grid gap-10 md:grid-cols-2 md:items-start">
               <div>
                 <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
-                  {current.security.heading}
+                  {security.heading}
                 </h3>
 
                 <div className="mt-10 flex items-center gap-6">
                   <div className="relative h-28 w-28 shrink-0">
                     <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
-                      <circle cx="50" cy="50" r="45" fill="none" stroke="var(--color-paper)" strokeOpacity="0.15" strokeWidth="6" />
+                      <defs>
+                        <linearGradient id="securityStatRing" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="var(--color-paper)" />
+                          <stop offset="100%" stopColor="#EF4444" />
+                        </linearGradient>
+                      </defs>
                       <circle
                         cx="50"
                         cy="50"
                         r="45"
                         fill="none"
-                        stroke="var(--color-ember)"
+                        stroke="url(#securityStatRing)"
                         strokeWidth="6"
                         strokeLinecap="round"
-                        strokeDasharray={`${(current.security.stat.percent / 100) * 282.7} 282.7`}
+                        strokeDasharray={`${(security.stat.percent / 100) * 282.7} 282.7`}
                       />
                     </svg>
                     <div className="absolute inset-0 flex items-center justify-center font-display text-xl font-bold text-paper">
-                      {current.security.stat.value}
+                      {security.stat.value}
                     </div>
                   </div>
-                  <div>
-                    <p className="text-sm leading-relaxed text-paper/70">{current.security.stat.description}</p>
-                    <p className="mt-2 font-mono text-xs uppercase tracking-wide text-paper/40">
-                      Source: {current.security.stat.source}
-                    </p>
-                  </div>
+                  <p className="text-sm leading-relaxed text-paper/70">{security.stat.description}</p>
+                </div>
+
+                <div className="mt-6 flex items-center gap-2">
+                  {sourceIcon && (
+                    <TechBrandIcon name={security.stat.source} color={`#${sourceIcon.hex}`} className="h-6 w-6" />
+                  )}
+                  <span className="font-display text-lg font-bold uppercase tracking-wide text-paper">
+                    {security.stat.source}
+                  </span>
                 </div>
               </div>
 
               <div>
-                <p className="text-lg leading-relaxed text-paper/70">{current.security.body}</p>
+                <p className="text-lg leading-relaxed text-paper/70">{security.body}</p>
                 <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
-                  {current.security.checklist.map((item) => (
+                  {security.checklist.map((item) => (
                     <p key={item} className="text-sm font-semibold text-paper">
                       <span className="text-ember">&middot; </span>
                       {item}
@@ -481,9 +493,7 @@ export default function ServiceTabs({
           <div className="mt-20 bg-signal md:mt-28">
             <div className="mx-auto flex max-w-6xl flex-col sm:flex-row sm:items-center">
               <div className="flex-1 px-6 py-8 sm:py-10">
-                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
-                  {current.security.ctaText}
-                </p>
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">{security.ctaText}</p>
               </div>
               <Link
                 href="/contact"
@@ -495,7 +505,8 @@ export default function ServiceTabs({
             </div>
           </div>
         </>
-      )}
+        );
+      })()}
 
       {current.approach && current.approach.steps.length > 1 && (
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
