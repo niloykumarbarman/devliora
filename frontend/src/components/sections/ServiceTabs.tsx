@@ -122,6 +122,25 @@ export type ServiceReviewQuote = {
   source: string;
 };
 
+// A real, third-party-attributed statistic (e.g. Cloudflare's own bot
+// traffic research) supporting a security narrative — not a Devliora
+// claim, so it's fine to cite verbatim as long as the source is named,
+// same as the Accenture research citation used elsewhere on this site.
+export type ServiceSecurityStat = {
+  value: string;
+  percent: number;
+  description: string;
+  source: string;
+};
+
+export type ServiceSecuritySection = {
+  heading: string;
+  body: string;
+  checklist: string[];
+  stat: ServiceSecurityStat;
+  ctaText: string;
+};
+
 // Purely descriptive, generic engineering-capability copy — no client
 // facts or figures involved, so unlike ServiceImpact this can be
 // adapted closely from the reference without a fabrication concern.
@@ -250,6 +269,7 @@ export type ServiceTab = {
   heading: string;
   body: string;
   cards?: ServiceTabCard[];
+  security?: ServiceSecuritySection;
   approach?: ServiceApproach;
   roadmap?: ServiceTabRoadmap;
   reviewQuote?: ServiceReviewQuote;
@@ -406,6 +426,76 @@ export default function ServiceTabs({
           </div>
         )}
       </div>
+
+      {current.security && (
+        <>
+          <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
+            <div className="grid gap-10 md:grid-cols-2 md:items-start">
+              <div>
+                <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+                  {current.security.heading}
+                </h3>
+
+                <div className="mt-10 flex items-center gap-6">
+                  <div className="relative h-28 w-28 shrink-0">
+                    <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
+                      <circle cx="50" cy="50" r="45" fill="none" stroke="var(--color-paper)" strokeOpacity="0.15" strokeWidth="6" />
+                      <circle
+                        cx="50"
+                        cy="50"
+                        r="45"
+                        fill="none"
+                        stroke="var(--color-ember)"
+                        strokeWidth="6"
+                        strokeLinecap="round"
+                        strokeDasharray={`${(current.security.stat.percent / 100) * 282.7} 282.7`}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center font-display text-xl font-bold text-paper">
+                      {current.security.stat.value}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-sm leading-relaxed text-paper/70">{current.security.stat.description}</p>
+                    <p className="mt-2 font-mono text-xs uppercase tracking-wide text-paper/40">
+                      Source: {current.security.stat.source}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-lg leading-relaxed text-paper/70">{current.security.body}</p>
+                <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-3 sm:grid-cols-2">
+                  {current.security.checklist.map((item) => (
+                    <p key={item} className="text-sm font-semibold text-paper">
+                      <span className="text-ember">&middot; </span>
+                      {item}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-20 bg-signal md:mt-28">
+            <div className="mx-auto flex max-w-6xl flex-col sm:flex-row sm:items-center">
+              <div className="flex-1 px-6 py-8 sm:py-10">
+                <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                  {current.security.ctaText}
+                </p>
+              </div>
+              <Link
+                href="/contact"
+                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+              >
+                Find Out More
+                <ArrowRight className="h-5 w-5" />
+              </Link>
+            </div>
+          </div>
+        </>
+      )}
 
       {current.approach && current.approach.steps.length > 1 && (
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">

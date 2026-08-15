@@ -870,6 +870,30 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           body: "Once deployed, we provide ongoing support and maintenance to ensure your desktop applications continue to operate efficiently. Our team is here to assist with updates, troubleshooting, and enhancements.",
         },
       ],
+      // Desktop tab only, matching the reference's own page. The 93%
+      // stat is Cloudflare's own bot-traffic research, cited with
+      // attribution — not a Devliora claim — same treatment as the
+      // Accenture research citation elsewhere on this site.
+      security: {
+        heading: "Fortifying your desktop app with top-notch security",
+        body: "We embed cybersecurity throughout our desktop app development, using threat modeling, input validation, and security headers. Our approach includes data encryption and SAST/DAST testing, with continuous exploration of new security measures to stay ahead of threats.",
+        checklist: [
+          "Embedded Cybersecurity",
+          "Threat Modeling",
+          "Input Validation",
+          "Security Headers",
+          "Data Encryption",
+          "SAST & DAST",
+          "Continuous Exploration",
+        ],
+        stat: {
+          value: "93%",
+          percent: 93,
+          description: "of bots identified in 2024 were unverified bots, and potentially malicious.",
+          source: "Cloudflare",
+        },
+        ctaText: "Unlock new possibilities with our tailored desktop solutions.",
+      },
       approach: {
         tagline: "Crafting well-built desktop applications, one deliberate decision at a time.",
         steps: APPROACH_STEPS,
