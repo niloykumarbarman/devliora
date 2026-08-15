@@ -937,40 +937,46 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         tagline: "Crafting well-built desktop applications, one deliberate decision at a time.",
         steps: APPROACH_STEPS,
       },
+      // Per explicit request, this matches the reference's own Desktop
+      // roadmap verbatim — industry verticals rather than the SDLC
+      // stages every other roadmap on this page uses. "RegFollower"
+      // (a bullet under Finance on the reference) reads as the name of
+      // one of their own client projects rather than a generic
+      // capability, so it's left out rather than implied as Devliora's.
       roadmap: {
-        tagline: "Building stable, high-performance desktop software built to last.",
-        body: "At Devliora, we build desktop applications with a clear focus on usability, reliability, and your business goals. From early idea shaping to UX/UI design, development, testing, and ongoing support, our team stays involved throughout the entire process. With over a decade of experience, we understand how to create desktop software that runs smoothly and adapts well to your needs.",
+        tagline: "Building stable, high-performance desktop software for long-term use.",
+        body: "We transform ideas into reliable desktop applications designed for performance, security, and usability. From early planning and design to development, testing, and long-term support, we manage every stage of the process. Our experience helps ensure desktop solutions that remain dependable as business needs evolve.",
         steps: [
           {
-            title: "Development",
-            body: "We develop desktop applications of varying complexity to help teams streamline internal operations, strengthen business transactions, and digitize customer-facing services.",
+            title: "Healthcare",
+            body: "Our desktop applications for healthcare streamline patient management, improve clinical workflows, and ensure compliance with regulations. We offer solutions that enhance both provider and patient experiences.",
+            bullets: ["Efficient patient data management", "Secure communication channels"],
           },
           {
-            title: "Integration",
-            body: "We integrate your desktop application with other software in your enterprise ecosystem or third-party tools, with secure connections and reliable data exchange.",
-          },
-          {
-            title: "Migration",
-            body: "We can move a desktop app's backend to a new cloud or on-premise environment, planning around common migration risks like downtime and data loss.",
-          },
-          {
-            title: "Testing",
-            body: "We perform comprehensive testing to catch the bugs, defects, and weaknesses that undermine a desktop application's operation and user experience.",
+            title: "Finance",
+            body: "In finance, our desktop solutions optimize transaction processing, enhance data security, and ensure compliance with financial regulations. We provide tools that support robust financial management and analytics.",
             bullets: [
-              "Functional testing",
-              "Performance testing",
-              "Cross-platform compatibility testing",
-              "Usability testing",
-              "Test automation",
+              "Streamlined transaction processing",
+              "Advanced data security features",
+              "Compliance with financial regulations",
             ],
           },
           {
-            title: "Security",
-            body: "We advise on making desktop applications resilient against common and emerging security threats, with encryption, secure storage, and access controls.",
+            title: "Furniture eCommerce",
+            body: "Our desktop applications for furniture eCommerce help you manage inventory, track orders, and enhance the online shopping experience. We design solutions that drive sales and improve customer satisfaction.",
           },
           {
-            title: "Modernization",
-            body: "We improve the outdated or underperforming parts of a legacy desktop application, reducing usability issues and long-term cost of ownership.",
+            title: "Telecom",
+            body: "In telecom, our desktop applications enhance customer service management, streamline billing processes, and support network monitoring. We provide solutions that improve service delivery and operational efficiency.",
+            bullets: ["Customer service management", "Network performance monitoring"],
+          },
+          {
+            title: "Logistics",
+            body: "Our desktop solutions for logistics optimize route planning, track shipments, and manage fleet operations. We deliver tools that improve operational efficiency and reduce costs.",
+          },
+          {
+            title: "Retail",
+            body: "For retail, our desktop apps streamline point-of-sale systems, manage inventory, and offer real-time sales analytics. We create solutions that boost efficiency and enhance the shopping experience.",
           },
         ],
       },
