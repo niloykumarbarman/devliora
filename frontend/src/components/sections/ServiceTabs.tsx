@@ -984,10 +984,10 @@ export default function ServiceTabs({
 
             {technologies.length > 0 && (
               <>
-                <p className="mt-16 font-mono text-xs font-semibold uppercase tracking-wide text-paper/50">
+                <h4 className="mt-16 font-display text-2xl font-bold leading-tight text-paper">
                   Quality Management
-                </p>
-                <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
+                </h4>
+                <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
                   {technologies.map((tech) => {
                     const icon = getTechIcon(tech.name);
                     return (
