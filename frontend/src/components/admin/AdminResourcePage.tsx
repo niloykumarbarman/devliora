@@ -8,8 +8,9 @@ import { resolveImageUrl } from "@/lib/hero";
 export interface ListItemFieldConfig {
   key: string;
   label: string;
-  type: "text" | "number" | "image";
+  type: "text" | "number" | "image" | "select";
   placeholder?: string;
+  options?: { value: string | number; label: string }[];
 }
 
 export interface FieldConfig<TForm> {
@@ -376,7 +377,12 @@ export default function AdminResourcePage<T extends { id: string }, TForm>({
                 const addItem = () => {
                   const newItem: Record<string, string | number> = {};
                   itemFields.forEach((f) => {
-                    newItem[f.key] = f.type === "number" ? 0 : "";
+                    newItem[f.key] =
+                      f.type === "number"
+                        ? 0
+                        : f.type === "select"
+                          ? (f.options?.[0]?.value ?? "")
+                          : "";
                   });
                   setFieldValue(field.key, [...arr, newItem]);
                 };
@@ -462,6 +468,25 @@ export default function AdminResourcePage<T extends { id: string }, TForm>({
                                         />
                                       </label>
                                     </div>
+                                  </div>
+                                );
+                              }
+
+                              if (f.type === "select") {
+                                return (
+                                  <div key={f.key}>
+                                    <label className={listLabelClass}>{f.label}</label>
+                                    <select
+                                      value={String(item[f.key] ?? "")}
+                                      onChange={(e) => updateItem(idx, f.key, e.target.value)}
+                                      className={listInputClass}
+                                    >
+                                      {f.options?.map((opt) => (
+                                        <option key={opt.value} value={opt.value}>
+                                          {opt.label}
+                                        </option>
+                                      ))}
+                                    </select>
                                   </div>
                                 );
                               }

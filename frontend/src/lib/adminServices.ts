@@ -14,6 +14,22 @@ export interface AdminServiceIndustryCard {
   displayOrder: number;
 }
 
+// Shared shape for both reading (denormalized case-study fields
+// included so the admin table can show titles without a second
+// lookup) and writing (only tab/caseStudyId/displayOrder are sent —
+// the rest are ignored server-side) — mirrors the backend's
+// ServiceTabCaseStudyItem.
+export interface AdminServiceTabCaseStudy {
+  tab: string;
+  caseStudyId: string;
+  displayOrder: number;
+  caseStudyTitle: string;
+  caseStudySlug: string;
+  caseStudyIndustry: string;
+  caseStudyResults: string;
+  caseStudyCoverImageUrl: string;
+}
+
 export interface AdminService {
   id: string;
   title: string;
@@ -38,6 +54,7 @@ export interface AdminService {
   industriesTagline: string;
   industriesDescription: string;
   industryCards: AdminServiceIndustryCard[];
+  tabCaseStudies: AdminServiceTabCaseStudy[];
 }
 
 export interface ServiceFormPayload {
@@ -63,6 +80,7 @@ export interface ServiceFormPayload {
   industriesTagline: string;
   industriesDescription: string;
   industryCards: AdminServiceIndustryCard[];
+  tabCaseStudies: AdminServiceTabCaseStudy[];
 }
 
 export const SERVICES_ADMIN_API_URL = `${API_BASE_URL}/services`;

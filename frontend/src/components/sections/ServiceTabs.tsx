@@ -17,6 +17,7 @@ import {
 import { resolveImageUrl } from "@/lib/hero";
 import type { TechnologyDto } from "@/lib/technologies";
 import type { CaseStudy } from "@/lib/caseStudies";
+import type { ServiceTabCaseStudy } from "@/lib/services";
 import { getTechIcon } from "@/lib/techIcons";
 import TechBrandIcon from "@/components/TechBrandIcon";
 
@@ -248,16 +249,42 @@ export default function ServiceTabs({
   heroImageUrl,
   technologies = [],
   caseStudies = [],
+  tabCaseStudies = [],
   testimonial = null,
 }: {
   tabs: ServiceTab[];
   heroImageUrl?: string;
   technologies?: TechnologyDto[];
   caseStudies?: CaseStudy[];
+  tabCaseStudies?: ServiceTabCaseStudy[];
   testimonial?: ServiceTestimonial | null;
 }) {
   const [active, setActive] = useState(0);
   const current = tabs[active];
+
+  // Admin-curated picks for this tab (see ServiceTabCaseStudy) take
+  // priority; if none were picked for this tab, fall back to the
+  // site's newest 4 published case studies — same as before this was
+  // admin-controllable.
+  const curatedForTab = tabCaseStudies
+    .filter((t) => t.tab === current.label)
+    .sort((a, b) => a.displayOrder - b.displayOrder);
+  const displayedCaseStudies =
+    curatedForTab.length > 0
+      ? curatedForTab.map((t) => ({
+          id: t.caseStudyId,
+          slug: t.caseStudySlug,
+          industry: t.caseStudyIndustry,
+          results: t.caseStudyResults,
+          coverImageUrl: t.caseStudyCoverImageUrl,
+        }))
+      : caseStudies.slice(0, 4).map((s) => ({
+          id: s.id,
+          slug: s.slug,
+          industry: s.industry,
+          results: s.results,
+          coverImageUrl: s.coverImageUrl,
+        }));
 
   return (
     <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-28">
@@ -528,7 +555,7 @@ export default function ServiceTabs({
         </>
       )}
 
-      {current.caseStudiesIntro && caseStudies.length > 0 && (
+      {current.caseStudiesIntro && displayedCaseStudies.length > 0 && (
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
           <h3 className="text-balance font-display text-3xl font-semibold leading-tight sm:text-4xl">
             <span className="text-ember">{current.caseStudiesIntro.highlight}</span>{" "}
@@ -544,9 +571,11 @@ export default function ServiceTabs({
           {/* Same card treatment as the page-level "Real results, real
               impact" case studies grid — real Devliora case studies
               (image, industry, results), not the reference's
-              per-card claims. */}
+              per-card claims. Admin-curated per tab when picks exist
+              (see ServiceTabCaseStudy), else the newest 4 published
+              case studies site-wide. */}
           <div className="mt-14 grid grid-cols-2 gap-6 lg:grid-cols-4">
-            {caseStudies.slice(0, 4).map((study) => (
+            {displayedCaseStudies.map((study) => (
               <Link
                 key={study.id}
                 href={`/case-studies/${study.slug}`}
@@ -575,7 +604,7 @@ export default function ServiceTabs({
         </div>
       )}
 
-      {current.caseStudiesIntro && caseStudies.length > 0 && (
+      {current.caseStudiesIntro && displayedCaseStudies.length > 0 && (
         <div className="mt-20 bg-signal md:mt-28">
           <div className="mx-auto flex max-w-6xl flex-col sm:flex-row sm:items-center">
             <div className="flex-1 px-6 py-8 sm:py-10">

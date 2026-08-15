@@ -2594,6 +2594,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             heroImageUrl={hero?.backgroundImageUrl}
             technologies={technologies}
             caseStudies={caseStudies}
+            tabCaseStudies={service.tabCaseStudies}
             testimonial={testimonial}
           />
         ) : service.slug === "it-consulting" ||

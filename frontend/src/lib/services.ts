@@ -13,6 +13,19 @@ export interface ServiceIndustryCard {
   displayOrder: number;
 }
 
+// Admin-curated case studies for a service's per-tab (Web/Mobile/
+// Enterprise) "Success Stats" grid — see ServiceTabs.tsx.
+export interface ServiceTabCaseStudy {
+  tab: string;
+  caseStudyId: string;
+  displayOrder: number;
+  caseStudyTitle: string;
+  caseStudySlug: string;
+  caseStudyIndustry: string;
+  caseStudyResults: string;
+  caseStudyCoverImageUrl: string;
+}
+
 export interface ServiceDto {
   id: string;
   title: string;
@@ -36,6 +49,7 @@ export interface ServiceDto {
   industriesTagline: string;
   industriesDescription: string;
   industryCards: ServiceIndustryCard[];
+  tabCaseStudies: ServiceTabCaseStudy[];
 }
 
 export async function fetchServices(): Promise<ServiceDto[]> {
