@@ -273,7 +273,7 @@ const PERFORMANCE_ENGAGEMENT_TEAM = [
 // Generic delivery-lifecycle stages for the "Our approach" zigzag
 // timeline inside each tab. Same 7 stages regardless of platform — this
 // is a standard SDLC shape, not a claim specific to Web/Mobile/
-// Enterprise — so it's defined once and reused across all three tabs'
+// Desktop — so it's defined once and reused across all three tabs'
 // approach.steps. iconKey (not the icon component itself) because this
 // data crosses the server->client boundary into ServiceTabs, which
 // can't receive component/function props — see ServiceTabs.tsx.
@@ -323,7 +323,7 @@ const WHY_CHOOSE_US_CLOSING_CTA: ServiceClosingCta = {
 };
 
 // Generic, non-platform-specific capability copy — same content
-// regardless of which tab (Web/Mobile/Enterprise) is active, since this
+// regardless of which tab (Web/Mobile/Desktop) is active, since this
 // section sits below the tabs as a shared block, not inside them.
 const SOFTWARE_ESSENTIALS = [
   {
@@ -597,9 +597,9 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         heading: "Technologies we work with",
         tagline: "Driven by a mix of cutting-edge tech, endless innovation, and continuous learning.",
         body: "We leverage a wide range of technologies to build powerful, customized solutions tailored to your needs. Our team uses proven tools and methodologies to stay current with the tech landscape, aiming for reliable, future-ready software.",
-        // Reference has a Web/Mobile/Desktop toggle here; we show the
-        // site's own real tabs (Web/Mobile/Enterprise — no Desktop
-        // track) instead of a fake platform filter. See
+        // Reference has a Web/Mobile/Desktop toggle here; clicking a
+        // pill switches the site's own real tabs above (same three
+        // platforms, since Desktop is a genuine Devliora offering). See
         // ServiceTechIntro.showTabToggle in ServiceTabs.tsx.
         showTabToggle: true,
       },
@@ -809,9 +809,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         heading: "Powering your mobile vision with cutting-edge tech",
         tagline: "Bringing mobile ideas to life with next-gen tech.",
         body: "Our mobile application development approach focuses on thoughtful use of modern technologies to build reliable, well-designed apps. Across iOS and Android, we combine practical engineering with considered design to address your specific requirements. Our team works with current tools and frameworks to ensure long-term maintainability — from native to hybrid and cross-platform, we support the full journey from concept to launch.",
-        // Same real Web/Mobile/Enterprise tab toggle as the Web tab (see
-        // note on that tab's techIntro) — not the reference's fake
-        // Web/Mobile/Desktop platform filter.
+        // Same real Web/Mobile/Desktop tab toggle as the Web tab — see
+        // note on that tab's techIntro.
         showTabToggle: true,
         // Reference's own Mobile-relevant tech stack — real language
         // names, not fabricated. "Objective-C", "Java", and "C#" don't
@@ -833,144 +832,16 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       },
     },
     {
-      label: "Enterprise",
-      heading: "Enterprise System Integration",
-      body: "Enterprise systems designed to integrate cleanly with what you already run — connecting existing tools, data, and processes instead of forcing a rebuild. We focus on architecture that holds up as the organization scales.",
-      cards: [
-        {
-          title: "Custom Enterprise System Development",
-          body: "Enterprise software built around your organization's real processes, not a generic template.",
-        },
-        {
-          title: "Platform Integration & Customization",
-          body: "Connecting and customizing the enterprise platforms and tools you already run, instead of forcing a rebuild.",
-        },
-        {
-          title: "Legacy System Modernization",
-          body: "Migrating aging enterprise systems onto modern, maintainable architecture without disrupting business continuity.",
-        },
-      ],
-      approach: {
-        tagline: "Crafting well-built enterprise systems, one deliberate decision at a time.",
-        steps: APPROACH_STEPS,
-      },
-      roadmap: {
-        tagline: "Building enterprise systems that are secure, integrated, and built to scale with your organization.",
-        body: "At Devliora, we build enterprise systems with a clear focus on usability, reliability, and your business goals. From early idea shaping to architecture, development, testing, and ongoing support, our team stays involved throughout the entire process. With over a decade of experience, we understand how to create systems that run smoothly and adapt well to your organization's needs.",
-        steps: [
-          {
-            title: "Development",
-            body: "We build enterprise systems of varying complexity, tailored to how your organization actually operates rather than a generic off-the-shelf process.",
-          },
-          {
-            title: "Integration",
-            body: "We integrate enterprise systems with the tools, data sources, and third-party platforms your teams already depend on, with secure and reliable connections.",
-          },
-          {
-            title: "Migration",
-            body: "We move enterprise applications between environments — on-premise, cloud, or hybrid — with a migration plan that accounts for uptime and data integrity.",
-          },
-          {
-            title: "Testing",
-            body: "We test enterprise systems thoroughly before rollout, across functionality, load, and the workflows real users depend on.",
-            bullets: [
-              "Functional testing",
-              "Load & performance testing",
-              "Integration testing",
-              "User acceptance testing",
-              "Regression testing",
-            ],
-          },
-          {
-            title: "Security",
-            body: "We apply enterprise-grade security practices — access management, encryption, and audit trails — appropriate to the systems and data involved.",
-          },
-          {
-            title: "Modernization",
-            body: "We modernize legacy enterprise systems in place, reducing technical debt and total cost of ownership without disrupting the business.",
-          },
-        ],
-      },
-      scope: {
-        intro: "We cover every stage of enterprise system development with a balance of precision and creativity. Here's an overview of what our enterprise development services include.",
-        items: [
-          {
-            title: "Conceptualization & Ideation",
-            body: "We work with you to shape the scope of your enterprise system around real organizational needs, before committing to an architecture or a build.",
-          },
-          {
-            title: "Architecture & Design",
-            body: "We design architecture that holds up as the organization scales, chosen for the workflows, data volume, and integrations it actually needs to support.",
-          },
-          {
-            title: "Development & Customization",
-            body: "Our engineers build the custom workflows your organization actually needs, rather than forcing your processes into an off-the-shelf product.",
-          },
-          {
-            title: "Integration & Automation",
-            body: "We connect with the enterprise tools and data sources you already run, and automate the workflows that would otherwise depend on manual handoffs.",
-          },
-          {
-            title: "Testing & Optimization",
-            body: "We test thoroughly across the workflows real users depend on, and optimize the system so it stays reliable as data volume and usage grow.",
-          },
-          {
-            title: "Launch & Beyond",
-            body: "We handle rollout carefully and provide ongoing support afterward, so the system keeps running reliably as your organization's needs evolve.",
-          },
-        ],
-      },
-      caseStudiesIntro: {
-        highlight: "Success Stats",
-        rest: "That Speak Volumes",
-        tagline: "Real Results, Real Impact, The Devliora Cases.",
-        body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
-        ctaText: "Ready to turn ideas into reality?",
-      },
-      whyChooseUs: {
-        ctaText: "Ready to turn ideas into reality?",
-        heading: "Why Choose Devliora for Your Enterprise System Integration Needs?",
-        tagline: "Unmatched Expertise and Dedication",
-        reasons: [
-          {
-            title: "Client-Centric Approach",
-            body: "Our process starts with understanding your actual business needs, not fitting you into a template.",
-          },
-          {
-            title: "Thoughtful Engineering",
-            body: "We choose architecture and technologies based on your real requirements, not what's trending.",
-          },
-          {
-            title: "Direct Communication",
-            body: "You work directly with the team building your software — no layers of account management in between.",
-          },
-          {
-            title: "Comprehensive Services",
-            body: "From initial architecture through deployment and beyond, we handle the full lifecycle.",
-          },
-          {
-            title: "Dedicated Support",
-            body: "We stay involved after launch, so your application keeps running reliably as your needs change.",
-          },
-        ],
-        extraCards: WHY_CHOOSE_US_EXTRA_CARDS,
-        closingCta: WHY_CHOOSE_US_CLOSING_CTA,
-      },
-      essentials: {
-        tagline: "We build enterprise systems with a laser focus on quality, performance, and security — every time.",
-        items: SOFTWARE_ESSENTIALS,
-      },
-      techIntro: {
-        heading: "Powering your enterprise vision with cutting-edge tech",
-        tagline: "Bringing enterprise ideas to life with next-gen tech.",
-        body: "Our enterprise system development approach focuses on thoughtful use of modern technologies to build reliable, well-integrated systems. We combine practical engineering with considered design to address your organization's specific requirements, using current tools and frameworks that support long-term maintainability and scale.",
-      },
-    },
-    {
+      // Enterprise tab removed per explicit request, to match the
+      // reference's real 3-tab structure (Web/Mobile/Desktop) exactly
+      // now that Desktop is confirmed as a genuine Devliora offering —
+      // it was only added earlier as a substitute for the reference's
+      // Desktop toggle, back when Desktop wasn't yet confirmed real.
+      //
       // Added per explicit confirmation that Devliora does offer desktop
       // application development — same full-parity treatment as
-      // Web/Mobile, not the lighter Enterprise-tab composition. Content
-      // adapted from the reference's own Desktop page, except its
+      // Web/Mobile. Content adapted from the reference's own Desktop
+      // page, except its
       // "roadmap" section (which lists industry verticals — Healthcare,
       // Finance, Furniture eCommerce, Telecom, Logistics, Retail —
       // rather than the SDLC stages every other roadmap on this page
@@ -1174,7 +1045,6 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
 // "-mobile" etc. isn't misread.
 const TAB_SLUG_SUFFIXES: [string, string][] = [
   ["-mobile", "Mobile"],
-  ["-enterprise", "Enterprise"],
   ["-desktop", "Desktop"],
   ["-web", "Web"],
 ];
