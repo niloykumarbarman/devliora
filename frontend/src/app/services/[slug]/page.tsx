@@ -894,12 +894,10 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         },
         ctaText: "Unlock new possibilities with our tailored desktop solutions.",
       },
-      // Desktop tab only, matching the reference's own page. Its
-      // "For business users" list also included "TypeScript" — a tech
-      // stack name, not a business-app category — which reads as a
-      // content-authoring error on their side, so it's left out here
-      // rather than reproduced. "Colaboration" is also corrected to
-      // "Collaboration".
+      // Desktop tab only, matching the reference's own page verbatim,
+      // including "TypeScript" in the business-users list and the
+      // "Colaboration" spelling — per explicit request to match the
+      // reference exactly rather than editorialize its content.
       targetUsers: {
         heading: "Desktop apps for your target users",
         tagline: "Crafting desktop experiences that engage, empower, and elevate your users.",
@@ -909,25 +907,26 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
             heading: "For business users",
             items: [
               "Digital workplace",
-              "HR management",
-              "Business process management",
               "Digital content",
+              "Colaboration",
+              "TypeScript",
+              "HR management",
               "CRM",
-              "Collaboration",
               "Enterprise resource planning",
               "Business intelligence",
+              "Business process management",
             ],
           },
           {
             heading: "For consumers",
             items: [
               "Customer portals",
-              "Employee portals",
               "Ecommerce portals",
-              "Healthcare portals",
               "eLearning portals",
-              "Project management",
               "B2B portals",
+              "Employee portals",
+              "Healthcare portals",
+              "Project management",
               "Finance managers",
             ],
           },
