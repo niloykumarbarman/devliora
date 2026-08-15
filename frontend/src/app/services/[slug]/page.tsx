@@ -175,19 +175,21 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params;
-  const service = await fetchServiceBySlug(slug);
+  const { slug: rawSlug } = await params;
+  const { baseSlug, tabLabel } = parseServiceSlug(rawSlug);
+  const service = await fetchServiceBySlug(baseSlug);
   if (!service) {
     return buildMetadata({
       title: "Service | Devliora",
       description: "Service details.",
-      path: `/services/${slug}`,
+      path: `/services/${rawSlug}`,
     });
   }
+  const tab = tabLabel ? SERVICE_TABS[baseSlug]?.find((t) => t.label === tabLabel) : null;
   return buildMetadata({
-    title: `${service.title} | Devliora`,
-    description: service.shortDescription,
-    path: `/services/${service.slug}`,
+    title: `${tab ? tab.heading : service.title} | Devliora`,
+    description: tab ? tab.body : service.shortDescription,
+    path: `/services/${rawSlug}`,
   });
 }
 
@@ -934,8 +936,34 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
   ],
 };
 
+// The reference (and now this site) gives each platform tab its own URL
+// — /services/software-engineering-mobile opens straight to the Mobile
+// tab — rather than only a client-side pill toggle on one shared URL.
+// "Web" has no suffix (it's the bare slug, same as before this existed).
+// Only strips a suffix when the resulting base slug actually has tabs
+// defined, so an unrelated service slug that happens to end in
+// "-mobile" etc. isn't misread.
+const TAB_SLUG_SUFFIXES: [string, string][] = [
+  ["-mobile", "Mobile"],
+  ["-enterprise", "Enterprise"],
+  ["-web", "Web"],
+];
+
+function parseServiceSlug(rawSlug: string): { baseSlug: string; tabLabel: string | null } {
+  for (const [suffix, label] of TAB_SLUG_SUFFIXES) {
+    if (rawSlug.endsWith(suffix)) {
+      const base = rawSlug.slice(0, -suffix.length);
+      if (SERVICE_TABS[base]?.some((t) => t.label === label)) {
+        return { baseSlug: base, tabLabel: label };
+      }
+    }
+  }
+  return { baseSlug: rawSlug, tabLabel: null };
+}
+
 export default async function ServiceDetailPage({ params }: Props) {
-  const { slug } = await params;
+  const { slug: rawSlug } = await params;
+  const { baseSlug: slug, tabLabel } = parseServiceSlug(rawSlug);
   const [
     service,
     hero,
@@ -2591,6 +2619,8 @@ export default async function ServiceDetailPage({ params }: Props) {
         {tabs ? (
           <ServiceTabs
             tabs={tabs}
+            baseSlug={service.slug}
+            initialActiveLabel={tabLabel}
             heroImageUrl={hero?.backgroundImageUrl}
             technologies={technologies}
             caseStudies={caseStudies}

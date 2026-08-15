@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -246,6 +247,8 @@ function ScopeCard({ item }: { item: ServiceScopeItem }) {
 
 export default function ServiceTabs({
   tabs,
+  baseSlug,
+  initialActiveLabel = null,
   heroImageUrl,
   technologies = [],
   caseStudies = [],
@@ -253,14 +256,46 @@ export default function ServiceTabs({
   testimonial = null,
 }: {
   tabs: ServiceTab[];
+  // Slug + label are used to give each tab its own URL — "Web" is the
+  // bare slug, other tabs get a "-mobile"/"-enterprise" suffix — same
+  // as the reference's separate per-platform pages, instead of a
+  // client-only toggle that always lives at one URL.
+  baseSlug?: string;
+  initialActiveLabel?: string | null;
   heroImageUrl?: string;
   technologies?: TechnologyDto[];
   caseStudies?: CaseStudy[];
   tabCaseStudies?: ServiceTabCaseStudy[];
   testimonial?: ServiceTestimonial | null;
 }) {
-  const [active, setActive] = useState(0);
+  const findTabIndex = (label: string | null) => {
+    const idx = tabs.findIndex((t) => t.label === label);
+    return idx >= 0 ? idx : 0;
+  };
+
+  const [active, setActive] = useState(() => findTabIndex(initialActiveLabel));
+  const router = useRouter();
+
+  // Resyncs the active tab when the URL's tab changes without a click
+  // here — direct navigation, a shared link, or browser back/forward.
+  // Adjusting state during render (React's documented pattern for
+  // "reset state when a prop changes") rather than in an effect, so
+  // there's no extra render showing the stale tab first.
+  const [syncedLabel, setSyncedLabel] = useState(initialActiveLabel);
+  if (initialActiveLabel !== syncedLabel) {
+    setSyncedLabel(initialActiveLabel);
+    setActive(findTabIndex(initialActiveLabel));
+  }
+
   const current = tabs[active];
+
+  function goToTab(i: number) {
+    setActive(i);
+    if (!baseSlug) return;
+    const label = tabs[i].label;
+    const path = label === "Web" ? `/services/${baseSlug}` : `/services/${baseSlug}-${label.toLowerCase()}`;
+    router.push(path, { scroll: false });
+  }
 
   // Admin-curated picks for this tab (see ServiceTabCaseStudy) take
   // priority; if none were picked for this tab, fall back to the
@@ -294,7 +329,7 @@ export default function ServiceTabs({
             <button
               key={tab.label}
               type="button"
-              onClick={() => setActive(i)}
+              onClick={() => goToTab(i)}
               aria-pressed={i === active}
               className={`rounded-full px-6 py-2.5 font-mono text-sm font-semibold transition-colors ${
                 i === active ? "bg-ember text-ink" : "text-paper/60 hover:text-paper"
@@ -899,7 +934,7 @@ export default function ServiceTabs({
                   <button
                     key={tab.label}
                     type="button"
-                    onClick={() => setActive(i)}
+                    onClick={() => goToTab(i)}
                     aria-pressed={i === active}
                     className={`rounded-full px-6 py-2.5 font-mono text-sm font-semibold transition-colors ${
                       i === active ? "bg-ember text-ink" : "text-paper/60 hover:text-paper"
