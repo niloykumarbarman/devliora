@@ -1039,6 +1039,21 @@ export default function ServiceTabs({
                   </div>
                   <p className="text-lg leading-relaxed text-paper/70">{current.techIntro.body}</p>
                 </div>
+
+                {/* Reference also repeats the tech list a third time as a
+                    plain text table (no icons), padded to a full row
+                    with "-" placeholders — matched verbatim per explicit
+                    request, same as the heading duplication above. */}
+                <h4 className="mt-16 font-display text-2xl font-bold leading-tight text-paper">
+                  Quality Management
+                </h4>
+                <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
+                  {Array.from({ length: Math.ceil(displayTechs.length / 4) * 4 }).map((_, i) => (
+                    <span key={i} className="font-mono text-sm font-semibold text-paper">
+                      {displayTechs[i]?.displayName.trim() ?? "-"}
+                    </span>
+                  ))}
+                </div>
               </>
             )}
 
