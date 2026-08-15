@@ -966,6 +966,202 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         body: "Our enterprise system development approach focuses on thoughtful use of modern technologies to build reliable, well-integrated systems. We combine practical engineering with considered design to address your organization's specific requirements, using current tools and frameworks that support long-term maintainability and scale.",
       },
     },
+    {
+      // Added per explicit confirmation that Devliora does offer desktop
+      // application development — same full-parity treatment as
+      // Web/Mobile, not the lighter Enterprise-tab composition. Content
+      // adapted from the reference's own Desktop page, except its
+      // "roadmap" section (which lists industry verticals — Healthcare,
+      // Finance, Furniture eCommerce, Telecom, Logistics, Retail —
+      // rather than the SDLC stages every other roadmap on this page
+      // uses) and its "93% of bots...unverified" security stat, both of
+      // which read as a content mix-up on the reference's own site
+      // rather than real Desktop-specific claims, so kept consistent
+      // with the site's own established pattern instead.
+      label: "Desktop",
+      heading: "Desktop Application Development",
+      body: "Custom and platform-based desktop applications that transform internal workflows, streamline business operations, and bring innovative digital solutions to life — for Windows, macOS, and Linux. We handle everything from initial architecture through release and post-launch support.",
+      cards: [
+        {
+          title: "Custom Desktop Application Development",
+          body: "Bespoke desktop apps built from the ground up around your actual business requirements, not squeezed into a generic template.",
+        },
+        {
+          title: "Platform-Based Desktop Customization",
+          body: "Built on proven frameworks and reusable components to ship a dependable desktop product without starting from zero.",
+        },
+        {
+          title: "Legacy Desktop Application Redesign",
+          body: "Refreshing aging desktop apps with modern interfaces, updated code, and improved performance and stability.",
+        },
+      ],
+      approach: {
+        tagline: "Crafting well-built desktop applications, one deliberate decision at a time.",
+        steps: APPROACH_STEPS,
+      },
+      roadmap: {
+        tagline: "Building stable, high-performance desktop software built to last.",
+        body: "At Devliora, we build desktop applications with a clear focus on usability, reliability, and your business goals. From early idea shaping to UX/UI design, development, testing, and ongoing support, our team stays involved throughout the entire process. With over a decade of experience, we understand how to create desktop software that runs smoothly and adapts well to your needs.",
+        steps: [
+          {
+            title: "Development",
+            body: "We develop desktop applications of varying complexity to help teams streamline internal operations, strengthen business transactions, and digitize customer-facing services.",
+          },
+          {
+            title: "Integration",
+            body: "We integrate your desktop application with other software in your enterprise ecosystem or third-party tools, with secure connections and reliable data exchange.",
+          },
+          {
+            title: "Migration",
+            body: "We can move a desktop app's backend to a new cloud or on-premise environment, planning around common migration risks like downtime and data loss.",
+          },
+          {
+            title: "Testing",
+            body: "We perform comprehensive testing to catch the bugs, defects, and weaknesses that undermine a desktop application's operation and user experience.",
+            bullets: [
+              "Functional testing",
+              "Performance testing",
+              "Cross-platform compatibility testing",
+              "Usability testing",
+              "Test automation",
+            ],
+          },
+          {
+            title: "Security",
+            body: "We advise on making desktop applications resilient against common and emerging security threats, with encryption, secure storage, and access controls.",
+          },
+          {
+            title: "Modernization",
+            body: "We improve the outdated or underperforming parts of a legacy desktop application, reducing usability issues and long-term cost of ownership.",
+          },
+        ],
+      },
+      // Unlike Web's SDLC-stage Scope, this mirrors the reference
+      // Desktop page's own "Cost-Effective Desktop Application
+      // Development" section — cost-control practices rather than cost
+      // factors, since that's what the reference actually covers here.
+      scope: {
+        intro: "Building a desktop application doesn't have to be costly. Here's how we manage budgets while delivering dependable, high-quality solutions.",
+        items: [
+          {
+            title: "Strategic Planning",
+            body: "We begin with a thorough analysis of your project needs to create a clear, actionable plan. Defining scope, requirements, and milestones early minimizes the risk of scope creep and unforeseen costs.",
+          },
+          {
+            title: "Efficient Development",
+            body: "Our development process emphasizes efficiency through agile methodologies and reusable code, reducing development time and cost while maintaining high standards of quality.",
+          },
+          {
+            title: "Continuous Optimization",
+            body: "We continuously monitor and optimize the application throughout the development lifecycle, catching potential issues early rather than through costly revisions later.",
+          },
+        ],
+      },
+      impact: {
+        ctaText: "Ready to turn ideas into reality?",
+        heading: "Our Impact in Numbers",
+        tagline: "A track record built one project at a time.",
+        stats: [
+          {
+            value: "10",
+            label: "Years in Operation",
+            tagline: "Building lasting partnerships",
+          },
+        ],
+      },
+      caseStudiesIntro: {
+        highlight: "Success Stats",
+        rest: "That Speak Volumes",
+        tagline: "Real Results, Real Impact, The Devliora Cases.",
+        body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
+        ctaText: "Ready to turn ideas into reality?",
+      },
+      capabilities: {
+        before: "Reliable Desktop Solutions with",
+        highlight: "Thoughtful",
+        after: "Engineering",
+        body: "From internal business tools to consumer-facing desktop products, our engineering practice focuses on clarity, performance, and long-term stability. We design desktop software with careful attention to security, maintainability, and your specific needs, ensuring smooth integration and room for future evolution.",
+        items: [
+          {
+            title: "Cross-platform reach",
+            body: "We build desktop apps that run dependably across Windows, macOS, and Linux, giving your users a consistent experience regardless of platform.",
+          },
+          {
+            title: "Streamlined development flow",
+            body: "Our streamlined desktop engineering workflows and toolkits help shorten development cycles while maintaining clean, reliable output.",
+          },
+          {
+            title: "Security-first approach",
+            body: "Security principles are applied from the ground up, protecting user data and system-level access throughout the application's lifecycle.",
+          },
+          {
+            title: "Designed to scale",
+            body: "Our desktop applications grow naturally with your business, staying fast and stable even as usage and feature demands increase.",
+          },
+          {
+            title: "Versatile engineering toolkit",
+            body: "We draw from a wide range of desktop frameworks and tools to support functionality and ensure a smooth build process.",
+          },
+        ],
+      },
+      whyChooseUs: {
+        ctaText: "Ready to turn ideas into reality?",
+        heading: "Why Choose Devliora for Your Desktop Application Development Needs?",
+        tagline: "Unmatched Expertise and Dedication",
+        reasons: [
+          {
+            title: "Client-Centric Approach",
+            body: "Our process starts with understanding your actual business needs, not fitting you into a template.",
+          },
+          {
+            title: "Thoughtful Engineering",
+            body: "We choose architecture and technologies based on your real requirements, not what's trending.",
+          },
+          {
+            title: "Direct Communication",
+            body: "You work directly with the team building your software — no layers of account management in between.",
+          },
+          {
+            title: "Comprehensive Services",
+            body: "From initial architecture through deployment and beyond, we handle the full lifecycle.",
+          },
+          {
+            title: "Dedicated Support",
+            body: "We stay involved after launch, so your application keeps running reliably as your needs change.",
+          },
+        ],
+        extraCards: WHY_CHOOSE_US_EXTRA_CARDS,
+        closingCta: WHY_CHOOSE_US_CLOSING_CTA,
+      },
+      essentials: {
+        tagline: "We build desktop applications with a laser focus on quality, performance, and security — every time.",
+        items: SOFTWARE_ESSENTIALS,
+      },
+      deliveryFramework: {
+        highlight: "From Code to Launch",
+        rest: "Devliora's Complete Delivery Framework",
+        tagline: "Crafting Solutions with Care – We Build, You Excel!",
+        body: "Devliora drives the entire development process, from initial concept to final deployment. Whether starting from scratch or stepping in at any stage of your desktop application's lifecycle, we ensure seamless execution. We also provide ongoing post-launch support, offering long-term maintenance and updates to keep your applications running smoothly.",
+        steps: [
+          { title: "Analysis", checkpoint: "Requirements Testing" },
+          { title: "Design", checkpoint: "UX/UI Testing" },
+          { title: "Development" },
+          { title: "Quality Assurance", checkpoint: "Stabilization" },
+          { title: "Deployment", checkpoint: "Acceptance testing" },
+          { title: "Support" },
+        ],
+      },
+      techIntro: {
+        ctaText: "Ready to turn ideas into reality?",
+        heading: "Powering your desktop vision with cutting-edge tech",
+        tagline: "Bringing desktop ideas to life with next-gen tech.",
+        body: "Our desktop application development approach focuses on thoughtful use of modern technologies to build reliable, well-designed apps. Across Windows, macOS, and Linux, we combine practical engineering with considered design to address your specific requirements. Our team works with current tools and frameworks to ensure long-term maintainability — from native to cross-platform, we support the full journey from concept to launch.",
+        showTabToggle: true,
+        // Real desktop-relevant languages/frameworks, same treatment as
+        // Mobile's curatedTechNames — not the site-wide technologies grid.
+        curatedTechNames: [".NET", "Java", "C#", "Python", "JavaScript", "TypeScript", "Swift", "Kotlin"],
+      },
+    },
   ],
 };
 
@@ -979,6 +1175,7 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
 const TAB_SLUG_SUFFIXES: [string, string][] = [
   ["-mobile", "Mobile"],
   ["-enterprise", "Enterprise"],
+  ["-desktop", "Desktop"],
   ["-web", "Web"],
 ];
 
