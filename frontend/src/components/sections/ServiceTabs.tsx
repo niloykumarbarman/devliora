@@ -198,6 +198,11 @@ export type ServiceCaseStudiesIntro = {
   rest: string;
   tagline: string;
   body: string;
+  // Reference has a closing CTA banner right after this grid ("Ready
+  // to elevate your app game?") — same bg-signal banner pattern as
+  // the other recurring CTAs on this page (impact, techIntro), rather
+  // than the reference's own rotating per-section colors.
+  ctaText: string;
 };
 
 export type ServiceTab = {
@@ -566,6 +571,25 @@ export default function ServiceTabs({
                 </div>
               </Link>
             ))}
+          </div>
+        </div>
+      )}
+
+      {current.caseStudiesIntro && caseStudies.length > 0 && (
+        <div className="mt-20 bg-signal md:mt-28">
+          <div className="mx-auto flex max-w-6xl flex-col sm:flex-row sm:items-center">
+            <div className="flex-1 px-6 py-8 sm:py-10">
+              <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                {current.caseStudiesIntro.ctaText}
+              </p>
+            </div>
+            <Link
+              href="/contact"
+              className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+            >
+              Get Started
+              <ArrowRight className="h-5 w-5" />
+            </Link>
           </div>
         </div>
       )}

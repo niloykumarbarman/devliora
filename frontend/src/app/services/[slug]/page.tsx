@@ -491,6 +491,7 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         rest: "That Speak Volumes",
         tagline: "Real Results, Real Impact, The Devliora Cases.",
         body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
+        ctaText: "Ready to turn ideas into reality?",
       },
       // Web tab only, per explicit request. Purely descriptive
       // engineering-capability copy — no client facts/figures, so kept
@@ -709,6 +710,7 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         rest: "That Speak Volumes",
         tagline: "Real Results, Real Impact, The Devliora Cases.",
         body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
+        ctaText: "Ready to turn ideas into reality?",
       },
       // Mobile tab, mirroring Web's "Reliable Solutions with Thoughtful
       // Engineering" capabilities section — same structure, reworded for
@@ -892,6 +894,7 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         rest: "That Speak Volumes",
         tagline: "Real Results, Real Impact, The Devliora Cases.",
         body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
+        ctaText: "Ready to turn ideas into reality?",
       },
       whyChooseUs: {
         ctaText: "Ready to turn ideas into reality?",
