@@ -51,6 +51,24 @@ public class GetAllServicesAdminQueryHandler : IRequestHandler<GetAllServicesAdm
                 IndustryCards = s.IndustryCards
                     .OrderBy(c => c.DisplayOrder)
                     .Select(c => new ServiceIndustryCardItem { ImageUrl = c.ImageUrl, Title = c.Title, Description = c.Description, DisplayOrder = c.DisplayOrder })
+                    .ToList(),
+                // Admin view intentionally skips the IsPublished/IsDeleted
+                // filter GetAllServicesQueryHandler applies, so an admin
+                // editing this service can still see (and fix) a
+                // selection that points at an unpublished case study.
+                TabCaseStudies = s.TabCaseStudies
+                    .OrderBy(t => t.Tab).ThenBy(t => t.DisplayOrder)
+                    .Select(t => new ServiceTabCaseStudyItem
+                    {
+                        Tab = t.Tab,
+                        CaseStudyId = t.CaseStudyId,
+                        DisplayOrder = t.DisplayOrder,
+                        CaseStudyTitle = t.CaseStudy.Title,
+                        CaseStudySlug = t.CaseStudy.Slug,
+                        CaseStudyIndustry = t.CaseStudy.Industry,
+                        CaseStudyResults = t.CaseStudy.Results,
+                        CaseStudyCoverImageUrl = t.CaseStudy.CoverImageUrl
+                    })
                     .ToList()
             })
             .ToListAsync(cancellationToken);

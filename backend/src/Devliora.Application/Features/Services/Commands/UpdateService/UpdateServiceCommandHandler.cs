@@ -83,6 +83,22 @@ public class UpdateServiceCommandHandler : IRequestHandler<UpdateServiceCommand,
             });
         }
 
+        var existingTabCaseStudies = await _context.ServiceTabCaseStudies
+            .Where(t => t.ServiceId == service.Id)
+            .ToListAsync(cancellationToken);
+        _context.ServiceTabCaseStudies.RemoveRange(existingTabCaseStudies);
+
+        foreach (var item in request.TabCaseStudies)
+        {
+            _context.ServiceTabCaseStudies.Add(new ServiceTabCaseStudy
+            {
+                ServiceId = service.Id,
+                Tab = item.Tab,
+                CaseStudyId = item.CaseStudyId,
+                DisplayOrder = item.DisplayOrder
+            });
+        }
+
         await _context.SaveChangesAsync(cancellationToken);
         await _cache.RemoveAsync(CacheKey, cancellationToken);
 

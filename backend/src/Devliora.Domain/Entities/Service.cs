@@ -40,4 +40,8 @@ public class Service : BaseEntity
     public string IndustriesTagline { get; set; } = string.Empty;
     public string IndustriesDescription { get; set; } = string.Empty;
     public ICollection<ServiceIndustryCard> IndustryCards { get; set; } = new List<ServiceIndustryCard>();
+
+    // Per-tab curated case studies for the tab-specific "Success Stats"
+    // grid — see ServiceTabCaseStudy.
+    public ICollection<ServiceTabCaseStudy> TabCaseStudies { get; set; } = new List<ServiceTabCaseStudy>();
 }

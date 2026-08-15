@@ -63,6 +63,16 @@ public class CreateServiceCommandHandler : IRequestHandler<CreateServiceCommand,
             });
         }
 
+        foreach (var item in request.TabCaseStudies)
+        {
+            service.TabCaseStudies.Add(new ServiceTabCaseStudy
+            {
+                Tab = item.Tab,
+                CaseStudyId = item.CaseStudyId,
+                DisplayOrder = item.DisplayOrder
+            });
+        }
+
         _context.Services.Add(service);
         await _context.SaveChangesAsync(cancellationToken);
         await _cache.RemoveAsync(CacheKey, cancellationToken);

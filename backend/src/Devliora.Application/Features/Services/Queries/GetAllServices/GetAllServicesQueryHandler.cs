@@ -58,6 +58,21 @@ public class GetAllServicesQueryHandler : IRequestHandler<GetAllServicesQuery, L
                 IndustryCards = s.IndustryCards
                     .OrderBy(c => c.DisplayOrder)
                     .Select(c => new ServiceIndustryCardItem { ImageUrl = c.ImageUrl, Title = c.Title, Description = c.Description, DisplayOrder = c.DisplayOrder })
+                    .ToList(),
+                TabCaseStudies = s.TabCaseStudies
+                    .Where(t => !t.CaseStudy.IsDeleted && t.CaseStudy.IsPublished)
+                    .OrderBy(t => t.Tab).ThenBy(t => t.DisplayOrder)
+                    .Select(t => new ServiceTabCaseStudyItem
+                    {
+                        Tab = t.Tab,
+                        CaseStudyId = t.CaseStudyId,
+                        DisplayOrder = t.DisplayOrder,
+                        CaseStudyTitle = t.CaseStudy.Title,
+                        CaseStudySlug = t.CaseStudy.Slug,
+                        CaseStudyIndustry = t.CaseStudy.Industry,
+                        CaseStudyResults = t.CaseStudy.Results,
+                        CaseStudyCoverImageUrl = t.CaseStudy.CoverImageUrl
+                    })
                     .ToList()
             })
             .ToListAsync(cancellationToken);

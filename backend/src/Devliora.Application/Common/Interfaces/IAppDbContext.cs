@@ -8,6 +8,7 @@ public interface IAppDbContext
     DbSet<Service> Services { get; }
     DbSet<ServiceHighlight> ServiceHighlights { get; }
     DbSet<ServiceIndustryCard> ServiceIndustryCards { get; }
+    DbSet<ServiceTabCaseStudy> ServiceTabCaseStudies { get; }
     DbSet<Portfolio> Portfolios { get; }
     DbSet<PortfolioImage> PortfolioImages { get; }
     DbSet<PortfolioMetric> PortfolioMetrics { get; }

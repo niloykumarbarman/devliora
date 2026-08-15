@@ -13,6 +13,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<Service> Services => Set<Service>();
     public DbSet<ServiceHighlight> ServiceHighlights => Set<ServiceHighlight>();
     public DbSet<ServiceIndustryCard> ServiceIndustryCards => Set<ServiceIndustryCard>();
+    public DbSet<ServiceTabCaseStudy> ServiceTabCaseStudies => Set<ServiceTabCaseStudy>();
     public DbSet<Portfolio> Portfolios => Set<Portfolio>();
     public DbSet<PortfolioImage> PortfolioImages => Set<PortfolioImage>();
     public DbSet<PortfolioMetric> PortfolioMetrics => Set<PortfolioMetric>();

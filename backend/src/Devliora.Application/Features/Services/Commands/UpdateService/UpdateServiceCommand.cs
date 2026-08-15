@@ -28,4 +28,5 @@ public class UpdateServiceCommand : IRequest<Unit>
     public string IndustriesTagline { get; set; } = string.Empty;
     public string IndustriesDescription { get; set; } = string.Empty;
     public List<ServiceIndustryCardItem> IndustryCards { get; set; } = new();
+    public List<ServiceTabCaseStudyItem> TabCaseStudies { get; set; } = new();
 }
