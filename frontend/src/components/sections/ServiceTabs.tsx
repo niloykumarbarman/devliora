@@ -1009,6 +1009,21 @@ export default function ServiceTabs({
                     );
                   })}
                 </div>
+
+                {/* Reference repeats this exact heading/tagline/body block
+                    a second time right below the tech icons — matched
+                    verbatim per explicit request. */}
+                <div className="mt-16 grid gap-10 md:grid-cols-2 md:items-start">
+                  <div>
+                    <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+                      {current.techIntro.heading}
+                    </h3>
+                    <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+                      {current.techIntro.tagline}
+                    </p>
+                  </div>
+                  <p className="text-lg leading-relaxed text-paper/70">{current.techIntro.body}</p>
+                </div>
               </>
             )}
 
