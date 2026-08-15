@@ -852,18 +852,22 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       label: "Desktop",
       heading: "Desktop Application Development",
       body: "Custom and platform-based desktop applications that transform internal workflows, streamline business operations, and bring innovative digital solutions to life — for Windows, macOS, and Linux. We handle everything from initial architecture through release and post-launch support.",
+      // Unlike Web/Mobile, the reference's own Desktop page uses a
+      // process-stage card pattern here instead of "Custom/Platform-
+      // Based/Legacy" — kept verbatim since it's real, generic
+      // descriptive copy with no fabricated claims.
       cards: [
         {
-          title: "Custom Desktop Application Development",
-          body: "Bespoke desktop apps built from the ground up around your actual business requirements, not squeezed into a generic template.",
+          title: "Design and Develop",
+          body: "We start by understanding your needs and designing custom desktop applications that meet your requirements. Our development process ensures a product that aligns with your business goals and enhances user experience.",
         },
         {
-          title: "Platform-Based Desktop Customization",
-          body: "Built on proven frameworks and reusable components to ship a dependable desktop product without starting from zero.",
+          title: "Test and Refine",
+          body: "Rigorous testing and refinement ensure that our desktop applications perform flawlessly. We identify and address any issues, optimizing functionality and user experience before launch.",
         },
         {
-          title: "Legacy Desktop Application Redesign",
-          body: "Refreshing aging desktop apps with modern interfaces, updated code, and improved performance and stability.",
+          title: "Deploy and Support",
+          body: "Once deployed, we provide ongoing support and maintenance to ensure your desktop applications continue to operate efficiently. Our team is here to assist with updates, troubleshooting, and enhancements.",
         },
       ],
       approach: {
