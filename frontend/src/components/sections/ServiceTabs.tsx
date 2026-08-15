@@ -540,10 +540,12 @@ export default function ServiceTabs({
             {current.targetUsers.groups.map((group) => (
               <div key={group.heading} className="mt-14">
                 <h4 className="font-display text-xl font-bold text-ember">{group.heading}</h4>
+                {/* Padded to a full row with "-" placeholders, same as
+                    the reference's grid and the tech-list table above. */}
                 <div className="mt-6 grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-4">
-                  {group.items.map((item) => (
-                    <p key={item} className="text-sm font-semibold text-paper">
-                      {item}
+                  {Array.from({ length: Math.ceil(group.items.length / 4) * 4 }).map((_, i) => (
+                    <p key={i} className="text-sm font-semibold text-paper">
+                      {group.items[i] ?? "-"}
                     </p>
                   ))}
                 </div>
