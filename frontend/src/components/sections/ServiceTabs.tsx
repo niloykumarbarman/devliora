@@ -106,6 +106,15 @@ export type ServiceTechIntro = {
   // reuses the site's own real tabs: clicking a pill actually switches
   // the active tab above, same tech list, honest interaction.
   showTabToggle?: boolean;
+  // Real language/framework names actually relevant to this platform
+  // (e.g. Kotlin/Swift/Dart for Mobile) — takes priority over the
+  // site-wide `technologies` list below when set, since a generic
+  // full-stack tech grid (Python, Kubernetes, TensorFlow, ...) doesn't
+  // read as "Mobile Application Development" tech. Looked up through
+  // the same getTechIcon() brand-icon table; a name with no matching
+  // icon (e.g. "Java", "C#" — see techIcons.ts) falls back to a plain
+  // colored dot, same as the site-wide grid does.
+  curatedTechNames?: string[];
 };
 
 export type ServiceReviewQuote = {
@@ -350,6 +359,12 @@ export default function ServiceTabs({
           results: s.results,
           coverImageUrl: s.coverImageUrl,
         }));
+
+  // A platform-curated name list (see ServiceTechIntro.curatedTechNames)
+  // takes priority over the site-wide `technologies` list.
+  const displayTechs = current.techIntro?.curatedTechNames
+    ? current.techIntro.curatedTechNames.map((name) => ({ key: name, name, displayName: name }))
+    : technologies.map((t) => ({ key: t.id, name: t.name, displayName: t.displayName }));
 
   return (
     <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-28">
@@ -982,16 +997,16 @@ export default function ServiceTabs({
               <p className="text-lg leading-relaxed text-paper/70">{current.techIntro.body}</p>
             </div>
 
-            {technologies.length > 0 && (
+            {displayTechs.length > 0 && (
               <>
                 <h4 className="mt-16 font-display text-2xl font-bold leading-tight text-paper">
                   Quality Management
                 </h4>
                 <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-6 sm:grid-cols-4">
-                  {technologies.map((tech) => {
+                  {displayTechs.map((tech) => {
                     const icon = getTechIcon(tech.name);
                     return (
-                      <div key={tech.id} className="flex items-center gap-3">
+                      <div key={tech.key} className="flex items-center gap-3">
                         <div
                           className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg"
                           style={{ backgroundColor: icon ? `#${icon.hex}` : "var(--color-ember)" }}

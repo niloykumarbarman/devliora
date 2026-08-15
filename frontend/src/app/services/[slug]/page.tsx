@@ -813,6 +813,23 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         // note on that tab's techIntro) — not the reference's fake
         // Web/Mobile/Desktop platform filter.
         showTabToggle: true,
+        // Reference's own Mobile-relevant tech stack — real language
+        // names, not fabricated. "Objective-C", "Java", and "C#" don't
+        // have brand icons in techIcons.ts (Apple/Oracle/Microsoft had
+        // simple-icons remove theirs) so those three render as a plain
+        // colored dot instead, same fallback the site-wide grid uses.
+        curatedTechNames: [
+          "Kotlin",
+          "Swift",
+          "Objective-C",
+          "TypeScript",
+          "Java",
+          "C#",
+          "Dart",
+          "HTML5",
+          "CSS3",
+          "JavaScript",
+        ],
       },
     },
     {
