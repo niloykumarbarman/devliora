@@ -933,10 +933,9 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         ],
         ctaText: "Ready to turn ideas into reality?",
       },
-      approach: {
-        tagline: "Crafting well-built desktop applications, one deliberate decision at a time.",
-        steps: APPROACH_STEPS,
-      },
+      // No "approach" zigzag on Desktop, unlike Web/Mobile — the
+      // reference's own Desktop page goes straight from this CTA into
+      // the roadmap, per explicit request to match it exactly.
       // Per explicit request, this matches the reference's own Desktop
       // roadmap verbatim — industry verticals rather than the SDLC
       // stages every other roadmap on this page uses. "RegFollower"
