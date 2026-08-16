@@ -1293,6 +1293,31 @@ export default function ServiceTabs({
               </div>
             ))}
           </div>
+
+          {/* Web/Mobile carry this same Web/Mobile/Desktop pill toggle
+              inside their techIntro ("Technologies we work with")
+              section below. Desktop has no techIntro of its own, so
+              without this it would be the only tab that never offers a
+              way to jump straight to the other two platforms from its
+              framework section — matching the reference, which shows
+              the toggle here regardless of tab. */}
+          {!current.techIntro && tabs.length > 1 && (
+            <div className="mt-16 flex flex-wrap gap-2">
+              {tabs.map((tab, i) => (
+                <button
+                  key={tab.label}
+                  type="button"
+                  onClick={() => goToTab(i)}
+                  aria-pressed={i === active}
+                  className={`rounded-full px-6 py-2.5 font-mono text-sm font-semibold transition-colors ${
+                    i === active ? "bg-ember text-ink" : "text-paper/60 hover:text-paper"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
