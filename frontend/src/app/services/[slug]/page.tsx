@@ -1174,6 +1174,59 @@ export default async function ServiceDetailPage({ params }: Props) {
   // can't accidentally affect any other service's page.
   const hidePortfolioShowcases = tabLabel === "Desktop";
 
+  // The generic, admin-managed "Industries" section (industriesHeading/
+  // industriesTagline/industriesDescription/industryCards, rendered
+  // below) already has real content in the backend for this one
+  // service — but that content was entered as a near-verbatim copy of
+  // the reference's own claimed credentials ("Certified JMeter
+  // engineers", "AWS-ready engineers", etc.), which aren't verified
+  // Devliora facts. Per explicit request, this frontend-only override
+  // substitutes honest, qualitative wording for the public page without
+  // touching the backend data itself — the underlying CMS content
+  // should still be corrected there directly when convenient. Scoped to
+  // this one slug; every other service's Industries section (real,
+  // non-fabricated admin content) renders from the backend as normal.
+  const industriesOverride =
+    service.slug === "performance-reliability-engineering"
+      ? {
+          heading: "Performance team, ready to test.",
+          tagline:
+            "Skilled in load testing tools, fluent in performance engineering, and deployed on demand.",
+          description:
+            "Whether it's a one-time performance audit or an ongoing testing partnership, we assemble the right engineers, integrate with your workflow, and get to work uncovering what breaks your system under load.",
+          cards: [
+            {
+              imageUrl: "",
+              title: "Performance Testing",
+              description:
+                "Engineers experienced in load and stress testing, ready to evaluate how your platform holds up under pressure.",
+              displayOrder: 1,
+            },
+            {
+              imageUrl: "",
+              title: "API & Backend Testing",
+              description:
+                "Focused on API performance and tracking down server-side bottlenecks before they reach production.",
+              displayOrder: 2,
+            },
+            {
+              imageUrl: "",
+              title: "E-Commerce Load Testing",
+              description:
+                "Experience testing high-traffic platforms, including Magento, through realistic peak-load scenarios.",
+              displayOrder: 3,
+            },
+            {
+              imageUrl: "",
+              title: "Infrastructure & Reporting",
+              description:
+                "Engineers who test cloud infrastructure and turn the results into clear, actionable reports.",
+              displayOrder: 4,
+            },
+          ],
+        }
+      : null;
+
   const rawCheckpoints = ROADMAP_CHECKPOINTS[service.slug];
   const checkpoints =
     rawCheckpoints && rawCheckpoints.length === service.includes.length ? rawCheckpoints : null;
@@ -3646,30 +3699,34 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section></Reveal>
         )}
 
-        {/* Industries image-card grid, admin-managed per service */}
-        {service.industryCards.length > 0 && (
+        {/* Industries image-card grid, admin-managed per service.
+            industriesOverride (see above) substitutes honest wording for
+            the one service whose backend content copied the reference's
+            unverified claims — every other service renders straight
+            from its own real admin-entered data, unchanged. */}
+        {(industriesOverride?.cards ?? service.industryCards).length > 0 && (
           <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="max-w-2xl">
-                {service.industriesHeading && (
+                {(industriesOverride?.heading ?? service.industriesHeading) && (
                   <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
-                    {renderHighlightedHeading(service.industriesHeading)}
+                    {renderHighlightedHeading(industriesOverride?.heading ?? service.industriesHeading)}
                   </h2>
                 )}
-                {service.industriesTagline && (
+                {(industriesOverride?.tagline ?? service.industriesTagline) && (
                   <p className="mt-6 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
-                    {service.industriesTagline}
+                    {industriesOverride?.tagline ?? service.industriesTagline}
                   </p>
                 )}
-                {service.industriesDescription && (
+                {(industriesOverride?.description ?? service.industriesDescription) && (
                   <p className="mt-6 text-base leading-relaxed text-paper/70">
-                    {service.industriesDescription}
+                    {industriesOverride?.description ?? service.industriesDescription}
                   </p>
                 )}
               </div>
 
               <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                {[...service.industryCards]
+                {[...(industriesOverride?.cards ?? service.industryCards)]
                   .sort((a, b) => a.displayOrder - b.displayOrder)
                   .map((card, i) => (
                     <div
