@@ -1148,7 +1148,7 @@ export default function ServiceTabs({
                 // 4-column) row, whether or not more steps follow.
                 const solidLeft = rowIndex === 0 ? firstCenter : 0;
                 return (
-                  <div key={rowIndex} className={rowIndex === 0 ? "" : "mt-24"}>
+                  <div key={rowIndex} className={rowIndex === 0 ? "" : "mt-14"}>
                     {/* Line lives in its own wrapper around only the
                         numeral/title/dot header — never the checklist
                         below — so its top-1/2 midpoint always lands on
