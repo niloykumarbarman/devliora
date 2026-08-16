@@ -304,7 +304,7 @@ export default function Navbar() {
                   {mobileExpanded === link.label && (
                     <div className="ml-2 space-y-4 border-l border-wire/60 py-2 pl-4">
                       <div>
-                        <p className="font-mono text-[0.65rem] uppercase tracking-widest text-graphite/40">
+                        <p className="font-mono text-[0.65rem] font-bold uppercase tracking-widest text-graphite/40">
                           Services
                         </p>
                         <ul className="mt-1.5 space-y-1.5">
@@ -322,7 +322,7 @@ export default function Navbar() {
                         </ul>
                       </div>
                       <div>
-                        <p className="font-mono text-[0.65rem] uppercase tracking-widest text-graphite/40">
+                        <p className="font-mono text-[0.65rem] font-bold uppercase tracking-widest text-graphite/40">
                           Technologies
                         </p>
                         <ul className="mt-1.5 space-y-1.5">
@@ -340,7 +340,7 @@ export default function Navbar() {
                         </ul>
                       </div>
                       <div>
-                        <p className="font-mono text-[0.65rem] uppercase tracking-widest text-graphite/40">
+                        <p className="font-mono text-[0.65rem] font-bold uppercase tracking-widest text-graphite/40">
                           Solutions
                         </p>
                         <ul className="mt-1.5 space-y-1.5">
