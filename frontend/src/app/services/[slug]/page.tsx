@@ -1013,12 +1013,14 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
+      // No closing ctaText here — whyChooseUs (next, with no
+      // capabilities section between them on Desktop) opens with its
+      // own identical CTA banner, so this one would just duplicate it.
       caseStudiesIntro: {
         highlight: "Success Stats",
         rest: "That Speak Volumes",
         tagline: "Real Results, Real Impact, The Devliora Cases.",
         body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
-        ctaText: "Ready to turn ideas into reality?",
       },
       // No "Reliable Solutions with Thoughtful Engineering" section on
       // Desktop — verified the reference's own Desktop page doesn't

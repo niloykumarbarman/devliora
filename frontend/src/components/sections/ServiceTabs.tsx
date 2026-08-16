@@ -266,8 +266,12 @@ export type ServiceCaseStudiesIntro = {
   // Reference has a closing CTA banner right after this grid ("Ready
   // to elevate your app game?") — same bg-signal banner pattern as
   // the other recurring CTAs on this page (impact, techIntro), rather
-  // than the reference's own rotating per-section colors.
-  ctaText: string;
+  // than the reference's own rotating per-section colors. Optional
+  // because it's skipped when whyChooseUs (which opens with its own
+  // identical-looking CTA banner) follows directly with nothing in
+  // between — e.g. Desktop, which has no capabilities section to
+  // separate them — to avoid two duplicate banners back to back.
+  ctaText?: string;
 };
 
 // "Our {label} app essentials" ring diagram — same generic,
@@ -877,7 +881,7 @@ export default function ServiceTabs({
         </div>
       )}
 
-      {current.caseStudiesIntro && displayedCaseStudies.length > 0 && (
+      {current.caseStudiesIntro && current.caseStudiesIntro.ctaText && displayedCaseStudies.length > 0 && (
         <div className="mt-20 bg-signal md:mt-28">
           <div className="mx-auto flex max-w-6xl flex-col sm:flex-row sm:items-center">
             <div className="flex-1 px-6 py-8 sm:py-10">
