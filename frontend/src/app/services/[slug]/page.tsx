@@ -1020,34 +1020,10 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
         ctaText: "Ready to turn ideas into reality?",
       },
-      capabilities: {
-        before: "Reliable Desktop Solutions with",
-        highlight: "Thoughtful",
-        after: "Engineering",
-        body: "From internal business tools to consumer-facing desktop products, our engineering practice focuses on clarity, performance, and long-term stability. We design desktop software with careful attention to security, maintainability, and your specific needs, ensuring smooth integration and room for future evolution.",
-        items: [
-          {
-            title: "Cross-platform reach",
-            body: "We build desktop apps that run dependably across Windows, macOS, and Linux, giving your users a consistent experience regardless of platform.",
-          },
-          {
-            title: "Streamlined development flow",
-            body: "Our streamlined desktop engineering workflows and toolkits help shorten development cycles while maintaining clean, reliable output.",
-          },
-          {
-            title: "Security-first approach",
-            body: "Security principles are applied from the ground up, protecting user data and system-level access throughout the application's lifecycle.",
-          },
-          {
-            title: "Designed to scale",
-            body: "Our desktop applications grow naturally with your business, staying fast and stable even as usage and feature demands increase.",
-          },
-          {
-            title: "Versatile engineering toolkit",
-            body: "We draw from a wide range of desktop frameworks and tools to support functionality and ensure a smooth build process.",
-          },
-        ],
-      },
+      // No "Reliable Solutions with Thoughtful Engineering" section on
+      // Desktop — verified the reference's own Desktop page doesn't
+      // have this section at all (unlike Web/Mobile), so it's left out
+      // here rather than reused by default.
       whyChooseUs: {
         ctaText: "Ready to turn ideas into reality?",
         heading: "Why Choose Devliora for Your Desktop Application Development Needs?",
@@ -1077,10 +1053,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         extraCards: WHY_CHOOSE_US_EXTRA_CARDS,
         closingCta: WHY_CHOOSE_US_CLOSING_CTA,
       },
-      essentials: {
-        tagline: "We build desktop applications with a laser focus on quality, performance, and security — every time.",
-        items: SOFTWARE_ESSENTIALS,
-      },
+      // No "Our desktop app essentials" ring section either — also
+      // confirmed absent from the reference's own Desktop page.
       // Unlike Web/Mobile's generic "From Code to Launch" framework,
       // the reference's own Desktop page has a distinct delivery
       // framework here — different stage names and a full checklist
@@ -1132,16 +1106,9 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
         ],
       },
-      techIntro: {
-        ctaText: "Ready to turn ideas into reality?",
-        heading: "Powering your desktop vision with cutting-edge tech",
-        tagline: "Bringing desktop ideas to life with next-gen tech.",
-        body: "Our desktop application development approach focuses on thoughtful use of modern technologies to build reliable, well-designed apps. Across Windows, macOS, and Linux, we combine practical engineering with considered design to address your specific requirements. Our team works with current tools and frameworks to ensure long-term maintainability — from native to cross-platform, we support the full journey from concept to launch.",
-        showTabToggle: true,
-        // Real desktop-relevant languages/frameworks, same treatment as
-        // Mobile's curatedTechNames — not the site-wide technologies grid.
-        curatedTechNames: [".NET", "Java", "C#", "Python", "JavaScript", "TypeScript", "Swift", "Kotlin"],
-      },
+      // And no tech-stack section — same reason. (Desktop is still
+      // reachable from Web/Mobile's own tab-toggle pill row on their
+      // tech sections, so it's not orphaned from the other two tabs.)
     },
   ],
 };
