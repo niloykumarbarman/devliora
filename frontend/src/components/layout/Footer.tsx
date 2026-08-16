@@ -109,7 +109,7 @@ export default async function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-xs uppercase tracking-wider text-paper/40">
+            <p className="font-mono text-xs font-bold uppercase tracking-wider text-paper/40">
               Offices
             </p>
             <ul className="mt-4 space-y-6">
@@ -139,7 +139,7 @@ export default async function Footer() {
 
           {Object.entries(FOOTER_LINKS).map(([heading, links]) => (
             <div key={heading}>
-              <p className="font-mono text-xs uppercase tracking-wider text-paper/40">
+              <p className="font-mono text-xs font-bold uppercase tracking-wider text-paper/40">
                 {heading}
               </p>
               <ul className="mt-4 space-y-3">
@@ -147,7 +147,7 @@ export default async function Footer() {
                   <li key={link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-paper/70 transition-colors hover:text-paper"
+                      className="text-sm text-paper/70 transition-colors hover:text-signal"
                     >
                       {link.label}
                     </Link>
