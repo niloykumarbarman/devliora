@@ -1,0 +1,43 @@
+# Devliora
+
+> Devliora designs and builds production-grade software systems for
+> enterprise teams: APIs, platforms, and the infrastructure that holds
+> them together.
+
+Devliora is built and led by Niloy Kumar Barman. The site's own framing:
+every claim it makes is backed by a running system rather than a sales
+deck — JWT rotation with revocation, per-IP rate limiting, Redis
+cache-aside across domain entities, and a public, linear commit history.
+The stated goal is to build software the way a large agency should,
+without the overhead of one.
+
+## Services
+
+- Software Engineering (Web, Mobile, and Desktop application development) — /services/software-engineering
+- Digital Design — /services/digital-design
+- Digital Marketing — /services/digital-marketing
+- IT Consulting — /services/it-consulting
+- IT Maintenance & Support — /services/it-maintenance-support
+- Staff Augmentation — /services/staff-augmentation
+- Software Quality Assurance — /services/software-quality-assurance
+- Performance & Reliability Engineering — /services/performance-reliability-engineering
+
+## Key pages
+
+- Homepage: https://devliora.com
+- About: https://devliora.com/about
+- Services: https://devliora.com/services
+- Industries: https://devliora.com/industries
+- Technologies: https://devliora.com/technologies
+- Portfolio: https://devliora.com/portfolio
+- Case Studies: https://devliora.com/case-studies
+- Blog: https://devliora.com/blog
+- Careers: https://devliora.com/careers
+- Contact: https://devliora.com/contact
+- Book a consultation: https://devliora.com/book-consultation
+- Sitemap: https://devliora.com/sitemap.xml
+
+## Contact
+
+- Email: devliora74@gmail.com
+- Phone: +8801766644823
