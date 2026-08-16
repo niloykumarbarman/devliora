@@ -1172,6 +1172,11 @@ export default async function ServiceDetailPage({ params }: Props) {
 
   const clientSpotlight = await toClientSpotlightItems(featuredPortfolios.slice(0, 2));
   const featuredWorkSplit = featuredPortfolios.slice(2, 4);
+  // Requested removal: the Desktop tab (only) skips both portfolio
+  // showcase sections below (ClientSpotlight and FeaturedWorkSplit).
+  // "Desktop" only exists as a tab on software-engineering, so this
+  // can't accidentally affect any other service's page.
+  const hidePortfolioShowcases = tabLabel === "Desktop";
 
   const rawCheckpoints = ROADMAP_CHECKPOINTS[service.slug];
   const checkpoints =
@@ -3822,7 +3827,7 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section>
         )}
 
-        <ClientSpotlight items={clientSpotlight} />
+        {!hidePortfolioShowcases && <ClientSpotlight items={clientSpotlight} />}
 
         {/* "Top-tier engineers..." CTA banner + "Our performance testing
             engagement models" — Performance & Reliability Engineering
@@ -4036,8 +4041,11 @@ export default async function ServiceDetailPage({ params }: Props) {
 
         {/* Skipped here for Digital Marketing — already rendered higher up,
             right after the "Maximize Reach" CTA, to match the reference's
-            page order (see above). */}
-        {service.slug !== "digital-marketing" && <FeaturedWorkSplit items={featuredWorkSplit} />}
+            page order (see above). Also skipped on the Desktop tab, along
+            with ClientSpotlight above — see hidePortfolioShowcases. */}
+        {service.slug !== "digital-marketing" && !hidePortfolioShowcases && (
+          <FeaturedWorkSplit items={featuredWorkSplit} />
+        )}
 
         {/* Case studies, pulled live from the site's real case-studies data.
             Hidden on Digital Design at request — ClientSpotlight and
