@@ -21,6 +21,7 @@ import type { CaseStudy } from "@/lib/caseStudies";
 import type { ServiceTabCaseStudy } from "@/lib/services";
 import { getTechIcon } from "@/lib/techIcons";
 import TechBrandIcon from "@/components/TechBrandIcon";
+import Reveal from "@/components/Reveal";
 
 export type ServiceTabCard = {
   title: string;
@@ -485,6 +486,7 @@ export default function ServiceTabs({
         const security = current.security;
         const sourceIcon = getTechIcon(security.stat.source);
         return (
+      <Reveal>
         <>
           <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
             <div className="grid gap-10 md:grid-cols-2 md:items-start">
@@ -559,10 +561,12 @@ export default function ServiceTabs({
             </div>
           </div>
         </>
+      </Reveal>
         );
       })()}
 
       {current.targetUsers && (
+      <Reveal>
         <>
           <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
             <div className="grid gap-10 md:grid-cols-2 md:items-start">
@@ -610,9 +614,11 @@ export default function ServiceTabs({
             </div>
           </div>
         </>
+      </Reveal>
       )}
 
       {current.approach && current.approach.steps.length > 1 && (
+      <Reveal>
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
           <h3 className="text-balance font-display text-2xl font-semibold leading-tight text-paper sm:text-3xl">
             Our approach to exceptional {current.label.toLowerCase()} development
@@ -700,9 +706,11 @@ export default function ServiceTabs({
             })}
           </div>
         </div>
+      </Reveal>
       )}
 
       {current.roadmap && (
+      <Reveal>
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
           <div className="grid gap-10 md:grid-cols-2 md:items-start">
             <div>
@@ -738,9 +746,11 @@ export default function ServiceTabs({
             ))}
           </div>
         </div>
+      </Reveal>
       )}
 
       {current.reviewQuote && (
+      <Reveal>
         <div className="mt-20 bg-graphite py-16 md:mt-28">
           <div className="mx-auto flex max-w-6xl flex-col gap-8 px-6 sm:flex-row sm:items-center sm:justify-between">
             <div>
@@ -758,9 +768,11 @@ export default function ServiceTabs({
             </p>
           </div>
         </div>
+      </Reveal>
       )}
 
       {current.scope && (
+      <Reveal>
         <>
           {current.scope.ctaText && (
             <div className="mt-20 bg-signal md:mt-28">
@@ -808,9 +820,11 @@ export default function ServiceTabs({
             </div>
           </div>
         </>
+      </Reveal>
       )}
 
       {current.impact && (
+      <Reveal>
         <>
           {/* CTA banner — generic, no factual claims, so it's kept
               verbatim from the reference like the site's other
@@ -858,9 +872,11 @@ export default function ServiceTabs({
             </div>
           </div>
         </>
+      </Reveal>
       )}
 
       {current.caseStudiesIntro && displayedCaseStudies.length > 0 && (
+      <Reveal>
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
           <h3 className="text-balance font-display text-3xl font-semibold leading-tight sm:text-4xl">
             <span className="text-ember">{current.caseStudiesIntro.highlight}</span>{" "}
@@ -907,9 +923,11 @@ export default function ServiceTabs({
             ))}
           </div>
         </div>
+      </Reveal>
       )}
 
       {current.caseStudiesIntro && current.caseStudiesIntro.ctaText && displayedCaseStudies.length > 0 && (
+      <Reveal>
         <div className="mt-20 bg-signal md:mt-28">
           <div className="mx-auto flex max-w-6xl flex-col sm:flex-row sm:items-center">
             <div className="flex-1 px-6 py-8 sm:py-10">
@@ -926,9 +944,11 @@ export default function ServiceTabs({
             </Link>
           </div>
         </div>
+      </Reveal>
       )}
 
       {current.capabilities && (
+      <Reveal>
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
           <div className="grid gap-10 md:grid-cols-2 md:items-start">
             <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
@@ -950,9 +970,11 @@ export default function ServiceTabs({
             ))}
           </div>
         </div>
+      </Reveal>
       )}
 
       {current.whyChooseUs && (
+      <Reveal>
         <>
           <div className="mt-20 bg-signal md:mt-28">
             <div className="mx-auto flex max-w-6xl flex-col sm:flex-row sm:items-center">
@@ -1061,9 +1083,11 @@ export default function ServiceTabs({
             </div>
           )}
         </>
+      </Reveal>
       )}
 
       {current.essentials && (
+      <Reveal>
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
           <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
             Our {current.label.toLowerCase()} app essentials
@@ -1110,9 +1134,11 @@ export default function ServiceTabs({
             </div>
           </div>
         </div>
+      </Reveal>
       )}
 
       {current.deliveryFramework && (
+      <Reveal>
         <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
           <div className="grid gap-10 md:grid-cols-2 md:items-start">
             <div>
@@ -1319,9 +1345,11 @@ export default function ServiceTabs({
             </div>
           )}
         </div>
+      </Reveal>
       )}
 
       {current.techIntro && (
+      <Reveal>
         <>
           {current.techIntro.ctaText && (
             <div className="mt-20 bg-signal md:mt-28">
@@ -1434,6 +1462,7 @@ export default function ServiceTabs({
             )}
           </div>
         </>
+      </Reveal>
       )}
     </section>
   );

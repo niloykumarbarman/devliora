@@ -37,6 +37,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import Reveal from "@/components/Reveal";
 import { fetchServiceBySlug, fetchServices, serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
 import { fetchIndustries } from "@/lib/industries";
 import { fetchHero, resolveImageUrl } from "@/lib/hero";
@@ -1228,7 +1229,7 @@ export default async function ServiceDetailPage({ params }: Props) {
              per-service in the admin panel) on the right — requested
              specifically for this page, in addition to (not instead of)
              the same-styled hero on the /services listing page. */
-          <section className="bg-grain relative overflow-hidden py-16 md:py-20">
+          <Reveal><section className="bg-grain relative overflow-hidden py-16 md:py-20">
             <div
               className="pointer-events-none absolute -top-40 left-1/4 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.12] blur-[120px]"
               style={{ backgroundColor: "var(--color-signal)" }}
@@ -1293,14 +1294,14 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
               </div>
             </div>
-          </section>
+          </section></Reveal>
         ) : (
           <>
             {/* Hero: full-bleed background image with the service title.
                 Prefers this service's own hero image (set per-service in the
                 admin panel); falls back to the site's shared hero background
                 for services that haven't had one uploaded yet. */}
-            <section className="relative h-[380px] overflow-hidden sm:h-[440px] md:h-[480px]">
+            <Reveal><section className="relative h-[380px] overflow-hidden sm:h-[440px] md:h-[480px]">
               {(service.heroImageUrl || hero?.backgroundImageUrl) && (
                 <Image
                   src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
@@ -1317,10 +1318,10 @@ export default async function ServiceDetailPage({ params }: Props) {
                   {service.title}
                 </h1>
               </div>
-            </section>
+            </section></Reveal>
 
             {/* Breadcrumb bar */}
-            <section className="border-t border-paper/10 py-6">
+            <Reveal><section className="border-t border-paper/10 py-6">
               <div className="mx-auto max-w-5xl px-6">
                 <nav className="flex flex-wrap items-center gap-2 font-mono text-sm">
                   <Link href="/" className="text-paper/80 transition-colors hover:text-paper">
@@ -1334,7 +1335,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   <span className="text-ember">{service.title}</span>
                 </nav>
               </div>
-            </section>
+            </section></Reveal>
           </>
         )}
 
@@ -1347,7 +1348,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             explicit request these are reworded to qualitative capability
             statements instead of invented figures. */}
         {service.slug === "performance-reliability-engineering" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
                 Key facts at a glance
@@ -1373,7 +1374,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "More solutions designed to deliver meaningful outcomes" —
@@ -1384,7 +1385,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             (highlights/toolNames/processSteps) that it's built as bespoke
             markup rather than stretched onto one of those. */}
         {service.slug === "performance-reliability-engineering" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-12 md:grid-cols-2">
                 <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
@@ -1432,7 +1433,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Engineering Excellence" — Performance & Reliability Engineering
@@ -1442,7 +1443,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             genericized — this choice is per-instance, not a standing
             policy). */}
         {service.slug === "performance-reliability-engineering" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-5xl px-6">
               <div className="grid gap-8 md:grid-cols-[auto_1fr] md:items-start md:gap-16">
                 <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
@@ -1466,7 +1467,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* IT Consulting only, static. NOTE: "Since 2004" and the three
@@ -1477,7 +1478,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             verified from simple-icons the same way as the Digital
             Marketing page's tools. */}
         {service.slug === "it-consulting" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-12 md:grid-cols-2">
                 <div>
@@ -1546,7 +1547,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 })}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Strategic IT consulting" + industry focus areas + "Get Started"
@@ -1556,7 +1557,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             rather than simple-icons brand marks. */}
         {service.slug === "it-consulting" && (
           <>
-            <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
               <div className="mx-auto max-w-6xl px-6">
                 <div className="grid gap-12 md:grid-cols-2">
                   <div>
@@ -1591,9 +1592,9 @@ export default async function ServiceDetailPage({ params }: Props) {
                   ))}
                 </div>
               </div>
-            </section>
+            </section></Reveal>
 
-            <section className="border-t border-paper/10 bg-signal">
+            <Reveal><section className="border-t border-paper/10 bg-signal">
               <div className="flex flex-col sm:flex-row">
                 <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                   <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -1609,7 +1610,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   <ArrowRight className="h-5 w-5" />
                 </Link>
               </div>
-            </section>
+            </section></Reveal>
           </>
         )}
 
@@ -1623,7 +1624,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             section) since the reference has no colon after each label,
             just an inline sentence. */}
         {service.slug === "staff-augmentation" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-4xl px-6">
               <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
                 Unmatched Experience in IT Solutions and Innovation
@@ -1658,7 +1659,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Empowering your dedicated development team for success" —
@@ -1673,7 +1674,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             line only spans from the first child's center to the last
             child's center instead of the full container width. */}
         {service.slug === "staff-augmentation" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-10 md:grid-cols-2 md:items-start">
                 <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
@@ -1809,14 +1810,14 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Unlock the full potential of your project" CTA banner — Staff
             Augmentation only, static, same two-line bg-signal pattern as
             the IT Maintenance & Support page's CTA banners. */}
         {service.slug === "staff-augmentation" && (
-          <section className="border-t border-paper/10 bg-signal">
+          <Reveal><section className="border-t border-paper/10 bg-signal">
             <div className="flex flex-col sm:flex-row">
               <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                 <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -1832,7 +1833,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Seamless Collaboration Across Distributed Teams" — Staff
@@ -1842,7 +1843,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             are generic concept marks (not brand logos), so lucide-react
             rather than simple-icons. */}
         {service.slug === "staff-augmentation" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-10 md:grid-cols-2 md:items-start">
                 <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
@@ -1900,7 +1901,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Our Staff Augmentation Services" — Staff Augmentation only,
@@ -1913,7 +1914,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             ScopeCard, extracted into ExpandableServiceCards since this
             is the first place outside ServiceTabs that needs it. */}
         {service.slug === "staff-augmentation" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-10 md:grid-cols-2 md:items-center">
                 <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
@@ -1969,14 +1970,14 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ]}
               />
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Transform your development team for success" CTA banner —
             Staff Augmentation only, static, same two-line bg-signal
             pattern as the page's other CTA banners. */}
         {service.slug === "staff-augmentation" && (
-          <section className="border-t border-paper/10 bg-signal">
+          <Reveal><section className="border-t border-paper/10 bg-signal">
             <div className="flex flex-col sm:flex-row">
               <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                 <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -1992,7 +1993,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Engineering Excellence" — Staff Augmentation only, static.
@@ -2005,7 +2006,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             already applied to the Quality management section's
             Clutch/Glassdoor/G2/GoodFirms row elsewhere on the site. */}
         {service.slug === "staff-augmentation" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-5xl px-6">
               <div className="grid gap-8 md:grid-cols-[auto_1fr] md:items-center md:gap-16">
                 <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
@@ -2025,7 +2026,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Microsoft" PartnerSpotlight — Staff Augmentation only, static.
@@ -2049,7 +2050,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             columns, same divider-under-header style as the "Seamless
             Collaboration" icon columns above. */}
         {service.slug === "staff-augmentation" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-10 md:grid-cols-2">
                 <div>
@@ -2099,7 +2100,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Enhance your team's capabilities and efficiency" CTA banner —
@@ -2110,7 +2111,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             other CTA banner on the site rather than introducing an
             off-brand one-off color. */}
         {service.slug === "staff-augmentation" && (
-          <section className="border-t border-paper/10 bg-signal">
+          <Reveal><section className="border-t border-paper/10 bg-signal">
             <div className="flex flex-col sm:flex-row">
               <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                 <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -2126,7 +2127,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Pricing models" — Staff Augmentation only. Same shared
@@ -2146,7 +2147,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             reads as one continuous connector instead of 6 separate
             segments. */}
         {service.slug === "software-quality-assurance" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-12 md:grid-cols-2">
                 <div>
@@ -2296,7 +2297,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 );
               })()}
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Ensure flawless performance with our QA expertise" CTA banner —
@@ -2304,7 +2305,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             bg-signal pattern as the page's other CTA banners (single line
             here). */}
         {service.slug === "software-quality-assurance" && (
-          <section className="border-t border-paper/10 bg-signal">
+          <Reveal><section className="border-t border-paper/10 bg-signal">
             <div className="flex flex-col sm:flex-row">
               <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                 <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -2319,7 +2320,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Proactive risk management" — Software Quality Assurance only,
@@ -2337,7 +2338,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             removed per explicit request to copy only what's actually
             there, not add anything extra). */}
         {service.slug === "software-quality-assurance" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-16 md:grid-cols-2 md:items-center">
                 <div>
@@ -2441,7 +2442,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Quality management" — Software Quality Assurance only. Same
@@ -2456,7 +2457,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             banner — Software Quality Assurance only, static, same
             bg-signal pattern as the page's other CTA banners. */}
         {service.slug === "software-quality-assurance" && (
-          <section className="border-t border-paper/10 bg-signal">
+          <Reveal><section className="border-t border-paper/10 bg-signal">
             <div className="flex flex-col sm:flex-row">
               <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                 <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -2471,7 +2472,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* Testing-automation step chain + tools row — Software Quality
@@ -2486,7 +2487,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             testrail, swagger, and others — left off rather than
             guessed. */}
         {service.slug === "software-quality-assurance" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3">
                 {["Testing scope definition", "Automation tools selection", "Testing framework development", "Framework implementation", "Test automation monitoring & support"].map(
@@ -2518,7 +2519,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Comprehensive multi-tier software support services" — IT
@@ -2528,7 +2529,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             pattern as Digital Marketing's "Our digital marketing
             services" split section — no new dedicated field. */}
         {service.slug === "it-maintenance-support" && (
-          <section className="relative overflow-hidden border-t border-paper/10">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10">
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="flex flex-col">
                 <div className="bg-graphite/40 px-6 py-14 sm:px-10 md:py-16">
@@ -2589,7 +2590,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </ul>
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Our numbers at a glance" — IT Maintenance & Support only,
@@ -2600,7 +2601,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             generic service.highlights section since that one has no
             description-paragraph slot. */}
         {service.slug === "it-maintenance-support" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-4xl px-6">
               <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
                 Our numbers at a glance
@@ -2633,14 +2634,14 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Get Started" CTA banner — IT Maintenance & Support only,
             static, same full-bleed pattern as the other CTA banners on
             this page. */}
         {service.slug === "it-maintenance-support" && (
-          <section className="border-t border-paper/10 bg-signal">
+          <Reveal><section className="border-t border-paper/10 bg-signal">
             <div className="flex flex-col sm:flex-row">
               <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                 <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -2655,7 +2656,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "IT support and maintenance roadmap" — IT Maintenance & Support
@@ -2665,7 +2666,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             are generic concept marks, not brand logos, so lucide-react
             rather than simple-icons. */}
         {service.slug === "it-maintenance-support" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-10 md:grid-cols-2 md:items-start">
                 <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
@@ -2714,14 +2715,14 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Service delivery models" — IT Maintenance & Support only,
             static. Generic engagement-model descriptions, no fabricated
             claims. */}
         {service.slug === "it-maintenance-support" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-10 md:grid-cols-2 md:items-start">
                 <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
@@ -2757,7 +2758,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Quality management" — IT Maintenance & Support only, static.
@@ -2774,7 +2775,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             other single-line CTA banners), same full-bleed pattern
             otherwise. */}
         {service.slug === "it-maintenance-support" && (
-          <section className="border-t border-paper/10 bg-signal">
+          <Reveal><section className="border-t border-paper/10 bg-signal">
             <div className="flex flex-col sm:flex-row">
               <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                 <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -2792,7 +2793,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {tabs ? (
@@ -2822,7 +2823,7 @@ export default async function ServiceDetailPage({ params }: Props) {
              Marketing, Staff Augmentation, and Software Quality Assurance
              too, not just the newly-built Performance & Reliability
              Engineering page. */
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-4xl px-6">
               <div className="flex items-center gap-4">
                 {service.iconUrl ? (
@@ -2843,12 +2844,12 @@ export default async function ServiceDetailPage({ params }: Props) {
                 {service.fullDescription}
               </p>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* At-a-glance highlights, admin-managed per service */}
         {service.highlights.length > 0 && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-4xl px-6">
               <h2 className="font-display text-2xl font-semibold text-paper sm:text-3xl">
                 {service.title} at a glance
@@ -2864,12 +2865,12 @@ export default async function ServiceDetailPage({ params }: Props) {
                   ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Tools we work with", admin-managed per service */}
         {service.toolNames.length > 0 && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-4xl px-6">
               <div className="grid gap-8 sm:grid-cols-2 sm:gap-12">
                 {service.toolsHeading && (
@@ -2908,7 +2909,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 })}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Meta" platform spotlight — Digital Marketing only, static.
@@ -2961,7 +2962,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             capability statement per explicit request (the other two
             cards were already generic, kept as-is). */}
         {service.slug === "it-maintenance-support" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-10 md:grid-cols-2 md:items-start">
                 <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
@@ -2998,14 +2999,14 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Learn More" CTA banner — IT Maintenance & Support only, static,
             two-line text stack like the "Contact Us" CTA below, same
             full-bleed pattern otherwise. */}
         {service.slug === "it-maintenance-support" && (
-          <section className="border-t border-paper/10 bg-signal">
+          <Reveal><section className="border-t border-paper/10 bg-signal">
             <div className="flex flex-col sm:flex-row">
               <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                 <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -3023,7 +3024,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Quality management" — IT Consulting only, static. Same shared
@@ -3047,7 +3048,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             rotating capability sets; kept as plain decoration since
             there's no second set of terms to rotate through. */}
         {service.slug === "it-consulting" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-16 md:grid-cols-2 md:items-center">
                 <div>
@@ -3146,7 +3147,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Key Digital Solutions" / Pricing / Timeline — Digital Marketing
@@ -3159,7 +3160,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             models already on the /services page; Limitations is
             replaced with a real Timeline column instead. */}
         {service.slug === "digital-marketing" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-10 md:grid-cols-2 md:gap-16">
                 <div>
@@ -3232,7 +3233,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Boost Visibility" CTA banner — Digital Marketing only, static,
@@ -3240,7 +3241,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             CTA banners (no max-w wrapper, so the two-tone split doesn't
             leave a mismatched color strip on wide screens). */}
         {service.slug === "digital-marketing" && (
-          <section className="border-t border-paper/10 bg-signal">
+          <Reveal><section className="border-t border-paper/10 bg-signal">
             <div className="flex flex-col sm:flex-row">
               <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                 <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -3255,7 +3256,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Our digital marketing services" — Digital Marketing only,
@@ -3264,7 +3265,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             same service.heroImageUrl already used elsewhere on this
             page rather than adding another dedicated field. */}
         {service.slug === "digital-marketing" && (
-          <section className="relative overflow-hidden border-t border-paper/10">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10">
             <div className="grid grid-cols-1 md:grid-cols-2">
               <div className="flex flex-col">
                 <div className="bg-graphite/40 px-6 py-14 sm:px-10 md:py-16">
@@ -3311,13 +3312,13 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </ul>
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Drive Conversions" CTA banner — Digital Marketing only, static,
             same full-bleed pattern as the other CTA banners on this page. */}
         {service.slug === "digital-marketing" && (
-          <section className="border-t border-paper/10 bg-signal">
+          <Reveal><section className="border-t border-paper/10 bg-signal">
             <div className="flex flex-col sm:flex-row">
               <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                 <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -3332,7 +3333,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Our digital marketing project roadmap" — Digital Marketing
@@ -3343,7 +3344,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             rather than an extension of that shared component. Reuses the
             same lerpAccentColor gradient dots for visual consistency. */}
         {service.slug === "digital-marketing" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
                 Our digital marketing project roadmap
@@ -3478,7 +3479,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 })()}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Maximize Reach" CTA banner — Digital Marketing only, static,
@@ -3487,7 +3488,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             reference's one-off magenta, for consistency with every
             other CTA banner already on this page). */}
         {service.slug === "digital-marketing" && (
-          <section className="border-t border-paper/10 bg-signal">
+          <Reveal><section className="border-t border-paper/10 bg-signal">
             <div className="flex flex-col sm:flex-row">
               <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                 <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -3502,7 +3503,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* Featured work, moved up to sit right after the CTA above —
@@ -3514,7 +3515,7 @@ export default async function ServiceDetailPage({ params }: Props) {
 
         {/* "Process" horizontal timeline, admin-managed per service */}
         {service.processSteps.length > 0 && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <h2 className="font-display text-3xl font-bold text-paper sm:text-4xl">Process</h2>
 
@@ -3584,14 +3585,14 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* Static inspirational quote — DaaS-specific, not admin-managed
             (a well-known, correctly-attributed public quote, unlike the
             Highlights numbers which needed to be Devliora's own claims). */}
         {service.slug === "digital-design" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-16 md:py-20">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-16 md:py-20">
             <div className="mx-auto max-w-6xl px-6">
               <div className="flex flex-col items-start justify-between gap-8 sm:flex-row sm:items-center">
                 <div>
@@ -3616,12 +3617,12 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </svg>
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* Industries image-card grid, admin-managed per service */}
         {service.industryCards.length > 0 && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="max-w-2xl">
                 {service.industriesHeading && (
@@ -3679,14 +3680,14 @@ export default async function ServiceDetailPage({ params }: Props) {
                   ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* Static "book a call" banner + collaboration diagram — DaaS-specific,
             not admin-managed, same as the Apple quote block above. */}
         {service.slug === "digital-design" && (
           <>
-            <section className="border-t border-paper/10 bg-signal">
+            <Reveal><section className="border-t border-paper/10 bg-signal">
               <div className="flex flex-col sm:flex-row">
                 <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                   <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -3701,9 +3702,9 @@ export default async function ServiceDetailPage({ params }: Props) {
                   <ArrowRight className="h-5 w-5" />
                 </Link>
               </div>
-            </section>
+            </section></Reveal>
 
-            <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
               <div className="mx-auto max-w-6xl px-6">
                 <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
                   <div>
@@ -3794,7 +3795,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   </div>
                 </div>
               </div>
-            </section>
+            </section></Reveal>
           </>
         )}
 
@@ -3803,7 +3804,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             Positioned right before ClientSpotlight to match the
             reference's order. */}
         {service.slug === "it-consulting" && (
-          <section className="border-t border-paper/10 bg-signal">
+          <Reveal><section className="border-t border-paper/10 bg-signal">
             <div className="flex flex-col sm:flex-row">
               <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                 <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -3819,7 +3820,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {!hidePortfolioShowcases && <ClientSpotlight items={clientSpotlight} />}
@@ -3836,7 +3837,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             every other CTA banner on the site. */}
         {service.slug === "performance-reliability-engineering" && (
           <>
-            <section className="border-t border-paper/10 bg-signal">
+            <Reveal><section className="border-t border-paper/10 bg-signal">
               <div className="flex flex-col sm:flex-row">
                 <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                   <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -3852,9 +3853,9 @@ export default async function ServiceDetailPage({ params }: Props) {
                   <ArrowRight className="h-5 w-5" />
                 </Link>
               </div>
-            </section>
+            </section></Reveal>
 
-            <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
               <div className="mx-auto max-w-6xl px-6">
                 <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
                   Our performance testing engagement models
@@ -3939,7 +3940,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   </div>
                 </div>
               </div>
-            </section>
+            </section></Reveal>
           </>
         )}
 
@@ -3954,7 +3955,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             page's earlier CTA — stays on bg-signal for consistency with
             every other CTA banner on the site. */}
         {service.slug === "software-quality-assurance" && (
-          <section className="border-t border-paper/10 bg-signal">
+          <Reveal><section className="border-t border-paper/10 bg-signal">
             <div className="flex flex-col sm:flex-row">
               <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                 <p className="max-w-lg text-lg font-medium leading-snug text-paper">
@@ -3969,7 +3970,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 <ArrowRight className="h-5 w-5" />
               </Link>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* "Seamless testing management" — Software Quality Assurance
@@ -3979,7 +3980,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             1, matching the reference's "Role distribution" / "Performance
             optimization" / "Testing team exit" placement). */}
         {service.slug === "software-quality-assurance" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-6xl px-6">
               <div className="grid gap-10 md:grid-cols-2">
                 <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
@@ -4031,7 +4032,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* Skipped here for Digital Marketing — already rendered higher up,
@@ -4053,7 +4054,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             page order) — showing them twice would be redundant.
             Still shown on every other service page. */}
         {caseStudies.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && service.slug !== "software-engineering" && (
-          <section className="relative overflow-hidden border-t border-paper/10 bg-graphite py-24 md:py-32">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 bg-graphite py-24 md:py-32">
             <div className="mx-auto max-w-6xl px-6">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">Case studies</p>
               <h2 className="mt-4 max-w-2xl text-balance font-display text-3xl font-semibold leading-tight sm:text-4xl">
@@ -4091,7 +4092,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* Blog Highlights, pulled live from the site's real blog posts.
@@ -4102,7 +4103,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             are redundant there — still shown on every other service
             page. */}
         {blogGridCells.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && service.slug !== "software-engineering" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
             <div className="mx-auto max-w-6xl px-6 text-center">
               <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">From the blog</p>
               <h2 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl">
@@ -4150,7 +4151,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 )
               )}
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* Why choose us + a real, admin-entered client testimonial.
@@ -4162,7 +4163,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             showing it twice would be redundant.
             Still shown on every other service page. */}
         {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && service.slug !== "software-engineering" && (
-        <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
+        <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto grid max-w-6xl gap-16 px-6 md:grid-cols-2">
             <div>
               <h2 className="text-balance font-display text-3xl font-semibold leading-tight sm:text-4xl">
@@ -4238,7 +4239,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               ))}
             </ul>
           </div>
-        </section>
+        </section></Reveal>
         )}
 
         {/* Engagement models. Hidden on Digital Design at request; also
@@ -4249,7 +4250,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             with the tab-specific sections above on the latter) — still
             shown on every other service page. */}
         {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && service.slug !== "software-engineering" && (
-        <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
+        <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto max-w-6xl px-6">
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-ember">How we engage</p>
             <h2 className="mt-4 max-w-2xl text-balance font-display text-3xl font-semibold leading-tight sm:text-4xl">
@@ -4282,7 +4283,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               ))}
             </div>
           </div>
-        </section>
+        </section></Reveal>
         )}
 
         {/* Software essentials. Hidden on Digital Design, Digital
@@ -4290,7 +4291,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             request, same as the sections above — still shown on every
             other service page. */}
         {service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && service.slug !== "software-engineering" && (
-        <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
+        <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div className="mx-auto max-w-6xl px-6">
             <h2 className="font-display text-3xl font-semibold leading-tight sm:text-4xl">
               Our software essentials
@@ -4337,7 +4338,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
             </div>
           </div>
-        </section>
+        </section></Reveal>
         )}
 
         {/* Roadmap, built from the service's own includes[], framed as
@@ -4352,7 +4353,7 @@ export default async function ServiceDetailPage({ params }: Props) {
             would be redundant there — still shown on every other
             service page. */}
         {service.includes.length > 0 && service.slug !== "digital-design" && service.slug !== "digital-marketing" && service.slug !== "it-consulting" && service.slug !== "it-maintenance-support" && service.slug !== "staff-augmentation" && service.slug !== "software-quality-assurance" && service.slug !== "performance-reliability-engineering" && service.slug !== "software-engineering" && (
-          <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
             <div
               className="pointer-events-none absolute inset-0 bg-[size:56px_56px] opacity-60"
               style={gridOverlayStyle}
@@ -4423,11 +4424,11 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {/* CTA */}
-        <section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
+        <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div
             className="pointer-events-none absolute -bottom-40 left-1/2 h-[480px] w-[480px] -translate-x-1/2 rounded-full opacity-[0.14] blur-[120px]"
             style={{ backgroundColor: "var(--color-ember)" }}
@@ -4461,7 +4462,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </Link>
             </div>
           </div>
-        </section>
+        </section></Reveal>
       </main>
       <Footer />
     </>
