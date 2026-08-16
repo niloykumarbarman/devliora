@@ -1125,36 +1125,42 @@ export default function ServiceTabs({
               className="relative grid"
               style={{ gridTemplateColumns: `repeat(${current.deliveryFramework.steps.length}, minmax(0, 1fr))` }}
             >
-              {current.deliveryFramework.steps.map((step, i) => (
-                <div key={step.title} className="flex flex-col items-center">
-                  <p className="max-w-[9.5rem] text-center text-sm font-semibold leading-snug text-paper">
-                    {step.checkpoints ? (
-                      <>
-                        <span className="text-ember">{i + 1}</span> {step.title}
-                      </>
-                    ) : (
-                      step.title
-                    )}
-                  </p>
-                  <span className="mt-4 h-3.5 w-3.5 shrink-0 rounded-full bg-ember ring-4 ring-ink" />
-                  {step.checkpoint && (
-                    <>
-                      <span className="mt-3 h-8 w-px border-l border-dashed border-paper/30" />
-                      <span className="h-2.5 w-2.5 shrink-0 rounded-full border-2 border-ember bg-ink" />
-                      <p className="mt-3 max-w-[8rem] text-center text-xs text-paper/50">{step.checkpoint}</p>
-                    </>
-                  )}
-                  {step.checkpoints && step.checkpoints.length > 0 && (
-                    <ul className="mt-6 space-y-2 self-start">
+              {current.deliveryFramework.steps.map((step, i) =>
+                step.checkpoints ? (
+                  // Desktop's own delivery framework: big numeral +
+                  // title left-aligned above the dot, full checklist
+                  // left-aligned below — matches the reference exactly,
+                  // instead of the centered single-checkpoint layout.
+                  <div key={step.title} className="flex flex-col items-start pr-4">
+                    <p className="flex items-baseline gap-2 whitespace-nowrap text-left">
+                      <span className="font-display text-3xl font-extrabold text-ember">{i + 1}</span>
+                      <span className="text-lg font-semibold leading-snug text-paper">{step.title}</span>
+                    </p>
+                    <span className="mt-4 h-3.5 w-3.5 shrink-0 rounded-full bg-ember ring-4 ring-ink" />
+                    <ul className="mt-6 space-y-2">
                       {step.checkpoints.map((item) => (
-                        <li key={item} className="max-w-[10.5rem] text-sm leading-snug text-paper/70">
+                        <li key={item} className="max-w-[11rem] text-left text-sm leading-snug text-paper/70">
                           {item}
                         </li>
                       ))}
                     </ul>
-                  )}
-                </div>
-              ))}
+                  </div>
+                ) : (
+                  <div key={step.title} className="flex flex-col items-center">
+                    <p className="max-w-[9.5rem] text-center text-sm font-semibold leading-snug text-paper">
+                      {step.title}
+                    </p>
+                    <span className="mt-4 h-3.5 w-3.5 shrink-0 rounded-full bg-ember ring-4 ring-ink" />
+                    {step.checkpoint && (
+                      <>
+                        <span className="mt-3 h-8 w-px border-l border-dashed border-paper/30" />
+                        <span className="h-2.5 w-2.5 shrink-0 rounded-full border-2 border-ember bg-ink" />
+                        <p className="mt-3 max-w-[8rem] text-center text-xs text-paper/50">{step.checkpoint}</p>
+                      </>
+                    )}
+                  </div>
+                )
+              )}
             </div>
           </div>
 
