@@ -41,6 +41,22 @@ const RING_DOT_POSITIONS = [
   { top: "25%", left: "6.7%" },
 ];
 
+// Desktop's own delivery framework carries a full bullet list per step
+// (unlike Web/Mobile's single short checkpoint), so it needs more
+// horizontal room per item. Rather than squeeze all 6 into one row, the
+// reference wraps them 4-per-row, each row getting its own connecting
+// line. Every row still lays out on a 4-column grid — even the last,
+// partly-empty one — so dots stay aligned column-for-column across rows.
+const FRAMEWORK_ROW_SIZE = 4;
+
+function chunkIntoRows<T>(items: T[], size: number): T[][] {
+  const rows: T[][] = [];
+  for (let i = 0; i < items.length; i += size) {
+    rows.push(items.slice(i, i + size));
+  }
+  return rows;
+}
+
 // React components (including icon components) can't be passed as
 // props from a Server Component (this data is defined in page.tsx)
 // into a Client Component like this one — only serializable data
@@ -373,6 +389,18 @@ export default function ServiceTabs({
   }
 
   const current = tabs[active];
+
+  // Desktop's own delivery framework (full bullet-list steps) uses the
+  // reference Figma file's gold/amber accent for its numerals, dots,
+  // and tagline underline instead of the site's own ember brand color
+  // — an explicit, requested exception scoped to this one section via
+  // arbitrary-value classes, not a change to the shared "ember" token
+  // used everywhere else on the site. Web/Mobile's short-checkpoint
+  // layout is unaffected and keeps ember.
+  const isDesktopChecklistFramework = current.deliveryFramework?.steps.some((step) => step.checkpoints) ?? false;
+  const frameworkAccentText = isDesktopChecklistFramework ? "text-[#F5A623]" : "text-ember";
+  const frameworkAccentBg = isDesktopChecklistFramework ? "bg-[#F5A623]" : "bg-ember";
+  const frameworkAccentBorder = isDesktopChecklistFramework ? "border-[#F5A623]" : "border-ember";
 
   function goToTab(i: number) {
     setActive(i);
@@ -1093,59 +1121,99 @@ export default function ServiceTabs({
                 <br />
                 <span className="text-paper">{current.deliveryFramework.rest}</span>
               </h3>
-              <p className="mt-3 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+              <p className={`mt-3 inline-block border-b ${frameworkAccentBorder}/40 pb-3 italic text-paper/60`}>
                 {current.deliveryFramework.tagline}
               </p>
             </div>
             <p className="text-lg leading-relaxed text-paper/70">{current.deliveryFramework.body}</p>
           </div>
 
-          {/* Desktop: straight horizontal timeline, same dashed-line +
-              optional-checkpoint pattern as the page-level "Delivery
-              framework" section further down, but here each step
-              carries its own optional checkpoint instead of an
-              all-or-nothing array. */}
-          <div className="relative mt-28 hidden md:block">
-            <div
-              className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
-              style={{ left: 0, width: `${50 / current.deliveryFramework.steps.length}%` }}
-            />
-            <div
-              className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
-              style={{ right: 0, width: `${50 / current.deliveryFramework.steps.length}%` }}
-            />
-            <div
-              className="absolute top-1/2 h-px -translate-y-1/2 bg-paper/30"
-              style={{
-                left: `${50 / current.deliveryFramework.steps.length}%`,
-                right: `${50 / current.deliveryFramework.steps.length}%`,
-              }}
-            />
-            <div
-              className="relative grid"
-              style={{ gridTemplateColumns: `repeat(${current.deliveryFramework.steps.length}, minmax(0, 1fr))` }}
-            >
-              {current.deliveryFramework.steps.map((step, i) =>
-                step.checkpoints ? (
-                  // Desktop's own delivery framework: big numeral +
-                  // title left-aligned above the dot, full checklist
-                  // left-aligned below — matches the reference exactly,
-                  // instead of the centered single-checkpoint layout.
-                  <div key={step.title} className="flex flex-col items-start pr-4">
-                    <p className="flex items-baseline gap-2 whitespace-nowrap text-left">
-                      <span className="font-display text-3xl font-extrabold text-ember">{i + 1}</span>
-                      <span className="text-lg font-semibold leading-snug text-paper">{step.title}</span>
-                    </p>
-                    <span className="mt-4 h-3.5 w-3.5 shrink-0 rounded-full bg-ember ring-4 ring-ink" />
-                    <ul className="mt-6 space-y-2">
-                      {step.checkpoints.map((item) => (
-                        <li key={item} className="max-w-[11rem] text-left text-sm leading-snug text-paper/70">
-                          {item}
-                        </li>
+          {/* Desktop: bullet-list steps (Desktop tab's own delivery
+              framework) wrap 4-per-row, each row with its own dashed
+              /solid/dashed line — matches the reference's kaz.com.bd
+              layout instead of squeezing 6 wide, checklist-heavy steps
+              into one row. Steps with only a short checkpoint label
+              (Web/Mobile) are narrower and keep the original single-row
+              timeline, which already has room for all of them. */}
+          {current.deliveryFramework.steps.some((step) => step.checkpoints) ? (
+            <div className="relative mt-28 hidden md:block">
+              {chunkIntoRows(current.deliveryFramework.steps, FRAMEWORK_ROW_SIZE).map((rowSteps, rowIndex) => {
+                const firstCenter = 50 / FRAMEWORK_ROW_SIZE;
+                const lastCenter = (rowSteps.length - 0.5) * (100 / FRAMEWORK_ROW_SIZE);
+                // Only the very first row gets a dashed lead-in before its
+                // first dot (marking the start of the whole timeline);
+                // later rows read as a continuation, so their line is
+                // solid from the row's left edge. Every row ends with a
+                // dashed run-out filling the rest of the (always
+                // 4-column) row, whether or not more steps follow.
+                const solidLeft = rowIndex === 0 ? firstCenter : 0;
+                return (
+                  <div key={rowIndex} className={rowIndex === 0 ? "relative" : "relative mt-24"}>
+                    {rowIndex === 0 && (
+                      <div
+                        className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
+                        style={{ left: 0, width: `${firstCenter}%` }}
+                      />
+                    )}
+                    <div
+                      className="absolute top-1/2 h-px -translate-y-1/2 bg-paper/30"
+                      style={{ left: `${solidLeft}%`, width: `${lastCenter - solidLeft}%` }}
+                    />
+                    <div
+                      className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
+                      style={{ left: `${lastCenter}%`, right: 0 }}
+                    />
+                    <div
+                      className="relative grid"
+                      style={{ gridTemplateColumns: `repeat(${FRAMEWORK_ROW_SIZE}, minmax(0, 1fr))` }}
+                    >
+                      {rowSteps.map((step, i) => (
+                        <div key={step.title} className="flex flex-col items-start pr-4">
+                          <p className="flex items-baseline gap-2 whitespace-nowrap text-left">
+                            <span className={`font-display text-3xl font-extrabold ${frameworkAccentText}`}>
+                              {rowIndex * FRAMEWORK_ROW_SIZE + i + 1}
+                            </span>
+                            <span className="text-lg font-semibold leading-snug text-paper">{step.title}</span>
+                          </p>
+                          <span className={`mt-4 h-3.5 w-3.5 shrink-0 rounded-full ${frameworkAccentBg} ring-4 ring-ink`} />
+                          {step.checkpoints && step.checkpoints.length > 0 && (
+                            <ul className="mt-6 space-y-2">
+                              {step.checkpoints.map((item) => (
+                                <li key={item} className="max-w-[11rem] text-left text-sm leading-snug text-paper/70">
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   </div>
-                ) : (
+                );
+              })}
+            </div>
+          ) : (
+            <div className="relative mt-28 hidden md:block">
+              <div
+                className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
+                style={{ left: 0, width: `${50 / current.deliveryFramework.steps.length}%` }}
+              />
+              <div
+                className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
+                style={{ right: 0, width: `${50 / current.deliveryFramework.steps.length}%` }}
+              />
+              <div
+                className="absolute top-1/2 h-px -translate-y-1/2 bg-paper/30"
+                style={{
+                  left: `${50 / current.deliveryFramework.steps.length}%`,
+                  right: `${50 / current.deliveryFramework.steps.length}%`,
+                }}
+              />
+              <div
+                className="relative grid"
+                style={{ gridTemplateColumns: `repeat(${current.deliveryFramework.steps.length}, minmax(0, 1fr))` }}
+              >
+                {current.deliveryFramework.steps.map((step) => (
                   <div key={step.title} className="flex flex-col items-center">
                     <p className="max-w-[9.5rem] text-center text-sm font-semibold leading-snug text-paper">
                       {step.title}
@@ -1159,20 +1227,22 @@ export default function ServiceTabs({
                       </>
                     )}
                   </div>
-                )
-              )}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Mobile: vertical timeline */}
           <div className="relative mt-14 space-y-8 border-l border-paper/15 pl-8 md:hidden">
             {current.deliveryFramework.steps.map((step, i) => (
               <div key={step.title} className="relative">
-                <span className="absolute -left-[2.05rem] top-1 h-3 w-3 rounded-full bg-ember ring-4 ring-ink" />
+                <span
+                  className={`absolute -left-[2.05rem] top-1 h-3 w-3 rounded-full ${frameworkAccentBg} ring-4 ring-ink`}
+                />
                 <p className="text-sm font-semibold leading-snug text-paper">
                   {step.checkpoints ? (
                     <>
-                      <span className="text-ember">{i + 1}</span> {step.title}
+                      <span className={frameworkAccentText}>{i + 1}</span> {step.title}
                     </>
                   ) : (
                     step.title
