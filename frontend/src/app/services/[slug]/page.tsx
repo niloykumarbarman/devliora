@@ -984,7 +984,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       // Development" section — cost-control practices rather than cost
       // factors, since that's what the reference actually covers here.
       scope: {
-        intro: "Building a desktop application doesn't have to be costly. Here's how we manage budgets while delivering dependable, high-quality solutions.",
+        intro: "Building a desktop application doesn't have to be costly. We focus on practical ways to manage budgets while delivering dependable, high-quality solutions. By reusing proven components, streamlining development, and offering flexible engagement models, we help maximize value. The approach prioritizes efficiency and cost control without compromising quality.",
+        ctaText: "Ready to turn ideas into reality?",
         items: [
           {
             title: "Strategic Planning",

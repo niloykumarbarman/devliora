@@ -90,6 +90,10 @@ export type ServiceScopeItem = {
 export type ServiceScope = {
   intro: string;
   items: ServiceScopeItem[];
+  // Optional recurring CTA banner shown right above this section, same
+  // bg-signal pattern as the other CTA banners in this file — only
+  // Desktop's reference page has one preceding this particular section.
+  ctaText?: string;
 };
 
 export type ServiceTechIntro = {
@@ -721,33 +725,53 @@ export default function ServiceTabs({
       )}
 
       {current.scope && (
-        <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
-          <div className="grid gap-10 md:grid-cols-2 md:items-center">
-            {heroImageUrl && (
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-                <Image
-                  src={resolveImageUrl(heroImageUrl)}
-                  alt=""
-                  fill
-                  sizes="(min-width: 768px) 50vw, 100vw"
-                  className="object-cover"
-                />
+        <>
+          {current.scope.ctaText && (
+            <div className="mt-20 bg-signal md:mt-28">
+              <div className="mx-auto flex max-w-6xl flex-col sm:flex-row sm:items-center">
+                <div className="flex-1 px-6 py-8 sm:py-10">
+                  <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                    {current.scope.ctaText}
+                  </p>
+                </div>
+                <Link
+                  href="/contact"
+                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+                >
+                  Get Started
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
               </div>
-            )}
-            <div>
-              <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
-                Comprehensive Scope of Our {current.label} Application Development
-              </h3>
-              <p className="mt-5 text-lg leading-relaxed text-paper/70">{current.scope.intro}</p>
+            </div>
+          )}
+          <div className="mx-auto mt-20 max-w-6xl px-6 md:mt-28">
+            <div className="grid gap-10 md:grid-cols-2 md:items-center">
+              {heroImageUrl && (
+                <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                  <Image
+                    src={resolveImageUrl(heroImageUrl)}
+                    alt=""
+                    fill
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+              )}
+              <div>
+                <h3 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+                  Comprehensive Scope of Our {current.label} Application Development
+                </h3>
+                <p className="mt-5 text-lg leading-relaxed text-paper/70">{current.scope.intro}</p>
+              </div>
+            </div>
+
+            <div className="mt-16 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-3">
+              {current.scope.items.map((item) => (
+                <ScopeCard key={item.title} item={item} />
+              ))}
             </div>
           </div>
-
-          <div className="mt-16 grid grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-3">
-            {current.scope.items.map((item) => (
-              <ScopeCard key={item.title} item={item} />
-            ))}
-          </div>
-        </div>
+        </>
       )}
 
       {current.impact && (
