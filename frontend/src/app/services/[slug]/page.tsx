@@ -1377,6 +1377,32 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section></Reveal>
         )}
 
+        {/* "Key facts at a glance" — Software Resource Rental only,
+            static, same layout/heading as the Performance & Reliability
+            Engineering version above (matches the reference's own
+            per-service "Key facts at a glance" pattern). Unlike that
+            one, every fact here is this service's own real, already
+            admin-authored data (shortDescription + includes) — nothing
+            invented, so no NOTE about unverified figures is needed. */}
+        {service.slug === "software-resource-rental" && (
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                Key facts at a glance
+              </h2>
+              <p className="mt-5 max-w-2xl text-paper/70">{service.shortDescription}</p>
+
+              <div className="mt-10 grid grid-cols-1 gap-x-16 gap-y-5 sm:grid-cols-2">
+                {service.includes.map((fact) => (
+                  <p key={fact} className="font-semibold text-paper">
+                    {fact.replace(/\.$/, "")}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </section></Reveal>
+        )}
+
         {/* "More solutions designed to deliver meaningful outcomes" —
             Performance & Reliability Engineering only, static. Generic
             capability copy, no fabricated claims. 5-item 2-column grid,
