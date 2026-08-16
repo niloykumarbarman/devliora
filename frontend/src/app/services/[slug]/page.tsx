@@ -562,14 +562,9 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         extraCards: WHY_CHOOSE_US_EXTRA_CARDS,
         closingCta: WHY_CHOOSE_US_CLOSING_CTA,
       },
-      // Same ring-diagram content as the page-level "Our software
-      // essentials" section (SOFTWARE_ESSENTIALS, hidden on this slug
-      // in favor of this per-tab version) — generic, non-platform-
-      // specific engineering copy, reused rather than duplicated.
-      essentials: {
-        tagline: "We build web applications with a laser focus on quality, performance, and security — every time.",
-        items: SOFTWARE_ESSENTIALS,
-      },
+      // "Our web app essentials" ring diagram removed from this Web tab
+      // per explicit request (Mobile keeps its own version of this
+      // section; Desktop already had none).
       // Web tab only, per explicit request. Distinct from the
       // page-level "Delivery framework" section further down (which
       // lists this service's actual deliverables from service.includes)
