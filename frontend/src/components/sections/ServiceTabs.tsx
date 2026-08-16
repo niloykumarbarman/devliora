@@ -1147,18 +1147,36 @@ export default function ServiceTabs({
                 // dashed run-out filling the rest of the (always
                 // 4-column) row, whether or not more steps follow.
                 const solidLeft = rowIndex === 0 ? firstCenter : 0;
+                const gridCols = { gridTemplateColumns: `repeat(${FRAMEWORK_ROW_SIZE}, minmax(0, 1fr))` };
                 return (
                   <div key={rowIndex} className={rowIndex === 0 ? "" : "mt-14"}>
-                    {/* Line lives in its own wrapper around only the
-                        numeral/title/dot header — never the checklist
-                        below — so its top-1/2 midpoint always lands on
-                        the dot. Sizing the wrapper by the whole row
-                        (header + checklist together) would stretch it
-                        to whichever column has the longest checklist
-                        (e.g. Discovery's 4 items vs. Testing's 2),
-                        pulling the line down off the dot and into the
-                        shorter columns' bullet text. */}
-                    <div className="relative">
+                    {/* Numerals/titles, dots, and checklists are three
+                        separate stacked grids (sharing the same column
+                        template, so columns still line up) instead of
+                        one flex column per step. The line's top-1/2
+                        wrapper holds ONLY the dot row, whose height is
+                        just the dot's own height — identical for every
+                        column — so the line always lands exactly on the
+                        dot. Wrapping title+dot together (an earlier
+                        version of this) made the wrapper's height
+                        title-row + dot, and top-1/2 of that lands
+                        mid-title instead; wrapping the whole row
+                        (title + dot + checklist) made it track whichever
+                        column had the longest checklist instead. */}
+                    <div
+                      className="grid"
+                      style={gridCols}
+                    >
+                      {rowSteps.map((step, i) => (
+                        <p key={step.title} className="flex items-baseline gap-2 whitespace-nowrap pr-4 text-left">
+                          <span className={`font-display text-3xl font-extrabold ${frameworkAccentText}`}>
+                            {rowIndex * FRAMEWORK_ROW_SIZE + i + 1}
+                          </span>
+                          <span className="text-lg font-semibold leading-snug text-paper">{step.title}</span>
+                        </p>
+                      ))}
+                    </div>
+                    <div className="relative mt-4">
                       {rowIndex === 0 && (
                         <div
                           className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
@@ -1173,29 +1191,17 @@ export default function ServiceTabs({
                         className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
                         style={{ left: `${lastCenter}%`, right: 0 }}
                       />
-                      <div
-                        className="relative grid"
-                        style={{ gridTemplateColumns: `repeat(${FRAMEWORK_ROW_SIZE}, minmax(0, 1fr))` }}
-                      >
-                        {rowSteps.map((step, i) => (
-                          <div key={step.title} className="flex flex-col items-start pr-4">
-                            <p className="flex items-baseline gap-2 whitespace-nowrap text-left">
-                              <span className={`font-display text-3xl font-extrabold ${frameworkAccentText}`}>
-                                {rowIndex * FRAMEWORK_ROW_SIZE + i + 1}
-                              </span>
-                              <span className="text-lg font-semibold leading-snug text-paper">{step.title}</span>
-                            </p>
+                      <div className="relative grid" style={gridCols}>
+                        {rowSteps.map((step) => (
+                          <div key={step.title} className="flex pr-4">
                             <span
-                              className={`mt-4 h-3.5 w-3.5 shrink-0 rounded-full ${frameworkAccentBg} ring-4 ring-ink`}
+                              className={`h-3.5 w-3.5 shrink-0 rounded-full ${frameworkAccentBg} ring-4 ring-ink`}
                             />
                           </div>
                         ))}
                       </div>
                     </div>
-                    <div
-                      className="mt-6 grid"
-                      style={{ gridTemplateColumns: `repeat(${FRAMEWORK_ROW_SIZE}, minmax(0, 1fr))` }}
-                    >
+                    <div className="mt-6 grid" style={gridCols}>
                       {rowSteps.map((step) => (
                         <div key={step.title} className="pr-4">
                           {step.checkpoints && step.checkpoints.length > 0 && (
