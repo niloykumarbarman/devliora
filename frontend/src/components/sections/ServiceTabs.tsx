@@ -222,7 +222,11 @@ export type ServiceWhyChooseUs = {
 // where every step shares the same checkpoints-or-none toggle.
 export type ServiceDeliveryFrameworkStep = {
   title: string;
+  // A step carries either a single short checkpoint label (Web/Mobile's
+  // "Requirements Testing" style) or a full bullet list (Desktop's own
+  // delivery framework) — never both.
   checkpoint?: string;
+  checkpoints?: string[];
 };
 
 export type ServiceDeliveryFramework = {
@@ -1117,10 +1121,16 @@ export default function ServiceTabs({
               className="relative grid"
               style={{ gridTemplateColumns: `repeat(${current.deliveryFramework.steps.length}, minmax(0, 1fr))` }}
             >
-              {current.deliveryFramework.steps.map((step) => (
+              {current.deliveryFramework.steps.map((step, i) => (
                 <div key={step.title} className="flex flex-col items-center">
                   <p className="max-w-[9.5rem] text-center text-sm font-semibold leading-snug text-paper">
-                    {step.title}
+                    {step.checkpoints ? (
+                      <>
+                        <span className="text-ember">{i + 1}</span> {step.title}
+                      </>
+                    ) : (
+                      step.title
+                    )}
                   </p>
                   <span className="mt-4 h-3.5 w-3.5 shrink-0 rounded-full bg-ember ring-4 ring-ink" />
                   {step.checkpoint && (
@@ -1130,6 +1140,15 @@ export default function ServiceTabs({
                       <p className="mt-3 max-w-[8rem] text-center text-xs text-paper/50">{step.checkpoint}</p>
                     </>
                   )}
+                  {step.checkpoints && step.checkpoints.length > 0 && (
+                    <ul className="mt-6 space-y-2 self-start">
+                      {step.checkpoints.map((item) => (
+                        <li key={item} className="max-w-[10.5rem] text-sm leading-snug text-paper/70">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               ))}
             </div>
@@ -1137,14 +1156,31 @@ export default function ServiceTabs({
 
           {/* Mobile: vertical timeline */}
           <div className="relative mt-14 space-y-8 border-l border-paper/15 pl-8 md:hidden">
-            {current.deliveryFramework.steps.map((step) => (
+            {current.deliveryFramework.steps.map((step, i) => (
               <div key={step.title} className="relative">
                 <span className="absolute -left-[2.05rem] top-1 h-3 w-3 rounded-full bg-ember ring-4 ring-ink" />
-                <p className="text-sm font-semibold leading-snug text-paper">{step.title}</p>
+                <p className="text-sm font-semibold leading-snug text-paper">
+                  {step.checkpoints ? (
+                    <>
+                      <span className="text-ember">{i + 1}</span> {step.title}
+                    </>
+                  ) : (
+                    step.title
+                  )}
+                </p>
                 {step.checkpoint && (
                   <p className="mt-1.5 font-mono text-xs uppercase tracking-wide text-paper/50">
                     {step.checkpoint}
                   </p>
+                )}
+                {step.checkpoints && step.checkpoints.length > 0 && (
+                  <ul className="mt-2 space-y-1">
+                    {step.checkpoints.map((item) => (
+                      <li key={item} className="text-sm leading-snug text-paper/70">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                 )}
               </div>
             ))}

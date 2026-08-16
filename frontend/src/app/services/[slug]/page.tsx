@@ -1081,18 +1081,55 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         tagline: "We build desktop applications with a laser focus on quality, performance, and security — every time.",
         items: SOFTWARE_ESSENTIALS,
       },
+      // Unlike Web/Mobile's generic "From Code to Launch" framework,
+      // the reference's own Desktop page has a distinct delivery
+      // framework here — different stage names and a full checklist
+      // per stage rather than a single checkpoint — matched verbatim.
       deliveryFramework: {
-        highlight: "From Code to Launch",
-        rest: "Devliora's Complete Delivery Framework",
-        tagline: "Crafting Solutions with Care – We Build, You Excel!",
-        body: "Devliora drives the entire development process, from initial concept to final deployment. Whether starting from scratch or stepping in at any stage of your desktop application's lifecycle, we ensure seamless execution. We also provide ongoing post-launch support, offering long-term maintenance and updates to keep your applications running smoothly.",
+        highlight: "Our Desktop App",
+        rest: "Development Framework",
+        tagline: "Crafting desktop apps with flair, precision, and a touch of magic",
+        body: "We help turn initial ideas into well-crafted desktop applications, guiding the process from early planning through testing and release. The focus is on building software that is both reliable and easy to use, with a clear, collaborative development process throughout.",
         steps: [
-          { title: "Analysis", checkpoint: "Requirements Testing" },
-          { title: "Design", checkpoint: "UX/UI Testing" },
-          { title: "Development" },
-          { title: "Quality Assurance", checkpoint: "Stabilization" },
-          { title: "Deployment", checkpoint: "Acceptance testing" },
-          { title: "Support" },
+          {
+            title: "Discovery",
+            checkpoints: [
+              "Project objectives, scope, and deliverables",
+              "Requirements analysis",
+              "Technical documentation",
+              "Project roadmap",
+            ],
+          },
+          {
+            title: "Coding",
+            checkpoints: [
+              "Iteration planning",
+              "Desktop app source code development",
+              "Technical documentation",
+              "Project roadmap",
+            ],
+          },
+          {
+            title: "Integration",
+            checkpoints: ["API integration", "Custom connectors development"],
+          },
+          {
+            title: "Testing",
+            checkpoints: ["Concurrent QA", "Post-development testing"],
+          },
+          {
+            title: "Delivery",
+            checkpoints: [
+              "Documentation creation",
+              "Acceptance testing",
+              "Ownership transfer",
+              "On-demand user training",
+            ],
+          },
+          {
+            title: "Post-Development",
+            checkpoints: ["L1, L2, and L3 technical support", "Desktop app maintenance"],
+          },
         ],
       },
       techIntro: {
