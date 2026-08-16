@@ -1148,36 +1148,58 @@ export default function ServiceTabs({
                 // 4-column) row, whether or not more steps follow.
                 const solidLeft = rowIndex === 0 ? firstCenter : 0;
                 return (
-                  <div key={rowIndex} className={rowIndex === 0 ? "relative" : "relative mt-24"}>
-                    {rowIndex === 0 && (
+                  <div key={rowIndex} className={rowIndex === 0 ? "" : "mt-24"}>
+                    {/* Line lives in its own wrapper around only the
+                        numeral/title/dot header — never the checklist
+                        below — so its top-1/2 midpoint always lands on
+                        the dot. Sizing the wrapper by the whole row
+                        (header + checklist together) would stretch it
+                        to whichever column has the longest checklist
+                        (e.g. Discovery's 4 items vs. Testing's 2),
+                        pulling the line down off the dot and into the
+                        shorter columns' bullet text. */}
+                    <div className="relative">
+                      {rowIndex === 0 && (
+                        <div
+                          className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
+                          style={{ left: 0, width: `${firstCenter}%` }}
+                        />
+                      )}
+                      <div
+                        className="absolute top-1/2 h-px -translate-y-1/2 bg-paper/30"
+                        style={{ left: `${solidLeft}%`, width: `${lastCenter - solidLeft}%` }}
+                      />
                       <div
                         className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
-                        style={{ left: 0, width: `${firstCenter}%` }}
+                        style={{ left: `${lastCenter}%`, right: 0 }}
                       />
-                    )}
+                      <div
+                        className="relative grid"
+                        style={{ gridTemplateColumns: `repeat(${FRAMEWORK_ROW_SIZE}, minmax(0, 1fr))` }}
+                      >
+                        {rowSteps.map((step, i) => (
+                          <div key={step.title} className="flex flex-col items-start pr-4">
+                            <p className="flex items-baseline gap-2 whitespace-nowrap text-left">
+                              <span className={`font-display text-3xl font-extrabold ${frameworkAccentText}`}>
+                                {rowIndex * FRAMEWORK_ROW_SIZE + i + 1}
+                              </span>
+                              <span className="text-lg font-semibold leading-snug text-paper">{step.title}</span>
+                            </p>
+                            <span
+                              className={`mt-4 h-3.5 w-3.5 shrink-0 rounded-full ${frameworkAccentBg} ring-4 ring-ink`}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                     <div
-                      className="absolute top-1/2 h-px -translate-y-1/2 bg-paper/30"
-                      style={{ left: `${solidLeft}%`, width: `${lastCenter - solidLeft}%` }}
-                    />
-                    <div
-                      className="absolute top-1/2 h-px -translate-y-1/2 border-t border-dashed border-paper/30"
-                      style={{ left: `${lastCenter}%`, right: 0 }}
-                    />
-                    <div
-                      className="relative grid"
+                      className="mt-6 grid"
                       style={{ gridTemplateColumns: `repeat(${FRAMEWORK_ROW_SIZE}, minmax(0, 1fr))` }}
                     >
-                      {rowSteps.map((step, i) => (
-                        <div key={step.title} className="flex flex-col items-start pr-4">
-                          <p className="flex items-baseline gap-2 whitespace-nowrap text-left">
-                            <span className={`font-display text-3xl font-extrabold ${frameworkAccentText}`}>
-                              {rowIndex * FRAMEWORK_ROW_SIZE + i + 1}
-                            </span>
-                            <span className="text-lg font-semibold leading-snug text-paper">{step.title}</span>
-                          </p>
-                          <span className={`mt-4 h-3.5 w-3.5 shrink-0 rounded-full ${frameworkAccentBg} ring-4 ring-ink`} />
+                      {rowSteps.map((step) => (
+                        <div key={step.title} className="pr-4">
                           {step.checkpoints && step.checkpoints.length > 0 && (
-                            <ul className="mt-6 space-y-2">
+                            <ul className="space-y-2">
                               {step.checkpoints.map((item) => (
                                 <li key={item} className="max-w-[11rem] text-left text-sm leading-snug text-paper/70">
                                   {item}
