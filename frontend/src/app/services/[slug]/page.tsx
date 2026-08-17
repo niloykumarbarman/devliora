@@ -1137,8 +1137,24 @@ const TAB_SLUG_SUFFIXES: [string, string][] = [
 // purely an additive alias, not a rename: nothing that already links
 // to the canonical path breaks, and this alias just shows the same
 // page under a second URL rather than 404ing.
+//
+// "software-resource-rental" is a different case, per explicit
+// confirmation (consequence spelled out and confirmed before this was
+// added): that service's own dedicated page is intentionally retired
+// by this alias — visiting its URL now shows Performance Testing
+// Services instead of its own content. Its own page code (the "Key
+// facts at a glance" section, the Overview-duplication exclusion,
+// etc., all still gated on service.slug === "software-resource-rental")
+// is unreachable through this URL as a result, since the fetched
+// service is now always performance-reliability-engineering here — not
+// deleted, just orphaned, in case this is reversed later. The nav
+// menu's "Software Resource Rental" label still links to this same
+// URL (serviceHref isn't affected by this map, only incoming requests
+// are), so it now knowingly leads to a page titled "Performance Testing
+// Services" instead.
 const SLUG_ALIASES: Record<string, string> = {
   "performance-testing-service": "performance-reliability-engineering",
+  "software-resource-rental": "performance-reliability-engineering",
 };
 
 function parseServiceSlug(rawSlug: string): { baseSlug: string; tabLabel: string | null } {
