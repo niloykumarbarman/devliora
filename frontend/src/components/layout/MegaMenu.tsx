@@ -100,7 +100,13 @@ export default function MegaMenu({
 
           <div>
             <h3 className={columnHeadingClass}>Technologies</h3>
-            <ul className="mt-4 space-y-3">
+            {/* The real, admin-managed list runs to 30 items — every one
+                of them is a genuine capability, so nothing here is
+                trimmed or cherry-picked. A capped, scrollable height
+                just keeps the column from dwarfing Services/Solutions
+                next to it; "View all" below covers anyone who wants the
+                full grouped view. */}
+            <ul className="mt-4 max-h-80 space-y-3 overflow-y-auto pr-2">
               {technologies.map((tech) => (
                 <li key={tech.id}>
                   {/* Individual technologies don't have their own anchor
@@ -111,7 +117,7 @@ export default function MegaMenu({
                     onClick={onNavigate}
                     className={linkClass}
                   >
-                    {tech.displayName}
+                    {tech.displayName.trim()}
                   </Link>
                 </li>
               ))}

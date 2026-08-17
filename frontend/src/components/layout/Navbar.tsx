@@ -331,7 +331,7 @@ export default function Navbar() {
                                 onClick={closeMobileMenu}
                                 className="block py-0.5 font-mono text-xs text-graphite/70 hover:text-ink"
                               >
-                                {tech.displayName}
+                                {tech.displayName.trim()}
                               </Link>
                             </li>
                           ))}
