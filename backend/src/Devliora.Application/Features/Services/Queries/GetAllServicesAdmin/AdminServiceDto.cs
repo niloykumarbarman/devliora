@@ -13,6 +13,7 @@ public class AdminServiceDto
     public string IconUrl { get; set; } = string.Empty;
     public string HeroImageUrl { get; set; } = string.Empty;
     public string AiServicesImageUrl { get; set; } = string.Empty;
+    public string AdvancedTechnologiesImageUrl { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
     public bool IsActive { get; set; }
     public string HighlightsHeading { get; set; } = string.Empty;

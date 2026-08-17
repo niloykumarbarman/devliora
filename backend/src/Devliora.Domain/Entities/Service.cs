@@ -18,6 +18,11 @@ public class Service : BaseEntity
     // added per explicit request for AI Development, but available to
     // any service that adds this section.
     public string AiServicesImageUrl { get; set; } = string.Empty;
+
+    // Same reasoning, for the "Advanced Technologies" split section's
+    // image tile — previously fell back to HeroImageUrl too, so the top
+    // banner and this tile always showed the same photo.
+    public string AdvancedTechnologiesImageUrl { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
     public bool IsActive { get; set; } = true;
 

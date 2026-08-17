@@ -40,6 +40,7 @@ export interface AdminService {
   iconUrl: string;
   heroImageUrl: string;
   aiServicesImageUrl: string;
+  advancedTechnologiesImageUrl: string;
   displayOrder: number;
   isActive: boolean;
   highlightsHeading: string;
@@ -69,6 +70,7 @@ export interface ServiceFormPayload {
   iconUrl: string;
   heroImageUrl: string;
   aiServicesImageUrl: string;
+  advancedTechnologiesImageUrl: string;
   displayOrder: number;
   isActive: boolean;
   highlightsHeading: string;

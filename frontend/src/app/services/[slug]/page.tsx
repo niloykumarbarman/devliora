@@ -3159,7 +3159,10 @@ export default async function ServiceDetailPage({ params }: Props) {
             testimonial. Same real testimonial the page's generic "Why
             choose us" section uses elsewhere — reused, not duplicated
             content. Only the tech list and page copy are the reference's
-            own generic (non-attributable) wording. */}
+            own generic (non-attributable) wording. Image tile uses its
+            own dedicated advancedTechnologiesImageUrl field (admin >
+            Services), independent of the top-of-page hero banner and the
+            "Our AI Services" section's own image below. */}
         {service.slug === "ai-development" && (
           <>
             <FeaturedWorkSplit items={featuredWorkSplit} />
@@ -3168,9 +3171,9 @@ export default async function ServiceDetailPage({ params }: Props) {
               <div className="mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-2 md:items-start">
                 <div className="flex flex-col gap-8">
                   <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite">
-                    {service.heroImageUrl ? (
+                    {service.advancedTechnologiesImageUrl ? (
                       <Image
-                        src={resolveImageUrl(service.heroImageUrl)}
+                        src={resolveImageUrl(service.advancedTechnologiesImageUrl)}
                         alt=""
                         fill
                         sizes="(min-width: 768px) 50vw, 100vw"

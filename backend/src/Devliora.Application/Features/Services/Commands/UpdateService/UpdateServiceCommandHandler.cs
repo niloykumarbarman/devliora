@@ -32,6 +32,7 @@ public class UpdateServiceCommandHandler : IRequestHandler<UpdateServiceCommand,
         service.IconUrl = request.IconUrl;
         service.HeroImageUrl = request.HeroImageUrl;
         service.AiServicesImageUrl = request.AiServicesImageUrl;
+        service.AdvancedTechnologiesImageUrl = request.AdvancedTechnologiesImageUrl;
         service.DisplayOrder = request.DisplayOrder;
         service.IsActive = request.IsActive;
         service.HighlightsHeading = request.HighlightsHeading;
