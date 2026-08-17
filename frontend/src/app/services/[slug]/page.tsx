@@ -2892,7 +2892,8 @@ export default async function ServiceDetailPage({ params }: Props) {
           service.slug === "digital-marketing" ||
           service.slug === "staff-augmentation" ||
           service.slug === "software-quality-assurance" ||
-          service.slug === "performance-reliability-engineering" ? null : (
+          service.slug === "performance-reliability-engineering" ||
+          service.slug === "software-resource-rental" ? null : (
           /* Fallback overview for services without a tab breakdown. Every
              bespoke-page slug above already shows shortDescription/
              fullDescription in its own hero or intro section, so this
@@ -2901,7 +2902,10 @@ export default async function ServiceDetailPage({ params }: Props) {
              second, redundant Overview block on Digital Design, Digital
              Marketing, Staff Augmentation, and Software Quality Assurance
              too, not just the newly-built Performance & Reliability
-             Engineering page. */
+             Engineering page. Software Resource Rental's own "Key facts
+             at a glance" section (added later) shows the same two
+             fields, so it joined this list too once the duplication
+             showed up live. */
           <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-4xl px-6">
               <div className="flex items-center gap-4">
