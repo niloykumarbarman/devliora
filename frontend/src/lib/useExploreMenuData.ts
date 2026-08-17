@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "./apiConfig";
-import { fetchTechnologies, type TechnologyDto } from "./technologies";
 import { SERVICE_TITLE_OVERRIDES } from "./services";
 
 export type ExploreService = {
@@ -34,24 +33,20 @@ async function fetchServicesForMenu(): Promise<ExploreService[]> {
 }
 
 /**
- * Shared data source for the navbar mega-menu (desktop hover) and the
- * mobile accordion equivalent, so both surfaces fetch services and
- * technologies exactly once per page load.
+ * Data source for the navbar mega-menu (desktop hover) and the mobile
+ * accordion equivalent. Technologies isn't fetched here — the mega-menu's
+ * "Technologies" column is a static list (see lib/megaMenuTechnologies.ts)
+ * matching kaz.com.bd's mega-menu, not the admin-managed data.
  */
 export function useExploreMenuData() {
   const [services, setServices] = useState<ExploreService[]>([]);
-  // Flat, admin-managed technology list (not grouped into categories) —
-  // the mega-menu's "Technologies" column lists each one individually,
-  // matching kaz.com.bd's mega-menu.
-  const [technologies, setTechnologies] = useState<TechnologyDto[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-    Promise.all([fetchServicesForMenu(), fetchTechnologies()]).then(([serviceData, techData]) => {
+    fetchServicesForMenu().then((serviceData) => {
       if (cancelled) return;
       setServices(serviceData);
-      setTechnologies([...techData].sort((a, b) => a.displayOrder - b.displayOrder));
       setLoaded(true);
     });
     return () => {
@@ -59,5 +54,5 @@ export function useExploreMenuData() {
     };
   }, []);
 
-  return { services, technologies, loaded };
+  return { services, loaded };
 }

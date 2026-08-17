@@ -5,16 +5,14 @@ import Image from "next/image";
 import { ArrowRight, Layers, LayoutGrid } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 import { serviceHref } from "@/lib/services";
-import { CATEGORY_META } from "@/lib/technologyCategories";
+import { MEGA_MENU_TECHNOLOGIES } from "@/lib/megaMenuTechnologies";
 import { SOLUTIONS } from "@/lib/solutions";
 import { slugify } from "@/lib/slugify";
-import type { TechnologyDto } from "@/lib/technologies";
 import type { ExploreService } from "@/lib/useExploreMenuData";
 
 type MegaMenuProps = {
   open: boolean;
   services: ExploreService[];
-  technologies: TechnologyDto[];
   loaded: boolean;
   imageUrl?: string;
   onMouseEnter: () => void;
@@ -32,7 +30,6 @@ const viewAllClass =
 export default function MegaMenu({
   open,
   services,
-  technologies,
   loaded,
   imageUrl,
   onMouseEnter,
@@ -100,28 +97,18 @@ export default function MegaMenu({
 
           <div>
             <h3 className={columnHeadingClass}>Technologies</h3>
-            {/* The real, admin-managed list runs to 30 items — every one
-                of them is a genuine capability, so nothing here is
-                trimmed or cherry-picked. A capped, scrollable height
-                just keeps the column from dwarfing Services/Solutions
-                next to it; "View all" below covers anyone who wants the
-                full grouped view. */}
-            <ul className="mt-4 max-h-80 space-y-3 overflow-y-auto pr-2">
-              {technologies.map((tech) => (
-                <li key={tech.id}>
-                  {/* Individual technologies don't have their own anchor
-                      on /technologies — only their category card does —
-                      so this links to that category's section. */}
-                  <Link
-                    href={`/technologies#${CATEGORY_META[tech.category]?.slug ?? ""}`}
-                    onClick={onNavigate}
-                    className={linkClass}
-                  >
-                    {tech.displayName.trim()}
+            {/* Static list matching kaz.com.bd's mega-menu exactly, per
+                explicit request — see lib/megaMenuTechnologies.ts. Not
+                the real admin-managed Technologies data (that's still
+                intact and reachable via "View all" below). */}
+            <ul className="mt-4 space-y-3">
+              {MEGA_MENU_TECHNOLOGIES.map((tech) => (
+                <li key={tech}>
+                  <Link href="/technologies" onClick={onNavigate} className={linkClass}>
+                    {tech}
                   </Link>
                 </li>
               ))}
-              {!loaded && <li className="font-mono text-sm text-graphite/40">Loading…</li>}
             </ul>
             <Link href="/technologies" onClick={onNavigate} className={viewAllClass}>
               View all technologies

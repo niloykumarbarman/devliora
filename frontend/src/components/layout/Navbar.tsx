@@ -8,7 +8,7 @@ import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
 import { useExploreMenuData } from "@/lib/useExploreMenuData";
 import { serviceHref } from "@/lib/services";
-import { CATEGORY_META } from "@/lib/technologyCategories";
+import { MEGA_MENU_TECHNOLOGIES } from "@/lib/megaMenuTechnologies";
 import { SOLUTIONS } from "@/lib/solutions";
 import { slugify } from "@/lib/slugify";
 import { fetchIndustries, type IndustryDto } from "@/lib/industries";
@@ -122,8 +122,6 @@ export default function Navbar() {
   const visibleMobileServices = [...exploreMenu.services].sort(
     (a, b) => a.displayOrder - b.displayOrder
   );
-
-  const visibleMobileTechnologies = exploreMenu.technologies;
 
   const closeMobileMenu = () => {
     setOpen(false);
@@ -250,7 +248,6 @@ export default function Navbar() {
         <MegaMenu
           open={megaOpen}
           services={exploreMenu.services}
-          technologies={exploreMenu.technologies}
           loaded={exploreMenu.loaded}
           imageUrl={servicesImageUrl}
           onMouseEnter={openMega}
@@ -324,14 +321,14 @@ export default function Navbar() {
                           Technologies
                         </p>
                         <ul className="mt-1.5 space-y-1.5">
-                          {visibleMobileTechnologies.map((tech) => (
-                            <li key={tech.id}>
+                          {MEGA_MENU_TECHNOLOGIES.map((tech) => (
+                            <li key={tech}>
                               <Link
-                                href={`/technologies#${CATEGORY_META[tech.category]?.slug ?? ""}`}
+                                href="/technologies"
                                 onClick={closeMobileMenu}
                                 className="block py-0.5 font-mono text-xs text-graphite/70 hover:text-ink"
                               >
-                                {tech.displayName.trim()}
+                                {tech}
                               </Link>
                             </li>
                           ))}
