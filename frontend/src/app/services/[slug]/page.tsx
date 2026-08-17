@@ -1387,9 +1387,13 @@ export default async function ServiceDetailPage({ params }: Props) {
             {/* Hero: full-bleed background image with the service title.
                 Prefers this service's own hero image (set per-service in the
                 admin panel); falls back to the site's shared hero background
-                for services that haven't had one uploaded yet. */}
+                for services that haven't had one uploaded yet — except AI
+                Development, per explicit request to drop that shared
+                fallback's network/particle graphic here. Upload a real
+                hero image for it via /admin/services and this reverts to
+                the normal per-service image automatically. */}
             <Reveal><section className="relative h-[380px] overflow-hidden sm:h-[440px] md:h-[480px]">
-              {(service.heroImageUrl || hero?.backgroundImageUrl) && (
+              {(service.heroImageUrl || (service.slug !== "ai-development" && hero?.backgroundImageUrl)) && (
                 <Image
                   src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
                   alt=""
