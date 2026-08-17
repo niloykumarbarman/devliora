@@ -3122,20 +3122,38 @@ export default async function ServiceDetailPage({ params }: Props) {
           />
         )}
 
-        {/* "Netflix" spotlight — AI Development only, static. 250M+
-            subscribers and AI-driven recommendations powering the large
-            majority of what's watched are real, publicly-cited Netflix
-            figures (not a Devliora claim about its own work), same
-            reasoning as the other spotlights on this page. No
-            "netflix" key exists in techIcons.ts, so this renders as the
-            text-badge fallback rather than a brand SVG. */}
+        {/* "Netflix" stat spotlight — AI Development only, static, bespoke
+            markup (not the generic PartnerSpotlight component, whose
+            quote-card layout doesn't match this big-stat-number design).
+            250M+ subscribers and AI-driven recommendations powering the
+            large majority of what's watched are real, publicly-cited
+            Netflix figures, not a Devliora claim about its own work.
+            "NETFLIX" renders as styled text in the brand's own red
+            rather than an embedded logo asset — same reasoning as the
+            text-badge fallback used for trademark-restricted icons
+            elsewhere on the site (IBM, Java, Marketo). */}
         {service.slug === "ai-development" && (
-          <PartnerSpotlight
-            quote="250M+ subscribers, powered by AI recommendations."
-            description="Netflix's recommendation algorithms personalize the viewing experience for its subscriber base, driving the large majority of what people actually watch on the platform."
-            name="Netflix"
-            icons={[{ key: "netflix", label: "Netflix" }]}
-          />
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 bg-black py-16 md:py-20">
+            <div className="mx-auto flex max-w-5xl flex-col gap-10 px-6 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="font-display text-5xl font-extrabold leading-none text-ember sm:text-6xl">
+                  250M+
+                </p>
+                <p className="mt-6 max-w-xl text-lg leading-relaxed text-paper/80">
+                  With over <span className="text-ember">250 million subscribers</span>, Netflix
+                  uses <span className="text-ember">AI-driven</span> recommendation algorithms to
+                  personalize viewing experiences, powering{" "}
+                  <span className="text-ember">over 80%</span> of the content users watch.
+                </p>
+              </div>
+              <p
+                className="shrink-0 font-display text-4xl font-black uppercase tracking-tight sm:text-5xl"
+                style={{ color: "#E50914" }}
+              >
+                Netflix
+              </p>
+            </div>
+          </section></Reveal>
         )}
 
         {/* "Accenture" spotlight — IT Consulting only, static. The quote
