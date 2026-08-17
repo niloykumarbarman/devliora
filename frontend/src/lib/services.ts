@@ -52,13 +52,31 @@ export interface ServiceDto {
   tabCaseStudies: ServiceTabCaseStudy[];
 }
 
+// Display-name overrides, keyed by slug, applied on top of the backend's
+// own service.title — added per explicit request to rename "Performance
+// & Reliability Engineering" to "Performance Testing Services" (matching
+// the reference exactly) without editing the CMS data itself. Exported
+// so every place a service's display name is read from the API — this
+// file's fetchServices, and useExploreMenuData's separate nav-menu
+// fetch, which hits the same endpoint directly — applies the same
+// rename consistently instead of drifting. The underlying backend title
+// should still be renamed there directly when convenient.
+export const SERVICE_TITLE_OVERRIDES: Record<string, string> = {
+  "performance-reliability-engineering": "Performance Testing Services",
+};
+
 export async function fetchServices(): Promise<ServiceDto[]> {
   try {
     const res = await fetch(`${API_BASE_URL}/services`, { cache: "no-store" });
     if (!res.ok) {
       return [];
     }
-    return (await res.json()) as ServiceDto[];
+    const services = (await res.json()) as ServiceDto[];
+    return services.map((service) =>
+      SERVICE_TITLE_OVERRIDES[service.slug]
+        ? { ...service, title: SERVICE_TITLE_OVERRIDES[service.slug] }
+        : service
+    );
   } catch {
     return [];
   }
@@ -105,7 +123,7 @@ export const STATIC_SERVICE_LINKS: { title: string; slug: string }[][] = [
     { title: "Software Engineering", slug: "software-engineering" },
     { title: "API Design & Integration", slug: "api-design-integration" },
     { title: "Cloud Infrastructure & DevOps", slug: "cloud-infrastructure-devops" },
-    { title: "Performance & Reliability Engineering", slug: "performance-reliability-engineering" },
+    { title: "Performance Testing Services", slug: "performance-reliability-engineering" },
     { title: "Software Resource Rental", slug: "software-resource-rental" },
     { title: "Software Quality Assurance", slug: "software-quality-assurance" },
   ],

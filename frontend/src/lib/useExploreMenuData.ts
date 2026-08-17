@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "./apiConfig";
 import { fetchTechnologies } from "./technologies";
+import { SERVICE_TITLE_OVERRIDES } from "./services";
 
 export type ExploreService = {
   id: string;
@@ -18,7 +19,15 @@ async function fetchServicesForMenu(): Promise<ExploreService[]> {
     if (!res.ok) {
       return [];
     }
-    return (await res.json()) as ExploreService[];
+    const services = (await res.json()) as ExploreService[];
+    // Same rename applied in lib/services.ts's fetchServices — this hook
+    // hits the API directly rather than reusing that function, so the
+    // override is applied here too to stay consistent.
+    return services.map((service) =>
+      SERVICE_TITLE_OVERRIDES[service.slug]
+        ? { ...service, title: SERVICE_TITLE_OVERRIDES[service.slug] }
+        : service
+    );
   } catch {
     return [];
   }
