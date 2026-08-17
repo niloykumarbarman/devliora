@@ -365,6 +365,26 @@ const DISTRIBUTED_TEAMS_COLLABORATION = [
   },
 ];
 
+// "Tailored tech solutions for every industry" column data — shared by
+// Staff Augmentation and AI Development, both of which render the same
+// real (non-fabricated) technology/domain names in identical columns.
+const TAILORED_TECH_COLUMNS = [
+  { title: "Programming languages", items: ["Java", ".NET", "C++", "Python", "C#", "PHP"] },
+  { title: "Platforms", items: ["Office 365", "SPA Commerce", "SharePoint", "Salesforce", "Atlassian"] },
+  {
+    title: "Technologies",
+    items: [
+      "Cloud",
+      "Machine Learning",
+      "Internet of Things",
+      "Augmented & Virtual Reality",
+      "Cybersecurity",
+      "Blockchain",
+    ],
+  },
+  { title: "Domains", items: ["Healthcare", "Telecom", "Finance", "Automotive", "Retail"] },
+];
+
 const DEDICATED_DEV_CENTER = [
   {
     title: "People",
@@ -2212,22 +2232,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
 
               <div className="mt-16 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
-                {[
-                  { title: "Programming languages", items: ["Java", ".NET", "C++", "Python", "C#", "PHP"] },
-                  { title: "Platforms", items: ["Office 365", "SPA Commerce", "SharePoint", "Salesforce", "Atlassian"] },
-                  {
-                    title: "Technologies",
-                    items: [
-                      "Cloud",
-                      "Machine Learning",
-                      "Internet of Things",
-                      "Augmented & Virtual Reality",
-                      "Cybersecurity",
-                      "Blockchain",
-                    ],
-                  },
-                  { title: "Domains", items: ["Healthcare", "Telecom", "Finance", "Automotive", "Retail"] },
-                ].map((col) => (
+                {TAILORED_TECH_COLUMNS.map((col) => (
                   <div key={col.title}>
                     <p className="font-semibold text-ember">{col.title}</p>
                     <div className="mt-2 border-t border-paper/15" />
@@ -3513,6 +3518,80 @@ export default async function ServiceDetailPage({ params }: Props) {
                     },
                   ]}
                 />
+              </div>
+            </section></Reveal>
+
+            {/* "Tailored Tech Solutions for Every Industry" — same column
+                data as Staff Augmentation's "Tailored tech solutions for
+                every industry" (shared via TAILORED_TECH_COLUMNS), but
+                the heading casing and intro paragraph are this page's own
+                wording per kaz.com.bd's AI Development page specifically
+                (confirmed by screenshot — the two reference pages reuse
+                this block with per-page copy variants). "Machine
+                Learning" renders bold here, matching the reference's own
+                highlight of the technology most relevant to this page. */}
+            <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+              <div className="mx-auto max-w-6xl px-6">
+                <div className="grid gap-10 md:grid-cols-2">
+                  <div>
+                    <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                      Tailored Tech Solutions for Every Industry
+                    </h2>
+                    <p className="mt-5 inline-block max-w-md border-b border-ember/40 pb-3 italic text-paper/60">
+                      Proven expertise, industry knowledge, tailored results.
+                    </p>
+                  </div>
+                  <p className="text-paper/70 md:pt-2">
+                    Across industries, we craft custom solutions designed to meet the specific
+                    needs of healthcare, telecom, finance, automotive, and retail. Our expertise
+                    ensures seamless integration and optimization of operations. From concept to
+                    execution, we deliver technology that empowers.
+                  </p>
+                </div>
+
+                <div className="mt-16 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
+                  {TAILORED_TECH_COLUMNS.map((col) => (
+                    <div key={col.title}>
+                      <p className="font-semibold text-ember">{col.title}</p>
+                      <div className="mt-2 border-t border-paper/15" />
+                      <div className="mt-4 flex flex-col gap-3">
+                        {col.items.map((item) => (
+                          <p
+                            key={item}
+                            className={item === "Machine Learning" ? "font-semibold text-paper" : "text-paper/80"}
+                          >
+                            {item}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section></Reveal>
+
+            {/* "Enhance your team's capabilities and efficiency" CTA
+                banner — same two-line bg-signal pattern as the other CTA
+                banners on this page (see Staff Augmentation's identical
+                banner for why bg-signal replaces the reference's
+                off-brand magenta). Button label is "Contact Us" here,
+                matching kaz.com.bd's AI Development page specifically
+                (Staff Augmentation's reads "Get Started" instead). */}
+            <Reveal><section className="border-t border-paper/10 bg-signal">
+              <div className="flex flex-col sm:flex-row">
+                <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+                  <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+                    Enhance your team&apos;s capabilities and efficiency.
+                  </p>
+                  <p className="mt-1 max-w-lg text-sm text-paper/70">Want to scale up?</p>
+                </div>
+                <Link
+                  href="/contact"
+                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                >
+                  Contact Us
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
               </div>
             </section></Reveal>
           </>
