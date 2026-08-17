@@ -1382,18 +1382,45 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
             </div>
           </section></Reveal>
+        ) : service.slug === "ai-development" ? (
+          /* Compact header instead of the full-height image hero: AI
+             Development has no hero image of its own yet (its previous
+             one turned out to be kaz.com.bd's own photo — removed), and
+             an empty, image-less 380-480px dark rectangle just reads as
+             a layout gap rather than a hero. Combines the breadcrumb and
+             title into one section instead. Once a real hero image is
+             uploaded via /admin/services, this can go back to the
+             default full-bleed-image branch below. Breadcrumb reads
+             "Home / Technologies / AI Development", matching
+             kaz.com.bd's own path for this page, per explicit request —
+             the actual route stays /services/ai-development either way,
+             this only changes the displayed trail and its middle link. */
+          <Reveal><section className="border-t border-paper/10 py-16 md:py-20">
+            <div className="mx-auto max-w-5xl px-6">
+              <nav className="flex flex-wrap items-center gap-2 font-mono text-sm">
+                <Link href="/" className="text-paper/80 transition-colors hover:text-paper">
+                  Home
+                </Link>
+                <span className="text-paper/30">/</span>
+                <Link href="/technologies" className="text-paper/80 transition-colors hover:text-paper">
+                  Technologies
+                </Link>
+                <span className="text-paper/30">/</span>
+                <span className="text-ember">{service.title}</span>
+              </nav>
+              <h1 className="mt-6 text-balance font-display text-4xl font-semibold leading-tight text-paper md:text-5xl">
+                {service.title}
+              </h1>
+            </div>
+          </section></Reveal>
         ) : (
           <>
             {/* Hero: full-bleed background image with the service title.
                 Prefers this service's own hero image (set per-service in the
                 admin panel); falls back to the site's shared hero background
-                for services that haven't had one uploaded yet — except AI
-                Development, per explicit request to drop that shared
-                fallback's network/particle graphic here. Upload a real
-                hero image for it via /admin/services and this reverts to
-                the normal per-service image automatically. */}
+                for services that haven't had one uploaded yet. */}
             <Reveal><section className="relative h-[380px] overflow-hidden sm:h-[440px] md:h-[480px]">
-              {(service.heroImageUrl || (service.slug !== "ai-development" && hero?.backgroundImageUrl)) && (
+              {(service.heroImageUrl || hero?.backgroundImageUrl) && (
                 <Image
                   src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
                   alt=""
