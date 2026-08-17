@@ -1382,19 +1382,17 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
             </div>
           </section></Reveal>
-        ) : service.slug === "ai-development" ? (
+        ) : service.slug === "ai-development" && !service.heroImageUrl ? (
           /* Compact header instead of the full-height image hero: AI
-             Development has no hero image of its own yet (its previous
-             one turned out to be kaz.com.bd's own photo — removed), and
-             an empty, image-less 380-480px dark rectangle just reads as
-             a layout gap rather than a hero. Combines the breadcrumb and
-             title into one section instead. Once a real hero image is
-             uploaded via /admin/services, this can go back to the
-             default full-bleed-image branch below. Breadcrumb reads
-             "Home / Technologies / AI Development", matching
-             kaz.com.bd's own path for this page, per explicit request —
-             the actual route stays /services/ai-development either way,
-             this only changes the displayed trail and its middle link. */
+             Development has no hero image of its own uploaded right now
+             (its previous one turned out to be kaz.com.bd's own photo —
+             removed), and an empty, image-less 380-480px dark rectangle
+             just reads as a layout gap rather than a hero. Combines the
+             breadcrumb and title into one section instead. The moment a
+             HeroImageUrl is saved for this service via /admin/services,
+             this condition goes false and it falls through to the
+             default full-bleed-image branch below automatically — no
+             further code change needed. */
           <Reveal><section className="border-t border-paper/10 py-16 md:py-20">
             <div className="mx-auto max-w-5xl px-6">
               <nav className="flex flex-wrap items-center gap-2 font-mono text-sm">
@@ -1418,7 +1416,10 @@ export default async function ServiceDetailPage({ params }: Props) {
             {/* Hero: full-bleed background image with the service title.
                 Prefers this service's own hero image (set per-service in the
                 admin panel); falls back to the site's shared hero background
-                for services that haven't had one uploaded yet. */}
+                for services that haven't had one uploaded yet. (AI
+                Development only reaches this branch once it has its own
+                HeroImageUrl — see the compact-header branch above — so
+                the fallback here is moot for it either way.) */}
             <Reveal><section className="relative h-[380px] overflow-hidden sm:h-[440px] md:h-[480px]">
               {(service.heroImageUrl || hero?.backgroundImageUrl) && (
                 <Image
@@ -1438,7 +1439,11 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
             </section></Reveal>
 
-            {/* Breadcrumb bar */}
+            {/* Breadcrumb bar. AI Development's middle crumb reads
+                "Technologies" (linking to /technologies) instead of
+                "Services", matching kaz.com.bd's own path for this page
+                per explicit request — the actual route is unchanged
+                (/services/ai-development either way). */}
             <Reveal><section className="border-t border-paper/10 py-6">
               <div className="mx-auto max-w-5xl px-6">
                 <nav className="flex flex-wrap items-center gap-2 font-mono text-sm">
@@ -1446,8 +1451,11 @@ export default async function ServiceDetailPage({ params }: Props) {
                     Home
                   </Link>
                   <span className="text-paper/30">/</span>
-                  <Link href="/services" className="text-paper/80 transition-colors hover:text-paper">
-                    Services
+                  <Link
+                    href={service.slug === "ai-development" ? "/technologies" : "/services"}
+                    className="text-paper/80 transition-colors hover:text-paper"
+                  >
+                    {service.slug === "ai-development" ? "Technologies" : "Services"}
                   </Link>
                   <span className="text-paper/30">/</span>
                   <span className="text-ember">{service.title}</span>
