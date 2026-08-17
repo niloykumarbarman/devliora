@@ -41,6 +41,8 @@ export interface AdminService {
   heroImageUrl: string;
   displayOrder: number;
   isActive: boolean;
+  highlightsHeading: string;
+  highlightsDescription: string;
   highlights: AdminServiceHighlight[];
   toolsHeading: string;
   toolsDescription: string;
@@ -67,6 +69,8 @@ export interface ServiceFormPayload {
   heroImageUrl: string;
   displayOrder: number;
   isActive: boolean;
+  highlightsHeading: string;
+  highlightsDescription: string;
   highlights: AdminServiceHighlight[];
   toolsHeading: string;
   toolsDescription: string;

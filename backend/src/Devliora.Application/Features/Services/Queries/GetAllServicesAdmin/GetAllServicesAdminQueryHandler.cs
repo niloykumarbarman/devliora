@@ -33,6 +33,8 @@ public class GetAllServicesAdminQueryHandler : IRequestHandler<GetAllServicesAdm
                 HeroImageUrl = s.HeroImageUrl,
                 DisplayOrder = s.DisplayOrder,
                 IsActive = s.IsActive,
+                HighlightsHeading = s.HighlightsHeading,
+                HighlightsDescription = s.HighlightsDescription,
                 Highlights = s.Highlights
                     .OrderBy(h => h.DisplayOrder)
                     .Select(h => new ServiceHighlightItem { Label = h.Label, Description = h.Description, DisplayOrder = h.DisplayOrder })

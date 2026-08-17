@@ -2964,8 +2964,43 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section></Reveal>
         )}
 
-        {/* At-a-glance highlights, admin-managed per service */}
-        {service.highlights.length > 0 && (
+        {/* Highlights, admin-managed per service, in one of two designs:
+            - HighlightsHeading set: "Benefits of X" card grid (each
+              Highlight rendered as its own underlined title + paragraph,
+              3-column grid wrapping to 2 on the last row) — matches
+              kaz.com.bd's AI Development page layout, opted into per
+              service by setting the heading field in /admin/services.
+            - HighlightsHeading blank: the older "{title} at a glance"
+              2-column inline label/description list, so services that
+              already had Highlights entered before this option existed
+              (Digital Design) keep rendering exactly as before. */}
+        {service.highlights.length > 0 && service.highlightsHeading && (
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-6xl px-6">
+              <div className="grid gap-8 sm:grid-cols-2 sm:gap-12">
+                <h2 className="text-balance font-display text-2xl font-semibold leading-tight text-paper sm:text-3xl">
+                  {renderHighlightedHeading(service.highlightsHeading)}
+                </h2>
+                {service.highlightsDescription && (
+                  <p className="text-base leading-relaxed text-paper/70">{service.highlightsDescription}</p>
+                )}
+              </div>
+              <div className="mt-12 grid gap-x-12 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+                {[...service.highlights]
+                  .sort((a, b) => a.displayOrder - b.displayOrder)
+                  .map((highlight, i) => (
+                    <div key={`${highlight.label}-${i}`}>
+                      <h3 className="border-b border-ember/40 pb-3 font-display text-lg font-semibold text-ember">
+                        {highlight.label}
+                      </h3>
+                      <p className="mt-4 text-base leading-relaxed text-paper/70">{highlight.description}</p>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </section></Reveal>
+        )}
+        {service.highlights.length > 0 && !service.highlightsHeading && (
           <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
             <div className="mx-auto max-w-4xl px-6">
               <h2 className="font-display text-2xl font-semibold text-paper sm:text-3xl">

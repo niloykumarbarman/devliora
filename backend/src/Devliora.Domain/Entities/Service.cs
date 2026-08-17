@@ -13,6 +13,18 @@ public class Service : BaseEntity
     public string HeroImageUrl { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
     public bool IsActive { get; set; } = true;
+
+    // "Benefits of X" card grid (heading + intro description, then each
+    // Highlight rendered as its own underlined title + paragraph, in a
+    // 3-column grid that wraps to 2 on the last row) — set HighlightsHeading
+    // to opt into this design; leave it blank and the section falls back
+    // to the older "{title} at a glance" 2-column label/description list,
+    // so services that already have Highlights entered (e.g. Digital
+    // Design) keep rendering exactly as before. HighlightsHeading supports
+    // wrapping a segment in {curly braces} to render it in the ember
+    // accent color, same convention as IndustriesHeading below.
+    public string HighlightsHeading { get; set; } = string.Empty;
+    public string HighlightsDescription { get; set; } = string.Empty;
     public ICollection<ServiceHighlight> Highlights { get; set; } = new List<ServiceHighlight>();
 
     // "Tools we work with" section: heading/description (2-column intro),

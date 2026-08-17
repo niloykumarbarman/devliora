@@ -14,6 +14,8 @@ public class AdminServiceDto
     public string HeroImageUrl { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
     public bool IsActive { get; set; }
+    public string HighlightsHeading { get; set; } = string.Empty;
+    public string HighlightsDescription { get; set; } = string.Empty;
     public List<ServiceHighlightItem> Highlights { get; set; } = new();
     public string ToolsHeading { get; set; } = string.Empty;
     public string ToolsDescription { get; set; } = string.Empty;

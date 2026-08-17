@@ -33,6 +33,8 @@ public class UpdateServiceCommandHandler : IRequestHandler<UpdateServiceCommand,
         service.HeroImageUrl = request.HeroImageUrl;
         service.DisplayOrder = request.DisplayOrder;
         service.IsActive = request.IsActive;
+        service.HighlightsHeading = request.HighlightsHeading;
+        service.HighlightsDescription = request.HighlightsDescription;
         service.ToolsHeading = request.ToolsHeading;
         service.ToolsDescription = request.ToolsDescription;
         service.ToolsTagline = request.ToolsTagline;

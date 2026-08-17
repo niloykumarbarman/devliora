@@ -40,6 +40,8 @@ public class GetAllServicesQueryHandler : IRequestHandler<GetAllServicesQuery, L
                 IconUrl = s.IconUrl,
                 HeroImageUrl = s.HeroImageUrl,
                 DisplayOrder = s.DisplayOrder,
+                HighlightsHeading = s.HighlightsHeading,
+                HighlightsDescription = s.HighlightsDescription,
                 Highlights = s.Highlights
                     .OrderBy(h => h.DisplayOrder)
                     .Select(h => new ServiceHighlightItem { Label = h.Label, Description = h.Description, DisplayOrder = h.DisplayOrder })
