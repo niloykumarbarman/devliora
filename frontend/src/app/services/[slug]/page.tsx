@@ -46,6 +46,7 @@ import { fetchBlogPosts, type BlogPost } from "@/lib/blogPosts";
 import { fetchTechnologies } from "@/lib/technologies";
 import { fetchFaqsForService } from "@/lib/faq";
 import FAQView from "@/components/sections/FAQView";
+import { MEGA_MENU_TECHNOLOGIES } from "@/lib/megaMenuTechnologies";
 import { API_BASE_URL } from "@/lib/apiConfig";
 import { buildMetadata } from "@/lib/seo";
 import { getTechIcon } from "@/lib/techIcons";
@@ -3156,15 +3157,116 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section></Reveal>
         )}
 
+        {/* AI Development's "Featured Projects" + "Advanced Technologies"
+            block, matching kaz.com.bd's page structure at this point —
+            but with real Devliora content substituted in wherever the
+            reference used its own material that Devliora can't honestly
+            claim: their two client project cards (a supply-chain SaaS
+            platform, a kids' edtech app) become Devliora's own real,
+            admin-managed featured work instead, and their "Customer
+            Voice" testimonial (a named individual's real quote about
+            them) becomes Devliora's own real, admin-entered featured
+            testimonial. Same real testimonial the page's generic "Why
+            choose us" section uses elsewhere — reused, not duplicated
+            content. Only the tech list and page copy are the reference's
+            own generic (non-attributable) wording. */}
+        {service.slug === "ai-development" && (
+          <>
+            <FeaturedWorkSplit items={featuredWorkSplit} />
+
+            <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+              <div className="mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-2 md:items-start">
+                <div className="flex flex-col gap-8">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite">
+                    {service.heroImageUrl ? (
+                      <Image
+                        src={resolveImageUrl(service.heroImageUrl)}
+                        alt=""
+                        fill
+                        sizes="(min-width: 768px) 50vw, 100vw"
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div
+                        className="absolute inset-0 opacity-60"
+                        style={{ backgroundImage: INDUSTRY_CARD_FALLBACK_GRADIENTS[0] }}
+                      />
+                    )}
+                  </div>
+
+                  {testimonial && (
+                    <div className="rounded-2xl border border-ember/20 bg-ember/10 p-8">
+                      <h3 className="font-display text-xl font-semibold text-paper">Customer Voice</h3>
+                      <p className="mt-4 text-lg leading-relaxed text-paper/80">
+                        &ldquo;{testimonial.quote.replace(/^[“"]|[”"]$/g, "")}&rdquo;
+                      </p>
+                      <div className="mt-6 flex items-center gap-3">
+                        {testimonial.clientPhotoUrl ? (
+                          <Image
+                            src={resolveImageUrl(testimonial.clientPhotoUrl)}
+                            alt=""
+                            width={44}
+                            height={44}
+                            className="h-11 w-11 shrink-0 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ember/20 text-ember">
+                            <Star className="h-5 w-5" />
+                          </div>
+                        )}
+                        <div>
+                          <p className="font-semibold text-paper">{testimonial.clientName}</p>
+                          <p className="text-sm text-paper/60">
+                            {testimonial.clientTitle}
+                            {testimonial.clientCompany && (
+                              <>
+                                , <span className="text-ember">{testimonial.clientCompany}</span>
+                              </>
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                    Advanced Technologies
+                  </h2>
+                  <p className="mt-4 inline-block border-b border-ember/40 pb-3 italic text-paper/60">
+                    Cutting-edge tech, timeless quality.
+                  </p>
+                  <p className="mt-4 text-base leading-relaxed text-paper/70">
+                    We stay ahead of the curve, embracing the latest advancements so every AI
+                    project is built on a foundation of innovation and reliability — from machine
+                    learning to cloud computing and beyond.
+                  </p>
+                  <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
+                    {MEGA_MENU_TECHNOLOGIES.map((tech) => (
+                      <Link
+                        key={tech.label}
+                        href={tech.href}
+                        className="font-medium text-ember transition-colors hover:text-paper"
+                      >
+                        {tech.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section></Reveal>
+          </>
+        )}
+
         {/* Everything below, down to the FAQ section, is the generic
             service-template content (Client Spotlight, Featured Work,
             Industries, Tools, tabs, testimonials, etc.) built for the
             site's full "service" pages. AI Development is meant to be a
             short, focused page matching kaz.com.bd's own AI Development
-            page structure (Hero → Overview → Benefits → Netflix stat →
-            FAQ → CTA), so all of it is skipped for that one slug — per
-            explicit request, after the FAQ section ended up buried below
-            a large stack of unrelated sections it never needed. */}
+            page structure, so all of it is skipped for that one slug —
+            per explicit request, after the FAQ section ended up buried
+            below a large stack of unrelated sections it never needed. */}
         {service.slug !== "ai-development" && (
         <>
         {/* "Accenture" spotlight — IT Consulting only, static. The quote
