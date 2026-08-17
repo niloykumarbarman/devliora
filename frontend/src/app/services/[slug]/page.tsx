@@ -331,6 +331,36 @@ const WHY_CHOOSE_US_CLOSING_CTA: ServiceClosingCta = {
   href: "/book-consultation",
 };
 
+// "Dedicated Development Center" org-chart data — shared by Staff
+// Augmentation and AI Development, both of which render the same
+// generic, non-attributable People/Infrastructure/Processes breakdown.
+const DEDICATED_DEV_CENTER = [
+  {
+    title: "People",
+    icon: Users,
+    subs: [
+      { title: "Teams", leaves: ["Team Productivity", "Knowledge Accumulation"] },
+      { title: "Individuals", leaves: ["Technological Skills", "Domain Experience"] },
+    ],
+  },
+  {
+    title: "Infrastructure",
+    icon: Server,
+    subs: [
+      { title: "Hardware", leaves: ["Devices", "Networks"] },
+      { title: "Software", leaves: ["Test Automation", "IDEs"] },
+    ],
+  },
+  {
+    title: "Processes",
+    icon: Workflow,
+    subs: [
+      { title: "Integration", leaves: ["In-House/Offshore", "Process Optimization"] },
+      { title: "Alignment", leaves: ["Seamless Communication", "Methodologies Adjustment"] },
+    ],
+  },
+];
+
 // Generic, non-platform-specific capability copy — same content
 // regardless of which tab (Web/Mobile/Desktop) is active, since this
 // section sits below the tabs as a shared block, not inside them.
@@ -1856,32 +1886,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                     is desktop/tablet only and mobile gets a simple
                     stacked list instead (no lines, just spacing). */}
                 <div className="hidden sm:flex">
-                  {[
-                    {
-                      title: "People",
-                      icon: Users,
-                      subs: [
-                        { title: "Teams", leaves: ["Team Productivity", "Knowledge Accumulation"] },
-                        { title: "Individuals", leaves: ["Technological Skills", "Domain Experience"] },
-                      ],
-                    },
-                    {
-                      title: "Infrastructure",
-                      icon: Server,
-                      subs: [
-                        { title: "Hardware", leaves: ["Devices", "Networks"] },
-                        { title: "Software", leaves: ["Test Automation", "IDEs"] },
-                      ],
-                    },
-                    {
-                      title: "Processes",
-                      icon: Workflow,
-                      subs: [
-                        { title: "Integration", leaves: ["In-House/Offshore", "Process Optimization"] },
-                        { title: "Alignment", leaves: ["Seamless Communication", "Methodologies Adjustment"] },
-                      ],
-                    },
-                  ].map((cat, i, cats) => (
+                  {DEDICATED_DEV_CENTER.map((cat, i, cats) => (
                     <div key={cat.title} className="relative flex-1 px-3">
                       <span
                         className="absolute top-0 h-px bg-paper/25"
@@ -1920,32 +1925,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
 
                 <div className="mt-8 flex flex-col gap-10 sm:hidden">
-                  {[
-                    {
-                      title: "People",
-                      icon: Users,
-                      subs: [
-                        { title: "Teams", leaves: ["Team Productivity", "Knowledge Accumulation"] },
-                        { title: "Individuals", leaves: ["Technological Skills", "Domain Experience"] },
-                      ],
-                    },
-                    {
-                      title: "Infrastructure",
-                      icon: Server,
-                      subs: [
-                        { title: "Hardware", leaves: ["Devices", "Networks"] },
-                        { title: "Software", leaves: ["Test Automation", "IDEs"] },
-                      ],
-                    },
-                    {
-                      title: "Processes",
-                      icon: Workflow,
-                      subs: [
-                        { title: "Integration", leaves: ["In-House/Offshore", "Process Optimization"] },
-                        { title: "Alignment", leaves: ["Seamless Communication", "Methodologies Adjustment"] },
-                      ],
-                    },
-                  ].map((cat) => (
+                  {DEDICATED_DEV_CENTER.map((cat) => (
                     <div key={cat.title} className="flex flex-col items-center text-center">
                       <cat.icon className="h-7 w-7 text-ember" strokeWidth={1.5} />
                       <p className="mt-2 font-semibold text-paper">{cat.title}</p>
@@ -3319,50 +3299,75 @@ export default async function ServiceDetailPage({ params }: Props) {
                   </p>
                 </div>
 
-                <div className="mt-20 flex flex-col items-center">
-                  <p className="font-display text-lg font-semibold text-paper">
-                    Dedicated Development Center
-                  </p>
-                  <div className="h-10 w-px bg-paper/20" />
-                  <div className="grid w-full grid-cols-1 gap-y-14 border-t border-paper/20 pt-10 sm:grid-cols-3">
-                    {[
-                      {
-                        title: "People",
-                        icon: Users,
-                        groups: [
-                          { label: "Teams", items: ["Team Productivity", "Knowledge Accumulation"] },
-                          { label: "Individuals", items: ["Technological Skills", "Domain Experience"] },
-                        ],
-                      },
-                      {
-                        title: "Infrastructure",
-                        icon: Network,
-                        groups: [
-                          { label: "Hardware", items: ["Devices", "Networks"] },
-                          { label: "Software", items: ["Test Automation", "IDEs"] },
-                        ],
-                      },
-                      {
-                        title: "Processes",
-                        icon: Workflow,
-                        groups: [
-                          { label: "Integration", items: ["In-House/Offshore", "Process Optimization"] },
-                          { label: "Alignment", items: ["Seamless Communication", "Methodologies Adjustment"] },
-                        ],
-                      },
-                    ].map((column) => (
-                      <div key={column.title} className="flex flex-col items-center gap-4 px-4 text-center">
-                        <column.icon className="h-6 w-6 text-ember" />
-                        <p className="border-b border-paper/20 pb-3 font-semibold text-paper">
-                          {column.title}
-                        </p>
-                        <div className="flex gap-8">
-                          {column.groups.map((group) => (
-                            <div key={group.label} className="flex flex-col items-center gap-1.5">
-                              <p className="text-sm font-medium text-paper/80">{group.label}</p>
-                              {group.items.map((item) => (
-                                <p key={item} className="text-xs text-paper/50">
-                                  {item}
+                <div className="mt-20">
+                  <div className="text-center">
+                    <p className="inline-block font-semibold text-paper">Dedicated Development Center</p>
+                  </div>
+                  <div className="mx-auto h-6 w-px bg-paper/25" />
+
+                  {/* Below sm, 3 categories x 2 subs each squeezes into
+                      unreadably narrow columns, so the connector-line tree
+                      is desktop/tablet only and mobile gets a simple
+                      stacked list instead (no lines, just spacing) — same
+                      technique as Staff Augmentation's identical org-chart
+                      above: each row of siblings paints its own half of the
+                      horizontal bracket line (0-50% or 50-100% of its own
+                      width) plus a vertical drop to its content, the
+                      classic pure-CSS org-chart trick, so the line only
+                      spans from the first child's center to the last
+                      child's center instead of the full container width. */}
+                  <div className="hidden sm:flex">
+                    {DEDICATED_DEV_CENTER.map((cat, i, cats) => (
+                      <div key={cat.title} className="relative flex-1 px-3">
+                        <span
+                          className="absolute top-0 h-px bg-paper/25"
+                          style={{ left: i === 0 ? "50%" : "0", right: i === cats.length - 1 ? "50%" : "0" }}
+                        />
+                        <span className="absolute left-1/2 top-0 h-6 w-px -translate-x-1/2 bg-paper/25" />
+
+                        <div className="flex flex-col items-center pt-6 text-center">
+                          <cat.icon className="h-7 w-7 text-ember" strokeWidth={1.5} />
+                          <p className="mt-2 font-semibold text-paper">{cat.title}</p>
+                          <div className="mt-4 h-4 w-px bg-paper/25" />
+
+                          <div className="flex w-full">
+                            {cat.subs.map((sub, j, subs) => (
+                              <div key={sub.title} className="relative flex-1 px-2">
+                                <span
+                                  className="absolute top-0 h-px bg-paper/25"
+                                  style={{ left: j === 0 ? "50%" : "0", right: j === subs.length - 1 ? "50%" : "0" }}
+                                />
+                                <span className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 bg-paper/25" />
+
+                                <div className="flex flex-col items-center gap-2 pt-4 text-center">
+                                  <p className="text-sm font-medium text-paper">{sub.title}</p>
+                                  {sub.leaves.map((leaf) => (
+                                    <p key={leaf} className="text-xs leading-snug text-paper/60">
+                                      {leaf}
+                                    </p>
+                                  ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-8 flex flex-col gap-10 sm:hidden">
+                    {DEDICATED_DEV_CENTER.map((cat) => (
+                      <div key={cat.title} className="flex flex-col items-center text-center">
+                        <cat.icon className="h-7 w-7 text-ember" strokeWidth={1.5} />
+                        <p className="mt-2 font-semibold text-paper">{cat.title}</p>
+
+                        <div className="mt-6 grid w-full grid-cols-2 gap-x-4 gap-y-2 border-t border-paper/15 pt-4">
+                          {cat.subs.map((sub) => (
+                            <div key={sub.title} className="flex flex-col items-center gap-1.5">
+                              <p className="text-sm font-medium text-paper">{sub.title}</p>
+                              {sub.leaves.map((leaf) => (
+                                <p key={leaf} className="text-xs leading-snug text-paper/60">
+                                  {leaf}
                                 </p>
                               ))}
                             </div>
