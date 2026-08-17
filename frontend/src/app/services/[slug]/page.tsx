@@ -178,19 +178,24 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug: rawSlug } = await params;
   const { baseSlug, tabLabel } = parseServiceSlug(rawSlug);
+  // An alias URL (see SLUG_ALIASES) should point its canonical tag at
+  // the service's own real path, not self-reference the alias — same
+  // content addressable at two URLs, but one clear canonical home for
+  // search engines rather than duplicate-content ambiguity.
+  const canonicalSlug = SLUG_ALIASES[rawSlug] ?? rawSlug;
   const service = await fetchServiceBySlug(baseSlug);
   if (!service) {
     return buildMetadata({
       title: "Service | Devliora",
       description: "Service details.",
-      path: `/services/${rawSlug}`,
+      path: `/services/${canonicalSlug}`,
     });
   }
   const tab = tabLabel ? SERVICE_TABS[baseSlug]?.find((t) => t.label === tabLabel) : null;
   return buildMetadata({
     title: `${tab ? tab.heading : service.title} | Devliora`,
     description: tab ? tab.body : service.shortDescription,
-    path: `/services/${rawSlug}`,
+    path: `/services/${canonicalSlug}`,
   });
 }
 
@@ -1124,16 +1129,29 @@ const TAB_SLUG_SUFFIXES: [string, string][] = [
   ["-web", "Web"],
 ];
 
+// Extra URL(s) that resolve to an existing service's real slug, in
+// addition to its own canonical path — added per explicit request so
+// the reference's own path also works. The service's real slug
+// (performance-reliability-engineering) stays the one true canonical
+// URL everywhere else — nav links, sitemap.xml, metadata — so this is
+// purely an additive alias, not a rename: nothing that already links
+// to the canonical path breaks, and this alias just shows the same
+// page under a second URL rather than 404ing.
+const SLUG_ALIASES: Record<string, string> = {
+  "performance-testing-service": "performance-reliability-engineering",
+};
+
 function parseServiceSlug(rawSlug: string): { baseSlug: string; tabLabel: string | null } {
+  const resolvedSlug = SLUG_ALIASES[rawSlug] ?? rawSlug;
   for (const [suffix, label] of TAB_SLUG_SUFFIXES) {
-    if (rawSlug.endsWith(suffix)) {
-      const base = rawSlug.slice(0, -suffix.length);
+    if (resolvedSlug.endsWith(suffix)) {
+      const base = resolvedSlug.slice(0, -suffix.length);
       if (SERVICE_TABS[base]?.some((t) => t.label === label)) {
         return { baseSlug: base, tabLabel: label };
       }
     }
   }
-  return { baseSlug: rawSlug, tabLabel: null };
+  return { baseSlug: resolvedSlug, tabLabel: null };
 }
 
 export default async function ServiceDetailPage({ params }: Props) {
