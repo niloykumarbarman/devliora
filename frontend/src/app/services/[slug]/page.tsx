@@ -3156,6 +3156,17 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section></Reveal>
         )}
 
+        {/* Everything below, down to the FAQ section, is the generic
+            service-template content (Client Spotlight, Featured Work,
+            Industries, Tools, tabs, testimonials, etc.) built for the
+            site's full "service" pages. AI Development is meant to be a
+            short, focused page matching kaz.com.bd's own AI Development
+            page structure (Hero → Overview → Benefits → Netflix stat →
+            FAQ → CTA), so all of it is skipped for that one slug — per
+            explicit request, after the FAQ section ended up buried below
+            a large stack of unrelated sections it never needed. */}
+        {service.slug !== "ai-development" && (
+        <>
         {/* "Accenture" spotlight — IT Consulting only, static. The quote
             frames a real, widely-cited industry-research theme (not a
             Devliora claim), same reasoning as the Meta spotlight above. */}
@@ -4671,6 +4682,8 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
             </div>
           </section></Reveal>
+        )}
+        </>
         )}
 
         {/* AI Development's own FAQ, admin-managed via /admin/faq (set
