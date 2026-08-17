@@ -3450,6 +3450,71 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
               </div>
             </section></Reveal>
+
+            {/* "Our AI Services" — matches kaz.com.bd's "OUR AI SERVICES"
+                section: image + intro copy (generic, doesn't name KAZ) +
+                5 expandable cards. Card body text confirmed verbatim from
+                the reference's own "Show more" expanded state (screenshot-
+                checked), same bar as Staff Augmentation's cards. Image
+                reuses service.heroImageUrl, same pattern as that section
+                and the Digital Marketing/IT Maintenance splits. */}
+            <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+              <div className="mx-auto max-w-6xl px-6">
+                <div className="grid gap-10 md:grid-cols-2 md:items-center">
+                  <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                    {(service.heroImageUrl || hero?.backgroundImageUrl) && (
+                      <Image
+                        src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
+                        alt=""
+                        fill
+                        sizes="(min-width: 768px) 50vw, 100vw"
+                        className="object-cover"
+                      />
+                    )}
+                  </div>
+                  <div>
+                    <h2 className="text-balance font-display text-3xl font-bold uppercase leading-tight text-paper sm:text-4xl">
+                      Our AI Services
+                    </h2>
+                    <p className="mt-5 text-paper/70">
+                      We apply artificial intelligence in practical ways that support automation,
+                      informed decision-making, and data-driven systems. Below is an overview of
+                      how AI expertise is applied across real-world use cases.
+                    </p>
+                  </div>
+                </div>
+
+                <ExpandableServiceCards
+                  cards={[
+                    {
+                      title: "AI Strategy & Use Cases",
+                      description:
+                        "We help identify where AI fits best within your products or processes, focusing on practical outcomes and measurable value.",
+                    },
+                    {
+                      title: "Custom AI Development",
+                      description:
+                        "Our team builds tailored AI solutions designed around your data, workflows, and specific application needs.",
+                    },
+                    {
+                      title: "Machine Learning Models",
+                      description:
+                        "We develop and train machine learning models to support prediction, classification, and pattern recognition tasks.",
+                    },
+                    {
+                      title: "AI Integration",
+                      description:
+                        "We integrate AI capabilities into existing systems and applications to support automation and intelligent workflows.",
+                    },
+                    {
+                      title: "Ongoing AI Support",
+                      description:
+                        "We provide continuous support to monitor performance, refine models, and adapt AI solutions as data and requirements evolve.",
+                    },
+                  ]}
+                />
+              </div>
+            </section></Reveal>
           </>
         )}
 
