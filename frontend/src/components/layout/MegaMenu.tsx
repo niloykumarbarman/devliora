@@ -103,9 +103,9 @@ export default function MegaMenu({
                 intact and reachable via "View all" below). */}
             <ul className="mt-4 space-y-3">
               {MEGA_MENU_TECHNOLOGIES.map((tech) => (
-                <li key={tech}>
-                  <Link href="/technologies" onClick={onNavigate} className={linkClass}>
-                    {tech}
+                <li key={tech.label}>
+                  <Link href={tech.href} onClick={onNavigate} className={linkClass}>
+                    {tech.label}
                   </Link>
                 </li>
               ))}

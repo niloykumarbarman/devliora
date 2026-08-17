@@ -322,13 +322,13 @@ export default function Navbar() {
                         </p>
                         <ul className="mt-1.5 space-y-1.5">
                           {MEGA_MENU_TECHNOLOGIES.map((tech) => (
-                            <li key={tech}>
+                            <li key={tech.label}>
                               <Link
-                                href="/technologies"
+                                href={tech.href}
                                 onClick={closeMobileMenu}
                                 className="block py-0.5 font-mono text-xs text-graphite/70 hover:text-ink"
                               >
-                                {tech}
+                                {tech.label}
                               </Link>
                             </li>
                           ))}
