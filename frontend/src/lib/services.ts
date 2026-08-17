@@ -35,6 +35,7 @@ export interface ServiceDto {
   includes: string[];
   iconUrl: string;
   heroImageUrl: string;
+  aiServicesImageUrl: string;
   displayOrder: number;
   highlightsHeading: string;
   highlightsDescription: string;

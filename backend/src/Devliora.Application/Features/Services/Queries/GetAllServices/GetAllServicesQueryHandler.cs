@@ -39,6 +39,7 @@ public class GetAllServicesQueryHandler : IRequestHandler<GetAllServicesQuery, L
                 Includes = s.Includes,
                 IconUrl = s.IconUrl,
                 HeroImageUrl = s.HeroImageUrl,
+                AiServicesImageUrl = s.AiServicesImageUrl,
                 DisplayOrder = s.DisplayOrder,
                 HighlightsHeading = s.HighlightsHeading,
                 HighlightsDescription = s.HighlightsDescription,

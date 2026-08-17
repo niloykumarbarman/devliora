@@ -31,6 +31,7 @@ public class GetAllServicesAdminQueryHandler : IRequestHandler<GetAllServicesAdm
                 Includes = s.Includes,
                 IconUrl = s.IconUrl,
                 HeroImageUrl = s.HeroImageUrl,
+                AiServicesImageUrl = s.AiServicesImageUrl,
                 DisplayOrder = s.DisplayOrder,
                 IsActive = s.IsActive,
                 HighlightsHeading = s.HighlightsHeading,

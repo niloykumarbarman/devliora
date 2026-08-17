@@ -3461,15 +3461,18 @@ export default async function ServiceDetailPage({ params }: Props) {
                 5 expandable cards. Card body text confirmed verbatim from
                 the reference's own "Show more" expanded state (screenshot-
                 checked), same bar as Staff Augmentation's cards. Image
-                reuses service.heroImageUrl, same pattern as that section
-                and the Digital Marketing/IT Maintenance splits. */}
+                uses its own dedicated aiServicesImageUrl field (admin >
+                Services) rather than reusing service.heroImageUrl, so it
+                doesn't just repeat the page's top banner photo — set per
+                explicit request after the Advanced Technologies image
+                tile and this one both fell back to the same hero image. */}
             <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
               <div className="mx-auto max-w-6xl px-6">
                 <div className="grid gap-10 md:grid-cols-2 md:items-center">
                   <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-                    {(service.heroImageUrl || hero?.backgroundImageUrl) && (
+                    {service.aiServicesImageUrl && (
                       <Image
-                        src={resolveImageUrl(service.heroImageUrl || hero!.backgroundImageUrl)}
+                        src={resolveImageUrl(service.aiServicesImageUrl)}
                         alt=""
                         fill
                         sizes="(min-width: 768px) 50vw, 100vw"

@@ -24,6 +24,7 @@ const emptyForm: ServiceFormPayload = {
   includes: [],
   iconUrl: "",
   heroImageUrl: "",
+  aiServicesImageUrl: "",
   displayOrder: 0,
   isActive: true,
   highlightsHeading: "",
@@ -91,6 +92,12 @@ export default function AdminServicesPage() {
     {
       key: "heroImageUrl",
       label: "Hero Image (detail page banner)",
+      type: "image",
+      colSpan: 2,
+    },
+    {
+      key: "aiServicesImageUrl",
+      label: '"Our AI Services"-style Section Image (AI Development only, for now)',
       type: "image",
       colSpan: 2,
     },
@@ -275,6 +282,7 @@ export default function AdminServicesPage() {
         includes: item.includes,
         iconUrl: item.iconUrl,
         heroImageUrl: item.heroImageUrl,
+        aiServicesImageUrl: item.aiServicesImageUrl,
         displayOrder: item.displayOrder,
         isActive: item.isActive,
         highlightsHeading: item.highlightsHeading,

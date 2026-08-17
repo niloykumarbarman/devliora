@@ -11,6 +11,13 @@ public class Service : BaseEntity
     public List<string> Includes { get; set; } = new();
     public string IconUrl { get; set; } = string.Empty;
     public string HeroImageUrl { get; set; } = string.Empty;
+
+    // Separate image for the "Our AI Services"-style split section
+    // (image + intro copy + expandable cards), so it doesn't have to
+    // reuse HeroImageUrl and show the same photo twice on one page —
+    // added per explicit request for AI Development, but available to
+    // any service that adds this section.
+    public string AiServicesImageUrl { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
     public bool IsActive { get; set; } = true;
 
