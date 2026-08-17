@@ -3726,16 +3726,28 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
 
               <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                {/* No per-card photos exist for the override (kaz's 4
+                    distinct stock photos aren't something we can
+                    verify/license here), so its cards fall back to
+                    this service's own real hero image instead of the
+                    gradient every other service's imageless cards use
+                    — a real Devliora photo beats a flat color block,
+                    without fabricating per-card imagery. */}
                 {[...(industriesOverride?.cards ?? service.industryCards)]
                   .sort((a, b) => a.displayOrder - b.displayOrder)
-                  .map((card, i) => (
+                  .map((card, i) => {
+                    const overrideImage = industriesOverride
+                      ? service.heroImageUrl || hero?.backgroundImageUrl
+                      : null;
+                    const imageSrc = card.imageUrl || overrideImage;
+                    return (
                     <div
                       key={`${card.title}-${i}`}
                       className="group relative aspect-[3/4] overflow-hidden rounded-lg bg-graphite"
                     >
-                      {card.imageUrl ? (
+                      {imageSrc ? (
                         <Image
-                          src={resolveImageUrl(card.imageUrl)}
+                          src={resolveImageUrl(imageSrc)}
                           alt=""
                           fill
                           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
@@ -3760,7 +3772,8 @@ export default async function ServiceDetailPage({ params }: Props) {
                         )}
                       </div>
                     </div>
-                  ))}
+                    );
+                  })}
               </div>
             </div>
           </section></Reveal>
