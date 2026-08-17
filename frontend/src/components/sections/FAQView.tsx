@@ -1,11 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { type FaqDto } from "@/lib/faq";
 
-export default function FAQView({ faqs }: { faqs: FaqDto[] }) {
+type FAQViewProps = {
+  faqs: FaqDto[];
+  /** Defaults to the homepage's own heading; pass a different one (e.g.
+   * a service detail page) to reuse this same accordion elsewhere. */
+  heading?: ReactNode;
+};
+
+export default function FAQView({ faqs, heading }: FAQViewProps) {
   const reduceMotion = useReducedMotion();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
@@ -32,8 +39,12 @@ export default function FAQView({ faqs }: { faqs: FaqDto[] }) {
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <h2 className="mt-5 text-balance font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-            Questions we get{" "}
-            <span className="text-signal">before the first call</span>.
+            {heading ?? (
+              <>
+                Questions we get{" "}
+                <span className="text-signal">before the first call</span>.
+              </>
+            )}
           </h2>
         </motion.div>
 

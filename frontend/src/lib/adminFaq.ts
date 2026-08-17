@@ -7,6 +7,7 @@ export interface AdminFaq {
   answer: string;
   displayOrder: number;
   isActive: boolean;
+  serviceSlug: string;
 }
 
 export interface FaqFormPayload {
@@ -14,6 +15,7 @@ export interface FaqFormPayload {
   answer: string;
   displayOrder: number;
   isActive: boolean;
+  serviceSlug: string;
 }
 
 const FAQ_BASE_API_URL = `${API_BASE_URL}/faqs`;

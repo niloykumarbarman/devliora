@@ -6,8 +6,6 @@ namespace Devliora.Application.Features.Faqs.Commands.CreateFaq;
 
 public class CreateFaqCommandHandler : IRequestHandler<CreateFaqCommand, Guid>
 {
-    private const string CacheKey = "faqs:all";
-
     private readonly IAppDbContext _context;
     private readonly ICacheService _cache;
 
@@ -23,12 +21,13 @@ public class CreateFaqCommandHandler : IRequestHandler<CreateFaqCommand, Guid>
         {
             Question = request.Question,
             Answer = request.Answer,
-            DisplayOrder = request.DisplayOrder
+            DisplayOrder = request.DisplayOrder,
+            ServiceSlug = request.ServiceSlug
         };
 
         _context.FaqItems.Add(faq);
         await _context.SaveChangesAsync(cancellationToken);
-        await _cache.RemoveAsync(CacheKey, cancellationToken);
+        await _cache.RemoveAsync($"faqs:all:{request.ServiceSlug}", cancellationToken);
 
         return faq.Id;
     }

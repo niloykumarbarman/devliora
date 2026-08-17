@@ -24,7 +24,8 @@ public class GetAllFaqsAdminQueryHandler : IRequestHandler<GetAllFaqsAdminQuery,
                 Question = f.Question,
                 Answer = f.Answer,
                 DisplayOrder = f.DisplayOrder,
-                IsActive = f.IsActive
+                IsActive = f.IsActive,
+                ServiceSlug = f.ServiceSlug
             })
             .ToListAsync(cancellationToken);
     }

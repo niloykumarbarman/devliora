@@ -9,5 +9,6 @@ public class UpdateFaqCommandValidator : AbstractValidator<UpdateFaqCommand>
         RuleFor(x => x.Id).NotEmpty();
         RuleFor(x => x.Question).NotEmpty().MaximumLength(500);
         RuleFor(x => x.Answer).NotEmpty();
+        RuleFor(x => x.ServiceSlug).MaximumLength(200);
     }
 }

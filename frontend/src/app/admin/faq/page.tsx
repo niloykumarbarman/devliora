@@ -19,6 +19,7 @@ const emptyForm: FaqFormPayload = {
   answer: "",
   displayOrder: 0,
   isActive: true,
+  serviceSlug: "",
 };
 
 const fields: FieldConfig<FaqFormPayload>[] = [
@@ -38,11 +39,28 @@ const fields: FieldConfig<FaqFormPayload>[] = [
   },
   { key: "displayOrder", label: "Display Order", type: "number" },
   { key: "isActive", label: "Active", type: "checkbox" },
+  {
+    key: "serviceSlug",
+    label: "Service Slug (optional)",
+    type: "text",
+    colSpan: 2,
+    placeholder:
+      "Leave blank for the homepage's site-wide FAQ. Set to a service's slug (e.g. ai-development) to show this only on that service's page instead.",
+  },
 ];
 
 const columns: ColumnConfig<AdminFaq>[] = [
   { key: "question", label: "Question" },
   { key: "displayOrder", label: "Order" },
+  {
+    key: "serviceSlug",
+    label: "Scope",
+    render: (item) => (
+      <span className="font-mono text-xs text-graphite/60">
+        {item.serviceSlug ? item.serviceSlug : "Site-wide"}
+      </span>
+    ),
+  },
   {
     key: "isActive",
     label: "Status",
@@ -80,6 +98,7 @@ export default function AdminFaqPage() {
         answer: item.answer,
         displayOrder: item.displayOrder,
         isActive: item.isActive,
+        serviceSlug: item.serviceSlug,
       })}
     />
   );

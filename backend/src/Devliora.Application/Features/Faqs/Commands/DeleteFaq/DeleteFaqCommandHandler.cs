@@ -6,8 +6,6 @@ namespace Devliora.Application.Features.Faqs.Commands.DeleteFaq;
 
 public class DeleteFaqCommandHandler : IRequestHandler<DeleteFaqCommand, Unit>
 {
-    private const string CacheKey = "faqs:all";
-
     private readonly IAppDbContext _context;
     private readonly ICacheService _cache;
 
@@ -27,7 +25,7 @@ public class DeleteFaqCommandHandler : IRequestHandler<DeleteFaqCommand, Unit>
         faq.UpdatedAt = DateTime.UtcNow;
 
         await _context.SaveChangesAsync(cancellationToken);
-        await _cache.RemoveAsync(CacheKey, cancellationToken);
+        await _cache.RemoveAsync($"faqs:all:{faq.ServiceSlug}", cancellationToken);
 
         return Unit.Value;
     }

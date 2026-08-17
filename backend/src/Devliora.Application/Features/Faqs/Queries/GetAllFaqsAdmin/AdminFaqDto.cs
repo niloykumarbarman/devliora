@@ -7,4 +7,5 @@ public class AdminFaqDto
     public string Answer { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
     public bool IsActive { get; set; }
+    public string ServiceSlug { get; set; } = string.Empty;
 }

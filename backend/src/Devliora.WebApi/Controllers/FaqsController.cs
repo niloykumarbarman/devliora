@@ -17,9 +17,9 @@ public class FaqsController : ControllerBase
         _sender = sender;
     }
     [HttpGet]
-    public async Task<ActionResult<List<FaqDto>>> GetAll(CancellationToken cancellationToken)
+    public async Task<ActionResult<List<FaqDto>>> GetAll([FromQuery] string? serviceSlug, CancellationToken cancellationToken)
     {
-        var result = await _sender.Send(new GetAllFaqsQuery(), cancellationToken);
+        var result = await _sender.Send(new GetAllFaqsQuery { ServiceSlug = serviceSlug }, cancellationToken);
         return Ok(result);
     }
     [HttpGet("admin")]

@@ -44,6 +44,8 @@ import { fetchHero, resolveImageUrl } from "@/lib/hero";
 import { fetchCaseStudies } from "@/lib/caseStudies";
 import { fetchBlogPosts, type BlogPost } from "@/lib/blogPosts";
 import { fetchTechnologies } from "@/lib/technologies";
+import { fetchFaqsForService } from "@/lib/faq";
+import FAQView from "@/components/sections/FAQView";
 import { API_BASE_URL } from "@/lib/apiConfig";
 import { buildMetadata } from "@/lib/seo";
 import { getTechIcon } from "@/lib/techIcons";
@@ -1183,6 +1185,7 @@ export default async function ServiceDetailPage({ params }: Props) {
     featuredPortfolios,
     allServices,
     industries,
+    serviceFaqs,
   ] = await Promise.all([
     fetchServiceBySlug(slug),
     fetchHero(),
@@ -1193,6 +1196,7 @@ export default async function ServiceDetailPage({ params }: Props) {
     safeFetchFeaturedPortfolios(),
     fetchServices(),
     fetchIndustries(),
+    fetchFaqsForService(slug),
   ]);
   const blogGridCells = buildBlogGridCells(blogPosts.slice(0, 4));
 
@@ -3118,6 +3122,22 @@ export default async function ServiceDetailPage({ params }: Props) {
           />
         )}
 
+        {/* "Netflix" spotlight — AI Development only, static. 250M+
+            subscribers and AI-driven recommendations powering the large
+            majority of what's watched are real, publicly-cited Netflix
+            figures (not a Devliora claim about its own work), same
+            reasoning as the other spotlights on this page. No
+            "netflix" key exists in techIcons.ts, so this renders as the
+            text-badge fallback rather than a brand SVG. */}
+        {service.slug === "ai-development" && (
+          <PartnerSpotlight
+            quote="250M+ subscribers, powered by AI recommendations."
+            description="Netflix's recommendation algorithms personalize the viewing experience for its subscriber base, driving the large majority of what people actually watch on the platform."
+            name="Netflix"
+            icons={[{ key: "netflix", label: "Netflix" }]}
+          />
+        )}
+
         {/* "Accenture" spotlight — IT Consulting only, static. The quote
             frames a real, widely-cited industry-research theme (not a
             Devliora claim), same reasoning as the Meta spotlight above. */}
@@ -4633,6 +4653,20 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
             </div>
           </section></Reveal>
+        )}
+
+        {/* AI Development's own FAQ, admin-managed via /admin/faq (set
+            "Service Slug" to ai-development). Reuses the homepage's FAQ
+            accordion component with a different heading. */}
+        {serviceFaqs.length > 0 && (
+          <FAQView
+            faqs={serviceFaqs}
+            heading={
+              <>
+                Frequently asked <span className="text-signal">questions</span>.
+              </>
+            }
+          />
         )}
 
         {/* CTA */}

@@ -6,8 +6,6 @@ namespace Devliora.Application.Features.Faqs.Commands.UpdateFaq;
 
 public class UpdateFaqCommandHandler : IRequestHandler<UpdateFaqCommand, Unit>
 {
-    private const string CacheKey = "faqs:all";
-
     private readonly IAppDbContext _context;
     private readonly ICacheService _cache;
 
@@ -23,14 +21,25 @@ public class UpdateFaqCommandHandler : IRequestHandler<UpdateFaqCommand, Unit>
             .FirstOrDefaultAsync(f => f.Id == request.Id && !f.IsDeleted, cancellationToken)
             ?? throw new KeyNotFoundException($"FaqItem with Id '{request.Id}' was not found.");
 
+        var previousServiceSlug = faq.ServiceSlug;
+
         faq.Question = request.Question;
         faq.Answer = request.Answer;
         faq.DisplayOrder = request.DisplayOrder;
         faq.IsActive = request.IsActive;
+        faq.ServiceSlug = request.ServiceSlug;
         faq.UpdatedAt = DateTime.UtcNow;
 
         await _context.SaveChangesAsync(cancellationToken);
-        await _cache.RemoveAsync(CacheKey, cancellationToken);
+
+        // Invalidate both the old and new ServiceSlug's cached list, in
+        // case this edit moved the FAQ between the site-wide list and a
+        // service-scoped one (or vice versa).
+        await _cache.RemoveAsync($"faqs:all:{previousServiceSlug}", cancellationToken);
+        if (request.ServiceSlug != previousServiceSlug)
+        {
+            await _cache.RemoveAsync($"faqs:all:{request.ServiceSlug}", cancellationToken);
+        }
 
         return Unit.Value;
     }
