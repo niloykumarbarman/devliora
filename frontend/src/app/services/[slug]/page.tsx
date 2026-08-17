@@ -3259,6 +3259,124 @@ export default async function ServiceDetailPage({ params }: Props) {
           </>
         )}
 
+        {/* AI Development's "Unmatched Experience" stat row + "Dedicated
+            Development Center" org-chart, matching kaz.com.bd's page
+            structure at this point. Both are KAZ's own generic/business
+            content rather than anything specific to a named third party:
+            the stat row (years in business, headcount, delivery count,
+            named platform partners, industries served) is KAZ's own
+            attributable business claims, published here under Devliora's
+            name per explicit request — same treatment as the FAQ's
+            timeline/price figures above. The org-chart (People /
+            Infrastructure / Processes) is generic methodology content,
+            reused as-is like "Advanced Technologies" above it. */}
+        {service.slug === "ai-development" && (
+          <>
+            <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+              <div className="mx-auto max-w-5xl px-6">
+                <h2 className="max-w-3xl text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                  Unmatched Experience in IT Solutions and Innovation
+                </h2>
+                <div className="mt-14 grid gap-x-16 gap-y-10 sm:grid-cols-2">
+                  <p className="text-base leading-relaxed text-paper/80">
+                    <span className="font-semibold text-ember">20+ years</span> in custom software
+                    development and engineering
+                  </p>
+                  <p className="text-base leading-relaxed text-paper/80">
+                    10+ industry leaders trust our{" "}
+                    <span className="text-ember">IT solutions, including Microsoft, AWS, and Google Cloud</span>
+                  </p>
+                  <p className="text-base leading-relaxed text-paper/80">
+                    <span className="font-semibold text-ember">100+ experienced</span> developers across
+                    diverse technologies
+                  </p>
+                  <p className="text-base leading-relaxed text-paper/80">
+                    Dedicated Centers of Excellence in{" "}
+                    <span className="text-ember">FinTech, Healthcare, Retail, and Manufacturing</span>
+                  </p>
+                  <p className="text-base leading-relaxed text-paper/80">
+                    <span className="font-semibold text-ember">200+</span> successful software
+                    deliveries worldwide
+                  </p>
+                  <p className="text-base leading-relaxed text-paper/80">
+                    Continuous innovation through company-wide{" "}
+                    <span className="text-ember">R&D initiatives</span>
+                  </p>
+                </div>
+              </div>
+            </section></Reveal>
+
+            <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+              <div className="mx-auto max-w-6xl px-6">
+                <div className="grid gap-8 md:grid-cols-2 md:items-start">
+                  <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                    Empowering Your Dedicated Development Team for Success
+                  </h2>
+                  <p className="text-base leading-relaxed text-paper/70">
+                    We build skilled teams with the right expertise, infrastructure, and processes
+                    to boost productivity and ensure seamless communication, fully aligned with
+                    your project goals.
+                  </p>
+                </div>
+
+                <div className="mt-20 flex flex-col items-center">
+                  <p className="font-display text-lg font-semibold text-paper">
+                    Dedicated Development Center
+                  </p>
+                  <div className="h-10 w-px bg-paper/20" />
+                  <div className="grid w-full grid-cols-1 gap-y-14 border-t border-paper/20 pt-10 sm:grid-cols-3">
+                    {[
+                      {
+                        title: "People",
+                        icon: Users,
+                        groups: [
+                          { label: "Teams", items: ["Team Productivity", "Knowledge Accumulation"] },
+                          { label: "Individuals", items: ["Technological Skills", "Domain Experience"] },
+                        ],
+                      },
+                      {
+                        title: "Infrastructure",
+                        icon: Network,
+                        groups: [
+                          { label: "Hardware", items: ["Devices", "Networks"] },
+                          { label: "Software", items: ["Test Automation", "IDEs"] },
+                        ],
+                      },
+                      {
+                        title: "Processes",
+                        icon: Workflow,
+                        groups: [
+                          { label: "Integration", items: ["In-House/Offshore", "Process Optimization"] },
+                          { label: "Alignment", items: ["Seamless Communication", "Methodologies Adjustment"] },
+                        ],
+                      },
+                    ].map((column) => (
+                      <div key={column.title} className="flex flex-col items-center gap-4 px-4 text-center">
+                        <column.icon className="h-6 w-6 text-ember" />
+                        <p className="border-b border-paper/20 pb-3 font-semibold text-paper">
+                          {column.title}
+                        </p>
+                        <div className="flex gap-8">
+                          {column.groups.map((group) => (
+                            <div key={group.label} className="flex flex-col items-center gap-1.5">
+                              <p className="text-sm font-medium text-paper/80">{group.label}</p>
+                              {group.items.map((item) => (
+                                <p key={item} className="text-xs text-paper/50">
+                                  {item}
+                                </p>
+                              ))}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </section></Reveal>
+          </>
+        )}
+
         {/* Everything below, down to the FAQ section, is the generic
             service-template content (Client Spotlight, Featured Work,
             Industries, Tools, tabs, testimonials, etc.) built for the
