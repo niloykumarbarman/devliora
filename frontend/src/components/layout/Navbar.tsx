@@ -8,7 +8,7 @@ import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
 import { useExploreMenuData } from "@/lib/useExploreMenuData";
 import { serviceHref } from "@/lib/services";
-import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/technologyCategories";
+import { CATEGORY_META } from "@/lib/technologyCategories";
 import { SOLUTIONS } from "@/lib/solutions";
 import { slugify } from "@/lib/slugify";
 import { fetchIndustries, type IndustryDto } from "@/lib/industries";
@@ -123,9 +123,7 @@ export default function Navbar() {
     (a, b) => a.displayOrder - b.displayOrder
   );
 
-  const visibleMobileCategories = CATEGORY_ORDER.filter(
-    (id) => (exploreMenu.technologyCounts[id] ?? 0) > 0 || !exploreMenu.loaded
-  );
+  const visibleMobileTechnologies = exploreMenu.technologies;
 
   const closeMobileMenu = () => {
     setOpen(false);
@@ -252,7 +250,7 @@ export default function Navbar() {
         <MegaMenu
           open={megaOpen}
           services={exploreMenu.services}
-          technologyCounts={exploreMenu.technologyCounts}
+          technologies={exploreMenu.technologies}
           loaded={exploreMenu.loaded}
           imageUrl={servicesImageUrl}
           onMouseEnter={openMega}
@@ -326,14 +324,14 @@ export default function Navbar() {
                           Technologies
                         </p>
                         <ul className="mt-1.5 space-y-1.5">
-                          {visibleMobileCategories.map((categoryId) => (
-                            <li key={categoryId}>
+                          {visibleMobileTechnologies.map((tech) => (
+                            <li key={tech.id}>
                               <Link
-                                href={`/technologies#${CATEGORY_META[categoryId].slug}`}
+                                href={`/technologies#${CATEGORY_META[tech.category]?.slug ?? ""}`}
                                 onClick={closeMobileMenu}
                                 className="block py-0.5 font-mono text-xs text-graphite/70 hover:text-ink"
                               >
-                                {CATEGORY_META[categoryId].title}
+                                {tech.displayName}
                               </Link>
                             </li>
                           ))}

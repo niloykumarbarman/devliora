@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "./apiConfig";
-import { fetchTechnologies } from "./technologies";
+import { fetchTechnologies, type TechnologyDto } from "./technologies";
 import { SERVICE_TITLE_OVERRIDES } from "./services";
 
 export type ExploreService = {
@@ -40,7 +40,10 @@ async function fetchServicesForMenu(): Promise<ExploreService[]> {
  */
 export function useExploreMenuData() {
   const [services, setServices] = useState<ExploreService[]>([]);
-  const [technologyCounts, setTechnologyCounts] = useState<Record<number, number>>({});
+  // Flat, admin-managed technology list (not grouped into categories) —
+  // the mega-menu's "Technologies" column lists each one individually,
+  // matching kaz.com.bd's mega-menu.
+  const [technologies, setTechnologies] = useState<TechnologyDto[]>([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -48,11 +51,7 @@ export function useExploreMenuData() {
     Promise.all([fetchServicesForMenu(), fetchTechnologies()]).then(([serviceData, techData]) => {
       if (cancelled) return;
       setServices(serviceData);
-      const counts: Record<number, number> = {};
-      for (const tech of techData) {
-        counts[tech.category] = (counts[tech.category] ?? 0) + 1;
-      }
-      setTechnologyCounts(counts);
+      setTechnologies([...techData].sort((a, b) => a.displayOrder - b.displayOrder));
       setLoaded(true);
     });
     return () => {
@@ -60,5 +59,5 @@ export function useExploreMenuData() {
     };
   }, []);
 
-  return { services, technologyCounts, loaded };
+  return { services, technologies, loaded };
 }

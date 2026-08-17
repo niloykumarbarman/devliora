@@ -5,15 +5,16 @@ import Image from "next/image";
 import { ArrowRight, Layers, LayoutGrid } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 import { serviceHref } from "@/lib/services";
-import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/technologyCategories";
+import { CATEGORY_META } from "@/lib/technologyCategories";
 import { SOLUTIONS } from "@/lib/solutions";
 import { slugify } from "@/lib/slugify";
+import type { TechnologyDto } from "@/lib/technologies";
 import type { ExploreService } from "@/lib/useExploreMenuData";
 
 type MegaMenuProps = {
   open: boolean;
   services: ExploreService[];
-  technologyCounts: Record<number, number>;
+  technologies: TechnologyDto[];
   loaded: boolean;
   imageUrl?: string;
   onMouseEnter: () => void;
@@ -31,7 +32,7 @@ const viewAllClass =
 export default function MegaMenu({
   open,
   services,
-  technologyCounts,
+  technologies,
   loaded,
   imageUrl,
   onMouseEnter,
@@ -43,10 +44,6 @@ export default function MegaMenu({
   // Show every active service — previously capped at 6, which silently
   // hid anything past that (e.g. Digital Design at position 7).
   const visibleServices = [...services].sort((a, b) => a.displayOrder - b.displayOrder);
-
-  const visibleCategories = CATEGORY_ORDER.filter(
-    (id) => (technologyCounts[id] ?? 0) > 0 || !loaded
-  );
 
   return (
     <div
@@ -104,22 +101,21 @@ export default function MegaMenu({
           <div>
             <h3 className={columnHeadingClass}>Technologies</h3>
             <ul className="mt-4 space-y-3">
-              {visibleCategories.map((categoryId) => {
-                const meta = CATEGORY_META[categoryId];
-                const Icon = meta.icon;
-                return (
-                  <li key={categoryId}>
-                    <Link
-                      href={`/technologies#${meta.slug}`}
-                      onClick={onNavigate}
-                      className={linkClass}
-                    >
-                      <Icon className="h-4 w-4 shrink-0 text-signal" strokeWidth={1.75} />
-                      {meta.title}
-                    </Link>
-                  </li>
-                );
-              })}
+              {technologies.map((tech) => (
+                <li key={tech.id}>
+                  {/* Individual technologies don't have their own anchor
+                      on /technologies — only their category card does —
+                      so this links to that category's section. */}
+                  <Link
+                    href={`/technologies#${CATEGORY_META[tech.category]?.slug ?? ""}`}
+                    onClick={onNavigate}
+                    className={linkClass}
+                  >
+                    {tech.displayName}
+                  </Link>
+                </li>
+              ))}
+              {!loaded && <li className="font-mono text-sm text-graphite/40">Loading…</li>}
             </ul>
             <Link href="/technologies" onClick={onNavigate} className={viewAllClass}>
               View all technologies
