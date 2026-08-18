@@ -21,6 +21,7 @@ export default function AdminSettingsPage() {
   const [servicesEngineeringImageUrl, setServicesEngineeringImageUrl] = useState("");
   const [servicesTechImageUrl, setServicesTechImageUrl] = useState("");
   const [servicesSolutionsImageUrl, setServicesSolutionsImageUrl] = useState("");
+  const [technologiesHeroImageUrl, setTechnologiesHeroImageUrl] = useState("");
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [uploadingHero, setUploadingHero] = useState(false);
@@ -30,6 +31,7 @@ export default function AdminSettingsPage() {
   const [uploadingServicesEngineering, setUploadingServicesEngineering] = useState(false);
   const [uploadingServicesTech, setUploadingServicesTech] = useState(false);
   const [uploadingServicesSolutions, setUploadingServicesSolutions] = useState(false);
+  const [uploadingTechnologiesHero, setUploadingTechnologiesHero] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -51,6 +53,7 @@ export default function AdminSettingsPage() {
           setServicesEngineeringImageUrl(data.servicesEngineeringImageUrl);
           setServicesTechImageUrl(data.servicesTechImageUrl);
           setServicesSolutionsImageUrl(data.servicesSolutionsImageUrl);
+          setTechnologiesHeroImageUrl(data.technologiesHeroImageUrl);
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load site settings.");
@@ -205,6 +208,24 @@ export default function AdminSettingsPage() {
     }
   };
 
+  const handleTechnologiesHeroFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingTechnologiesHero(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setTechnologiesHeroImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload Technologies page hero image.");
+    } finally {
+      setUploadingTechnologiesHero(false);
+    }
+  };
+
   const handleSave = async () => {
     if (!settingsId) return;
     setSaving(true);
@@ -222,6 +243,7 @@ export default function AdminSettingsPage() {
         servicesEngineeringImageUrl,
         servicesTechImageUrl,
         servicesSolutionsImageUrl,
+        technologiesHeroImageUrl,
       });
       setSuccess(true);
     } catch (err) {
@@ -575,6 +597,44 @@ export default function AdminSettingsPage() {
               className="hidden"
               onChange={handleServicesSolutionsFileChange}
               disabled={uploadingServicesSolutions}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Technologies Page — Title Banner Image</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            The full-bleed &quot;Technologies&quot; title banner at the top of /technologies.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {technologiesHeroImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(technologiesHeroImageUrl)}
+                alt="Technologies page banner preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No banner image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingTechnologiesHero ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingTechnologiesHero ? "Uploading..." : "Upload banner image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleTechnologiesHeroFileChange}
+              disabled={uploadingTechnologiesHero}
             />
           </label>
         </div>

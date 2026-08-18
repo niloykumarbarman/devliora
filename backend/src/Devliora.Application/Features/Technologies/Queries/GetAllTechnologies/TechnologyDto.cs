@@ -9,4 +9,5 @@ public class TechnologyDto
     public string DisplayName { get; set; } = string.Empty;
     public TechnologyCategory Category { get; set; }
     public int DisplayOrder { get; set; }
+    public string Frameworks { get; set; } = string.Empty;
 }

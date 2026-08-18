@@ -8,6 +8,7 @@ export interface AdminTechnology {
   category: number;
   displayOrder: number;
   isActive: boolean;
+  frameworks: string;
 }
 
 export interface TechnologyFormPayload {
@@ -16,6 +17,7 @@ export interface TechnologyFormPayload {
   category: number;
   displayOrder: number;
   isActive: boolean;
+  frameworks: string;
 }
 
 const TECHNOLOGIES_BASE_API_URL = `${API_BASE_URL}/technologies`;

@@ -34,6 +34,7 @@ const emptyForm: TechnologyFormPayload = {
   category: 0,
   displayOrder: 0,
   isActive: true,
+  frameworks: "",
 };
 
 const fields: FieldConfig<TechnologyFormPayload>[] = [
@@ -48,6 +49,13 @@ const fields: FieldConfig<TechnologyFormPayload>[] = [
   },
   { key: "displayOrder", label: "Display Order", type: "number" },
   { key: "isActive", label: "Active", type: "checkbox" },
+  {
+    key: "frameworks",
+    label: "Related Frameworks/Tools (comma-separated, shown on /technologies)",
+    type: "text",
+    colSpan: 2,
+    placeholder: "e.g. Django, FastAPI, Flask, Celery",
+  },
 ];
 
 const columns: ColumnConfig<AdminTechnology>[] = [
@@ -96,6 +104,7 @@ export default function AdminTechnologiesPage() {
         category: item.category,
         displayOrder: item.displayOrder,
         isActive: item.isActive,
+        frameworks: item.frameworks,
       })}
     />
   );

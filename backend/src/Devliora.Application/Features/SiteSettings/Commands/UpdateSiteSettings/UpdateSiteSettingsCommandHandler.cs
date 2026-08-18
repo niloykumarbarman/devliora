@@ -32,6 +32,7 @@ public class UpdateSiteSettingsCommandHandler : IRequestHandler<UpdateSiteSettin
         settings.ServicesEngineeringImageUrl = request.ServicesEngineeringImageUrl;
         settings.ServicesTechImageUrl = request.ServicesTechImageUrl;
         settings.ServicesSolutionsImageUrl = request.ServicesSolutionsImageUrl;
+        settings.TechnologiesHeroImageUrl = request.TechnologiesHeroImageUrl;
         settings.UpdatedAt = DateTime.UtcNow;
 
         await _context.SaveChangesAsync(cancellationToken);

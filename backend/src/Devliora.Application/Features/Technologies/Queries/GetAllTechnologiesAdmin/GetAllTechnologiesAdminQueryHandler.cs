@@ -25,7 +25,8 @@ public class GetAllTechnologiesAdminQueryHandler : IRequestHandler<GetAllTechnol
                 DisplayName = t.DisplayName,
                 Category = t.Category,
                 DisplayOrder = t.DisplayOrder,
-                IsActive = t.IsActive
+                IsActive = t.IsActive,
+                Frameworks = t.Frameworks
             })
             .ToListAsync(cancellationToken);
     }

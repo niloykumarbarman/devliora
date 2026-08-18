@@ -6,6 +6,7 @@ export interface TechnologyDto {
   displayName: string;
   category: number;
   displayOrder: number;
+  frameworks: string;
 }
 
 export async function fetchTechnologies(): Promise<TechnologyDto[]> {

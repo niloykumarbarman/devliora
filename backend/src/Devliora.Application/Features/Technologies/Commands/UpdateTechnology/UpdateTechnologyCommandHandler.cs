@@ -28,6 +28,7 @@ public class UpdateTechnologyCommandHandler : IRequestHandler<UpdateTechnologyCo
         technology.Category = request.Category;
         technology.DisplayOrder = request.DisplayOrder;
         technology.IsActive = request.IsActive;
+        technology.Frameworks = request.Frameworks;
         technology.UpdatedAt = DateTime.UtcNow;
 
         await _context.SaveChangesAsync(cancellationToken);

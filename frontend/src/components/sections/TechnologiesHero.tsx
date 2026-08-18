@@ -1,50 +1,54 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { fetchSiteSettings } from "@/lib/siteSettings";
+import { resolveImageUrl } from "@/lib/hero";
 
+// Full-bleed page-title banner + breadcrumb, matching kaz.com.bd/technologies
+// and the same pattern every other detail page on the site uses (Services,
+// Portfolio, individual services) — replaces the old centered gradient hero,
+// which had no image or breadcrumb.
 export default function TechnologiesHero() {
-  const reducedMotion = useReducedMotion();
+  const [bannerImageUrl, setBannerImageUrl] = useState("");
 
-  const fadeUp = {
-    initial: { opacity: 0, y: reducedMotion ? 0 : 24 },
-    animate: { opacity: 1, y: 0 },
-  };
+  useEffect(() => {
+    let cancelled = false;
+    fetchSiteSettings().then((data) => {
+      if (cancelled || !data) return;
+      if (data.technologiesHeroImageUrl) setBannerImageUrl(resolveImageUrl(data.technologiesHeroImageUrl));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   return (
-    <section className="relative overflow-hidden bg-ink px-6 py-28 sm:py-32">
-      <div className="bg-grain pointer-events-none absolute inset-0" />
+    <section className="relative overflow-hidden bg-ink text-paper">
+      <div className="relative flex h-[280px] items-center justify-center sm:h-[340px] md:h-[380px]">
+        {bannerImageUrl ? (
+          <Image src={bannerImageUrl} alt="" fill priority sizes="100vw" className="object-cover" />
+        ) : (
+          <div
+            className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.18] blur-[120px]"
+            style={{ backgroundColor: "var(--color-signal)" }}
+          />
+        )}
+        <div className="absolute inset-0 bg-ink/70" />
+        <h1 className="relative text-balance text-center font-display text-5xl font-semibold leading-tight md:text-7xl">
+          Technologies
+        </h1>
+      </div>
 
-      <div className="pointer-events-none absolute -top-32 left-1/4 h-96 w-96 rounded-full bg-signal/20 blur-[120px]" />
-      <div className="pointer-events-none absolute -bottom-24 right-1/4 h-80 w-80 rounded-full bg-ember/10 blur-[120px]" />
-
-      <div
-        className="pointer-events-none absolute inset-0 bg-[size:56px_56px] opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, var(--color-paper) 1px, transparent 1px), linear-gradient(to bottom, var(--color-paper) 1px, transparent 1px)",
-        }}
-      />
-
-      <div className="relative mx-auto max-w-4xl text-center">
-
-        <motion.h1
-          {...fadeUp}
-          transition={{ duration: 0.5, delay: 0.08 }}
-          className="mt-6 text-balance font-display text-4xl font-medium text-paper sm:text-5xl md:text-6xl"
-        >
-          The <span className="text-signal">tools and platforms</span> behind
-          everything we ship
-        </motion.h1>
-
-        <motion.p
-          {...fadeUp}
-          transition={{ duration: 0.5, delay: 0.16 }}
-          className="mx-auto mt-6 max-w-2xl text-lg text-wire"
-        >
-          We choose technology based on the problem, not the trend. Here is
-          the stack we rely on to build software that stays reliable, secure,
-          and easy to maintain long after launch.
-        </motion.p>
+      <div className="relative border-t border-paper/10 bg-ink">
+        <div className="mx-auto flex max-w-6xl items-center gap-2 px-6 py-6 font-mono text-sm">
+          <Link href="/" className="text-paper/80 transition-colors hover:text-paper">
+            Home
+          </Link>
+          <span className="text-paper/30">/</span>
+          <span className="text-ember">Technologies</span>
+        </div>
       </div>
     </section>
   );

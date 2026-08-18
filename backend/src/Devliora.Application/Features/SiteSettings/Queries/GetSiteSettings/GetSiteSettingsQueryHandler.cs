@@ -45,7 +45,8 @@ public class GetSiteSettingsQueryHandler : IRequestHandler<GetSiteSettingsQuery,
                 ServicesBannerImageUrl = "",
                 ServicesEngineeringImageUrl = "",
                 ServicesTechImageUrl = "",
-                ServicesSolutionsImageUrl = ""
+                ServicesSolutionsImageUrl = "",
+                TechnologiesHeroImageUrl = ""
             };
             _context.SiteSettings.Add(settings);
             await _context.SaveChangesAsync(cancellationToken);
@@ -62,7 +63,8 @@ public class GetSiteSettingsQueryHandler : IRequestHandler<GetSiteSettingsQuery,
             ServicesBannerImageUrl = settings.ServicesBannerImageUrl,
             ServicesEngineeringImageUrl = settings.ServicesEngineeringImageUrl,
             ServicesTechImageUrl = settings.ServicesTechImageUrl,
-            ServicesSolutionsImageUrl = settings.ServicesSolutionsImageUrl
+            ServicesSolutionsImageUrl = settings.ServicesSolutionsImageUrl,
+            TechnologiesHeroImageUrl = settings.TechnologiesHeroImageUrl
         };
 
         await _cache.SetAsync(CacheKey, result, TimeSpan.FromMinutes(5), cancellationToken);

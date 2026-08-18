@@ -15,4 +15,8 @@ public class SiteSettings : BaseEntity
     public string ServicesEngineeringImageUrl { get; set; } = string.Empty;
     public string ServicesTechImageUrl { get; set; } = string.Empty;
     public string ServicesSolutionsImageUrl { get; set; } = string.Empty;
+
+    // Hero banner image for the /technologies page (dark photo behind
+    // the "Technologies" title), matching kaz.com.bd/technologies.
+    public string TechnologiesHeroImageUrl { get; set; } = string.Empty;
 }

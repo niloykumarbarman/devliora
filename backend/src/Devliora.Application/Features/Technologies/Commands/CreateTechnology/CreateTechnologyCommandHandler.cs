@@ -24,7 +24,8 @@ public class CreateTechnologyCommandHandler : IRequestHandler<CreateTechnologyCo
             Name = request.Name,
             DisplayName = request.DisplayName,
             Category = request.Category,
-            DisplayOrder = request.DisplayOrder
+            DisplayOrder = request.DisplayOrder,
+            Frameworks = request.Frameworks
         };
 
         _context.TechnologyItems.Add(technology);

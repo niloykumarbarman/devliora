@@ -2,54 +2,30 @@
 
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
 
+// Matches kaz.com.bd/technologies' closing "Ready to turn ideas into
+// reality?" / "Get Started Now!" banner — same bg-signal split-banner
+// pattern already used for every other CTA banner on the site (their teal
+// isn't part of Devliora's palette, so this stays on-brand rather than
+// introducing a one-off color, same reasoning as the AI Development page's
+// CTA banners). Replaces the old centered gradient-card CTA.
 export default function TechnologiesCTA() {
-  const reducedMotion = useReducedMotion();
-
   return (
-    <section className="relative overflow-hidden bg-ink px-6 py-24 sm:py-28">
-      <div className="bg-grain pointer-events-none absolute inset-0" />
-
-      <div className="pointer-events-none absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-signal/15 blur-[120px]" />
-
-      <div
-        className="pointer-events-none absolute inset-0 bg-[size:56px_56px] opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, var(--color-paper) 1px, transparent 1px), linear-gradient(to bottom, var(--color-paper) 1px, transparent 1px)",
-        }}
-      />
-
-      <motion.div
-        initial={{ opacity: 0, y: reducedMotion ? 0 : 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.5 }}
-        className="relative mx-auto max-w-2xl text-center"
-      >
-
-        <h2 className="mt-6 text-balance font-display text-3xl font-medium text-paper sm:text-4xl">
-          Not sure which stack fits{" "}
-          <span className="text-signal">your project?</span>
-        </h2>
-
-        <p className="mx-auto mt-4 max-w-lg text-wire">
-          Tell us what you are building, and we will recommend the right tools
-          for the job, not the ones we are most comfortable with.
-        </p>
-
+    <section className="border-t border-paper/10 bg-signal">
+      <div className="flex flex-col sm:flex-row">
+        <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
+          <p className="max-w-lg text-lg font-medium leading-snug text-paper">
+            Ready to turn ideas into reality?
+          </p>
+        </div>
         <Link
           href="/contact"
-          className="group mt-8 inline-flex items-center gap-2 rounded-full bg-signal px-7 py-3.5 font-medium text-paper shadow-[0_0_40px_-10px_var(--color-signal)] transition-transform duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
+          className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
         >
-          Start a conversation
-          <ArrowRight
-            size={18}
-            className="transition-transform duration-200 group-hover:translate-x-1"
-          />
+          Get Started Now!
+          <ArrowRight className="h-5 w-5" />
         </Link>
-      </motion.div>
+      </div>
     </section>
   );
 }

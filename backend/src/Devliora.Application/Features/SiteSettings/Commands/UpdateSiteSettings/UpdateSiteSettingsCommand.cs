@@ -14,4 +14,5 @@ public class UpdateSiteSettingsCommand : IRequest<Unit>
     public string ServicesEngineeringImageUrl { get; set; } = string.Empty;
     public string ServicesTechImageUrl { get; set; } = string.Empty;
     public string ServicesSolutionsImageUrl { get; set; } = string.Empty;
+    public string TechnologiesHeroImageUrl { get; set; } = string.Empty;
 }

@@ -34,7 +34,8 @@ public class GetAllTechnologiesQueryHandler : IRequestHandler<GetAllTechnologies
                 Name = t.Name,
                 DisplayName = t.DisplayName,
                 Category = t.Category,
-                DisplayOrder = t.DisplayOrder
+                DisplayOrder = t.DisplayOrder,
+                Frameworks = t.Frameworks
             })
             .ToListAsync(cancellationToken);
 

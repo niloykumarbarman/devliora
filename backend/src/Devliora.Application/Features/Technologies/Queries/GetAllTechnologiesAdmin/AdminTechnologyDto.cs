@@ -10,4 +10,5 @@ public class AdminTechnologyDto
     public TechnologyCategory Category { get; set; }
     public int DisplayOrder { get; set; }
     public bool IsActive { get; set; }
+    public string Frameworks { get; set; } = string.Empty;
 }
