@@ -3147,13 +3147,10 @@ export default async function ServiceDetailPage({ params }: Props) {
           </section></Reveal>
         )}
 
-        {/* AI Development's "Featured Projects" + "Advanced Technologies"
-            block, matching kaz.com.bd's page structure at this point —
-            but with real Devliora content substituted in wherever the
-            reference used its own material that Devliora can't honestly
-            claim: their two client project cards (a supply-chain SaaS
-            platform, a kids' edtech app) become Devliora's own real,
-            admin-managed featured work instead, and their "Customer
+        {/* AI Development's "Advanced Technologies" block, matching
+            kaz.com.bd's page structure at this point — with real Devliora
+            content substituted in wherever the reference used its own
+            material that Devliora can't honestly claim: their "Customer
             Voice" testimonial (a named individual's real quote about
             them) becomes Devliora's own real, admin-entered featured
             testimonial. Same real testimonial the page's generic "Why
@@ -3162,11 +3159,13 @@ export default async function ServiceDetailPage({ params }: Props) {
             own generic (non-attributable) wording. Image tile uses its
             own dedicated advancedTechnologiesImageUrl field (admin >
             Services), independent of the top-of-page hero banner and the
-            "Our AI Services" section's own image below. */}
+            "Our AI Services" section's own image below. The reference's
+            "Featured Projects" pair (which used to render here via
+            FeaturedWorkSplit) was removed per explicit request — the
+            "Client spotlight: selected work" section further down still
+            covers that same "real project proof" role. */}
         {service.slug === "ai-development" && (
           <>
-            <FeaturedWorkSplit items={featuredWorkSplit} />
-
             <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
               <div className="mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-2 md:items-start">
                 <div className="flex flex-col gap-8">
