@@ -4,6 +4,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import TechnologyDetailHero from "@/components/sections/TechnologyDetailHero";
 import TechnologyDetailOverview from "@/components/sections/TechnologyDetailOverview";
+import TechnologyDetailIndustries from "@/components/sections/TechnologyDetailIndustries";
 import TechnologiesCTA from "@/components/sections/TechnologiesCTA";
 
 export const metadata: Metadata = buildMetadata({
@@ -48,6 +49,7 @@ export default function DotNetDevelopmentPage() {
           paragraph="From enterprise-grade platforms to fast-moving internal tools, .NET gives us the reliability and performance modern businesses need. With deep experience across the .NET ecosystem, we deliver secure, high-performing applications built to your exact specification, with seamless integration and architecture that holds up as requirements change."
           features={FEATURES}
         />
+        <TechnologyDetailIndustries paragraph="With experience across a wide range of sectors, we help clients innovate, scale, and succeed with .NET, from fast-growing startups to established enterprises." />
         <TechnologiesCTA />
       </main>
       <Footer />
