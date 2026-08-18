@@ -19,4 +19,15 @@ public class SiteSettings : BaseEntity
     // Hero banner image for the /technologies page (dark photo behind
     // the "Technologies" title), matching kaz.com.bd/technologies.
     public string TechnologiesHeroImageUrl { get; set; } = string.Empty;
+
+    // One image per /technologies category section (index matches
+    // TechnologyCategory / CATEGORY_ORDER on the frontend), shown beside
+    // that section's tech list — matching kaz.com.bd/technologies' own
+    // per-section photo.
+    public string TechnologiesBackendImageUrl { get; set; } = string.Empty;
+    public string TechnologiesFrontendImageUrl { get; set; } = string.Empty;
+    public string TechnologiesCloudImageUrl { get; set; } = string.Empty;
+    public string TechnologiesDatabaseImageUrl { get; set; } = string.Empty;
+    public string TechnologiesDevOpsImageUrl { get; set; } = string.Empty;
+    public string TechnologiesAiMlImageUrl { get; set; } = string.Empty;
 }

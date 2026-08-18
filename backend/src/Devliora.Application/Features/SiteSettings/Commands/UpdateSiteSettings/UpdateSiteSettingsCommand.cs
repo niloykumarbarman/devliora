@@ -15,4 +15,10 @@ public class UpdateSiteSettingsCommand : IRequest<Unit>
     public string ServicesTechImageUrl { get; set; } = string.Empty;
     public string ServicesSolutionsImageUrl { get; set; } = string.Empty;
     public string TechnologiesHeroImageUrl { get; set; } = string.Empty;
+    public string TechnologiesBackendImageUrl { get; set; } = string.Empty;
+    public string TechnologiesFrontendImageUrl { get; set; } = string.Empty;
+    public string TechnologiesCloudImageUrl { get; set; } = string.Empty;
+    public string TechnologiesDatabaseImageUrl { get; set; } = string.Empty;
+    public string TechnologiesDevOpsImageUrl { get; set; } = string.Empty;
+    public string TechnologiesAiMlImageUrl { get; set; } = string.Empty;
 }

@@ -22,6 +22,12 @@ export default function AdminSettingsPage() {
   const [servicesTechImageUrl, setServicesTechImageUrl] = useState("");
   const [servicesSolutionsImageUrl, setServicesSolutionsImageUrl] = useState("");
   const [technologiesHeroImageUrl, setTechnologiesHeroImageUrl] = useState("");
+  const [technologiesBackendImageUrl, setTechnologiesBackendImageUrl] = useState("");
+  const [technologiesFrontendImageUrl, setTechnologiesFrontendImageUrl] = useState("");
+  const [technologiesCloudImageUrl, setTechnologiesCloudImageUrl] = useState("");
+  const [technologiesDatabaseImageUrl, setTechnologiesDatabaseImageUrl] = useState("");
+  const [technologiesDevOpsImageUrl, setTechnologiesDevOpsImageUrl] = useState("");
+  const [technologiesAiMlImageUrl, setTechnologiesAiMlImageUrl] = useState("");
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [uploadingHero, setUploadingHero] = useState(false);
@@ -32,6 +38,12 @@ export default function AdminSettingsPage() {
   const [uploadingServicesTech, setUploadingServicesTech] = useState(false);
   const [uploadingServicesSolutions, setUploadingServicesSolutions] = useState(false);
   const [uploadingTechnologiesHero, setUploadingTechnologiesHero] = useState(false);
+  const [uploadingTechnologiesBackend, setUploadingTechnologiesBackend] = useState(false);
+  const [uploadingTechnologiesFrontend, setUploadingTechnologiesFrontend] = useState(false);
+  const [uploadingTechnologiesCloud, setUploadingTechnologiesCloud] = useState(false);
+  const [uploadingTechnologiesDatabase, setUploadingTechnologiesDatabase] = useState(false);
+  const [uploadingTechnologiesDevOps, setUploadingTechnologiesDevOps] = useState(false);
+  const [uploadingTechnologiesAiMl, setUploadingTechnologiesAiMl] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -54,6 +66,12 @@ export default function AdminSettingsPage() {
           setServicesTechImageUrl(data.servicesTechImageUrl);
           setServicesSolutionsImageUrl(data.servicesSolutionsImageUrl);
           setTechnologiesHeroImageUrl(data.technologiesHeroImageUrl);
+          setTechnologiesBackendImageUrl(data.technologiesBackendImageUrl);
+          setTechnologiesFrontendImageUrl(data.technologiesFrontendImageUrl);
+          setTechnologiesCloudImageUrl(data.technologiesCloudImageUrl);
+          setTechnologiesDatabaseImageUrl(data.technologiesDatabaseImageUrl);
+          setTechnologiesDevOpsImageUrl(data.technologiesDevOpsImageUrl);
+          setTechnologiesAiMlImageUrl(data.technologiesAiMlImageUrl);
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load site settings.");
@@ -226,6 +244,114 @@ export default function AdminSettingsPage() {
     }
   };
 
+  const handleTechnologiesBackendFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingTechnologiesBackend(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setTechnologiesBackendImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload Backend & APIs image.");
+    } finally {
+      setUploadingTechnologiesBackend(false);
+    }
+  };
+
+  const handleTechnologiesFrontendFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingTechnologiesFrontend(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setTechnologiesFrontendImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload Frontend & UI image.");
+    } finally {
+      setUploadingTechnologiesFrontend(false);
+    }
+  };
+
+  const handleTechnologiesCloudFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingTechnologiesCloud(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setTechnologiesCloudImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload Cloud & Infrastructure image.");
+    } finally {
+      setUploadingTechnologiesCloud(false);
+    }
+  };
+
+  const handleTechnologiesDatabaseFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingTechnologiesDatabase(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setTechnologiesDatabaseImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload Databases & Caching image.");
+    } finally {
+      setUploadingTechnologiesDatabase(false);
+    }
+  };
+
+  const handleTechnologiesDevOpsFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingTechnologiesDevOps(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setTechnologiesDevOpsImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload DevOps & CI/CD image.");
+    } finally {
+      setUploadingTechnologiesDevOps(false);
+    }
+  };
+
+  const handleTechnologiesAiMlFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingTechnologiesAiMl(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setTechnologiesAiMlImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload AI/ML & Data image.");
+    } finally {
+      setUploadingTechnologiesAiMl(false);
+    }
+  };
+
   const handleSave = async () => {
     if (!settingsId) return;
     setSaving(true);
@@ -244,6 +370,12 @@ export default function AdminSettingsPage() {
         servicesTechImageUrl,
         servicesSolutionsImageUrl,
         technologiesHeroImageUrl,
+        technologiesBackendImageUrl,
+        technologiesFrontendImageUrl,
+        technologiesCloudImageUrl,
+        technologiesDatabaseImageUrl,
+        technologiesDevOpsImageUrl,
+        technologiesAiMlImageUrl,
       });
       setSuccess(true);
     } catch (err) {
@@ -635,6 +767,234 @@ export default function AdminSettingsPage() {
               className="hidden"
               onChange={handleTechnologiesHeroFileChange}
               disabled={uploadingTechnologiesHero}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Technologies Page — &quot;Backend & APIs&quot; Image</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            The image beside the &quot;Backend & APIs&quot; category section&apos;s tech list.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {technologiesBackendImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(technologiesBackendImageUrl)}
+                alt="Backend & APIs preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingTechnologiesBackend ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingTechnologiesBackend ? "Uploading..." : "Upload image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleTechnologiesBackendFileChange}
+              disabled={uploadingTechnologiesBackend}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Technologies Page — &quot;Frontend & UI&quot; Image</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            The image beside the &quot;Frontend & UI&quot; category section&apos;s tech list.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {technologiesFrontendImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(technologiesFrontendImageUrl)}
+                alt="Frontend & UI preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingTechnologiesFrontend ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingTechnologiesFrontend ? "Uploading..." : "Upload image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleTechnologiesFrontendFileChange}
+              disabled={uploadingTechnologiesFrontend}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Technologies Page — &quot;Cloud & Infrastructure&quot; Image</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            The image beside the &quot;Cloud & Infrastructure&quot; category section&apos;s tech list.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {technologiesCloudImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(technologiesCloudImageUrl)}
+                alt="Cloud & Infrastructure preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingTechnologiesCloud ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingTechnologiesCloud ? "Uploading..." : "Upload image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleTechnologiesCloudFileChange}
+              disabled={uploadingTechnologiesCloud}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Technologies Page — &quot;Databases & Caching&quot; Image</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            The image beside the &quot;Databases & Caching&quot; category section&apos;s tech list.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {technologiesDatabaseImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(technologiesDatabaseImageUrl)}
+                alt="Databases & Caching preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingTechnologiesDatabase ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingTechnologiesDatabase ? "Uploading..." : "Upload image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleTechnologiesDatabaseFileChange}
+              disabled={uploadingTechnologiesDatabase}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Technologies Page — &quot;DevOps & CI/CD&quot; Image</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            The image beside the &quot;DevOps & CI/CD&quot; category section&apos;s tech list.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {technologiesDevOpsImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(technologiesDevOpsImageUrl)}
+                alt="DevOps & CI/CD preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingTechnologiesDevOps ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingTechnologiesDevOps ? "Uploading..." : "Upload image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleTechnologiesDevOpsFileChange}
+              disabled={uploadingTechnologiesDevOps}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Technologies Page — &quot;AI/ML & Data&quot; Image</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            The image beside the &quot;AI/ML & Data&quot; category section&apos;s tech list.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {technologiesAiMlImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(technologiesAiMlImageUrl)}
+                alt="AI/ML & Data preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingTechnologiesAiMl ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingTechnologiesAiMl ? "Uploading..." : "Upload image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleTechnologiesAiMlFileChange}
+              disabled={uploadingTechnologiesAiMl}
             />
           </label>
         </div>

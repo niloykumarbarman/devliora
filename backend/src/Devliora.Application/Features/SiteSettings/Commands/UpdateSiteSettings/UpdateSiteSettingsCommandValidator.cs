@@ -17,5 +17,11 @@ public class UpdateSiteSettingsCommandValidator : AbstractValidator<UpdateSiteSe
         RuleFor(x => x.ServicesTechImageUrl).MaximumLength(500);
         RuleFor(x => x.ServicesSolutionsImageUrl).MaximumLength(500);
         RuleFor(x => x.TechnologiesHeroImageUrl).MaximumLength(500);
+        RuleFor(x => x.TechnologiesBackendImageUrl).MaximumLength(500);
+        RuleFor(x => x.TechnologiesFrontendImageUrl).MaximumLength(500);
+        RuleFor(x => x.TechnologiesCloudImageUrl).MaximumLength(500);
+        RuleFor(x => x.TechnologiesDatabaseImageUrl).MaximumLength(500);
+        RuleFor(x => x.TechnologiesDevOpsImageUrl).MaximumLength(500);
+        RuleFor(x => x.TechnologiesAiMlImageUrl).MaximumLength(500);
     }
 }

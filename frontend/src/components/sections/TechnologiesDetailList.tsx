@@ -1,11 +1,25 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import TechBrandIcon from "@/components/TechBrandIcon";
 import { getTechIcon } from "@/lib/techIcons";
 import { fetchTechnologies, TechnologyDto } from "@/lib/technologies";
+import { fetchSiteSettings, SiteSettingsDto } from "@/lib/siteSettings";
+import { resolveImageUrl } from "@/lib/hero";
 import { CATEGORY_META, CATEGORY_ORDER } from "@/lib/technologyCategories";
+
+// Which SiteSettings field holds each category section's image, matching
+// kaz.com.bd/technologies' own per-section photo beside the tech list.
+const CATEGORY_IMAGE_KEY: Record<number, keyof SiteSettingsDto> = {
+  0: "technologiesBackendImageUrl",
+  1: "technologiesFrontendImageUrl",
+  2: "technologiesCloudImageUrl",
+  3: "technologiesDatabaseImageUrl",
+  4: "technologiesDevOpsImageUrl",
+  5: "technologiesAiMlImageUrl",
+};
 
 // Per-category heading/tagline/paragraph, matching kaz.com.bd/technologies'
 // stacked "[Category] engineering, built for X" sections — one full-width
@@ -58,9 +72,11 @@ const CATEGORY_COPY: Record<number, { heading: string; tagline: string; paragrap
 export default function TechnologiesDetailList() {
   const reducedMotion = useReducedMotion();
   const [technologies, setTechnologies] = useState<TechnologyDto[]>([]);
+  const [siteSettings, setSiteSettings] = useState<SiteSettingsDto | null>(null);
 
   useEffect(() => {
     fetchTechnologies().then(setTechnologies);
+    fetchSiteSettings().then(setSiteSettings);
   }, []);
 
   useEffect(() => {
@@ -79,7 +95,9 @@ export default function TechnologiesDetailList() {
 
   return (
     <>
-      {groups.map((group, i) => (
+      {groups.map((group, i) => {
+        const imageUrl = siteSettings?.[CATEGORY_IMAGE_KEY[group.categoryId]];
+        return (
         <section
           key={group.categoryId}
           id={group.meta.slug}
@@ -132,40 +150,59 @@ export default function TechnologiesDetailList() {
               {group.copy.paragraph}
             </motion.p>
 
-            <div className="mt-12 grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2">
-              {group.items.map((tool, idx) => {
-                const hasIcon = !!getTechIcon(tool.name);
-                return (
-                  <motion.div
-                    key={tool.id}
-                    initial={{ opacity: 0, y: reducedMotion ? 0 : 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-40px" }}
-                    transition={{ duration: 0.4, delay: idx * 0.05 }}
-                    className="flex items-start gap-3"
-                  >
-                    {hasIcon ? (
-                      <TechBrandIcon name={tool.name} className="mt-1 h-7 w-7 shrink-0" />
-                    ) : (
-                      <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-signal" />
-                    )}
-                    <div>
-                      <p className={`font-display text-lg font-semibold ${i % 2 === 0 ? "text-ink" : "text-paper"}`}>
-                        {tool.displayName.trim()}
-                      </p>
-                      {tool.frameworks && (
-                        <p className={`mt-1.5 text-sm leading-relaxed ${i % 2 === 0 ? "text-graphite/70" : "text-wire"}`}>
-                          {tool.frameworks}
-                        </p>
+            <div
+              className={`mt-12 grid grid-cols-1 gap-10 md:items-start ${
+                imageUrl ? "md:grid-cols-[minmax(0,1fr)_2fr]" : ""
+              }`}
+            >
+              {imageUrl && (
+                <motion.div
+                  initial={{ opacity: 0, y: reducedMotion ? 0 : 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-40px" }}
+                  transition={{ duration: 0.5 }}
+                  className="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-graphite md:max-w-sm"
+                >
+                  <Image src={resolveImageUrl(imageUrl)} alt="" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
+                </motion.div>
+              )}
+
+              <div className="grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2">
+                {group.items.map((tool, idx) => {
+                  const hasIcon = !!getTechIcon(tool.name);
+                  return (
+                    <motion.div
+                      key={tool.id}
+                      initial={{ opacity: 0, y: reducedMotion ? 0 : 16 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-40px" }}
+                      transition={{ duration: 0.4, delay: idx * 0.05 }}
+                      className="flex items-start gap-3"
+                    >
+                      {hasIcon ? (
+                        <TechBrandIcon name={tool.name} className="mt-1 h-7 w-7 shrink-0" />
+                      ) : (
+                        <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-signal" />
                       )}
-                    </div>
-                  </motion.div>
-                );
-              })}
+                      <div>
+                        <p className={`font-display text-lg font-semibold ${i % 2 === 0 ? "text-ink" : "text-paper"}`}>
+                          {tool.displayName.trim()}
+                        </p>
+                        {tool.frameworks && (
+                          <p className={`mt-1.5 text-sm leading-relaxed ${i % 2 === 0 ? "text-graphite/70" : "text-wire"}`}>
+                            {tool.frameworks}
+                          </p>
+                        )}
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
-      ))}
+        );
+      })}
     </>
   );
 }
