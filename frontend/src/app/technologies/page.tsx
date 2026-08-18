@@ -4,6 +4,8 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import TechnologiesHero from "@/components/sections/TechnologiesHero";
 import TechnologiesDetailList from "@/components/sections/TechnologiesDetailList";
+import TechnologiesOverview from "@/components/sections/TechnologiesOverview";
+import TechnologiesMethodologies from "@/components/sections/TechnologiesMethodologies";
 import TechnologiesCTA from "@/components/sections/TechnologiesCTA";
 
 export const metadata: Metadata = buildMetadata({
@@ -20,6 +22,8 @@ export default function TechnologiesPage() {
       <main>
         <TechnologiesHero />
         <TechnologiesDetailList />
+        <TechnologiesOverview />
+        <TechnologiesMethodologies />
         <TechnologiesCTA />
       </main>
       <Footer />
