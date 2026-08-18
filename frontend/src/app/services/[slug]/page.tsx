@@ -3600,6 +3600,32 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </Link>
               </div>
             </section></Reveal>
+
+            {/* "Client spotlight: selected work" — a second instance of
+                kaz.com.bd's project-showcase split cards further down
+                this page, distinct from the "Featured Projects" pair
+                shown earlier near the Netflix spotlight (the reference
+                itself shows two different project pairs at these two
+                points). Reuses the same FeaturedWorkSplit component and
+                real, admin-managed portfolio data — but a different
+                slice of it (items 5-6 of the featured set, vs. 3-4 used
+                above) so this page doesn't show the same two case
+                studies twice. The reference pairs each card with a big
+                stat number (e.g. "15,000+ latrines monitored"); Devliora's
+                portfolio entries don't have metrics entered yet, so that
+                callout is left out rather than inventing figures — same
+                reasoning applied throughout this page (see the FAQ
+                numbers and stats-row notes above). */}
+            <Reveal><section className="relative overflow-hidden border-t border-paper/10 pt-20 md:pt-24">
+              <div className="mx-auto max-w-6xl px-6">
+                <h2 className="text-balance font-display text-3xl font-bold leading-tight text-paper sm:text-4xl">
+                  Client spotlight: selected work
+                </h2>
+              </div>
+              <div className="mt-14">
+                <FeaturedWorkSplit items={featuredPortfolios.slice(4, 6)} />
+              </div>
+            </section></Reveal>
           </>
         )}
 
