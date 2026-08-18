@@ -13,12 +13,14 @@
 // of these are display-only labels with no dedicated page behind them.
 // "AI Development" is the one exception: it's also a real, admin-managed
 // Service (/services/ai-development), so it links straight there instead
-// of to a page that wouldn't show anything about it.
+// of to a page that wouldn't show anything about it. ".NET Development"
+// now has its own dedicated page too (/technologies/dot-net-development),
+// matching kaz.com.bd's per-technology page.
 export type MegaMenuTechnology = { label: string; href: string };
 
 export const MEGA_MENU_TECHNOLOGIES: MegaMenuTechnology[] = [
   { label: "AI Development", href: "/services/ai-development" },
-  { label: ".NET Development", href: "/technologies" },
+  { label: ".NET Development", href: "/technologies/dot-net-development" },
   { label: "Java Development", href: "/technologies" },
   { label: "PHP Development", href: "/technologies" },
   { label: "Node.js Development", href: "/technologies" },
