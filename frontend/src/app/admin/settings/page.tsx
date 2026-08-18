@@ -28,6 +28,7 @@ export default function AdminSettingsPage() {
   const [technologiesDatabaseImageUrl, setTechnologiesDatabaseImageUrl] = useState("");
   const [technologiesDevOpsImageUrl, setTechnologiesDevOpsImageUrl] = useState("");
   const [technologiesAiMlImageUrl, setTechnologiesAiMlImageUrl] = useState("");
+  const [technologiesMobileImageUrl, setTechnologiesMobileImageUrl] = useState("");
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [uploadingHero, setUploadingHero] = useState(false);
@@ -44,6 +45,7 @@ export default function AdminSettingsPage() {
   const [uploadingTechnologiesDatabase, setUploadingTechnologiesDatabase] = useState(false);
   const [uploadingTechnologiesDevOps, setUploadingTechnologiesDevOps] = useState(false);
   const [uploadingTechnologiesAiMl, setUploadingTechnologiesAiMl] = useState(false);
+  const [uploadingTechnologiesMobile, setUploadingTechnologiesMobile] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -72,6 +74,7 @@ export default function AdminSettingsPage() {
           setTechnologiesDatabaseImageUrl(data.technologiesDatabaseImageUrl);
           setTechnologiesDevOpsImageUrl(data.technologiesDevOpsImageUrl);
           setTechnologiesAiMlImageUrl(data.technologiesAiMlImageUrl);
+          setTechnologiesMobileImageUrl(data.technologiesMobileImageUrl);
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Failed to load site settings.");
@@ -352,6 +355,24 @@ export default function AdminSettingsPage() {
     }
   };
 
+  const handleTechnologiesMobileFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingTechnologiesMobile(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setTechnologiesMobileImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload Mobile Apps image.");
+    } finally {
+      setUploadingTechnologiesMobile(false);
+    }
+  };
+
   const handleSave = async () => {
     if (!settingsId) return;
     setSaving(true);
@@ -376,6 +397,7 @@ export default function AdminSettingsPage() {
         technologiesDatabaseImageUrl,
         technologiesDevOpsImageUrl,
         technologiesAiMlImageUrl,
+        technologiesMobileImageUrl,
       });
       setSuccess(true);
     } catch (err) {
@@ -995,6 +1017,44 @@ export default function AdminSettingsPage() {
               className="hidden"
               onChange={handleTechnologiesAiMlFileChange}
               disabled={uploadingTechnologiesAiMl}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Technologies Page — &quot;Mobile Apps&quot; Image</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            The image beside the &quot;Mobile Apps&quot; category section&apos;s tech list.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {technologiesMobileImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(technologiesMobileImageUrl)}
+                alt="Mobile Apps preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingTechnologiesMobile ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingTechnologiesMobile ? "Uploading..." : "Upload image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleTechnologiesMobileFileChange}
+              disabled={uploadingTechnologiesMobile}
             />
           </label>
         </div>

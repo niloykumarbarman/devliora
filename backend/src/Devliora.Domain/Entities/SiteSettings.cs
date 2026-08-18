@@ -30,4 +30,5 @@ public class SiteSettings : BaseEntity
     public string TechnologiesDatabaseImageUrl { get; set; } = string.Empty;
     public string TechnologiesDevOpsImageUrl { get; set; } = string.Empty;
     public string TechnologiesAiMlImageUrl { get; set; } = string.Empty;
+    public string TechnologiesMobileImageUrl { get; set; } = string.Empty;
 }

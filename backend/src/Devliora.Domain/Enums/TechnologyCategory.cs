@@ -6,5 +6,6 @@ public enum TechnologyCategory
     CloudInfrastructure,
     DatabasesCaching,
     DevOpsCicd,
-    AiMlData
+    AiMlData,
+    MobileApps
 }

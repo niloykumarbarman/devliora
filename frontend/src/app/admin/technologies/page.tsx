@@ -21,6 +21,7 @@ const CATEGORY_LABELS: Record<number, string> = {
   3: "Databases & Caching",
   4: "DevOps & CI/CD",
   5: "AI, ML & Data",
+  6: "Mobile Apps",
 };
 
 const categoryOptions = Object.entries(CATEGORY_LABELS).map(([value, label]) => ({

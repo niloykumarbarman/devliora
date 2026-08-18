@@ -32,6 +32,7 @@ const CATEGORY_IMAGE_KEY: Record<number, keyof SiteSettingsDto> = {
   3: "technologiesDatabaseImageUrl",
   4: "technologiesDevOpsImageUrl",
   5: "technologiesAiMlImageUrl",
+  6: "technologiesMobileImageUrl",
 };
 
 // Per-category heading/tagline/paragraph, matching kaz.com.bd/technologies'
@@ -90,6 +91,14 @@ const CATEGORY_COPY: Record<
     tagline: "Real workflows, not novelty demos.",
     paragraph:
       "TensorFlow and PyTorch power model training, Scikit-learn and NumPy handle the statistical groundwork, and Pandas keeps the data pipeline clean end to end. Where an off-the-shelf model fits better than a custom one, OpenAI's APIs are used directly — the goal is the right tool for the workflow, not the most impressive one.",
+  },
+  // Heading, tagline, and paragraph confirmed verbatim from the reference
+  // screenshot ("Modern mobile experiences").
+  6: {
+    heading: "Modern mobile experiences",
+    tagline: "Scalable, high-performance mobile apps built for real users.",
+    paragraph:
+      "Our mobile development expertise covers native and cross-platform technologies that support performance, usability, and long-term maintainability. From native Android and iOS applications to flexible cross-platform frameworks, we build mobile solutions that align with product goals, user expectations, and evolving business needs.",
   },
 };
 

@@ -5,6 +5,7 @@ import {
   Database,
   GitBranch,
   BrainCircuit,
+  Smartphone,
 } from "lucide-react";
 
 export type CategoryMeta = {
@@ -57,6 +58,13 @@ export const CATEGORY_META: Record<number, CategoryMeta> = {
     description:
       "Practical AI integration focused on real workflows, not novelty.",
   },
+  6: {
+    icon: Smartphone,
+    title: "Mobile Apps",
+    slug: "mobile-apps",
+    description:
+      "Native and cross-platform apps built for real-world performance and usability.",
+  },
 };
 
-export const CATEGORY_ORDER = [0, 1, 2, 3, 4, 5];
+export const CATEGORY_ORDER = [0, 1, 2, 3, 4, 5, 6];

@@ -19,6 +19,7 @@ export interface SiteSettingsDto {
   technologiesDatabaseImageUrl: string;
   technologiesDevOpsImageUrl: string;
   technologiesAiMlImageUrl: string;
+  technologiesMobileImageUrl: string;
 }
 
 export const SITE_SETTINGS_API_URL = `${API_BASE_URL}/site-settings`;
