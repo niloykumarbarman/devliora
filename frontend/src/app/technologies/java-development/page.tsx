@@ -4,7 +4,9 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import TechnologyDetailHero from "@/components/sections/TechnologyDetailHero";
 import TechnologyDetailOverview from "@/components/sections/TechnologyDetailOverview";
+import TechnologyDetailHighlight from "@/components/sections/TechnologyDetailHighlight";
 import TechnologyDetailIndustries from "@/components/sections/TechnologyDetailIndustries";
+import { ShieldCheck } from "lucide-react";
 import TechnologyDetailSelectedWork from "@/components/sections/TechnologyDetailSelectedWork";
 import TechnologyDetailSpotlight from "@/components/sections/TechnologyDetailSpotlight";
 import FAQView from "@/components/sections/FAQView";
@@ -134,6 +136,11 @@ export default function JavaDevelopmentPage() {
           headingAccent="Java"
           paragraph="Java is used to build reliable, scalable applications across a range of industries. By working with its mature ecosystem and proven capabilities, solutions are designed for long-term stability and maintainability. Explore how Java can support durable, enterprise-ready systems."
           features={FEATURES}
+        />
+        <TechnologyDetailHighlight
+          headline="Battle-tested at enterprise scale"
+          paragraph="Java has powered mission-critical backend systems for decades — across banking, e-commerce, and large-scale platforms — thanks to its proven performance, mature tooling, and long-term platform stability. It's a dependable foundation for software that can't afford downtime."
+          icon={ShieldCheck}
         />
         <TechnologyDetailIndustries paragraph="With experience across a wide range of sectors, we help clients innovate, scale, and succeed with Java, from fast-growing startups to established enterprises." />
         <TechnologyDetailSelectedWork />
