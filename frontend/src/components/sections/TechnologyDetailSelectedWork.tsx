@@ -7,23 +7,35 @@ import { fetchPortfolios, Portfolio } from "@/lib/portfolios";
 import { resolveImageUrl } from "@/lib/hero";
 
 // "Selected work" block for individual technology pages, matching
-// kaz.com.bd's per-technology page's "Client spotlight" layout (image +
-// label, title, summary, Read more). Unlike the reference, this pulls
-// real featured projects from Devliora's own admin-managed Portfolio list
-// (same source as /portfolio) rather than naming a specific client's tech
-// stack that wasn't actually built with this technology — none of
-// Devliora's real portfolio entries are tagged .NET/ASP.NET Core today,
-// so the projects shown here are general "work we've shipped" examples,
-// not claims that they used this specific technology. No stat callout
-// (kaz's "3mn transactions processed" etc.) since Portfolio metrics
-// aren't populated for these entries yet — showing an invented number
-// isn't an option.
-export default function TechnologyDetailSelectedWork() {
+// kaz.com.bd's per-technology page's "Client spotlight: selected work"
+// layout (image + label, title, summary, Read more) — which some
+// reference pages (e.g. Java's) repeat twice with a different project
+// pair each time, hence `start` to page through Devliora's real
+// portfolio instead of showing the same two projects again. Unlike the
+// reference, this pulls real featured projects from Devliora's own
+// admin-managed Portfolio list (same source as /portfolio) rather than
+// naming a specific client's tech stack that wasn't actually built with
+// this technology — none of Devliora's real portfolio entries are
+// tagged .NET/ASP.NET Core or Java today, so the projects shown here are
+// general "work we've shipped" examples, not claims that they used this
+// specific technology. No stat callout (kaz's "3mn transactions
+// processed", "500,000+ direct online buyers served" etc.) since
+// Portfolio metrics aren't populated for these entries yet — showing an
+// invented number isn't an option.
+type TechnologyDetailSelectedWorkProps = {
+  heading?: string;
+  start?: number;
+};
+
+export default function TechnologyDetailSelectedWork({
+  heading = "Selected work",
+  start = 0,
+}: TechnologyDetailSelectedWorkProps) {
   const [projects, setProjects] = useState<Portfolio[]>([]);
 
   useEffect(() => {
-    fetchPortfolios().then((data) => setProjects(data.slice(0, 2)));
-  }, []);
+    fetchPortfolios().then((data) => setProjects(data.slice(start, start + 2)));
+  }, [start]);
 
   if (projects.length === 0) return null;
 
@@ -32,7 +44,7 @@ export default function TechnologyDetailSelectedWork() {
       <div className="bg-grain absolute inset-0" />
       <div className="relative mx-auto max-w-6xl">
         <h2 className="text-balance font-display text-3xl font-semibold text-paper sm:text-4xl">
-          Selected work
+          {heading}
         </h2>
 
         <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2">

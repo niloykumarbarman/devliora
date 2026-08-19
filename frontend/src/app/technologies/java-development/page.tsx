@@ -17,6 +17,7 @@ import TechnologyDetailServices from "@/components/sections/TechnologyDetailServ
 import CodeSnippetVisual from "@/components/sections/CodeSnippetVisual";
 import TransformTeamCTA from "@/components/sections/TransformTeamCTA";
 import TailoredTechSolutions from "@/components/sections/TailoredTechSolutions";
+import EnhanceTeamCTA from "@/components/sections/EnhanceTeamCTA";
 import TechnologiesCTA from "@/components/sections/TechnologiesCTA";
 import type { FaqDto } from "@/lib/faq";
 
@@ -164,6 +165,8 @@ export default function JavaDevelopmentPage() {
         />
         <TransformTeamCTA />
         <TailoredTechSolutions />
+        <EnhanceTeamCTA />
+        <TechnologyDetailSelectedWork heading="More from our portfolio" start={4} />
         <TechnologiesCTA />
       </main>
       <Footer />
