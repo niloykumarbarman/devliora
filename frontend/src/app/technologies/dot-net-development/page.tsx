@@ -6,6 +6,7 @@ import TechnologyDetailHero from "@/components/sections/TechnologyDetailHero";
 import TechnologyDetailOverview from "@/components/sections/TechnologyDetailOverview";
 import TechnologyDetailIndustries from "@/components/sections/TechnologyDetailIndustries";
 import TechnologyDetailSelectedWork from "@/components/sections/TechnologyDetailSelectedWork";
+import TechnologyDetailSpotlight from "@/components/sections/TechnologyDetailSpotlight";
 import FAQView from "@/components/sections/FAQView";
 import TechnologiesCTA from "@/components/sections/TechnologiesCTA";
 import type { FaqDto } from "@/lib/faq";
@@ -105,6 +106,7 @@ export default function DotNetDevelopmentPage() {
         <TechnologyDetailIndustries paragraph="With experience across a wide range of sectors, we help clients innovate, scale, and succeed with .NET, from fast-growing startups to established enterprises." />
         <TechnologyDetailSelectedWork />
         <FAQView faqs={FAQS} heading="Frequently asked questions" />
+        <TechnologyDetailSpotlight />
         <TechnologiesCTA />
       </main>
       <Footer />
