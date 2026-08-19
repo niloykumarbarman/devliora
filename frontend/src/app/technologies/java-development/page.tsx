@@ -28,13 +28,17 @@ export const metadata: Metadata = buildMetadata({
 
 // Static, page-scoped FAQ content — same reasoning as the .NET
 // Development page (lib/faq.ts only scopes to Services via serviceSlug,
-// and Java Development isn't a Service record). No invented numbers.
+// and Java Development isn't a Service record). Questions confirmed
+// verbatim from the kaz.com.bd/technologies/java-development reference
+// screenshot (including its final answer, generic capability copy with
+// no invented numbers); the other answers follow the same honest,
+// no-fabrication approach as the .NET page's FAQ.
 const FAQS: FaqDto[] = [
   {
     id: "timeline",
     serviceSlug: "",
     displayOrder: 0,
-    question: "How long does it take to build a Java application?",
+    question: "How long does it take to develop a Java application?",
     answer:
       "It depends on scope. A focused internal tool can take a few weeks; a full enterprise platform with multiple integrations can take several months. We scope every project individually and give you a realistic timeline before work begins, not a generic estimate.",
   },
@@ -42,7 +46,7 @@ const FAQS: FaqDto[] = [
     id: "why-java",
     serviceSlug: "",
     displayOrder: 1,
-    question: "Why should I choose Java for my enterprise software project?",
+    question: "Why should I choose Java for my software project?",
     answer:
       "Java gives you a mature, battle-tested platform with strong performance, a large talent pool, and decades of enterprise adoption behind it. Its \"write once, run anywhere\" model, robust security tooling, and vast library ecosystem make it a dependable choice for software you'll be running for years.",
   },
@@ -50,7 +54,7 @@ const FAQS: FaqDto[] = [
     id: "integration",
     serviceSlug: "",
     displayOrder: 2,
-    question: "Can you integrate a Java application with my existing systems (ERP, CRM, databases)?",
+    question: "Can you integrate a Java application with my existing systems?",
     answer:
       "Yes. Java's ecosystem is built for integration — we regularly connect Java applications to existing ERPs, CRMs, and databases through REST APIs, message queues, or direct data access, without disrupting systems that are already running in production.",
   },
@@ -58,7 +62,7 @@ const FAQS: FaqDto[] = [
     id: "cost",
     serviceSlug: "",
     displayOrder: 3,
-    question: "What is the cost range for developing a Java solution?",
+    question: "What is the cost range for developing a Java application?",
     answer:
       "Cost depends on scope, complexity, and timeline — a small internal tool costs far less than a multi-service enterprise platform. We provide a clear, itemized estimate once we understand your requirements, with no hidden fees.",
   },
@@ -66,9 +70,9 @@ const FAQS: FaqDto[] = [
     id: "support",
     serviceSlug: "",
     displayOrder: 4,
-    question: "Do you provide ongoing support and maintenance for Java applications?",
+    question: "Do you offer ongoing support and maintenance for Java apps?",
     answer:
-      "Yes — through our IT Maintenance & Support service we handle monitoring, security patches, performance tuning, and feature updates after launch, so your application stays reliable long after the initial release.",
+      "Absolutely. We provide continuous monitoring, code optimization, updates, bug fixes, and feature enhancements to keep your Java application running smoothly.",
   },
 ];
 
