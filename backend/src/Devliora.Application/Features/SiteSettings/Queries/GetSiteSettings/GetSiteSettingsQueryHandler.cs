@@ -53,7 +53,8 @@ public class GetSiteSettingsQueryHandler : IRequestHandler<GetSiteSettingsQuery,
                 TechnologiesDatabaseImageUrl = "",
                 TechnologiesDevOpsImageUrl = "",
                 TechnologiesAiMlImageUrl = "",
-                TechnologiesMobileImageUrl = ""
+                TechnologiesMobileImageUrl = "",
+                TechnologiesDotNetImageUrl = ""
             };
             _context.SiteSettings.Add(settings);
             await _context.SaveChangesAsync(cancellationToken);
@@ -78,7 +79,8 @@ public class GetSiteSettingsQueryHandler : IRequestHandler<GetSiteSettingsQuery,
             TechnologiesDatabaseImageUrl = settings.TechnologiesDatabaseImageUrl,
             TechnologiesDevOpsImageUrl = settings.TechnologiesDevOpsImageUrl,
             TechnologiesAiMlImageUrl = settings.TechnologiesAiMlImageUrl,
-            TechnologiesMobileImageUrl = settings.TechnologiesMobileImageUrl
+            TechnologiesMobileImageUrl = settings.TechnologiesMobileImageUrl,
+            TechnologiesDotNetImageUrl = settings.TechnologiesDotNetImageUrl
         };
 
         await _cache.SetAsync(CacheKey, result, TimeSpan.FromMinutes(5), cancellationToken);

@@ -31,4 +31,10 @@ public class SiteSettings : BaseEntity
     public string TechnologiesDevOpsImageUrl { get; set; } = string.Empty;
     public string TechnologiesAiMlImageUrl { get; set; } = string.Empty;
     public string TechnologiesMobileImageUrl { get; set; } = string.Empty;
+
+    // Decorative image for the ".NET Core" card on the
+    // /technologies/dot-net-development page's "Development Services"
+    // section. Falls back to a coded gradient (using .NET's real brand
+    // purple, #512BD4) when unset, so this is optional.
+    public string TechnologiesDotNetImageUrl { get; set; } = string.Empty;
 }
