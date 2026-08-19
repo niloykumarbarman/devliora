@@ -11,6 +11,7 @@ import FAQView from "@/components/sections/FAQView";
 import DedicatedDevTeam from "@/components/sections/DedicatedDevTeam";
 import UnlockProjectCTA from "@/components/sections/UnlockProjectCTA";
 import DistributedTeamsCollaboration from "@/components/sections/DistributedTeamsCollaboration";
+import TechnologyDetailServices from "@/components/sections/TechnologyDetailServices";
 import TechnologiesCTA from "@/components/sections/TechnologiesCTA";
 import type { FaqDto } from "@/lib/faq";
 
@@ -71,6 +72,34 @@ const FAQS: FaqDto[] = [
   },
 ];
 
+const DOTNET_SERVICES = [
+  {
+    title: ".NET Consulting",
+    description:
+      "We help define architecture, technology choices, and development approach, ensuring your .NET solution aligns with business goals, scalability needs, and long-term roadmap.",
+  },
+  {
+    title: "Custom .NET Development",
+    description:
+      "Our team builds tailored web, desktop, and backend applications using modern .NET frameworks, focused on reliability, performance, and clean code practices.",
+  },
+  {
+    title: "UI/UX for .NET Applications",
+    description:
+      "We design intuitive interfaces that integrate seamlessly with .NET applications, supporting usability, accessibility, and consistent user experiences.",
+  },
+  {
+    title: "Modernization & Migration",
+    description:
+      "We upgrade legacy .NET systems with improved performance, updated architecture, and cloud readiness, including refactoring and framework upgrades.",
+  },
+  {
+    title: "Support & Maintenance",
+    description:
+      "Our ongoing support ensures your .NET applications remain stable, secure, and up to date as your business and technical requirements evolve.",
+  },
+];
+
 const FEATURES = [
   {
     title: "Cross-platform compatibility",
@@ -113,6 +142,12 @@ export default function DotNetDevelopmentPage() {
         <DedicatedDevTeam />
         <UnlockProjectCTA />
         <DistributedTeamsCollaboration />
+        <TechnologyDetailServices
+          heading=".NET Development Services"
+          cardLabel=".NET Core"
+          paragraph="At Devliora, we deliver end-to-end .NET solutions built for performance, security, and long-term maintainability. Here's a snapshot of what our .NET expertise covers."
+          services={DOTNET_SERVICES}
+        />
         <TechnologiesCTA />
       </main>
       <Footer />
