@@ -1,6 +1,7 @@
 using Devliora.Application.Features.TechnologyDetailPages.Commands.CreateTechnologyDetailPage;
 using Devliora.Application.Features.TechnologyDetailPages.Commands.DeleteTechnologyDetailPage;
 using Devliora.Application.Features.TechnologyDetailPages.Commands.UpdateTechnologyDetailPage;
+using Devliora.Application.Features.TechnologyDetailPages.Queries.GetAllTechnologyDetailPages;
 using Devliora.Application.Features.TechnologyDetailPages.Queries.GetAllTechnologyDetailPagesAdmin;
 using Devliora.Application.Features.TechnologyDetailPages.Queries.GetTechnologyDetailPageBySlug;
 using MediatR;
@@ -18,6 +19,16 @@ public class TechnologyDetailPagesController : ControllerBase
     public TechnologyDetailPagesController(ISender sender)
     {
         _sender = sender;
+    }
+
+    // Lightweight public listing (slug/name/title only) — powers
+    // /technologies' "Explore our technology pages" section so a newly
+    // created page is discoverable without knowing its exact URL.
+    [HttpGet]
+    public async Task<ActionResult<List<TechnologyDetailPageSummaryDto>>> GetAll(CancellationToken cancellationToken)
+    {
+        var result = await _sender.Send(new GetAllTechnologyDetailPagesQuery(), cancellationToken);
+        return Ok(result);
     }
 
     [HttpGet("{slug}")]

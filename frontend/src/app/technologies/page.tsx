@@ -3,6 +3,7 @@ import { buildMetadata } from "@/lib/seo";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import TechnologiesHero from "@/components/sections/TechnologiesHero";
+import TechnologyDetailPagesGrid from "@/components/sections/TechnologyDetailPagesGrid";
 import TechnologiesDetailList from "@/components/sections/TechnologiesDetailList";
 import TechnologiesOverview from "@/components/sections/TechnologiesOverview";
 import TechnologiesMethodologies from "@/components/sections/TechnologiesMethodologies";
@@ -21,6 +22,7 @@ export default function TechnologiesPage() {
       <Navbar />
       <main>
         <TechnologiesHero />
+        <TechnologyDetailPagesGrid />
         <TechnologiesDetailList />
         <TechnologiesOverview />
         <TechnologiesMethodologies />

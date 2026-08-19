@@ -54,6 +54,15 @@ export interface TechnologyDetailPageDto {
   services: TechnologyDetailServiceItem[];
 }
 
+// Lightweight listing shape for linking to each page (e.g. from
+// /technologies) — not the full page content.
+export interface TechnologyDetailPageSummaryDto {
+  slug: string;
+  technologyName: string;
+  heroTitle: string;
+  displayOrder: number;
+}
+
 export const TECHNOLOGY_DETAIL_PAGES_API_URL = `${API_BASE_URL}/technology-detail-pages`;
 
 export async function fetchTechnologyDetailPageBySlug(
@@ -63,4 +72,14 @@ export async function fetchTechnologyDetailPageBySlug(
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`Failed to fetch technology detail page: ${res.status}`);
   return res.json();
+}
+
+export async function fetchAllTechnologyDetailPages(): Promise<TechnologyDetailPageSummaryDto[]> {
+  try {
+    const res = await fetch(TECHNOLOGY_DETAIL_PAGES_API_URL, { cache: "no-store" });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch {
+    return [];
+  }
 }
