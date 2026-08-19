@@ -9,6 +9,8 @@ import TechnologyDetailSelectedWork from "@/components/sections/TechnologyDetail
 import TechnologyDetailSpotlight from "@/components/sections/TechnologyDetailSpotlight";
 import FAQView from "@/components/sections/FAQView";
 import DedicatedDevTeam from "@/components/sections/DedicatedDevTeam";
+import UnlockProjectCTA from "@/components/sections/UnlockProjectCTA";
+import DistributedTeamsCollaboration from "@/components/sections/DistributedTeamsCollaboration";
 import TechnologiesCTA from "@/components/sections/TechnologiesCTA";
 import type { FaqDto } from "@/lib/faq";
 
@@ -109,6 +111,8 @@ export default function DotNetDevelopmentPage() {
         <FAQView faqs={FAQS} heading="Frequently asked questions" />
         <TechnologyDetailSpotlight />
         <DedicatedDevTeam />
+        <UnlockProjectCTA />
+        <DistributedTeamsCollaboration />
         <TechnologiesCTA />
       </main>
       <Footer />
