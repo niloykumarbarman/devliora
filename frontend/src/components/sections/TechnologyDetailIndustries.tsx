@@ -13,9 +13,11 @@ import { resolveImageUrl } from "@/lib/hero";
 // /industries) rather than hardcoding a copied list — so it stays
 // accurate as that list changes. Reuses the /industries page's own
 // banner image (industriesImageUrl) instead of a new per-technology
-// field. bg-graphite (not bg-ink) gives this section a distinct dark
-// tone from the feature grid above it, echoing the reference's
-// navy-then-maroon rhythm without introducing off-brand colors.
+// field. Background color is the reference's own deep maroon/wine tone
+// (#33182a), kept as a deliberate one-off accent per explicit request
+// for a pixel-close match on this specific section, rather than
+// Devliora's usual ink/graphite — unlike the fabricated-stat cases
+// elsewhere on these pages, a color choice carries no accuracy risk.
 export default function TechnologyDetailIndustries({ paragraph }: { paragraph: string }) {
   const [industries, setIndustries] = useState<IndustryDto[]>([]);
   const [imageUrl, setImageUrl] = useState("");
@@ -32,7 +34,7 @@ export default function TechnologyDetailIndustries({ paragraph }: { paragraph: s
   if (industries.length === 0) return null;
 
   return (
-    <section className="relative overflow-hidden bg-graphite">
+    <section className="relative overflow-hidden" style={{ backgroundColor: "#33182a" }}>
       <div className="mx-auto grid max-w-6xl grid-cols-1 md:grid-cols-2">
         <div className="relative aspect-[4/3] w-full md:aspect-auto">
           {imageUrl ? (
