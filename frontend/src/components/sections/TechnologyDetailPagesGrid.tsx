@@ -30,7 +30,7 @@ export default function TechnologyDetailPagesGrid() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.5 }}
-          className="font-display text-2xl font-semibold text-ink sm:text-3xl"
+          className="animate-gradient-text font-display text-2xl font-semibold sm:text-3xl"
         >
           Explore our technology pages
         </motion.h2>
