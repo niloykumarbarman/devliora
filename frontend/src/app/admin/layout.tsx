@@ -21,6 +21,7 @@ import {
   Settings,
   MapPin,
   Handshake,
+  Code2,
 } from "lucide-react";
 import { clearAdminToken, isAdminAuthenticated } from "@/lib/adminAuth";
 
@@ -36,6 +37,7 @@ const NAV_ITEMS = [
   { href: "/admin/testimonials", label: "Testimonials", icon: Quote },
   { href: "/admin/hero", label: "Hero", icon: PanelTop },
   { href: "/admin/technologies", label: "Technologies", icon: Cpu },
+  { href: "/admin/technology-detail-pages", label: "Technology Pages", icon: Code2 },
   { href: "/admin/industries", label: "Industries", icon: Building2 },
   { href: "/admin/faq", label: "FAQ", icon: HelpCircle },
   { href: "/admin/office-locations", label: "Office Locations", icon: MapPin },

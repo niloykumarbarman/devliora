@@ -23,6 +23,10 @@ public interface IAppDbContext
     DbSet<ConsultationRequest> ConsultationRequests { get; }
     DbSet<HeroContent> HeroContents { get; }
     DbSet<TechnologyItem> TechnologyItems { get; }
+    DbSet<TechnologyDetailPage> TechnologyDetailPages { get; }
+    DbSet<TechnologyDetailFeature> TechnologyDetailFeatures { get; }
+    DbSet<TechnologyDetailFaq> TechnologyDetailFaqs { get; }
+    DbSet<TechnologyDetailServiceCard> TechnologyDetailServiceCards { get; }
     DbSet<Industry> Industries { get; }
     DbSet<IndustryStat> IndustryStats { get; }
     DbSet<FaqItem> FaqItems { get; }

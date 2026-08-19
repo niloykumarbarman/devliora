@@ -28,6 +28,10 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<ConsultationRequest> ConsultationRequests => Set<ConsultationRequest>();
     public DbSet<HeroContent> HeroContents => Set<HeroContent>();
     public DbSet<TechnologyItem> TechnologyItems => Set<TechnologyItem>();
+    public DbSet<TechnologyDetailPage> TechnologyDetailPages => Set<TechnologyDetailPage>();
+    public DbSet<TechnologyDetailFeature> TechnologyDetailFeatures => Set<TechnologyDetailFeature>();
+    public DbSet<TechnologyDetailFaq> TechnologyDetailFaqs => Set<TechnologyDetailFaq>();
+    public DbSet<TechnologyDetailServiceCard> TechnologyDetailServiceCards => Set<TechnologyDetailServiceCard>();
     public DbSet<Industry> Industries => Set<Industry>();
     public DbSet<IndustryStat> IndustryStats => Set<IndustryStat>();
     public DbSet<FaqItem> FaqItems => Set<FaqItem>();

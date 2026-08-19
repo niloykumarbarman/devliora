@@ -8,7 +8,7 @@ import { resolveImageUrl } from "@/lib/hero";
 export interface ListItemFieldConfig {
   key: string;
   label: string;
-  type: "text" | "number" | "image" | "select";
+  type: "text" | "textarea" | "number" | "image" | "select";
   placeholder?: string;
   options?: { value: string | number; label: string }[];
 }
@@ -487,6 +487,21 @@ export default function AdminResourcePage<T extends { id: string }, TForm>({
                                         </option>
                                       ))}
                                     </select>
+                                  </div>
+                                );
+                              }
+
+                              if (f.type === "textarea") {
+                                return (
+                                  <div key={f.key} className="sm:col-span-3">
+                                    <label className={listLabelClass}>{f.label}</label>
+                                    <textarea
+                                      rows={3}
+                                      placeholder={f.placeholder}
+                                      value={String(item[f.key] ?? "")}
+                                      onChange={(e) => updateItem(idx, f.key, e.target.value)}
+                                      className={listInputClass}
+                                    />
                                   </div>
                                 );
                               }
