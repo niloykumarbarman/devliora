@@ -4,6 +4,7 @@ import { useEffect, useState, type FormEvent, type ReactNode } from "react";
 import { Trash2, Loader2, RefreshCw, Plus, X, Pencil, Upload, type LucideIcon } from "lucide-react";
 import { uploadImage } from "@/lib/adminUploads";
 import { resolveImageUrl } from "@/lib/hero";
+import { slugify } from "@/lib/slugify";
 
 export interface ListItemFieldConfig {
   key: string;
@@ -16,7 +17,7 @@ export interface ListItemFieldConfig {
 export interface FieldConfig<TForm> {
   key: keyof TForm;
   label: string;
-  type: "text" | "textarea" | "checkbox" | "number" | "select" | "list" | "stringlist" | "image";
+  type: "text" | "textarea" | "checkbox" | "number" | "select" | "list" | "stringlist" | "image" | "slug";
   required?: boolean;
   colSpan?: 1 | 2;
   placeholder?: string;
@@ -289,6 +290,38 @@ export default function AdminResourcePage<T extends { id: string }, TForm>({
                       className={inputClass}
                     />
                     <p className="mt-1 text-[11px] text-graphite/40">One item per line.</p>
+                  </div>
+                );
+              }
+
+              if (field.type === "slug") {
+                const strValue = String(value ?? "");
+                // Live-normalize on every keystroke (lowercase, invalid
+                // chars -> hyphen, collapse repeats) without trimming a
+                // trailing hyphen the user just typed — that trim only
+                // happens on blur, via the full slugify(), so typing a
+                // hyphen mid-word doesn't get eaten before the next letter.
+                const liveNormalize = (s: string) =>
+                  s
+                    .toLowerCase()
+                    .replace(/&/g, " ")
+                    .replace(/[^a-z0-9-]+/g, "-")
+                    .replace(/-{2,}/g, "-");
+                return (
+                  <div key={String(field.key)} className={spanClass}>
+                    <label className={labelClass}>{field.label}</label>
+                    <input
+                      type="text"
+                      required={field.required}
+                      placeholder={field.placeholder}
+                      value={strValue}
+                      onChange={(e) => setFieldValue(field.key, liveNormalize(e.target.value))}
+                      onBlur={(e) => setFieldValue(field.key, slugify(e.target.value))}
+                      className={`${inputClass} font-mono`}
+                    />
+                    <p className="mt-1 text-[11px] text-graphite/40">
+                      Lowercase, hyphen-separated — normalized automatically as you type.
+                    </p>
                   </div>
                 );
               }

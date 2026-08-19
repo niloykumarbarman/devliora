@@ -49,7 +49,7 @@ const fields: FieldConfig<TechnologyDetailPageFormPayload>[] = [
   {
     key: "slug",
     label: "Slug",
-    type: "text",
+    type: "slug",
     required: true,
     placeholder: "e.g. java-development",
   },
