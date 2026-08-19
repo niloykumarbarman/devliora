@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 import TechnologyDetailHero from "@/components/sections/TechnologyDetailHero";
 import TechnologyDetailOverview from "@/components/sections/TechnologyDetailOverview";
 import TechnologyDetailIndustries from "@/components/sections/TechnologyDetailIndustries";
+import TechnologyDetailSelectedWork from "@/components/sections/TechnologyDetailSelectedWork";
 import TechnologiesCTA from "@/components/sections/TechnologiesCTA";
 
 export const metadata: Metadata = buildMetadata({
@@ -50,6 +51,7 @@ export default function DotNetDevelopmentPage() {
           features={FEATURES}
         />
         <TechnologyDetailIndustries paragraph="With experience across a wide range of sectors, we help clients innovate, scale, and succeed with .NET, from fast-growing startups to established enterprises." />
+        <TechnologyDetailSelectedWork />
         <TechnologiesCTA />
       </main>
       <Footer />
