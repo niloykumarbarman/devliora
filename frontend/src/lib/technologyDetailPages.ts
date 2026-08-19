@@ -46,6 +46,7 @@ export interface TechnologyDetailPageDto {
   servicesHeading: string;
   servicesCardLabel: string;
   servicesParagraph: string;
+  servicesCardImageUrl: string;
 
   features: TechnologyDetailFeatureItem[];
   faqs: TechnologyDetailFaqItem[];

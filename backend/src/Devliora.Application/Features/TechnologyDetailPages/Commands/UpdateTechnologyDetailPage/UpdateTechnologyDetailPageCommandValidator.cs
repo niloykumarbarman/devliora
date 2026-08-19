@@ -23,5 +23,6 @@ public class UpdateTechnologyDetailPageCommandValidator : AbstractValidator<Upda
         RuleFor(x => x.ServicesHeading).MaximumLength(200);
         RuleFor(x => x.ServicesCardLabel).MaximumLength(100);
         RuleFor(x => x.ServicesParagraph).MaximumLength(1000);
+        RuleFor(x => x.ServicesCardImageUrl).MaximumLength(500);
     }
 }

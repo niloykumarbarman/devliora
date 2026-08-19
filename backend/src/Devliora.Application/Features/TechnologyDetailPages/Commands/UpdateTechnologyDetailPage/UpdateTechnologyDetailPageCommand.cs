@@ -26,6 +26,7 @@ public class UpdateTechnologyDetailPageCommand : IRequest<Unit>
     public string ServicesHeading { get; set; } = string.Empty;
     public string ServicesCardLabel { get; set; } = string.Empty;
     public string ServicesParagraph { get; set; } = string.Empty;
+    public string ServicesCardImageUrl { get; set; } = string.Empty;
 
     public List<TechnologyDetailFeatureItem> Features { get; set; } = new();
     public List<TechnologyDetailFaqItem> Faqs { get; set; } = new();

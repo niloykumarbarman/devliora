@@ -30,6 +30,7 @@ const emptyForm: TechnologyDetailPageFormPayload = {
   servicesHeading: "",
   servicesCardLabel: "",
   servicesParagraph: "",
+  servicesCardImageUrl: "",
   features: [],
   faqs: [],
   services: [],
@@ -97,6 +98,12 @@ const fields: FieldConfig<TechnologyDetailPageFormPayload>[] = [
     key: "servicesParagraph",
     label: "Services Paragraph",
     type: "textarea",
+    colSpan: 2,
+  },
+  {
+    key: "servicesCardImageUrl",
+    label: "Services Card Image (optional — falls back to a coded gradient/mockup)",
+    type: "image",
     colSpan: 2,
   },
 
@@ -170,6 +177,7 @@ export default function AdminTechnologyDetailPagesPage() {
         servicesHeading: item.servicesHeading,
         servicesCardLabel: item.servicesCardLabel,
         servicesParagraph: item.servicesParagraph,
+        servicesCardImageUrl: item.servicesCardImageUrl,
         features: item.features,
         faqs: item.faqs,
         services: item.services,

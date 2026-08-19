@@ -36,6 +36,7 @@ export interface AdminTechnologyDetailPage {
   servicesHeading: string;
   servicesCardLabel: string;
   servicesParagraph: string;
+  servicesCardImageUrl: string;
   features: AdminTechnologyDetailFeature[];
   faqs: AdminTechnologyDetailFaq[];
   services: AdminTechnologyDetailServiceCard[];

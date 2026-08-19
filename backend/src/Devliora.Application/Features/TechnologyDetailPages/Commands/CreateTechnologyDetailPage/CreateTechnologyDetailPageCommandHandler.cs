@@ -31,7 +31,8 @@ public class CreateTechnologyDetailPageCommandHandler : IRequestHandler<CreateTe
             IndustriesImageUrl = request.IndustriesImageUrl,
             ServicesHeading = request.ServicesHeading,
             ServicesCardLabel = request.ServicesCardLabel,
-            ServicesParagraph = request.ServicesParagraph
+            ServicesParagraph = request.ServicesParagraph,
+            ServicesCardImageUrl = request.ServicesCardImageUrl
         };
 
         foreach (var feature in request.Features)

@@ -35,6 +35,7 @@ public class UpdateTechnologyDetailPageCommandHandler : IRequestHandler<UpdateTe
         page.ServicesHeading = request.ServicesHeading;
         page.ServicesCardLabel = request.ServicesCardLabel;
         page.ServicesParagraph = request.ServicesParagraph;
+        page.ServicesCardImageUrl = request.ServicesCardImageUrl;
         page.UpdatedAt = DateTime.UtcNow;
 
         // Explicit DbSet remove/add (instead of navigation-collection

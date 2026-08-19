@@ -38,6 +38,7 @@ public class GetTechnologyDetailPageBySlugQueryHandler
                 ServicesHeading = p.ServicesHeading,
                 ServicesCardLabel = p.ServicesCardLabel,
                 ServicesParagraph = p.ServicesParagraph,
+                ServicesCardImageUrl = p.ServicesCardImageUrl,
                 Features = p.Features
                     .OrderBy(f => f.DisplayOrder)
                     .Select(f => new TechnologyDetailFeatureItem { Title = f.Title, Body = f.Body, DisplayOrder = f.DisplayOrder })

@@ -13,8 +13,11 @@ import { resolveImageUrl } from "@/lib/hero";
 // pages, matching kaz.com.bd's per-technology page: a decorative card +
 // intro copy, followed by a grid of expandable service cards (reusing
 // ExpandableServiceCards, already built for the Staff Augmentation
-// page). The card's content, in priority order: an admin-uploaded image
-// (when `settingsImageKey` names a Site Settings field with a value); a
+// page). The card's content, in priority order: `imageUrl` (the
+// per-page TechnologyDetailPage.servicesCardImageUrl override, set from
+// the Technology Pages admin form); an admin-uploaded image via the
+// older `settingsImageKey`-named Site Settings field (kept for .NET's
+// pre-existing upload, from before per-page image fields existed); a
 // custom `visual` node (e.g. a coded code-editor mockup, for pages whose
 // reference uses a photo rather than a brand-colored card — no photo
 // asset needed); or the `gradient`/`iconName` fallback (the technology's
@@ -28,6 +31,7 @@ type TechnologyDetailServicesProps = {
   services: ExpandableServiceCard[];
   gradient: string;
   iconName?: string;
+  imageUrl?: string;
   settingsImageKey?: keyof SiteSettingsDto;
   visual?: ReactNode;
 };
@@ -39,18 +43,21 @@ export default function TechnologyDetailServices({
   services,
   gradient,
   iconName,
+  imageUrl,
   settingsImageKey,
   visual,
 }: TechnologyDetailServicesProps) {
-  const [cardImageUrl, setCardImageUrl] = useState("");
+  const [settingsCardImageUrl, setSettingsCardImageUrl] = useState("");
 
   useEffect(() => {
-    if (!settingsImageKey) return;
+    if (imageUrl || !settingsImageKey) return;
     fetchSiteSettings().then((data) => {
       const value = data?.[settingsImageKey];
-      if (typeof value === "string" && value) setCardImageUrl(resolveImageUrl(value));
+      if (typeof value === "string" && value) setSettingsCardImageUrl(resolveImageUrl(value));
     });
-  }, [settingsImageKey]);
+  }, [imageUrl, settingsImageKey]);
+
+  const cardImageUrl = imageUrl ? resolveImageUrl(imageUrl) : settingsCardImageUrl;
 
   return (
     <section className="relative overflow-hidden bg-ink py-20 md:py-24">

@@ -124,6 +124,7 @@ export default async function TechnologyDetailPage({ params }: Props) {
             services={page.services}
             gradient={servicesVisual.gradient}
             iconName={servicesVisual.iconName}
+            imageUrl={page.servicesCardImageUrl}
             visual={servicesVisual.visual}
             settingsImageKey={servicesVisual.settingsImageKey}
           />
