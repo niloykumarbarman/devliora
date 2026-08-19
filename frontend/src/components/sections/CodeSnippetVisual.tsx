@@ -53,7 +53,7 @@ export default function CodeSnippetVisual() {
   return (
     <div className="absolute inset-0" style={{ backgroundColor: "#1e1e1e" }}>
       <div className="absolute inset-0 bg-gradient-to-br from-black/0 via-black/0 to-black/50" />
-      <pre className="relative flex h-full flex-col justify-center gap-1.5 overflow-hidden px-8 font-mono text-xs leading-relaxed sm:text-sm">
+      <pre className="relative flex h-full flex-col justify-center gap-1 overflow-hidden px-6 font-mono text-[11px] leading-relaxed sm:gap-1.5 sm:px-8 sm:text-sm">
         {LINES.map((line, i) => (
           <div key={i} style={{ paddingLeft: `${line.indent * 1.5}rem` }}>
             {line.tokens.map((token, j) => (

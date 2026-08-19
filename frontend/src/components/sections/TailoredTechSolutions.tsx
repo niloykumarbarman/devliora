@@ -43,7 +43,7 @@ export default function TailoredTechSolutions() {
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
+        <div className="mt-16 grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {TAILORED_TECH_COLUMNS.map((col) => (
             <div key={col.title}>
               <p className="font-semibold text-ember">{col.title}</p>

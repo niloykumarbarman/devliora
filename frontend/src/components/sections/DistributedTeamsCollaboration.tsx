@@ -51,7 +51,7 @@ export default function DistributedTeamsCollaboration() {
           </p>
         </div>
 
-        <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-12 sm:grid-cols-3 lg:grid-cols-5">
+        <div className="mt-14 grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-3 lg:grid-cols-5">
           {DISTRIBUTED_TEAMS_COLLABORATION.map((col) => (
             <div key={col.title}>
               <div className="flex items-center gap-2 border-b border-paper/15 pb-3">

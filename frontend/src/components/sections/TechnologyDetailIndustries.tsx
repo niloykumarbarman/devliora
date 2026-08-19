@@ -60,7 +60,7 @@ export default function TechnologyDetailIndustries({ paragraph, imageUrl: imageU
           </h2>
           <p className="mt-5 max-w-lg text-wire">{paragraph}</p>
 
-          <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-3">
+          <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-3">
             {industries.map((industry) => (
               <span key={industry.id} className="font-mono text-sm text-ember">
                 {industry.name}

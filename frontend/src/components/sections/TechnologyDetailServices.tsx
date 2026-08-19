@@ -64,7 +64,7 @@ export default function TechnologyDetailServices({
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-10 md:grid-cols-2 md:items-center">
           <div
-            className="relative aspect-[16/9] overflow-hidden rounded-lg"
+            className="relative aspect-[4/3] overflow-hidden rounded-lg sm:aspect-[16/9]"
             style={cardImageUrl || visual ? undefined : { background: gradient }}
           >
             {cardImageUrl ? (
@@ -77,8 +77,8 @@ export default function TechnologyDetailServices({
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-ink/40" />
-                <div className="relative flex h-full items-center justify-between px-8">
-                  <span className="font-display text-2xl font-medium text-paper/90 sm:text-3xl">
+                <div className="relative flex h-full items-center justify-between px-6 sm:px-8">
+                  <span className="font-display text-xl font-medium text-paper/90 sm:text-2xl md:text-3xl">
                     {cardLabel}
                   </span>
                 </div>
@@ -88,12 +88,12 @@ export default function TechnologyDetailServices({
             ) : (
               <>
                 <div className="pointer-events-none absolute -right-10 -top-10 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
-                <div className="relative flex h-full items-center justify-between px-8">
-                  <span className="font-display text-2xl font-medium text-paper/90 sm:text-3xl">
+                <div className="relative flex h-full items-center justify-between px-6 sm:px-8">
+                  <span className="font-display text-xl font-medium text-paper/90 sm:text-2xl md:text-3xl">
                     {cardLabel}
                   </span>
                   {iconName && (
-                    <TechBrandIcon name={iconName} color="#fff" className="h-16 w-16 shrink-0 opacity-90 sm:h-20 sm:w-20" />
+                    <TechBrandIcon name={iconName} color="#fff" className="h-12 w-12 shrink-0 opacity-90 sm:h-16 sm:w-16 md:h-20 md:w-20" />
                   )}
                 </div>
               </>
