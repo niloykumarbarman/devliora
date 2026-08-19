@@ -12,6 +12,8 @@ import DedicatedDevTeam from "@/components/sections/DedicatedDevTeam";
 import UnlockProjectCTA from "@/components/sections/UnlockProjectCTA";
 import DistributedTeamsCollaboration from "@/components/sections/DistributedTeamsCollaboration";
 import TechnologyDetailServices from "@/components/sections/TechnologyDetailServices";
+import TransformTeamCTA from "@/components/sections/TransformTeamCTA";
+import TailoredTechSolutions from "@/components/sections/TailoredTechSolutions";
 import TechnologiesCTA from "@/components/sections/TechnologiesCTA";
 import type { FaqDto } from "@/lib/faq";
 
@@ -148,6 +150,8 @@ export default function DotNetDevelopmentPage() {
           paragraph="At Devliora, we deliver end-to-end .NET solutions built for performance, security, and long-term maintainability. Here's a snapshot of what our .NET expertise covers."
           services={DOTNET_SERVICES}
         />
+        <TransformTeamCTA />
+        <TailoredTechSolutions />
         <TechnologiesCTA />
       </main>
       <Footer />
