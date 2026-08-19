@@ -6,23 +6,27 @@ import TechBrandIcon from "@/components/TechBrandIcon";
 import ExpandableServiceCards, {
   type ExpandableServiceCard,
 } from "@/components/sections/ExpandableServiceCards";
-import { fetchSiteSettings } from "@/lib/siteSettings";
+import { fetchSiteSettings, type SiteSettingsDto } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
 
 // "<Technology> Development Services" block for individual technology
 // pages, matching kaz.com.bd's per-technology page: a decorative brand-
 // colored image card + intro copy, followed by a grid of expandable
 // service cards (reusing ExpandableServiceCards, already built for the
-// Staff Augmentation page). The card shows an admin-uploaded image
-// (technologiesDotNetImageUrl in Site Settings) when set; otherwise it
-// falls back to a coded gradient using .NET's own real brand purple
-// (#512BD4, same hex already used for its icon in lib/techIcons.ts)
-// rather than an invented color.
+// Staff Augmentation page). When `settingsImageKey` names a Site
+// Settings field with a value, the card shows that admin-uploaded image;
+// otherwise it falls back to `gradient` (the technology's own real brand
+// color, not an invented one) plus `iconName`'s brand mark, when that
+// technology has one in lib/techIcons.ts (some, like Java, don't — see
+// that file's notes on trademark-holder takedown requests).
 type TechnologyDetailServicesProps = {
   heading: string;
   cardLabel: string;
   paragraph: string;
   services: ExpandableServiceCard[];
+  gradient: string;
+  iconName?: string;
+  settingsImageKey?: keyof SiteSettingsDto;
 };
 
 export default function TechnologyDetailServices({
@@ -30,14 +34,19 @@ export default function TechnologyDetailServices({
   cardLabel,
   paragraph,
   services,
+  gradient,
+  iconName,
+  settingsImageKey,
 }: TechnologyDetailServicesProps) {
   const [cardImageUrl, setCardImageUrl] = useState("");
 
   useEffect(() => {
+    if (!settingsImageKey) return;
     fetchSiteSettings().then((data) => {
-      if (data?.technologiesDotNetImageUrl) setCardImageUrl(resolveImageUrl(data.technologiesDotNetImageUrl));
+      const value = data?.[settingsImageKey];
+      if (typeof value === "string" && value) setCardImageUrl(resolveImageUrl(value));
     });
-  }, []);
+  }, [settingsImageKey]);
 
   return (
     <section className="relative overflow-hidden bg-ink py-20 md:py-24">
@@ -45,11 +54,7 @@ export default function TechnologyDetailServices({
         <div className="grid gap-10 md:grid-cols-2 md:items-center">
           <div
             className="relative aspect-[16/9] overflow-hidden rounded-lg"
-            style={
-              cardImageUrl
-                ? undefined
-                : { background: "linear-gradient(135deg, #241056 0%, #512BD4 55%, #8b6cf0 100%)" }
-            }
+            style={cardImageUrl ? undefined : { background: gradient }}
           >
             {cardImageUrl ? (
               <>
@@ -69,8 +74,8 @@ export default function TechnologyDetailServices({
               <span className="font-display text-2xl font-medium text-paper/90 sm:text-3xl">
                 {cardLabel}
               </span>
-              {!cardImageUrl && (
-                <TechBrandIcon name=".NET" color="#fff" className="h-16 w-16 shrink-0 opacity-90 sm:h-20 sm:w-20" />
+              {!cardImageUrl && iconName && (
+                <TechBrandIcon name={iconName} color="#fff" className="h-16 w-16 shrink-0 opacity-90 sm:h-20 sm:w-20" />
               )}
             </div>
           </div>

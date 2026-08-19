@@ -149,6 +149,9 @@ export default function DotNetDevelopmentPage() {
           cardLabel=".NET Core"
           paragraph="At Devliora, we deliver end-to-end .NET solutions built for performance, security, and long-term maintainability. Here's a snapshot of what our .NET expertise covers."
           services={DOTNET_SERVICES}
+          gradient="linear-gradient(135deg, #241056 0%, #512BD4 55%, #8b6cf0 100%)"
+          iconName=".NET"
+          settingsImageKey="technologiesDotNetImageUrl"
         />
         <TransformTeamCTA />
         <TailoredTechSolutions />

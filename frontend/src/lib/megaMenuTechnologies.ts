@@ -14,14 +14,15 @@
 // "AI Development" is the one exception: it's also a real, admin-managed
 // Service (/services/ai-development), so it links straight there instead
 // of to a page that wouldn't show anything about it. ".NET Development"
-// now has its own dedicated page too (/technologies/dot-net-development),
-// matching kaz.com.bd's per-technology page.
+// and "Java Development" now have their own dedicated pages too
+// (/technologies/dot-net-development, /technologies/java-development),
+// matching kaz.com.bd's per-technology pages.
 export type MegaMenuTechnology = { label: string; href: string };
 
 export const MEGA_MENU_TECHNOLOGIES: MegaMenuTechnology[] = [
   { label: "AI Development", href: "/services/ai-development" },
   { label: ".NET Development", href: "/technologies/dot-net-development" },
-  { label: "Java Development", href: "/technologies" },
+  { label: "Java Development", href: "/technologies/java-development" },
   { label: "PHP Development", href: "/technologies" },
   { label: "Node.js Development", href: "/technologies" },
   { label: "Python", href: "/technologies" },
