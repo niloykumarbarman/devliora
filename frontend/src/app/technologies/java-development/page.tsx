@@ -14,6 +14,7 @@ import DedicatedDevTeam from "@/components/sections/DedicatedDevTeam";
 import UnlockProjectCTA from "@/components/sections/UnlockProjectCTA";
 import DistributedTeamsCollaboration from "@/components/sections/DistributedTeamsCollaboration";
 import TechnologyDetailServices from "@/components/sections/TechnologyDetailServices";
+import CodeSnippetVisual from "@/components/sections/CodeSnippetVisual";
 import TransformTeamCTA from "@/components/sections/TransformTeamCTA";
 import TailoredTechSolutions from "@/components/sections/TailoredTechSolutions";
 import TechnologiesCTA from "@/components/sections/TechnologiesCTA";
@@ -156,9 +157,10 @@ export default function JavaDevelopmentPage() {
         <TechnologyDetailServices
           heading="Java Development Services"
           cardLabel="Java"
-          paragraph="At Devliora, we deliver end-to-end Java solutions built for performance, security, and long-term maintainability. Here's a snapshot of what our Java expertise covers."
+          paragraph="At Devliora, we build reliable, scalable Java solutions designed to support complex business needs. Here's a snapshot of how our Java expertise helps teams build and grow with confidence."
           services={JAVA_SERVICES}
           gradient="linear-gradient(135deg, #2b1608 0%, #ED8B00 55%, #f0a83d 100%)"
+          visual={<CodeSnippetVisual />}
         />
         <TransformTeamCTA />
         <TailoredTechSolutions />

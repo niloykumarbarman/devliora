@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Image from "next/image";
 import TechBrandIcon from "@/components/TechBrandIcon";
 import ExpandableServiceCards, {
@@ -10,15 +10,17 @@ import { fetchSiteSettings, type SiteSettingsDto } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
 
 // "<Technology> Development Services" block for individual technology
-// pages, matching kaz.com.bd's per-technology page: a decorative brand-
-// colored image card + intro copy, followed by a grid of expandable
-// service cards (reusing ExpandableServiceCards, already built for the
-// Staff Augmentation page). When `settingsImageKey` names a Site
-// Settings field with a value, the card shows that admin-uploaded image;
-// otherwise it falls back to `gradient` (the technology's own real brand
-// color, not an invented one) plus `iconName`'s brand mark, when that
-// technology has one in lib/techIcons.ts (some, like Java, don't — see
-// that file's notes on trademark-holder takedown requests).
+// pages, matching kaz.com.bd's per-technology page: a decorative card +
+// intro copy, followed by a grid of expandable service cards (reusing
+// ExpandableServiceCards, already built for the Staff Augmentation
+// page). The card's content, in priority order: an admin-uploaded image
+// (when `settingsImageKey` names a Site Settings field with a value); a
+// custom `visual` node (e.g. a coded code-editor mockup, for pages whose
+// reference uses a photo rather than a brand-colored card — no photo
+// asset needed); or the `gradient`/`iconName` fallback (the technology's
+// own real brand color, plus its brand mark when lib/techIcons.ts has
+// one — some, like Java, don't, see that file's notes on trademark-
+// holder takedown requests).
 type TechnologyDetailServicesProps = {
   heading: string;
   cardLabel: string;
@@ -27,6 +29,7 @@ type TechnologyDetailServicesProps = {
   gradient: string;
   iconName?: string;
   settingsImageKey?: keyof SiteSettingsDto;
+  visual?: ReactNode;
 };
 
 export default function TechnologyDetailServices({
@@ -37,6 +40,7 @@ export default function TechnologyDetailServices({
   gradient,
   iconName,
   settingsImageKey,
+  visual,
 }: TechnologyDetailServicesProps) {
   const [cardImageUrl, setCardImageUrl] = useState("");
 
@@ -54,7 +58,7 @@ export default function TechnologyDetailServices({
         <div className="grid gap-10 md:grid-cols-2 md:items-center">
           <div
             className="relative aspect-[16/9] overflow-hidden rounded-lg"
-            style={cardImageUrl ? undefined : { background: gradient }}
+            style={cardImageUrl || visual ? undefined : { background: gradient }}
           >
             {cardImageUrl ? (
               <>
@@ -66,18 +70,27 @@ export default function TechnologyDetailServices({
                   className="object-cover"
                 />
                 <div className="absolute inset-0 bg-ink/40" />
+                <div className="relative flex h-full items-center justify-between px-8">
+                  <span className="font-display text-2xl font-medium text-paper/90 sm:text-3xl">
+                    {cardLabel}
+                  </span>
+                </div>
               </>
+            ) : visual ? (
+              visual
             ) : (
-              <div className="pointer-events-none absolute -right-10 -top-10 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
+              <>
+                <div className="pointer-events-none absolute -right-10 -top-10 h-56 w-56 rounded-full bg-white/10 blur-3xl" />
+                <div className="relative flex h-full items-center justify-between px-8">
+                  <span className="font-display text-2xl font-medium text-paper/90 sm:text-3xl">
+                    {cardLabel}
+                  </span>
+                  {iconName && (
+                    <TechBrandIcon name={iconName} color="#fff" className="h-16 w-16 shrink-0 opacity-90 sm:h-20 sm:w-20" />
+                  )}
+                </div>
+              </>
             )}
-            <div className="relative flex h-full items-center justify-between px-8">
-              <span className="font-display text-2xl font-medium text-paper/90 sm:text-3xl">
-                {cardLabel}
-              </span>
-              {!cardImageUrl && iconName && (
-                <TechBrandIcon name={iconName} color="#fff" className="h-16 w-16 shrink-0 opacity-90 sm:h-20 sm:w-20" />
-              )}
-            </div>
           </div>
 
           <div>
