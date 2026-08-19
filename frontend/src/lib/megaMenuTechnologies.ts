@@ -17,16 +17,13 @@
 // "Java Development", and "PHP Development" now have their own
 // admin-managed pages too (/technologies/[slug], via the Technology
 // Pages admin panel), matching kaz.com.bd's per-technology pages.
-// NOTE: PHP's slug currently has a typo ("php-developmentf", entered
-// through the admin form) — update this href to match once that's
-// corrected in /admin/technology-detail-pages.
 export type MegaMenuTechnology = { label: string; href: string };
 
 export const MEGA_MENU_TECHNOLOGIES: MegaMenuTechnology[] = [
   { label: "AI Development", href: "/services/ai-development" },
   { label: ".NET Development", href: "/technologies/dot-net-development" },
   { label: "Java Development", href: "/technologies/java-development" },
-  { label: "PHP Development", href: "/technologies/php-developmentf" },
+  { label: "PHP Development", href: "/technologies/php-development" },
   { label: "Node.js Development", href: "/technologies" },
   { label: "Python", href: "/technologies" },
   { label: "Flutter Development", href: "/technologies" },
