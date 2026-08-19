@@ -32,6 +32,7 @@ export interface TechnologyDetailPageDto {
   displayOrder: number;
 
   heroTitle: string;
+  heroImageUrl: string;
 
   overviewHeading: string;
   overviewHeadingAccent: string;

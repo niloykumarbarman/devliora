@@ -25,6 +25,7 @@ public class UpdateTechnologyDetailPageCommandHandler : IRequestHandler<UpdateTe
         page.MetaDescription = request.MetaDescription;
         page.DisplayOrder = request.DisplayOrder;
         page.HeroTitle = request.HeroTitle;
+        page.HeroImageUrl = request.HeroImageUrl;
         page.OverviewHeading = request.OverviewHeading;
         page.OverviewHeadingAccent = request.OverviewHeadingAccent;
         page.OverviewParagraph = request.OverviewParagraph;

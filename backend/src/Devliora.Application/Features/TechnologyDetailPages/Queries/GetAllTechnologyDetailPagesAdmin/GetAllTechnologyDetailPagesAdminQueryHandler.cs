@@ -30,6 +30,7 @@ public class GetAllTechnologyDetailPagesAdminQueryHandler
                 MetaDescription = p.MetaDescription,
                 DisplayOrder = p.DisplayOrder,
                 HeroTitle = p.HeroTitle,
+                HeroImageUrl = p.HeroImageUrl,
                 OverviewHeading = p.OverviewHeading,
                 OverviewHeadingAccent = p.OverviewHeadingAccent,
                 OverviewParagraph = p.OverviewParagraph,

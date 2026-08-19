@@ -20,6 +20,7 @@ const emptyForm: TechnologyDetailPageFormPayload = {
   metaDescription: "",
   displayOrder: 0,
   heroTitle: "",
+  heroImageUrl: "",
   overviewHeading: "",
   overviewHeadingAccent: "",
   overviewParagraph: "",
@@ -60,6 +61,12 @@ const fields: FieldConfig<TechnologyDetailPageFormPayload>[] = [
     required: true,
     colSpan: 2,
     placeholder: "e.g. Java Development",
+  },
+  {
+    key: "heroImageUrl",
+    label: "Hero Banner Image (optional — falls back to the shared Settings image)",
+    type: "image",
+    colSpan: 2,
   },
   { key: "metaDescription", label: "Meta Description (SEO)", type: "textarea", colSpan: 2 },
 
@@ -167,6 +174,7 @@ export default function AdminTechnologyDetailPagesPage() {
         metaDescription: item.metaDescription,
         displayOrder: item.displayOrder,
         heroTitle: item.heroTitle,
+        heroImageUrl: item.heroImageUrl,
         overviewHeading: item.overviewHeading,
         overviewHeadingAccent: item.overviewHeadingAccent,
         overviewParagraph: item.overviewParagraph,

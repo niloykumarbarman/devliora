@@ -22,6 +22,7 @@ public class CreateTechnologyDetailPageCommandHandler : IRequestHandler<CreateTe
             MetaDescription = request.MetaDescription,
             DisplayOrder = request.DisplayOrder,
             HeroTitle = request.HeroTitle,
+            HeroImageUrl = request.HeroImageUrl,
             OverviewHeading = request.OverviewHeading,
             OverviewHeadingAccent = request.OverviewHeadingAccent,
             OverviewParagraph = request.OverviewParagraph,

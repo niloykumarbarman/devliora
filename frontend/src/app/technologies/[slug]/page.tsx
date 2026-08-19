@@ -95,7 +95,7 @@ export default async function TechnologyDetailPage({ params }: Props) {
     <>
       <Navbar />
       <main>
-        <TechnologyDetailHero title={page.heroTitle} />
+        <TechnologyDetailHero title={page.heroTitle} imageUrl={page.heroImageUrl} />
         <TechnologyDetailOverview
           heading={page.overviewHeading}
           headingAccent={page.overviewHeadingAccent}

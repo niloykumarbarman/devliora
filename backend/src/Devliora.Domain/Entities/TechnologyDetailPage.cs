@@ -22,6 +22,11 @@ public class TechnologyDetailPage : BaseEntity
 
     public string HeroTitle { get; set; } = string.Empty;
 
+    // Optional per-page override for the hero banner background image.
+    // Empty falls back to the shared SiteSettings.TechnologiesHeroImageUrl
+    // (same image the /technologies index page uses).
+    public string HeroImageUrl { get; set; } = string.Empty;
+
     public string OverviewHeading { get; set; } = string.Empty;
     public string OverviewHeadingAccent { get; set; } = string.Empty;
     public string OverviewParagraph { get; set; } = string.Empty;

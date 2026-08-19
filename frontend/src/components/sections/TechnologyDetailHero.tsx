@@ -9,22 +9,31 @@ import { resolveImageUrl } from "@/lib/hero";
 // Individual technology page banner (e.g. /technologies/dot-net-development),
 // matching kaz.com.bd's per-technology page: same full-bleed image + centered
 // title treatment as TechnologiesHero.tsx, but with a three-level breadcrumb
-// (Home / Technologies / <title>) since this sits one level deeper. Reuses
-// the same technologiesHeroImageUrl banner image as the /technologies index
-// rather than introducing a per-technology image field.
-export default function TechnologyDetailHero({ title }: { title: string }) {
-  const [bannerImageUrl, setBannerImageUrl] = useState("");
+// (Home / Technologies / <title>) since this sits one level deeper.
+type TechnologyDetailHeroProps = {
+  title: string;
+  /** Per-page override (TechnologyDetailPage.heroImageUrl). Falls back to
+   * the shared SiteSettings.technologiesHeroImageUrl (same image the
+   * /technologies index page uses) when unset. */
+  imageUrl?: string;
+};
+
+export default function TechnologyDetailHero({ title, imageUrl }: TechnologyDetailHeroProps) {
+  const [fallbackImageUrl, setFallbackImageUrl] = useState("");
 
   useEffect(() => {
+    if (imageUrl) return;
     let cancelled = false;
     fetchSiteSettings().then((data) => {
       if (cancelled || !data) return;
-      if (data.technologiesHeroImageUrl) setBannerImageUrl(resolveImageUrl(data.technologiesHeroImageUrl));
+      if (data.technologiesHeroImageUrl) setFallbackImageUrl(resolveImageUrl(data.technologiesHeroImageUrl));
     });
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [imageUrl]);
+
+  const bannerImageUrl = imageUrl ? resolveImageUrl(imageUrl) : fallbackImageUrl;
 
   return (
     <section className="relative overflow-hidden bg-ink text-paper">

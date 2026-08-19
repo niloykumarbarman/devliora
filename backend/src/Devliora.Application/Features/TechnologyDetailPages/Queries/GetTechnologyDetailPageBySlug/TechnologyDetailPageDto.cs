@@ -10,6 +10,7 @@ public class TechnologyDetailPageDto
     public string MetaDescription { get; set; } = string.Empty;
 
     public string HeroTitle { get; set; } = string.Empty;
+    public string HeroImageUrl { get; set; } = string.Empty;
 
     public string OverviewHeading { get; set; } = string.Empty;
     public string OverviewHeadingAccent { get; set; } = string.Empty;

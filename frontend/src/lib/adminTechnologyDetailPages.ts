@@ -26,6 +26,7 @@ export interface AdminTechnologyDetailPage {
   metaDescription: string;
   displayOrder: number;
   heroTitle: string;
+  heroImageUrl: string;
   overviewHeading: string;
   overviewHeadingAccent: string;
   overviewParagraph: string;

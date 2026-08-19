@@ -12,6 +12,7 @@ public class UpdateTechnologyDetailPageCommand : IRequest<Unit>
     public int DisplayOrder { get; set; }
 
     public string HeroTitle { get; set; } = string.Empty;
+    public string HeroImageUrl { get; set; } = string.Empty;
 
     public string OverviewHeading { get; set; } = string.Empty;
     public string OverviewHeadingAccent { get; set; } = string.Empty;

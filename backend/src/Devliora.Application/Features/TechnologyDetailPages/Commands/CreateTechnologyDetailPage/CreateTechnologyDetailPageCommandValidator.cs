@@ -12,6 +12,7 @@ public class CreateTechnologyDetailPageCommandValidator : AbstractValidator<Crea
         RuleFor(x => x.TechnologyName).NotEmpty().MaximumLength(100);
         RuleFor(x => x.MetaDescription).MaximumLength(500);
         RuleFor(x => x.HeroTitle).NotEmpty().MaximumLength(200);
+        RuleFor(x => x.HeroImageUrl).MaximumLength(500);
         RuleFor(x => x.OverviewHeading).MaximumLength(200);
         RuleFor(x => x.OverviewHeadingAccent).MaximumLength(100);
         RuleFor(x => x.OverviewParagraph).MaximumLength(2000);
