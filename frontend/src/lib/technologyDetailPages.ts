@@ -41,6 +41,7 @@ export interface TechnologyDetailPageDto {
   highlightParagraph: string;
 
   industriesParagraph: string;
+  industriesImageUrl: string;
 
   servicesHeading: string;
   servicesCardLabel: string;

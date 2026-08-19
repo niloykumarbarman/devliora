@@ -28,6 +28,7 @@ public class CreateTechnologyDetailPageCommandHandler : IRequestHandler<CreateTe
             HighlightHeadline = request.HighlightHeadline,
             HighlightParagraph = request.HighlightParagraph,
             IndustriesParagraph = request.IndustriesParagraph,
+            IndustriesImageUrl = request.IndustriesImageUrl,
             ServicesHeading = request.ServicesHeading,
             ServicesCardLabel = request.ServicesCardLabel,
             ServicesParagraph = request.ServicesParagraph

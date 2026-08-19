@@ -109,7 +109,7 @@ export default async function TechnologyDetailPage({ params }: Props) {
             icon={ShieldCheck}
           />
         )}
-        <TechnologyDetailIndustries paragraph={page.industriesParagraph} />
+        <TechnologyDetailIndustries paragraph={page.industriesParagraph} imageUrl={page.industriesImageUrl} />
         <TechnologyDetailSelectedWork />
         {faqs.length > 0 && <FAQView faqs={faqs} heading="Frequently asked questions" />}
         <TechnologyDetailSpotlight />

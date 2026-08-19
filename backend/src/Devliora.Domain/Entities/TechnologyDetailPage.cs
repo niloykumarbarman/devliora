@@ -32,6 +32,12 @@ public class TechnologyDetailPage : BaseEntity
 
     public string IndustriesParagraph { get; set; } = string.Empty;
 
+    // Optional per-page override for the Industries & Verticals Served
+    // image. Empty falls back to the shared SiteSettings.IndustriesImageUrl
+    // (same image the /industries page uses) — that's still the default
+    // for every page that hasn't set one of its own.
+    public string IndustriesImageUrl { get; set; } = string.Empty;
+
     public string ServicesHeading { get; set; } = string.Empty;
     public string ServicesCardLabel { get; set; } = string.Empty;
     public string ServicesParagraph { get; set; } = string.Empty;

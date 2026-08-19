@@ -36,6 +36,7 @@ public class GetAllTechnologyDetailPagesAdminQueryHandler
                 HighlightHeadline = p.HighlightHeadline,
                 HighlightParagraph = p.HighlightParagraph,
                 IndustriesParagraph = p.IndustriesParagraph,
+                IndustriesImageUrl = p.IndustriesImageUrl,
                 ServicesHeading = p.ServicesHeading,
                 ServicesCardLabel = p.ServicesCardLabel,
                 ServicesParagraph = p.ServicesParagraph,

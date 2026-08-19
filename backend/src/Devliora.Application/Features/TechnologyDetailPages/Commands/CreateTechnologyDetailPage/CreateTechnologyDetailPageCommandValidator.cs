@@ -18,6 +18,7 @@ public class CreateTechnologyDetailPageCommandValidator : AbstractValidator<Crea
         RuleFor(x => x.HighlightHeadline).MaximumLength(200);
         RuleFor(x => x.HighlightParagraph).MaximumLength(1000);
         RuleFor(x => x.IndustriesParagraph).MaximumLength(1000);
+        RuleFor(x => x.IndustriesImageUrl).MaximumLength(500);
         RuleFor(x => x.ServicesHeading).MaximumLength(200);
         RuleFor(x => x.ServicesCardLabel).MaximumLength(100);
         RuleFor(x => x.ServicesParagraph).MaximumLength(1000);

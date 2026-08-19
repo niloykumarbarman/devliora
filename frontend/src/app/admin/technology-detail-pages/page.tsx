@@ -26,6 +26,7 @@ const emptyForm: TechnologyDetailPageFormPayload = {
   highlightHeadline: "",
   highlightParagraph: "",
   industriesParagraph: "",
+  industriesImageUrl: "",
   servicesHeading: "",
   servicesCardLabel: "",
   servicesParagraph: "",
@@ -81,6 +82,12 @@ const fields: FieldConfig<TechnologyDetailPageFormPayload>[] = [
     key: "industriesParagraph",
     label: "Industries & Verticals Paragraph",
     type: "textarea",
+    colSpan: 2,
+  },
+  {
+    key: "industriesImageUrl",
+    label: "Industries & Verticals Image (optional — falls back to the shared Settings image)",
+    type: "image",
     colSpan: 2,
   },
 
@@ -159,6 +166,7 @@ export default function AdminTechnologyDetailPagesPage() {
         highlightHeadline: item.highlightHeadline,
         highlightParagraph: item.highlightParagraph,
         industriesParagraph: item.industriesParagraph,
+        industriesImageUrl: item.industriesImageUrl,
         servicesHeading: item.servicesHeading,
         servicesCardLabel: item.servicesCardLabel,
         servicesParagraph: item.servicesParagraph,

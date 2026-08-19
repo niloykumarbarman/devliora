@@ -11,25 +11,35 @@ import { resolveImageUrl } from "@/lib/hero";
 // a grid of industry names on the other. Unlike kaz's static list, this
 // pulls Devliora's real admin-managed Industries data (same source as
 // /industries) rather than hardcoding a copied list — so it stays
-// accurate as that list changes. Reuses the /industries page's own
-// banner image (industriesImageUrl) instead of a new per-technology
-// field. Background color is the reference's own deep maroon/wine tone
-// (#33182a), kept as a deliberate one-off accent per explicit request
-// for a pixel-close match on this specific section, rather than
-// Devliora's usual ink/graphite — unlike the fabricated-stat cases
-// elsewhere on these pages, a color choice carries no accuracy risk.
-export default function TechnologyDetailIndustries({ paragraph }: { paragraph: string }) {
+// accurate as that list changes. Background color is the reference's
+// own deep maroon/wine tone (#33182a), kept as a deliberate one-off
+// accent per explicit request for a pixel-close match on this specific
+// section, rather than Devliora's usual ink/graphite — unlike the
+// fabricated-stat cases elsewhere on these pages, a color choice
+// carries no accuracy risk.
+type TechnologyDetailIndustriesProps = {
+  paragraph: string;
+  /** Per-page override (TechnologyDetailPage.industriesImageUrl). Falls
+   * back to the shared SiteSettings.industriesImageUrl (same image the
+   * /industries page uses) when unset. */
+  imageUrl?: string;
+};
+
+export default function TechnologyDetailIndustries({ paragraph, imageUrl: imageUrlProp }: TechnologyDetailIndustriesProps) {
   const [industries, setIndustries] = useState<IndustryDto[]>([]);
-  const [imageUrl, setImageUrl] = useState("");
+  const [fallbackImageUrl, setFallbackImageUrl] = useState("");
 
   useEffect(() => {
     fetchIndustries().then((data) =>
       setIndustries([...data].sort((a, b) => a.displayOrder - b.displayOrder))
     );
+    if (imageUrlProp) return;
     fetchSiteSettings().then((data) => {
-      if (data?.industriesImageUrl) setImageUrl(resolveImageUrl(data.industriesImageUrl));
+      if (data?.industriesImageUrl) setFallbackImageUrl(resolveImageUrl(data.industriesImageUrl));
     });
-  }, []);
+  }, [imageUrlProp]);
+
+  const imageUrl = imageUrlProp ? resolveImageUrl(imageUrlProp) : fallbackImageUrl;
 
   if (industries.length === 0) return null;
 

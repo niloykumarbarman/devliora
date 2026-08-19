@@ -32,6 +32,7 @@ export interface AdminTechnologyDetailPage {
   highlightHeadline: string;
   highlightParagraph: string;
   industriesParagraph: string;
+  industriesImageUrl: string;
   servicesHeading: string;
   servicesCardLabel: string;
   servicesParagraph: string;

@@ -21,6 +21,7 @@ public class UpdateTechnologyDetailPageCommand : IRequest<Unit>
     public string HighlightParagraph { get; set; } = string.Empty;
 
     public string IndustriesParagraph { get; set; } = string.Empty;
+    public string IndustriesImageUrl { get; set; } = string.Empty;
 
     public string ServicesHeading { get; set; } = string.Empty;
     public string ServicesCardLabel { get; set; } = string.Empty;

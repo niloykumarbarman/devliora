@@ -31,6 +31,7 @@ public class UpdateTechnologyDetailPageCommandHandler : IRequestHandler<UpdateTe
         page.HighlightHeadline = request.HighlightHeadline;
         page.HighlightParagraph = request.HighlightParagraph;
         page.IndustriesParagraph = request.IndustriesParagraph;
+        page.IndustriesImageUrl = request.IndustriesImageUrl;
         page.ServicesHeading = request.ServicesHeading;
         page.ServicesCardLabel = request.ServicesCardLabel;
         page.ServicesParagraph = request.ServicesParagraph;
