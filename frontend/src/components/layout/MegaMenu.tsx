@@ -6,8 +6,7 @@ import { ArrowRight, Layers, LayoutGrid } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 import { serviceHref } from "@/lib/services";
 import { MEGA_MENU_TECHNOLOGIES } from "@/lib/megaMenuTechnologies";
-import { SOLUTIONS } from "@/lib/solutions";
-import { slugify } from "@/lib/slugify";
+import { MEGA_MENU_SOLUTIONS } from "@/lib/megaMenuSolutions";
 import type { ExploreService } from "@/lib/useExploreMenuData";
 
 type MegaMenuProps = {
@@ -118,16 +117,15 @@ export default function MegaMenu({
 
           <div>
             <h3 className={columnHeadingClass}>Solutions</h3>
+            {/* Static list matching kaz.com.bd's mega-menu exactly, per
+                explicit request — see lib/megaMenuSolutions.ts. Not
+                Devliora's own real SOLUTIONS categories list (that's
+                still intact on /solutions itself). */}
             <ul className="mt-4 space-y-3">
-              {SOLUTIONS.map((solution) => (
-                <li key={solution.id}>
-                  <Link
-                    href={`/solutions#${slugify(solution.title)}`}
-                    onClick={onNavigate}
-                    className={linkClass}
-                  >
-                    <span className="font-mono text-xs text-signal">{solution.id}</span>
-                    {solution.title}
+              {MEGA_MENU_SOLUTIONS.map((solution) => (
+                <li key={solution.label}>
+                  <Link href={solution.href} onClick={onNavigate} className={linkClass}>
+                    {solution.label}
                   </Link>
                 </li>
               ))}
