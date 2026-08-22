@@ -6,19 +6,35 @@ import Image from "next/image";
 import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
 
-// Individual technology page banner (e.g. /technologies/dot-net-development),
-// matching kaz.com.bd's per-technology page: same full-bleed image + centered
-// title treatment as TechnologiesHero.tsx, but with a three-level breadcrumb
-// (Home / Technologies / <title>) since this sits one level deeper.
+// Individual technology (or, via the parent* props, solution) page
+// banner — e.g. /technologies/dot-net-development or
+// /solutions/furniture-ecommerce-software — matching kaz.com.bd's
+// per-item page: same full-bleed image + centered title treatment as
+// TechnologiesHero.tsx, but with a three-level breadcrumb
+// (Home / <parentLabel> / <breadcrumbLabel>) since this sits one level
+// deeper. Defaults match the original Technologies-only usage.
 type TechnologyDetailHeroProps = {
   title: string;
   /** Per-page override (TechnologyDetailPage.heroImageUrl). Falls back to
    * the shared SiteSettings.technologiesHeroImageUrl (same image the
    * /technologies index page uses) when unset. */
   imageUrl?: string;
+  /** Middle breadcrumb crumb — label + link. Defaults to Technologies. */
+  parentLabel?: string;
+  parentHref?: string;
+  /** Final breadcrumb crumb text, when it should differ from the full
+   * `title` (e.g. "Furniture eCommerce" for a "Furniture eCommerce
+   * Software" page title). Defaults to `title`. */
+  breadcrumbLabel?: string;
 };
 
-export default function TechnologyDetailHero({ title, imageUrl }: TechnologyDetailHeroProps) {
+export default function TechnologyDetailHero({
+  title,
+  imageUrl,
+  parentLabel = "Technologies",
+  parentHref = "/technologies",
+  breadcrumbLabel,
+}: TechnologyDetailHeroProps) {
   const [fallbackImageUrl, setFallbackImageUrl] = useState("");
 
   useEffect(() => {
@@ -58,11 +74,11 @@ export default function TechnologyDetailHero({ title, imageUrl }: TechnologyDeta
             Home
           </Link>
           <span className="text-paper/30">/</span>
-          <Link href="/technologies" className="text-paper/80 transition-colors hover:text-paper">
-            Technologies
+          <Link href={parentHref} className="text-paper/80 transition-colors hover:text-paper">
+            {parentLabel}
           </Link>
           <span className="text-paper/30">/</span>
-          <span className="text-ember">{title}</span>
+          <span className="text-ember">{breadcrumbLabel ?? title}</span>
         </div>
       </div>
     </section>
