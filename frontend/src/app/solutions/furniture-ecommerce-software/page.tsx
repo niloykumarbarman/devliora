@@ -4,7 +4,10 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import TechnologyDetailHero from "@/components/sections/TechnologyDetailHero";
 import SolutionDetailOverview from "@/components/sections/SolutionDetailOverview";
+import TechnologyDetailHighlight from "@/components/sections/TechnologyDetailHighlight";
+import SolutionDetailTechnologies from "@/components/sections/SolutionDetailTechnologies";
 import SolutionsCTA from "@/components/sections/SolutionsCTA";
+import { ShoppingCart } from "lucide-react";
 
 export const metadata: Metadata = buildMetadata({
   title: "Furniture eCommerce Software | Devliora",
@@ -56,6 +59,12 @@ export default function FurnitureEcommerceSoftwarePage() {
           paragraph="At Devliora, we harness the power of artificial intelligence to create intelligent solutions that drive innovation. Our expertise in AI enables us to enhance efficiency and automate processes — discover the benefits of adopting AI for your next furniture eCommerce project."
           features={FEATURES}
         />
+        <TechnologyDetailHighlight
+          headline="Built to scale with your catalog"
+          paragraph="Modern eCommerce platforms are designed to handle growing product catalogs and traffic without a rewrite — the same principle we apply to every furniture eCommerce platform we build, from a boutique catalog to a full warehouse operation."
+          icon={ShoppingCart}
+        />
+        <SolutionDetailTechnologies />
         <SolutionsCTA />
       </main>
       <Footer />
