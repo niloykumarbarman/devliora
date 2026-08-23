@@ -6,8 +6,10 @@ import TechnologyDetailHero from "@/components/sections/TechnologyDetailHero";
 import SolutionDetailOverview from "@/components/sections/SolutionDetailOverview";
 import TechnologyDetailHighlight from "@/components/sections/TechnologyDetailHighlight";
 import SolutionDetailTechnologies from "@/components/sections/SolutionDetailTechnologies";
+import FAQView from "@/components/sections/FAQView";
 import SolutionsCTA from "@/components/sections/SolutionsCTA";
 import { ShoppingCart } from "lucide-react";
+import type { FaqDto } from "@/lib/faq";
 
 export const metadata: Metadata = buildMetadata({
   title: "Furniture eCommerce Software | Devliora",
@@ -39,6 +41,57 @@ const FEATURES = [
   },
 ];
 
+// Static, page-scoped FAQ — same reasoning as the technology pages'
+// (lib/faq.ts only scopes to Services via serviceSlug, and this isn't
+// one). Questions confirmed verbatim from the kaz.com.bd reference;
+// answers too, except the timeline and cost-range ones, which named
+// specific figures ("8–16 weeks", "$20,000–$120,000") that are Kaz's
+// own unverified numbers, not Devliora's — replaced with the same
+// honest, no-invented-numbers phrasing already used on the .NET/Java
+// technology pages' FAQs.
+const FAQS: FaqDto[] = [
+  {
+    id: "timeline",
+    serviceSlug: "",
+    displayOrder: 0,
+    question: "How long does it take to build a furniture-focused eCommerce platform?",
+    answer:
+      "It depends on scope — catalog size, custom features, and how many integrations are involved. We scope every project individually and give you a realistic timeline before work begins, not a generic estimate.",
+  },
+  {
+    id: "why-specialized",
+    serviceSlug: "",
+    displayOrder: 1,
+    question: "Why should I choose a specialized eCommerce solution for the furniture industry?",
+    answer:
+      "Furniture requires advanced visualizations, large catalogs, custom attributes, delivery logic, and price variations — which standard eCommerce setups don't handle well.",
+  },
+  {
+    id: "ar-configurators",
+    serviceSlug: "",
+    displayOrder: 2,
+    question: "Can you integrate AR/3D previews, room visualizers, or custom configurators?",
+    answer:
+      "Yes. We integrate AR modules, 3D viewers, color/size configurators, and product pairing tools to enhance the customer experience.",
+  },
+  {
+    id: "cost",
+    serviceSlug: "",
+    displayOrder: 3,
+    question: "What is the cost range for furniture eCommerce software?",
+    answer:
+      "Cost depends on scope, complexity, and the visualization tools involved — a focused catalog site costs far less than a full AR/3D-configurator platform. We provide a clear, itemized estimate once we understand your requirements, with no hidden fees.",
+  },
+  {
+    id: "support",
+    serviceSlug: "",
+    displayOrder: 4,
+    question: "Do you provide ongoing support for furniture eCommerce platforms?",
+    answer:
+      "Absolutely. We handle updates, performance optimization, inventory sync, security patches, and continuous UX improvements.",
+  },
+];
+
 export default function FurnitureEcommerceSoftwarePage() {
   return (
     <>
@@ -65,6 +118,7 @@ export default function FurnitureEcommerceSoftwarePage() {
           icon={ShoppingCart}
         />
         <SolutionDetailTechnologies />
+        <FAQView faqs={FAQS} heading="Frequently asked questions" />
         <SolutionsCTA />
       </main>
       <Footer />
