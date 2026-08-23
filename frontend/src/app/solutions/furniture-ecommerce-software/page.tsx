@@ -10,6 +10,7 @@ import FAQView from "@/components/sections/FAQView";
 import TechnologyDetailSpotlight from "@/components/sections/TechnologyDetailSpotlight";
 import UnlockProjectCTA from "@/components/sections/UnlockProjectCTA";
 import DedicatedDevTeam from "@/components/sections/DedicatedDevTeam";
+import DistributedTeamsCollaboration from "@/components/sections/DistributedTeamsCollaboration";
 import SolutionsCTA from "@/components/sections/SolutionsCTA";
 import { ShoppingCart } from "lucide-react";
 import type { FaqDto } from "@/lib/faq";
@@ -125,6 +126,8 @@ export default function FurnitureEcommerceSoftwarePage() {
         <TechnologyDetailSpotlight />
         <UnlockProjectCTA />
         <DedicatedDevTeam />
+        <UnlockProjectCTA />
+        <DistributedTeamsCollaboration />
         <SolutionsCTA />
       </main>
       <Footer />
