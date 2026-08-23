@@ -8,6 +8,7 @@ import TechnologyDetailHighlight from "@/components/sections/TechnologyDetailHig
 import SolutionDetailTechnologies from "@/components/sections/SolutionDetailTechnologies";
 import FAQView from "@/components/sections/FAQView";
 import TechnologyDetailSpotlight from "@/components/sections/TechnologyDetailSpotlight";
+import TechnologyDetailSelectedWork from "@/components/sections/TechnologyDetailSelectedWork";
 import UnlockProjectCTA from "@/components/sections/UnlockProjectCTA";
 import DedicatedDevTeam from "@/components/sections/DedicatedDevTeam";
 import DistributedTeamsCollaboration from "@/components/sections/DistributedTeamsCollaboration";
@@ -174,6 +175,7 @@ export default function FurnitureEcommerceSoftwarePage() {
         />
         <UnlockProjectCTA />
         <TailoredTechSolutions />
+        <TechnologyDetailSelectedWork />
         <SolutionsCTA />
       </main>
       <Footer />
