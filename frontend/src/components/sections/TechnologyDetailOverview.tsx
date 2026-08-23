@@ -1,10 +1,13 @@
-// Intro + feature-grid body for individual technology pages (e.g.
-// /technologies/dot-net-development), matching kaz.com.bd's per-technology
-// page layout: a two-tone heading + paragraph pair, followed by a
-// two-column-per-row grid of short capability write-ups (ember heading,
-// underline rule, supporting copy). Kept generic/prop-driven so the next
-// technology page (Java, PHP, Node.js, ...) can reuse it instead of
-// duplicating the layout.
+// Intro + feature-grid body for individual technology or solution pages
+// (e.g. /technologies/dot-net-development, /solutions/furniture-ecommerce-
+// software), matching kaz.com.bd's per-item page layout: a two-tone
+// heading + paragraph pair, followed by a two-column-per-row grid of
+// short capability write-ups (ember heading, underline rule, supporting
+// copy). Kept generic/prop-driven so the next page can reuse it instead
+// of duplicating the layout. `headingSuffix` covers headings whose
+// accent sits mid-sentence rather than trailing (e.g. "Benefits of
+// [Furniture eCommerce] Software" vs ".NET"-page's "Build Powerful
+// Solutions with [.NET]", where the suffix stays empty).
 type TechnologyFeature = {
   title: string;
   body: string;
@@ -13,6 +16,7 @@ type TechnologyFeature = {
 type TechnologyDetailOverviewProps = {
   heading: string;
   headingAccent: string;
+  headingSuffix?: string;
   paragraph: string;
   features: TechnologyFeature[];
 };
@@ -20,6 +24,7 @@ type TechnologyDetailOverviewProps = {
 export default function TechnologyDetailOverview({
   heading,
   headingAccent,
+  headingSuffix,
   paragraph,
   features,
 }: TechnologyDetailOverviewProps) {
@@ -29,6 +34,7 @@ export default function TechnologyDetailOverview({
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 gap-10 md:grid-cols-2">
         <h2 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
           {heading} <span className="text-ember">{headingAccent}</span>
+          {headingSuffix ? ` ${headingSuffix}` : ""}
         </h2>
         <p className="text-lg leading-relaxed text-wire">{paragraph}</p>
       </div>

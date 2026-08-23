@@ -30,13 +30,22 @@ export interface TechnologyDetailPageDto {
   technologyName: string;
   metaDescription: string;
   displayOrder: number;
+  /** "technology" (renders at /technologies/[slug]) or "solution"
+   * (renders at /solutions/[slug]). */
+  pageType: string;
 
   heroTitle: string;
   heroImageUrl: string;
 
   overviewHeading: string;
   overviewHeadingAccent: string;
+  /** Optional trailing text after the accent span, for headings that
+   * put the accent mid-sentence (e.g. "Benefits of [Furniture
+   * eCommerce] Software") instead of at the end. */
+  overviewHeadingSuffix: string;
   overviewParagraph: string;
+  /** Shows the Technologies logo-cloud section when true. */
+  showTechnologiesShowcase: boolean;
 
   highlightHeadline: string;
   highlightParagraph: string;
@@ -61,6 +70,7 @@ export interface TechnologyDetailPageSummaryDto {
   technologyName: string;
   heroTitle: string;
   displayOrder: number;
+  pageType: string;
 }
 
 export const TECHNOLOGY_DETAIL_PAGES_API_URL = `${API_BASE_URL}/technology-detail-pages`;

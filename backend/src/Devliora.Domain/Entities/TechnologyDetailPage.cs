@@ -2,9 +2,10 @@ using Devliora.Domain.Common;
 
 namespace Devliora.Domain.Entities;
 
-// Admin-managed content for an individual technology's detail page
-// (e.g. /technologies/dot-net-development, /technologies/java-development),
-// rendered by the generic [slug] route using the same shared section
+// Admin-managed content for an individual technology or solution detail
+// page (e.g. /technologies/dot-net-development,
+// /solutions/furniture-ecommerce-software — see PageType), rendered by
+// the matching generic [slug] route using the same shared section
 // components every such page already relies on (hero, feature grid,
 // FAQ, etc.). Covers every piece of *text* content on the page, plus
 // optional per-page image overrides (Industries, Services card) for the
@@ -20,6 +21,12 @@ public class TechnologyDetailPage : BaseEntity
     public string MetaDescription { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
 
+    // "technology" (default, renders at /technologies/[slug]) or
+    // "solution" (renders at /solutions/[slug]) — determines which
+    // frontend route serves this row and its breadcrumb parent. Not a
+    // real enum so new page types can be added without a migration.
+    public string PageType { get; set; } = "technology";
+
     public string HeroTitle { get; set; } = string.Empty;
 
     // Optional per-page override for the hero banner background image.
@@ -29,7 +36,19 @@ public class TechnologyDetailPage : BaseEntity
 
     public string OverviewHeading { get; set; } = string.Empty;
     public string OverviewHeadingAccent { get; set; } = string.Empty;
+    // Optional trailing text after the accent span, for headings that put
+    // the accent mid-sentence (e.g. "Benefits of [Furniture eCommerce]
+    // Software") instead of at the end (e.g. "Build Powerful Solutions
+    // with [.NET]", where this stays empty).
+    public string OverviewHeadingSuffix { get; set; } = string.Empty;
     public string OverviewParagraph { get; set; } = string.Empty;
+
+    // Shows the "Technologies" logo-cloud section (Devliora's real
+    // admin-managed Technologies list) when true. Off by default since
+    // the technology detail pages already cover this via their own
+    // page's subject; solution pages use it to showcase the stack behind
+    // that solution.
+    public bool ShowTechnologiesShowcase { get; set; }
 
     // Optional qualitative "stat banner" stand-in (e.g. Java's
     // "Battle-tested at enterprise scale") — empty headline hides the

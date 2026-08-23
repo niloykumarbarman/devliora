@@ -8,13 +8,16 @@ public class TechnologyDetailPageDto
     public string Slug { get; set; } = string.Empty;
     public string TechnologyName { get; set; } = string.Empty;
     public string MetaDescription { get; set; } = string.Empty;
+    public string PageType { get; set; } = "technology";
 
     public string HeroTitle { get; set; } = string.Empty;
     public string HeroImageUrl { get; set; } = string.Empty;
 
     public string OverviewHeading { get; set; } = string.Empty;
     public string OverviewHeadingAccent { get; set; } = string.Empty;
+    public string OverviewHeadingSuffix { get; set; } = string.Empty;
     public string OverviewParagraph { get; set; } = string.Empty;
+    public bool ShowTechnologiesShowcase { get; set; }
 
     public string HighlightHeadline { get; set; } = string.Empty;
     public string HighlightParagraph { get; set; } = string.Empty;

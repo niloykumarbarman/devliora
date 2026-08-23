@@ -1,9 +1,9 @@
 "use client";
 
-import { Code2 } from "lucide-react";
+import { Package } from "lucide-react";
 import AdminResourcePage from "@/components/admin/AdminResourcePage";
 import {
-  fetchAdminTechnologyOnlyPages,
+  fetchAdminSolutionDetailPages,
   createTechnologyDetailPage,
   updateTechnologyDetailPage,
   deleteTechnologyDetailPage,
@@ -18,23 +18,23 @@ import {
 } from "@/lib/technologyDetailPageAdminFields";
 
 // Backed by the same TechnologyDetailPage table as
-// /admin/solution-detail-pages — this screen only lists/creates rows
-// with pageType "technology" (fetchAdminTechnologyOnlyPages filters
-// client-side); "solution" rows live on the other screen instead, even
-// though both render through the shared AdminResourcePage form.
-export default function AdminTechnologyDetailPagesPage() {
+// /admin/technology-detail-pages — this screen only lists/creates rows
+// with pageType "solution" (fetchAdminSolutionDetailPages filters
+// client-side), rendered at /solutions/<slug> instead of
+// /technologies/<slug>.
+export default function AdminSolutionDetailPagesPage() {
   return (
     <AdminResourcePage<AdminTechnologyDetailPage, TechnologyDetailPageFormPayload>
-      routePath="/admin/technology-detail-pages"
-      title="Technology Detail Pages"
+      routePath="/admin/solution-detail-pages"
+      title="Solution Detail Pages"
       itemLabel="Page"
-      emptyForm={makeEmptyTechnologyDetailPageForm("technology")}
+      emptyForm={makeEmptyTechnologyDetailPageForm("solution")}
       fields={technologyDetailPageFields}
       columns={technologyDetailPageColumns}
-      emptyIcon={Code2}
-      emptyMessage="No technology detail pages yet. Create one to publish it at /technologies/<slug>."
-      editNote="Live at /technologies/<slug> as soon as you save. Card gradient/icon and any custom visual (e.g. a code-editor mockup) are set in code per slug, not here."
-      fetchAll={fetchAdminTechnologyOnlyPages}
+      emptyIcon={Package}
+      emptyMessage="No solution detail pages yet. Create one to publish it at /solutions/<slug>."
+      editNote="Live at /solutions/<slug> as soon as you save. Card gradient and the Highlight section's icon are set in code per slug, not here."
+      fetchAll={fetchAdminSolutionDetailPages}
       create={createTechnologyDetailPage}
       update={updateTechnologyDetailPage}
       remove={deleteTechnologyDetailPage}

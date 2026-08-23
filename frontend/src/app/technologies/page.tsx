@@ -22,7 +22,12 @@ export default function TechnologiesPage() {
       <Navbar />
       <main>
         <TechnologiesHero />
-        <TechnologyDetailPagesGrid />
+        <TechnologyDetailPagesGrid
+          pageType="technology"
+          basePath="/technologies"
+          heading="Explore our technology pages"
+          subheading="An in-depth look at how we work with each technology."
+        />
         <TechnologiesDetailList />
         <TechnologiesOverview />
         <TechnologiesMethodologies />

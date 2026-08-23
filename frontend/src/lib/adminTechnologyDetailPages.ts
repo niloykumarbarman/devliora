@@ -25,11 +25,20 @@ export interface AdminTechnologyDetailPage {
   technologyName: string;
   metaDescription: string;
   displayOrder: number;
+  /** "technology" (renders at /technologies/[slug]) or "solution"
+   * (renders at /solutions/[slug]). */
+  pageType: string;
   heroTitle: string;
   heroImageUrl: string;
   overviewHeading: string;
   overviewHeadingAccent: string;
+  /** Optional trailing text after the accent span, for headings that
+   * put the accent mid-sentence (e.g. "Benefits of [Furniture
+   * eCommerce] Software") instead of at the end. */
+  overviewHeadingSuffix: string;
   overviewParagraph: string;
+  /** Shows the Technologies logo-cloud section when true. */
+  showTechnologiesShowcase: boolean;
   highlightHeadline: string;
   highlightParagraph: string;
   industriesParagraph: string;
@@ -53,6 +62,20 @@ export async function fetchAdminTechnologyDetailPages() {
     throw new Error(`Failed to fetch technology detail pages: ${res.status}`);
   }
   return res.json() as Promise<AdminTechnologyDetailPage[]>;
+}
+
+// The admin API returns every row (both page types) from one endpoint;
+// these two filter client-side so the "Technology Pages" and "Solution
+// Pages" admin screens each show only their own rows, even though both
+// are backed by the same table.
+export async function fetchAdminTechnologyOnlyPages() {
+  const all = await fetchAdminTechnologyDetailPages();
+  return all.filter((p) => p.pageType !== "solution");
+}
+
+export async function fetchAdminSolutionDetailPages() {
+  const all = await fetchAdminTechnologyDetailPages();
+  return all.filter((p) => p.pageType === "solution");
 }
 
 export async function createTechnologyDetailPage(payload: TechnologyDetailPageFormPayload) {

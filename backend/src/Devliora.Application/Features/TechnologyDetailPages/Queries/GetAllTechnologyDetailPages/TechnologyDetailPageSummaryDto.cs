@@ -8,4 +8,5 @@ public class TechnologyDetailPageSummaryDto
     public string TechnologyName { get; set; } = string.Empty;
     public string HeroTitle { get; set; } = string.Empty;
     public int DisplayOrder { get; set; }
+    public string PageType { get; set; } = "technology";
 }

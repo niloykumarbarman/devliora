@@ -26,7 +26,8 @@ public class GetAllTechnologyDetailPagesQueryHandler
                 Slug = p.Slug,
                 TechnologyName = p.TechnologyName,
                 HeroTitle = p.HeroTitle,
-                DisplayOrder = p.DisplayOrder
+                DisplayOrder = p.DisplayOrder,
+                PageType = p.PageType
             })
             .ToListAsync(cancellationToken);
     }

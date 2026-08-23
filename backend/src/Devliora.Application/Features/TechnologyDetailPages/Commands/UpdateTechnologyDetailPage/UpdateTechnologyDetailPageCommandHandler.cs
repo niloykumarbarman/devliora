@@ -24,11 +24,14 @@ public class UpdateTechnologyDetailPageCommandHandler : IRequestHandler<UpdateTe
         page.TechnologyName = request.TechnologyName;
         page.MetaDescription = request.MetaDescription;
         page.DisplayOrder = request.DisplayOrder;
+        page.PageType = request.PageType;
         page.HeroTitle = request.HeroTitle;
         page.HeroImageUrl = request.HeroImageUrl;
         page.OverviewHeading = request.OverviewHeading;
         page.OverviewHeadingAccent = request.OverviewHeadingAccent;
+        page.OverviewHeadingSuffix = request.OverviewHeadingSuffix;
         page.OverviewParagraph = request.OverviewParagraph;
+        page.ShowTechnologiesShowcase = request.ShowTechnologiesShowcase;
         page.HighlightHeadline = request.HighlightHeadline;
         page.HighlightParagraph = request.HighlightParagraph;
         page.IndustriesParagraph = request.IndustriesParagraph;
