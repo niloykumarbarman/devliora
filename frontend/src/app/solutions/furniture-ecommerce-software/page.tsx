@@ -12,6 +12,7 @@ import UnlockProjectCTA from "@/components/sections/UnlockProjectCTA";
 import DedicatedDevTeam from "@/components/sections/DedicatedDevTeam";
 import DistributedTeamsCollaboration from "@/components/sections/DistributedTeamsCollaboration";
 import TechnologyDetailServices from "@/components/sections/TechnologyDetailServices";
+import TailoredTechSolutions from "@/components/sections/TailoredTechSolutions";
 import SolutionsCTA from "@/components/sections/SolutionsCTA";
 import { ShoppingCart } from "lucide-react";
 import type { FaqDto } from "@/lib/faq";
@@ -171,6 +172,8 @@ export default function FurnitureEcommerceSoftwarePage() {
           services={FURNITURE_SERVICES}
           gradient="linear-gradient(135deg, #2b1608 0%, #FF6B35 55%, #ffb088 100%)"
         />
+        <UnlockProjectCTA />
+        <TailoredTechSolutions />
         <SolutionsCTA />
       </main>
       <Footer />
