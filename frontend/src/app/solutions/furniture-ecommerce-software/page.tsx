@@ -11,6 +11,7 @@ import TechnologyDetailSpotlight from "@/components/sections/TechnologyDetailSpo
 import UnlockProjectCTA from "@/components/sections/UnlockProjectCTA";
 import DedicatedDevTeam from "@/components/sections/DedicatedDevTeam";
 import DistributedTeamsCollaboration from "@/components/sections/DistributedTeamsCollaboration";
+import TechnologyDetailServices from "@/components/sections/TechnologyDetailServices";
 import SolutionsCTA from "@/components/sections/SolutionsCTA";
 import { ShoppingCart } from "lucide-react";
 import type { FaqDto } from "@/lib/faq";
@@ -96,6 +97,41 @@ const FAQS: FaqDto[] = [
   },
 ];
 
+// Confirmed verbatim from the kaz.com.bd reference — generic capability
+// descriptions about a furniture eCommerce platform, no fabricated
+// claims. No real photo asset for the card (this is a static page, not
+// one of the admin-managed TechnologyDetailPage rows with an image
+// field), so it falls back to a warm ember-toned gradient — thematically
+// fitting for "furniture" on its own, same reasoning as the .NET/Java
+// pages' brand-colored gradient fallback.
+const FURNITURE_SERVICES = [
+  {
+    title: "Catalog Management",
+    description:
+      "We design systems that handle large furniture catalogs, variants, materials, dimensions, and pricing with clarity and structure.",
+  },
+  {
+    title: "Customization",
+    description:
+      "We enable product configuration features such as size, finish, fabric, and options to support personalized buying experiences.",
+  },
+  {
+    title: "Shopping & Checkout Flow",
+    description:
+      "We build smooth browsing, cart, and checkout experiences optimized for high-value furniture purchases and conversions.",
+  },
+  {
+    title: "Inventory & Order Handling",
+    description:
+      "We integrate inventory tracking, order management, and fulfillment workflows to support accurate availability and delivery.",
+  },
+  {
+    title: "Platform Support & Scaling",
+    description:
+      "We provide ongoing support to keep furniture eCommerce platforms stable, scalable, and ready for business growth.",
+  },
+];
+
 export default function FurnitureEcommerceSoftwarePage() {
   return (
     <>
@@ -128,6 +164,13 @@ export default function FurnitureEcommerceSoftwarePage() {
         <DedicatedDevTeam />
         <UnlockProjectCTA />
         <DistributedTeamsCollaboration />
+        <TechnologyDetailServices
+          heading="Furniture eCommerce Software Services"
+          cardLabel="Furniture eCommerce"
+          paragraph="We build furniture-focused eCommerce software designed to handle complex catalogs, customization, and high-consideration buying journeys. Here's a snapshot of how our solutions support furniture brands and retailers."
+          services={FURNITURE_SERVICES}
+          gradient="linear-gradient(135deg, #2b1608 0%, #FF6B35 55%, #ffb088 100%)"
+        />
         <SolutionsCTA />
       </main>
       <Footer />
