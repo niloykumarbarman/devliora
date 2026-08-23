@@ -7,6 +7,8 @@ import SolutionDetailOverview from "@/components/sections/SolutionDetailOverview
 import TechnologyDetailHighlight from "@/components/sections/TechnologyDetailHighlight";
 import SolutionDetailTechnologies from "@/components/sections/SolutionDetailTechnologies";
 import FAQView from "@/components/sections/FAQView";
+import TechnologyDetailSpotlight from "@/components/sections/TechnologyDetailSpotlight";
+import UnlockProjectCTA from "@/components/sections/UnlockProjectCTA";
 import SolutionsCTA from "@/components/sections/SolutionsCTA";
 import { ShoppingCart } from "lucide-react";
 import type { FaqDto } from "@/lib/faq";
@@ -119,6 +121,8 @@ export default function FurnitureEcommerceSoftwarePage() {
         />
         <SolutionDetailTechnologies />
         <FAQView faqs={FAQS} heading="Frequently asked questions" />
+        <TechnologyDetailSpotlight />
+        <UnlockProjectCTA />
         <SolutionsCTA />
       </main>
       <Footer />
