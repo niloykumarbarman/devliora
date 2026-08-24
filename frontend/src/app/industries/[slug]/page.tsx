@@ -8,7 +8,7 @@ import IndustriesCTA from "@/components/sections/IndustriesCTA";
 import { fetchIndustries, fetchIndustryBySlug } from "@/lib/industries";
 import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
-import { buildMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -52,9 +52,18 @@ export default async function IndustryDetailPage({ params }: Props) {
   const sortedStats = [...industry.stats].sort((a, b) => a.displayOrder - b.displayOrder);
   const sortedIndustries = [...industries].sort((a, b) => a.displayOrder - b.displayOrder);
   const imageUrl = settings?.industriesImageUrl ?? "";
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Home", path: "" },
+    { name: "Industries", path: "/industries" },
+    { name: industry.name, path: `/industries/${industry.slug}` },
+  ]);
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <Navbar />
       <main>
         <section className="relative overflow-hidden bg-ink py-24 md:py-32">

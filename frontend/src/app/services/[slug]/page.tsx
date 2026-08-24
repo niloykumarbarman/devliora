@@ -48,7 +48,7 @@ import { fetchFaqsForService } from "@/lib/faq";
 import FAQView from "@/components/sections/FAQView";
 import { MEGA_MENU_TECHNOLOGIES } from "@/lib/megaMenuTechnologies";
 import { API_BASE_URL } from "@/lib/apiConfig";
-import { buildMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 import { getTechIcon } from "@/lib/techIcons";
 import TechBrandIcon from "@/components/TechBrandIcon";
 import ServiceTabs, {
@@ -1392,8 +1392,25 @@ export default async function ServiceDetailPage({ params }: Props) {
       : tab
   );
 
+  // Mirrors the visible breadcrumb logic below: AI Development is filed
+  // under "Technologies" (matching kaz.com.bd's own path for this page),
+  // every other service under "Services".
+  const breadcrumbParent =
+    service.slug === "ai-development"
+      ? { name: "Technologies", path: "/technologies" }
+      : { name: "Services", path: "/services" };
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Home", path: "" },
+    breadcrumbParent,
+    { name: service.title, path: `/services/${service.slug}` },
+  ]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <Navbar />
       <main className="bg-ink text-paper">
         {service.slug === "digital-design" ? (

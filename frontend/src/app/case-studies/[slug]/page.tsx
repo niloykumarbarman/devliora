@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { fetchCaseStudyBySlug } from "@/lib/caseStudies";
-import { buildMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 const ILLUSTRATIVE_SUFFIX = " (Illustrative Example)";
 
@@ -52,9 +52,18 @@ export default async function CaseStudyDetailPage({ params }: Props) {
   }
 
   const { name, isIllustrative } = splitClientName(study.clientName);
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Home", path: "" },
+    { name: "Case Studies", path: "/case-studies" },
+    { name: study.title, path: `/case-studies/${study.slug}` },
+  ]);
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <Navbar />
       <main>
         <section className="relative overflow-hidden bg-ink py-24 text-paper md:py-32">

@@ -104,6 +104,25 @@ export function websiteJsonLd() {
   };
 }
 
+/**
+ * BreadcrumbList structured data for a detail page — mirrors the visible
+ * "Home / Category / Item" trail already rendered on these pages, so
+ * Google can show the same trail as breadcrumb rich results in search.
+ * Pass site-relative paths (e.g. "/services"); "" means the homepage.
+ */
+export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: `${siteConfig.url}${item.path}`,
+    })),
+  };
+}
+
 interface ArticleJsonLdOptions {
   title: string;
   description: string;

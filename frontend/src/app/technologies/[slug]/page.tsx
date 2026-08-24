@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { buildMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 import { fetchTechnologyDetailPageBySlug } from "@/lib/technologyDetailPages";
 import type { SiteSettingsDto } from "@/lib/siteSettings";
 import Navbar from "@/components/layout/Navbar";
@@ -91,8 +91,18 @@ export default async function TechnologyDetailPage({ params }: Props) {
     answer: faq.answer,
   }));
 
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Home", path: "" },
+    { name: "Technologies", path: "/technologies" },
+    { name: page.heroTitle, path: `/technologies/${page.slug}` },
+  ]);
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <Navbar />
       <main>
         <TechnologyDetailHero title={page.heroTitle} imageUrl={page.heroImageUrl} />

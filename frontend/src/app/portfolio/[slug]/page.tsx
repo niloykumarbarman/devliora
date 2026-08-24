@@ -5,7 +5,7 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { fetchPortfolioBySlug, parseTechStack } from "@/lib/portfolios";
 import { resolveImageUrl } from "@/lib/hero";
-import { buildMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -47,9 +47,18 @@ export default async function PortfolioDetailPage({ params }: Props) {
   const sortedMetrics = [...portfolio.metrics].sort(
     (a, b) => a.displayOrder - b.displayOrder
   );
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Home", path: "" },
+    { name: "My Work", path: "/portfolio" },
+    { name: portfolio.title, path: `/portfolio/${portfolio.slug}` },
+  ]);
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       <Navbar />
       <main>
         <section className="relative overflow-hidden bg-ink py-24 text-paper md:py-32">
