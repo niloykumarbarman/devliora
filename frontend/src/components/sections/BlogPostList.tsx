@@ -104,7 +104,16 @@ export default function BlogPostList() {
                   transition={{ duration: 0.5, delay: i * 0.08 }}
                   className="flex flex-col bg-paper"
                 >
-                  <Link href={`/blog/${post.slug}`} className="flex flex-1 flex-col">
+                  {/* Scale-only hover (no translate/rotate, and a plain
+                      Tailwind :hover class rather than tilt-3d/whileHover):
+                      this Link isn't itself Framer-Motion-animated so a
+                      CSS class works fine, but the *parent* grid relies on
+                      its own overflow-hidden for the gap-px hairline
+                      mosaic trick — a bigger lift would just get clipped. */}
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="relative z-0 flex flex-1 flex-col transition-transform duration-300 hover:z-10 hover:scale-[1.03]"
+                  >
                   <div className="relative aspect-[16/9] w-full overflow-hidden bg-graphite/10">
                     {post.coverImageUrl && (
                       <Image

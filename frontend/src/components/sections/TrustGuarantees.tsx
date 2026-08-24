@@ -83,7 +83,15 @@ export default function TrustGuarantees() {
                     ? { duration: 0.3 }
                     : { duration: 0.5, ease: "easeOut", delay: i * 0.08 }
                 }
-                className="bg-paper p-8"
+                // whileHover, not a CSS :hover class: once this motion.div's
+                // own whileInView settles, Framer Motion leaves a permanent
+                // inline `transform` on the element that would silently
+                // beat any CSS class's :hover transform. Plain scale (no
+                // translate/rotate) since the parent grid relies on its own
+                // `overflow-hidden` for the gap-px hairline mosaic trick,
+                // which would clip a bigger lift.
+                whileHover={reduceMotion ? undefined : { scale: 1.03, zIndex: 10 }}
+                className="relative z-0 bg-paper p-8"
               >
                 <Icon className="h-6 w-6 text-signal" strokeWidth={1.75} />
                 <h3 className="mt-5 font-display text-xl font-semibold tracking-tight">

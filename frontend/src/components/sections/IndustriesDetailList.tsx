@@ -36,7 +36,7 @@ export default function IndustriesDetailList() {
               >
                 <Link
                   href={`/industries/${industry.slug}`}
-                  className="group flex h-full flex-col justify-between p-8 transition-colors duration-200 hover:bg-ink/[0.03]"
+                  className="group relative z-0 flex h-full flex-col justify-between p-8 transition-[background-color,transform] duration-200 hover:z-10 hover:scale-[1.03] hover:bg-ink/[0.03]"
                 >
                   <span className="font-mono text-sm tabular-nums text-signal">
                     {String(i + 1).padStart(2, "0")}

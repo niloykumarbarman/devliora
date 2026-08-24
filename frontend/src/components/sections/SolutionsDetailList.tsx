@@ -32,7 +32,14 @@ export default function SolutionsDetailList() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="scroll-mt-24 bg-paper p-8"
+              // whileHover, not a CSS :hover class: once this motion.div's
+              // own whileInView settles, Framer Motion leaves a permanent
+              // inline `transform` on it that would beat a CSS transform.
+              // Plain scale (no translate/rotate) — the parent grid relies
+              // on its own overflow-hidden for the gap-px hairline mosaic
+              // trick, which would clip a bigger lift.
+              whileHover={shouldReduceMotion ? undefined : { scale: 1.03, zIndex: 10 }}
+              className="relative z-0 scroll-mt-24 bg-paper p-8"
             >
               <span className="font-mono text-sm tabular-nums text-signal">
                 {solution.id}

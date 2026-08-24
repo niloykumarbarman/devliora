@@ -160,9 +160,17 @@ export default function PortfolioGrid() {
                   <motion.article
                     key={item.id}
                     {...fadeUp(i)}
-                    className="tilt-3d group overflow-hidden rounded-xl"
+                    className="overflow-hidden rounded-xl"
                   >
-                    <Link href={`/portfolio/${item.slug}`} className="flex h-full flex-col sm:flex-row">
+                    {/* tilt-3d goes on this inner Link, not the
+                        motion.article above: once that article's own
+                        fadeUp animation settles, Framer Motion leaves a
+                        permanent inline `transform` on it, which would
+                        silently beat a CSS :hover transform every time. */}
+                    <Link
+                      href={`/portfolio/${item.slug}`}
+                      className="tilt-3d group flex h-full flex-col sm:flex-row"
+                    >
                       <div className="relative aspect-[16/10] w-full overflow-hidden bg-graphite/10 sm:aspect-auto sm:w-2/5">
                         {item.thumbnailUrl && (
                           <Image

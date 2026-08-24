@@ -30,7 +30,7 @@ export default function TechnologyDetailSpotlight() {
           <Link
             key={project.id}
             href={`/portfolio/${project.slug}`}
-            className="group relative flex h-[320px] flex-col justify-end overflow-hidden p-6 sm:h-[480px] sm:p-10"
+            className="tilt-3d group relative flex h-[320px] flex-col justify-end overflow-hidden p-6 sm:h-[480px] sm:p-10"
           >
             {project.thumbnailUrl && (
               <Image

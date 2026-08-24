@@ -94,6 +94,14 @@ export default function WhyChooseUs() {
                     ? { duration: 0.3 }
                     : { duration: 0.5, ease: "easeOut", delay: i * 0.08 }
                 }
+                // whileHover, not a CSS :hover class: once this motion.div's
+                // own whileInView settles, Framer Motion leaves a permanent
+                // inline `transform` on it that would beat any CSS class's
+                // :hover transform. A plain lift (no rotate) — these are
+                // borderless (just a top divider), not boxed cards, so a
+                // 3D tilt wouldn't read as "depth" without a card surface
+                // under it.
+                whileHover={reduceMotion ? undefined : { y: -4 }}
                 className="border-t border-paper/10 pt-7"
               >
                 <Icon className="h-6 w-6 text-signal" strokeWidth={1.75} />

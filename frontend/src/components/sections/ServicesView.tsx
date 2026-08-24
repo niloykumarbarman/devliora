@@ -92,13 +92,17 @@ export default function ServicesView({ services }: { services: ServiceItem[] }) 
                       ? { duration: 0.3 }
                       : { duration: 0.5, ease: "easeOut", delay: i * 0.08 }
                   }
+                  // whileHover (not a CSS :hover class) because this is a
+                  // motion.div: once its own whileInView animation settles,
+                  // Framer Motion leaves a permanent inline `transform`
+                  // style on the element, which would silently beat any
+                  // CSS class's :hover transform every time. Plain scale
+                  // (no translate/rotate) since the parent grid relies on
+                  // its own `overflow-hidden` for the gap-px hairline
+                  // mosaic trick, which would clip a bigger lift.
+                  whileHover={reduceMotion ? undefined : { scale: 1.03, zIndex: 10 }}
                   {...hoverHandlers}
-                  // Plain scale (no translate/rotate) — this grid's parent
-                  // is `overflow-hidden` (it relies on that to clip the
-                  // gap-px hairline mosaic trick below), which would clip
-                  // a tilt-3d-style lift+shadow at the tile edges instead
-                  // of showing it.
-                  className={`group relative z-0 cursor-pointer p-8 transition-[transform,background-color,color] duration-300 hover:z-10 hover:scale-[1.03] ${
+                  className={`group relative z-0 cursor-pointer p-8 transition-colors duration-300 ${
                     isActive ? "bg-ink text-paper" : "bg-paper"
                   }`}
                 >

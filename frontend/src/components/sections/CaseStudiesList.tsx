@@ -113,7 +113,14 @@ export default function CaseStudiesList() {
                     {...fadeUp(i)}
                     className="group bg-paper p-8 transition-colors duration-300 hover:bg-ink/[0.02] md:p-12"
                   >
-                    <Link href={`/case-studies/${study.slug}`}>
+                    {/* Scale-only (no translate/rotate/tilt-3d): the
+                        grandparent list is `overflow-hidden` (it relies on
+                        that for the gap-px hairline mosaic trick), which
+                        would clip a bigger lift at the row edges. */}
+                    <Link
+                      href={`/case-studies/${study.slug}`}
+                      className="relative z-0 block transition-transform duration-300 hover:z-10 hover:scale-[1.02]"
+                    >
                       {study.coverImageUrl && (
                         <div className="relative mb-6 h-48 w-full overflow-hidden rounded-lg">
                           <Image

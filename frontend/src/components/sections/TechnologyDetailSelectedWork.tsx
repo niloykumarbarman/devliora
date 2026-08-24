@@ -49,7 +49,7 @@ export default function TechnologyDetailSelectedWork({
 
         <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2">
           {projects.map((project) => (
-            <Link key={project.id} href={`/portfolio/${project.slug}`} className="group block">
+            <Link key={project.id} href={`/portfolio/${project.slug}`} className="tilt-3d group block">
               <div className="relative aspect-[16/10] w-full overflow-hidden rounded-lg bg-graphite">
                 {project.thumbnailUrl ? (
                   <Image

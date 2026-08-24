@@ -50,7 +50,11 @@ export default function ClientSpotlight({ items }: ClientSpotlightProps) {
               transition={{ duration: 0.6, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
               className="group border-b border-paper/10 pb-12"
             >
-              <Link href={`/portfolio/${item.slug}`} className="block">
+              {/* tilt-3d on this inner Link, not the motion.div above: once
+                  that div's own whileInView settles, Framer Motion leaves a
+                  permanent inline `transform` on it, which would silently
+                  beat a CSS :hover transform every time. */}
+              <Link href={`/portfolio/${item.slug}`} className="tilt-3d block">
                 <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-graphite">
                   {item.thumbnailUrl && (
                     <motion.img
