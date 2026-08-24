@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { LogIn, Loader2, AlertCircle } from "lucide-react";
-import { loginAdmin, setAdminToken } from "@/lib/adminAuth";
+import { loginAdmin, setAdminToken, setAdminRefreshToken } from "@/lib/adminAuth";
 
 type SubmitStatus = "idle" | "submitting" | "error";
 
@@ -33,6 +33,9 @@ export default function AdminLoginPage() {
       const data = await loginAdmin({ email, password });
       if (data.token) {
         setAdminToken(data.token);
+        if (data.refreshToken) {
+          setAdminRefreshToken(data.refreshToken);
+        }
         router.push("/admin/consultations");
       }
     } catch (err) {
