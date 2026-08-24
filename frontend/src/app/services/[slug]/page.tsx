@@ -48,7 +48,7 @@ import { fetchFaqsForService } from "@/lib/faq";
 import FAQView from "@/components/sections/FAQView";
 import { MEGA_MENU_TECHNOLOGIES } from "@/lib/megaMenuTechnologies";
 import { API_BASE_URL } from "@/lib/apiConfig";
-import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata, serviceJsonLd } from "@/lib/seo";
 import { getTechIcon } from "@/lib/techIcons";
 import TechBrandIcon from "@/components/TechBrandIcon";
 import ServiceTabs, {
@@ -1404,12 +1404,21 @@ export default async function ServiceDetailPage({ params }: Props) {
     breadcrumbParent,
     { name: service.title, path: `/services/${service.slug}` },
   ]);
+  const serviceLd = serviceJsonLd({
+    name: service.title,
+    description: service.shortDescription,
+    slug: service.slug,
+  });
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceLd) }}
       />
       <Navbar />
       <main className="bg-ink text-paper">
