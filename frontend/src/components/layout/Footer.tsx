@@ -93,16 +93,40 @@ export default async function Footer() {
               depend on to run.
             </p>
             <div className="mt-5 flex items-center gap-4">
-              <a href="#" aria-label="Facebook" className="text-paper/50 transition-colors hover:text-signal">
+              <a
+                href="https://www.facebook.com/profile.php?id=61593049053860"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="text-paper/50 transition-colors hover:text-signal"
+              >
                 <FacebookIcon />
               </a>
-              <a href="#" aria-label="LinkedIn" className="text-paper/50 transition-colors hover:text-signal">
+              <a
+                href="https://www.linkedin.com/company/141053921/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                className="text-paper/50 transition-colors hover:text-signal"
+              >
                 <LinkedInIcon />
               </a>
-              <a href="#" aria-label="Twitter" className="text-paper/50 transition-colors hover:text-signal">
+              <a
+                href="https://x.com/Devliora"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Twitter"
+                className="text-paper/50 transition-colors hover:text-signal"
+              >
                 <TwitterIcon />
               </a>
-              <a href="#" aria-label="Instagram" className="text-paper/50 transition-colors hover:text-signal">
+              <a
+                href="https://www.instagram.com/devliora"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="text-paper/50 transition-colors hover:text-signal"
+              >
                 <InstagramIcon />
               </a>
             </div>

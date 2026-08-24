@@ -21,6 +21,15 @@ export const siteConfig = {
   ogImage: "/og-image.png",
   contactEmail: "devliora74@gmail.com",
   contactPhone: "+8801766644823",
+  // Real social profiles (also linked in the footer) — feeds
+  // Organization schema's `sameAs`, which is how Google ties this
+  // domain to those profiles as the same entity for its knowledge graph.
+  socialProfiles: [
+    "https://www.facebook.com/profile.php?id=61593049053860",
+    "https://www.linkedin.com/company/141053921/",
+    "https://x.com/Devliora",
+    "https://www.instagram.com/devliora",
+  ],
 };
 
 interface BuildMetadataOptions {
@@ -137,6 +146,7 @@ export function organizationJsonLd() {
       telephone: siteConfig.contactPhone,
       contactType: "customer service",
     },
+    sameAs: siteConfig.socialProfiles,
   };
 }
 
