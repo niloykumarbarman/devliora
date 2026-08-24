@@ -19,7 +19,7 @@ export default function ServicesCTA() {
   return (
     <section className="bg-grain relative overflow-hidden bg-ink py-24 text-paper md:py-32">
       <div
-        className="pointer-events-none absolute -bottom-40 left-1/2 h-[480px] w-[480px] -translate-x-1/2 rounded-full opacity-[0.12] blur-[120px]"
+        className="pointer-events-none absolute -bottom-40 left-1/2 h-[480px] w-[480px] -translate-x-1/2 rounded-full opacity-[0.12] blur-[120px] animate-ambient-drift"
         style={{ backgroundColor: "var(--color-ember)" }}
       />
       <div

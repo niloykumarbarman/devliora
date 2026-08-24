@@ -11,7 +11,7 @@ export default function BlogCTA() {
     <section className="relative overflow-hidden bg-ink px-6 py-24 sm:py-28">
       <div className="bg-grain pointer-events-none absolute inset-0" />
 
-      <div className="pointer-events-none absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-signal/15 blur-[120px]" />
+      <div className="pointer-events-none absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-signal/15 blur-[120px] animate-ambient-drift" />
 
       <div
         className="pointer-events-none absolute inset-0 bg-[size:56px_56px] opacity-[0.04]"

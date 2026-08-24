@@ -558,7 +558,7 @@ export default function ServiceTabs({
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
               >
                 Find Out More
                 <ArrowRight className="h-5 w-5" />
@@ -611,7 +611,7 @@ export default function ServiceTabs({
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
               >
                 Get Started
                 <ArrowRight className="h-5 w-5" />
@@ -789,7 +789,7 @@ export default function ServiceTabs({
                 </div>
                 <Link
                   href="/contact"
-                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+                  className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
                 >
                   Get Started
                   <ArrowRight className="h-5 w-5" />
@@ -843,7 +843,7 @@ export default function ServiceTabs({
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
               >
                 Get Started
                 <ArrowRight className="h-5 w-5" />
@@ -942,7 +942,7 @@ export default function ServiceTabs({
             </div>
             <Link
               href="/contact"
-              className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+              className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
             >
               Get Started
               <ArrowRight className="h-5 w-5" />
@@ -990,7 +990,7 @@ export default function ServiceTabs({
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
               >
                 Get Started
                 <ArrowRight className="h-5 w-5" />
@@ -1079,7 +1079,7 @@ export default function ServiceTabs({
                 </div>
                 <Link
                   href={current.whyChooseUs.closingCta.href}
-                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+                  className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
                 >
                   {current.whyChooseUs.closingCta.buttonText}
                   <ArrowRight className="h-5 w-5" />
@@ -1366,7 +1366,7 @@ export default function ServiceTabs({
                 </div>
                 <Link
                   href="/contact"
-                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
+                  className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25"
                 >
                   Get Started
                   <ArrowRight className="h-5 w-5" />

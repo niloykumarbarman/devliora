@@ -205,3 +205,77 @@ h1, h2, h3 {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+/* --- Premium 3D touches -----------------------------------------------
+   Deliberately CSS-only (no Three.js/WebGL, no JS pointer tracking): it
+   gives the "premium" depth/motion feel the design asked for while
+   keeping mobile performance/battery as the actual priority — these are
+   plain GPU-composited transforms, ~0 CPU cost, and the hover-driven one
+   is gated on `(hover: hover)` so touch phones never run it. */
+
+/* Ambient drift for the decorative blurred glow orbs already used across
+   every hero/CTA section — turns each static blob into a slow, subtle
+   float+pulse so hero sections everywhere feel alive instead of static.
+   Each orb gets its own phase via nth-of-type so a hero with two orbs
+   doesn't have them moving in lockstep. */
+@keyframes ambient-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(3%, -4%) scale(1.08); }
+}
+.animate-ambient-drift {
+  animation: ambient-drift 14s ease-in-out infinite;
+}
+.animate-ambient-drift:nth-of-type(2) {
+  animation-duration: 18s;
+  animation-delay: -6s;
+}
+
+/* Subtle 3D tilt-and-lift for card grids (services, portfolio, case
+   studies, testimonials, ...) — a fixed perspective tilt rather than
+   pointer-tracked (no mousemove listener needed), plus a soft shadow to
+   sell the depth. `transform-style: preserve-3d` lets inner content
+   (icons, text) read as sitting slightly "above" the card. */
+.tilt-3d {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+  transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) translateZ(0);
+  transform-style: preserve-3d;
+}
+@media (hover: hover) and (pointer: fine) {
+  .tilt-3d:hover {
+    transform: perspective(1000px) rotateX(4deg) rotateY(-4deg) translateY(-6px) translateZ(0);
+    box-shadow: 0 24px 48px -16px color-mix(in srgb, var(--color-ink) 35%, transparent);
+    z-index: 1;
+  }
+}
+
+/* Same idea, tuned for pill/rectangular buttons — a smaller lift/scale
+   reads as "premium" without the card-style rotation looking odd on a
+   thin button shape. */
+.btn-3d {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  transform: perspective(600px) translateY(0) translateZ(0) scale(1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-3d:hover {
+    transform: perspective(600px) translateY(-3px) translateZ(0) scale(1.03);
+    box-shadow: 0 16px 32px -12px color-mix(in srgb, var(--color-signal) 45%, transparent);
+  }
+  .btn-3d:active {
+    transform: perspective(600px) translateY(-1px) translateZ(0) scale(1.01);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-ambient-drift {
+    animation: none;
+  }
+  .tilt-3d,
+  .btn-3d {
+    transition: none;
+  }
+  .tilt-3d:hover,
+  .btn-3d:hover,
+  .btn-3d:active {
+    transform: none;
+  }
+}

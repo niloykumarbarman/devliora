@@ -39,7 +39,7 @@ export default function TechnologiesView({ technologies }: { technologies: Techn
     <section id="technologies" className="bg-grain relative overflow-hidden bg-ink text-paper">
       <div
         aria-hidden
-        className="pointer-events-none absolute top-[-12%] left-[-10%] h-[440px] w-[440px] rounded-full bg-signal/15 blur-[140px]"
+        className="pointer-events-none absolute top-[-12%] left-[-10%] h-[440px] w-[440px] rounded-full bg-signal/15 blur-[140px] animate-ambient-drift"
       />
       <div
         aria-hidden

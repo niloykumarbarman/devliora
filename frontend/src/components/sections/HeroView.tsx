@@ -189,12 +189,12 @@ export default function HeroView({ hero }: { hero: HeroDto }) {
               }}
             />
             <motion.div
-              className="absolute -left-32 -top-32 h-[420px] w-[420px] rounded-full bg-signal/25 blur-[120px]"
+              className="absolute -left-32 -top-32 h-[420px] w-[420px] rounded-full bg-signal/25 blur-[120px] animate-ambient-drift"
               animate={{ opacity: [0.35, 0.65, 0.35] }}
               transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div
-              className="absolute -bottom-40 right-[-10%] h-[480px] w-[480px] rounded-full bg-ember/20 blur-[140px]"
+              className="absolute -bottom-40 right-[-10%] h-[480px] w-[480px] rounded-full bg-ember/20 blur-[140px] animate-ambient-drift"
               animate={{ opacity: [0.3, 0.6, 0.3] }}
               transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
             />

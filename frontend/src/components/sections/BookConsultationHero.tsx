@@ -16,7 +16,7 @@ export default function BookConsultationHero() {
           backgroundSize: "56px 56px",
         }}
       />
-      <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-signal/20 blur-[120px]" />
+      <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-signal/20 blur-[120px] animate-ambient-drift" />
 
       <div className="relative mx-auto max-w-3xl px-6 text-center">
         <motion.h1

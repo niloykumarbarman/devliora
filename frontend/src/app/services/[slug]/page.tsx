@@ -1421,7 +1421,7 @@ export default async function ServiceDetailPage({ params }: Props) {
              the same-styled hero on the /services listing page. */
           <Reveal><section className="bg-grain relative overflow-hidden py-16 md:py-20">
             <div
-              className="pointer-events-none absolute -top-40 left-1/4 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.12] blur-[120px]"
+              className="pointer-events-none absolute -top-40 left-1/4 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.12] blur-[120px] animate-ambient-drift"
               style={{ backgroundColor: "var(--color-signal)" }}
             />
             <div className="pointer-events-none absolute inset-0 bg-[size:56px_56px] opacity-60" style={gridOverlayStyle} />
@@ -1859,7 +1859,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
                 <Link
                   href="/contact"
-                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                  className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
                 >
                   Get Started
                   <ArrowRight className="h-5 w-5" />
@@ -2032,7 +2032,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
               >
                 Get Started
                 <ArrowRight className="h-5 w-5" />
@@ -2166,7 +2166,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
               >
                 Explore Options
                 <ArrowRight className="h-5 w-5" />
@@ -2285,7 +2285,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
               >
                 Get Started
                 <ArrowRight className="h-5 w-5" />
@@ -2478,7 +2478,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
               >
                 Test Perfect
                 <ArrowRight className="h-5 w-5" />
@@ -2630,7 +2630,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
               >
                 Assure Quality
                 <ArrowRight className="h-5 w-5" />
@@ -2814,7 +2814,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
               >
                 Get Started
                 <ArrowRight className="h-5 w-5" />
@@ -2951,7 +2951,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
               >
                 Contact Us
                 <ArrowRight className="h-5 w-5" />
@@ -3425,7 +3425,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
                 <Link
                   href="/contact"
-                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                  className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
                 >
                   Get Started
                   <ArrowRight className="h-5 w-5" />
@@ -3609,7 +3609,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
                 <Link
                   href="/contact"
-                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                  className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
                 >
                   Contact Us
                   <ArrowRight className="h-5 w-5" />
@@ -3746,7 +3746,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
               >
                 Learn More
                 <ArrowRight className="h-5 w-5" />
@@ -3978,7 +3978,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
               >
                 Boost Visibility
                 <ArrowRight className="h-5 w-5" />
@@ -4055,7 +4055,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
               >
                 Drive Conversions
                 <ArrowRight className="h-5 w-5" />
@@ -4225,7 +4225,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
               >
                 Maximize Reach
                 <ArrowRight className="h-5 w-5" />
@@ -4441,7 +4441,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
                 <Link
                   href="/book-consultation"
-                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                  className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
                 >
                   Start Now
                   <ArrowRight className="h-5 w-5" />
@@ -4559,7 +4559,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
               >
                 Explore Now
                 <ArrowRight className="h-5 w-5" />
@@ -4592,7 +4592,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                 </div>
                 <Link
                   href="/contact"
-                  className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                  className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
                 >
                   Get Talent
                   <ArrowRight className="h-5 w-5" />
@@ -4709,7 +4709,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               </div>
               <Link
                 href="/contact"
-                className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+                className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
               >
                 QA Ready
                 <ArrowRight className="h-5 w-5" />
@@ -5191,7 +5191,7 @@ export default async function ServiceDetailPage({ params }: Props) {
         {/* CTA */}
         <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">
           <div
-            className="pointer-events-none absolute -bottom-40 left-1/2 h-[480px] w-[480px] -translate-x-1/2 rounded-full opacity-[0.14] blur-[120px]"
+            className="pointer-events-none absolute -bottom-40 left-1/2 h-[480px] w-[480px] -translate-x-1/2 rounded-full opacity-[0.14] blur-[120px] animate-ambient-drift"
             style={{ backgroundColor: "var(--color-ember)" }}
           />
           <div className="pointer-events-none absolute inset-0 bg-[size:56px_56px]" style={gridOverlayStyle} />

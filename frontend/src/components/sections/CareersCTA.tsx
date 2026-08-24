@@ -18,7 +18,7 @@ export default function CareersCTA() {
           backgroundSize: "56px 56px",
         }}
       />
-      <div className="pointer-events-none absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-signal/20 blur-[120px]" />
+      <div className="pointer-events-none absolute left-1/2 top-0 h-72 w-72 -translate-x-1/2 rounded-full bg-signal/20 blur-[120px] animate-ambient-drift" />
 
       <div className="relative mx-auto max-w-2xl px-6 text-center">
         <motion.h2

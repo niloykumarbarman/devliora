@@ -47,7 +47,7 @@ export default function TrustGuarantees() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute bottom-[-12%] left-[-8%] h-[400px] w-[400px] rounded-full bg-signal/10 blur-[130px]"
+        className="pointer-events-none absolute bottom-[-12%] left-[-8%] h-[400px] w-[400px] rounded-full bg-signal/10 blur-[130px] animate-ambient-drift"
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">

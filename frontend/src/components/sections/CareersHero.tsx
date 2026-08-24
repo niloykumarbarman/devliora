@@ -16,8 +16,8 @@ export default function CareersHero() {
           backgroundSize: "56px 56px",
         }}
       />
-      <div className="pointer-events-none absolute -top-32 right-0 h-96 w-96 rounded-full bg-signal/20 blur-[120px]" />
-      <div className="pointer-events-none absolute -bottom-24 left-0 h-80 w-80 rounded-full bg-ember/10 blur-[100px]" />
+      <div className="pointer-events-none absolute -top-32 right-0 h-96 w-96 rounded-full bg-signal/20 blur-[120px] animate-ambient-drift" />
+      <div className="pointer-events-none absolute -bottom-24 left-0 h-80 w-80 rounded-full bg-ember/10 blur-[100px] animate-ambient-drift" />
 
       <div className="relative mx-auto max-w-4xl px-6 text-center">
         <motion.h1

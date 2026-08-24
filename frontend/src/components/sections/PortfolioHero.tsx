@@ -46,7 +46,7 @@ export default function PortfolioHero() {
           />
         ) : (
           <div
-            className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.18] blur-[120px]"
+            className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.18] blur-[120px] animate-ambient-drift"
             style={{ backgroundColor: "var(--color-signal)" }}
           />
         )}

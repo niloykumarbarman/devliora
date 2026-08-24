@@ -41,7 +41,7 @@ export default function ServicesView({ services }: { services: ServiceItem[] }) 
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-32 left-[-8%] h-[420px] w-[420px] rounded-full bg-signal/10 blur-[130px]"
+        className="pointer-events-none absolute -top-32 left-[-8%] h-[420px] w-[420px] rounded-full bg-signal/10 blur-[130px] animate-ambient-drift"
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
@@ -93,7 +93,12 @@ export default function ServicesView({ services }: { services: ServiceItem[] }) 
                       : { duration: 0.5, ease: "easeOut", delay: i * 0.08 }
                   }
                   {...hoverHandlers}
-                  className={`group relative cursor-pointer p-8 transition-colors duration-300 ${
+                  // Plain scale (no translate/rotate) — this grid's parent
+                  // is `overflow-hidden` (it relies on that to clip the
+                  // gap-px hairline mosaic trick below), which would clip
+                  // a tilt-3d-style lift+shadow at the tile edges instead
+                  // of showing it.
+                  className={`group relative z-0 cursor-pointer p-8 transition-[transform,background-color,color] duration-300 hover:z-10 hover:scale-[1.03] ${
                     isActive ? "bg-ink text-paper" : "bg-paper"
                   }`}
                 >

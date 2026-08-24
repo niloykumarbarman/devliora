@@ -46,7 +46,7 @@ export default function Process() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute bottom-[-15%] right-[-8%] h-[420px] w-[420px] rounded-full bg-ember/10 blur-[130px]"
+        className="pointer-events-none absolute bottom-[-15%] right-[-8%] h-[420px] w-[420px] rounded-full bg-ember/10 blur-[130px] animate-ambient-drift"
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">

@@ -52,11 +52,11 @@ export default function CaseStudies() {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute top-[-8%] right-[-10%] h-[440px] w-[440px] rounded-full bg-signal/15 blur-[140px]"
+        className="pointer-events-none absolute top-[-8%] right-[-10%] h-[440px] w-[440px] rounded-full bg-signal/15 blur-[140px] animate-ambient-drift"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute bottom-[-15%] left-[-10%] h-[380px] w-[380px] rounded-full bg-ember/10 blur-[130px]"
+        className="pointer-events-none absolute bottom-[-15%] left-[-10%] h-[380px] w-[380px] rounded-full bg-ember/10 blur-[130px] animate-ambient-drift"
       />
       <div
         aria-hidden

@@ -87,7 +87,7 @@ export default function TestimonialsView({ items }: { items: TestimonialItem[] }
                 return (
                 <div
                   key={item.id}
-                  className="relative flex flex-col overflow-hidden rounded-xl border border-ink/10 bg-paper p-8 pb-14 shadow-[0_1px_2px_rgba(14,20,32,0.04)]"
+                  className="tilt-3d relative flex flex-col overflow-hidden rounded-xl border border-ink/10 bg-paper p-8 pb-14 shadow-[0_1px_2px_rgba(14,20,32,0.04)]"
                 >
                   <span className={`absolute inset-x-0 top-0 h-1 ${topBarClass}`} />
                   {item.rating > 0 && (

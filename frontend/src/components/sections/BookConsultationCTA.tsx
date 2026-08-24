@@ -19,7 +19,7 @@ export default function BookConsultationCTA() {
   return (
     <section className="relative overflow-hidden bg-ink py-24 sm:py-32">
       <div className="bg-grain absolute inset-0 opacity-40" />
-      <div className="pointer-events-none absolute -bottom-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-signal/20 blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-signal/20 blur-[120px] animate-ambient-drift" />
 
       <div className="relative mx-auto max-w-2xl px-6 text-center">
         <motion.h2

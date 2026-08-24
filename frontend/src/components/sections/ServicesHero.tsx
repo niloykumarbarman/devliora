@@ -131,7 +131,7 @@ export default function ServicesHero() {
             <Image src={bannerImageUrl} alt="" fill priority sizes="100vw" className="object-cover" />
           ) : (
             <div
-              className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.18] blur-[120px]"
+              className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.18] blur-[120px] animate-ambient-drift"
               style={{ backgroundColor: "var(--color-signal)" }}
             />
           )}
@@ -158,7 +158,7 @@ export default function ServicesHero() {
           on the right. */}
       <section className="bg-grain relative overflow-hidden bg-ink py-16 text-paper md:py-20">
         <div
-          className="pointer-events-none absolute -top-40 left-1/4 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.12] blur-[120px]"
+          className="pointer-events-none absolute -top-40 left-1/4 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.12] blur-[120px] animate-ambient-drift"
           style={{ backgroundColor: "var(--color-signal)" }}
         />
         <div
@@ -242,7 +242,7 @@ export default function ServicesHero() {
           </div>
           <Link
             href="/contact"
-            className="flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
+            className="btn-3d flex shrink-0 items-center justify-center gap-2 bg-black/15 px-10 py-8 text-lg font-semibold text-paper transition-colors hover:bg-black/25 sm:pr-[max(2.5rem,calc(50vw_-_36rem_+_2.5rem))]"
           >
             Get Started Now
             <ArrowRight className="h-5 w-5" />

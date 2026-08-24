@@ -160,7 +160,7 @@ export default function PortfolioGrid() {
                   <motion.article
                     key={item.id}
                     {...fadeUp(i)}
-                    className="group overflow-hidden rounded-xl"
+                    className="tilt-3d group overflow-hidden rounded-xl"
                   >
                     <Link href={`/portfolio/${item.slug}`} className="flex h-full flex-col sm:flex-row">
                       <div className="relative aspect-[16/10] w-full overflow-hidden bg-graphite/10 sm:aspect-auto sm:w-2/5">

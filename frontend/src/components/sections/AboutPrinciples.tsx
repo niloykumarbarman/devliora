@@ -46,7 +46,7 @@ export default function AboutPrinciples() {
   return (
     <section className="bg-grain relative overflow-hidden bg-ink py-24 text-paper md:py-32">
       <div
-        className="pointer-events-none absolute -bottom-40 right-0 h-[480px] w-[480px] rounded-full opacity-[0.1] blur-[120px]"
+        className="pointer-events-none absolute -bottom-40 right-0 h-[480px] w-[480px] rounded-full opacity-[0.1] blur-[120px] animate-ambient-drift"
         style={{ backgroundColor: "var(--color-ember)" }}
       />
       <div
