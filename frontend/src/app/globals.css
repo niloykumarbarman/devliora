@@ -191,3 +191,17 @@ h1, h2, h3 {
     background: rgba(255, 255, 255, 0.1);
   }
 }
+
+/* For horizontally-scrollable rows (e.g. a tab bar that overflows on
+   narrow phones) that should scroll via touch/drag without showing a
+   visible scrollbar track, matching the site's otherwise scrollbar-free
+   look. Native touch/momentum scrolling still works — this only hides
+   the bar chrome, not the scroll behavior itself. */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

@@ -444,14 +444,19 @@ export default function ServiceTabs({
   return (
     <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-28">
       <div className="mx-auto max-w-5xl px-6">
-        <div className="flex flex-wrap justify-center gap-2">
+        {/* flex-wrap used to wrap this onto a second, awkwardly centered
+            line on narrow phones (~320px, e.g. iPhone SE) since 3 pills
+            don't quite fit one row there. A tab bar should never wrap —
+            it should either fit or scroll horizontally, so this is now a
+            no-wrap row that scrolls on overflow instead. */}
+        <div className="no-scrollbar flex flex-nowrap justify-center gap-2 overflow-x-auto">
           {tabs.map((tab, i) => (
             <button
               key={tab.label}
               type="button"
               onClick={() => goToTab(i)}
               aria-pressed={i === active}
-              className={`rounded-full px-6 py-2.5 font-mono text-sm font-semibold transition-colors ${
+              className={`shrink-0 rounded-full px-6 py-2.5 font-mono text-sm font-semibold transition-colors ${
                 i === active ? "bg-ember text-ink" : "text-paper/60 hover:text-paper"
               }`}
             >
