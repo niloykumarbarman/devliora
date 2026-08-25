@@ -94,16 +94,16 @@ export default function PartnersView({ partners }: { partners: PartnerDto[] }) {
                 transition={
                   reduceMotion ? { duration: 0.2 } : { duration: 0.4, ease: "easeOut" }
                 }
-                className="flex w-full flex-wrap items-center justify-center gap-x-12 gap-y-10 sm:gap-x-16"
+                className="flex w-full flex-wrap items-center justify-center gap-x-8 gap-y-10 sm:gap-x-10"
               >
                 {visible.map((partner) => {
                   const content = partner.logoUrl ? (
-                    <div className="relative h-20 w-[220px] transition-transform duration-300 hover:scale-110 md:h-24 md:w-[260px]">
+                    <div className="relative h-16 w-[180px] transition-transform duration-300 hover:scale-110 sm:h-20 sm:w-[200px] lg:h-24 lg:w-[240px]">
                       <Image
                         src={resolveImageUrl(partner.logoUrl)}
                         alt={partner.name}
                         fill
-                        sizes="260px"
+                        sizes="240px"
                         className="object-contain"
                       />
                     </div>
