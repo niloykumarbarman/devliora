@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -23,6 +24,34 @@ const EDGES: [number, number][] = [
   [2, 4],
   [3, 4],
 ];
+
+interface VideoCaption {
+  start: number;
+  end: number;
+  text: string;
+}
+
+const VIDEO_CAPTIONS: VideoCaption[] = [
+  { start: 0, end: 10, text: "AI automates enterprise tax work" },
+  { start: 10, end: 20, text: "Business spatial analytics" },
+  { start: 20, end: 30, text: "Machine learning fraud detection" },
+  { start: 30, end: 40, text: "SaaS cross-platform development" },
+  { start: 40, end: 50, text: "AI in regulatory compliance" },
+  { start: 50, end: 60, text: "Ethical AI for children" },
+  { start: 60, end: 70, text: "Smart city IoT" },
+  { start: 70, end: 80, text: "Purchase order automation" },
+  { start: 80, end: 90, text: "Big data analytics platform" },
+  { start: 90, end: 100, text: "Music app for African market" },
+  { start: 100, end: 110, text: "AI automates clinical encounters" },
+  { start: 110, end: 120, text: "Smart sensor agriculture" },
+  { start: 120, end: 130, text: "Drone flying over farmland" },
+  { start: 130, end: 140, text: "AI in furniture manufacturing" },
+];
+
+function getCaptionForTime(t: number): string | null {
+  const match = VIDEO_CAPTIONS.find((c) => t >= c.start && t < c.end);
+  return match ? match.text : null;
+}
 
 function NodeGraph() {
   return (
@@ -88,7 +117,40 @@ function TelemetryCluster({ pills }: { pills: TelemetryPillDto[] }) {
   );
 }
 
+function VideoCaptionOverlay({ text }: { text: string | null }) {
+  return (
+    <div className="pointer-events-none absolute bottom-6 left-4 z-[5] w-[70%] max-w-[16rem] overflow-hidden sm:bottom-10 sm:left-6 sm:max-w-xs md:bottom-12 md:left-8 md:max-w-sm lg:bottom-14 lg:left-10 lg:max-w-md xl:bottom-16 xl:left-12 xl:max-w-lg">
+      <AnimatePresence mode="wait">
+        {text && (
+          <motion.div
+            key={text}
+            initial={{ y: 28, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -28, opacity: 0 }}
+            transition={{ duration: 0.45, ease: "easeOut" }}
+            className="flex items-start gap-2.5 sm:gap-3"
+          >
+            <span className="mt-2 h-[2px] w-4 shrink-0 bg-ember sm:mt-2.5 sm:w-5 md:mt-3 md:w-6" />
+            <p className="font-display text-lg font-semibold leading-tight tracking-tight text-paper drop-shadow-[0_2px_12px_rgba(0,0,0,0.55)] sm:text-xl md:text-2xl lg:text-3xl xl:text-4xl">
+              {text}
+            </p>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export default function HeroView({ hero }: { hero: HeroDto }) {
+  const [activeCaption, setActiveCaption] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleTimeUpdate = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    setActiveCaption(getCaptionForTime(video.currentTime));
+  };
+
   const backgroundSrc = hero.backgroundImageUrl ? resolveImageUrl(hero.backgroundImageUrl) : "";
   const videoSrc = hero.backgroundVideoUrl ? resolveImageUrl(hero.backgroundVideoUrl) : "";
   const pills = hero.telemetryPills;
@@ -98,6 +160,8 @@ export default function HeroView({ hero }: { hero: HeroDto }) {
       <div className="relative h-[280px] w-full overflow-hidden sm:absolute sm:inset-0 sm:h-auto">
         {videoSrc ? (
           <video
+            ref={videoRef}
+            onTimeUpdate={handleTimeUpdate}
             autoPlay
             muted
             loop
@@ -137,6 +201,7 @@ export default function HeroView({ hero }: { hero: HeroDto }) {
           </>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/30" />
+        {videoSrc ? <VideoCaptionOverlay text={activeCaption} /> : null}
       </div>
 
       <div className="relative mx-auto flex w-full flex-col gap-6 bg-ink px-4 pb-8 pt-6 sm:min-h-[520px] sm:max-w-6xl sm:flex-row sm:items-end sm:justify-end sm:gap-8 sm:bg-transparent sm:px-6 sm:pb-10 sm:pt-8 md:min-h-[600px] md:px-8 md:pb-12 md:pt-10 lg:min-h-[680px] lg:px-10 lg:pb-14 lg:pt-12 xl:min-h-[760px]">
