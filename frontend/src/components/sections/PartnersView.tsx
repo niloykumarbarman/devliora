@@ -14,10 +14,14 @@ type PartnerDto = {
   displayOrder: number;
 };
 
+// 4-per-row was the count before the logos were sized up for a more
+// premium look; at the bigger size, 4 across no longer fits one line at
+// common desktop widths and wraps into an awkward 3+1. 3-per-row keeps
+// every page a full line at the new size.
 function getPerPage(width: number) {
   if (width < 640) return 1;
   if (width < 1024) return 2;
-  return 4;
+  return 3;
 }
 
 export default function PartnersView({ partners }: { partners: PartnerDto[] }) {
@@ -90,7 +94,7 @@ export default function PartnersView({ partners }: { partners: PartnerDto[] }) {
                 transition={
                   reduceMotion ? { duration: 0.2 } : { duration: 0.4, ease: "easeOut" }
                 }
-                className="flex w-full flex-wrap items-center justify-center gap-x-20 gap-y-10"
+                className="flex w-full flex-wrap items-center justify-center gap-x-12 gap-y-10 sm:gap-x-16"
               >
                 {visible.map((partner) => {
                   const content = partner.logoUrl ? (
