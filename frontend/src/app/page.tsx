@@ -22,6 +22,15 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <Capabilities />
+        {/* Moved ahead of ClientShowcase — a Feb-2026 external audit
+            flagged the homepage as needing stronger trust signals higher
+            up. ClientShowcase's "engagements" are explicitly labeled
+            illustrative (real public case studies are still in
+            progress), so leading with TrustGuarantees' actual, concrete
+            commitments (security defaults, response-time guarantee,
+            commit visibility) establishes credibility with something
+            real before the illustrative examples, rather than after. */}
+        <TrustGuarantees />
         <ClientShowcase />
         <Services />
         <Partners />
@@ -31,7 +40,6 @@ export default function Home() {
         <Portfolio />
         <CaseStudies />
         <Testimonials />
-        <TrustGuarantees />
         <FAQ />
       <Contact />
       </main>
