@@ -60,10 +60,10 @@ export default function PartnersView({ partners }: { partners: PartnerDto[] }) {
           }
           className="mb-12"
         >
-          <h2 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+          <h2 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl md:text-5xl">
             Meet Our <span className="text-signal">Partners</span>
           </h2>
-          <p className="mt-2 text-sm text-graphite/60">
+          <p className="mt-3 text-base text-graphite/60 md:text-lg">
             Who are helping us grow, thank you.
           </p>
         </motion.div>
@@ -80,7 +80,7 @@ export default function PartnersView({ partners }: { partners: PartnerDto[] }) {
             </button>
           )}
 
-          <div className="flex min-h-[120px] w-full items-center justify-center overflow-hidden px-16">
+          <div className="flex min-h-[160px] w-full items-center justify-center overflow-hidden px-16">
             <AnimatePresence mode="wait">
               <motion.div
                 key={page}
@@ -90,22 +90,22 @@ export default function PartnersView({ partners }: { partners: PartnerDto[] }) {
                 transition={
                   reduceMotion ? { duration: 0.2 } : { duration: 0.4, ease: "easeOut" }
                 }
-                className="flex w-full flex-wrap items-center justify-center gap-x-14 gap-y-8"
+                className="flex w-full flex-wrap items-center justify-center gap-x-20 gap-y-10"
               >
                 {visible.map((partner) => {
                   const content = partner.logoUrl ? (
-                    <div className="relative h-14 w-[160px] md:h-16">
+                    <div className="relative h-20 w-[220px] transition-transform duration-300 hover:scale-110 md:h-24 md:w-[260px]">
                       <Image
                         src={resolveImageUrl(partner.logoUrl)}
                         alt={partner.name}
                         fill
-                        sizes="160px"
+                        sizes="260px"
                         className="object-contain"
                       />
                     </div>
                   ) : (
-                    <span className="flex items-center gap-2 font-mono text-base text-graphite/60">
-                      <Handshake className="h-6 w-6" strokeWidth={1.6} />
+                    <span className="flex items-center gap-2 font-mono text-lg text-graphite/60">
+                      <Handshake className="h-7 w-7" strokeWidth={1.6} />
                       {partner.name}
                     </span>
                   );
