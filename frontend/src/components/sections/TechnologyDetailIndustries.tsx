@@ -5,6 +5,7 @@ import Image from "next/image";
 import { fetchIndustries, IndustryDto } from "@/lib/industries";
 import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
+import Reveal from "@/components/Reveal";
 
 // "Industries & Verticals Served" block for individual technology pages,
 // matching kaz.com.bd's per-technology page: image + copy on one side,
@@ -44,9 +45,9 @@ export default function TechnologyDetailIndustries({ paragraph, imageUrl: imageU
   if (industries.length === 0) return null;
 
   return (
-    <section className="relative overflow-hidden" style={{ backgroundColor: "#33182a" }}>
+    <Reveal><section className="relative overflow-hidden" style={{ backgroundColor: "#33182a" }}>
       <div className="mx-auto grid max-w-6xl grid-cols-1 md:grid-cols-2">
-        <div className="relative aspect-[4/3] w-full md:aspect-auto">
+        <div className="tilt-3d relative aspect-[4/3] w-full md:aspect-auto">
           {imageUrl ? (
             <Image src={imageUrl} alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover" />
           ) : (
@@ -58,17 +59,17 @@ export default function TechnologyDetailIndustries({ paragraph, imageUrl: imageU
           <h2 className="text-balance font-display text-3xl font-semibold text-paper sm:text-4xl">
             Industries &amp; Verticals Served
           </h2>
-          <p className="mt-5 max-w-lg text-wire">{paragraph}</p>
+          <p className="mt-5 max-w-lg text-lg text-wire">{paragraph}</p>
 
           <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-3">
             {industries.map((industry) => (
-              <span key={industry.id} className="font-mono text-sm text-ember">
+              <span key={industry.id} className="font-mono text-base text-ember">
                 {industry.name}
               </span>
             ))}
           </div>
         </div>
       </div>
-    </section>
+    </section></Reveal>
   );
 }

@@ -8,6 +8,7 @@ import ExpandableServiceCards, {
 } from "@/components/sections/ExpandableServiceCards";
 import { fetchSiteSettings, type SiteSettingsDto } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
+import Reveal from "@/components/Reveal";
 
 // "<Technology> Development Services" block for individual technology
 // pages, matching kaz.com.bd's per-technology page: a decorative card +
@@ -60,11 +61,11 @@ export default function TechnologyDetailServices({
   const cardImageUrl = imageUrl ? resolveImageUrl(imageUrl) : settingsCardImageUrl;
 
   return (
-    <section className="relative overflow-hidden bg-ink py-20 md:py-24">
+    <Reveal><section className="relative overflow-hidden bg-ink py-20 md:py-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid gap-10 md:grid-cols-2 md:items-center">
           <div
-            className="relative aspect-[4/3] overflow-hidden rounded-lg sm:aspect-[16/9]"
+            className="tilt-3d relative aspect-[4/3] overflow-hidden rounded-lg sm:aspect-[16/9]"
             style={cardImageUrl || visual ? undefined : { background: gradient }}
           >
             {cardImageUrl ? (
@@ -104,12 +105,12 @@ export default function TechnologyDetailServices({
             <h2 className="text-balance font-display text-3xl font-bold uppercase leading-tight text-paper sm:text-4xl">
               {heading}
             </h2>
-            <p className="mt-5 text-paper/70">{paragraph}</p>
+            <p className="mt-5 text-lg text-paper/70">{paragraph}</p>
           </div>
         </div>
 
         <ExpandableServiceCards cards={services} />
       </div>
-    </section>
+    </section></Reveal>
   );
 }

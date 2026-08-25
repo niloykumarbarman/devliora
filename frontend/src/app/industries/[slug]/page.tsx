@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import Reveal from "@/components/Reveal";
 import IndustriesCTA from "@/components/sections/IndustriesCTA";
 import { fetchIndustries, fetchIndustryBySlug } from "@/lib/industries";
 import { fetchSiteSettings } from "@/lib/siteSettings";
@@ -66,7 +67,7 @@ export default async function IndustryDetailPage({ params }: Props) {
       />
       <Navbar />
       <main>
-        <section className="relative overflow-hidden bg-ink py-24 md:py-32">
+        <Reveal><section className="relative overflow-hidden bg-ink py-24 md:py-32">
           <div className="bg-grain absolute inset-0" />
           <div
             className="absolute inset-0 opacity-40"
@@ -76,23 +77,27 @@ export default async function IndustryDetailPage({ params }: Props) {
             }}
           />
           <div className="absolute inset-0 bg-[size:56px_56px] bg-[linear-gradient(to_right,rgba(243,242,237,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(243,242,237,0.04)_1px,transparent_1px)]" />
+          <div
+            className="pointer-events-none absolute -top-40 right-0 h-[480px] w-[480px] rounded-full opacity-[0.15] blur-[120px] animate-ambient-drift"
+            style={{ backgroundColor: "var(--color-signal)" }}
+          />
 
           <div className="relative mx-auto max-w-4xl px-6">
             <p className="font-mono text-xs font-semibold uppercase tracking-widest text-signal">
               Industries
             </p>
-            <h1 className="mt-4 text-balance font-display text-4xl font-semibold text-paper md:text-5xl">
+            <h1 className="mt-4 text-balance font-display text-4xl font-semibold text-paper md:text-5xl lg:text-6xl">
               {industry.name}
             </h1>
             {industry.description && (
-              <p className="mt-6 max-w-2xl text-lg text-wire">{industry.description}</p>
+              <p className="mt-6 max-w-2xl text-lg text-wire md:text-xl">{industry.description}</p>
             )}
           </div>
-        </section>
+        </section></Reveal>
 
-        <section className="relative bg-paper py-20 md:py-24">
+        <Reveal><section className="relative bg-paper py-20 md:py-24">
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-10 px-6 md:grid-cols-[1.3fr_1fr]">
-            <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-graphite/5">
+            <div className="tilt-3d relative aspect-[16/10] overflow-hidden rounded-2xl bg-graphite/5">
               {imageUrl ? (
                 <Image
                   src={resolveImageUrl(imageUrl)}
@@ -123,8 +128,8 @@ export default async function IndustryDetailPage({ params }: Props) {
                         aria-current={isCurrent ? "page" : undefined}
                         className={
                           isCurrent
-                            ? "font-mono text-sm font-semibold text-ink"
-                            : "font-mono text-sm text-graphite/70 transition-colors duration-200 hover:text-ink"
+                            ? "font-mono text-base font-semibold text-ink"
+                            : "font-mono text-base text-graphite/70 transition-colors duration-200 hover:text-ink"
                         }
                       >
                         {item.name}
@@ -135,17 +140,17 @@ export default async function IndustryDetailPage({ params }: Props) {
               </ul>
             </div>
           </div>
-        </section>
+        </section></Reveal>
 
         {sortedStats.length > 0 && (
-          <section className="relative overflow-hidden bg-ink py-20">
+          <Reveal><section className="relative overflow-hidden bg-ink py-20">
             <div className="bg-grain absolute inset-0" />
             <div className="relative mx-auto max-w-5xl px-6">
               <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
                 {sortedStats.map((stat, i) => {
                   const accent = ACCENTS[i % ACCENTS.length];
                   return (
-                    <div key={`${stat.label}-${i}`} className="flex items-start gap-5">
+                    <div key={`${stat.label}-${i}`} className="tilt-3d flex items-start gap-5 rounded-xl p-2">
                       <div
                         className={`flex h-24 w-24 shrink-0 items-center justify-center rounded-full border-2 ${accent}`}
                       >
@@ -154,7 +159,7 @@ export default async function IndustryDetailPage({ params }: Props) {
                         </span>
                       </div>
                       <div className="pt-2">
-                        <p className="text-sm leading-relaxed text-wire">{stat.label}</p>
+                        <p className="text-base leading-relaxed text-wire">{stat.label}</p>
                         {stat.source && (
                           <p className="mt-2 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-paper/40">
                             {stat.source}
@@ -166,7 +171,7 @@ export default async function IndustryDetailPage({ params }: Props) {
                 })}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         <IndustriesCTA />

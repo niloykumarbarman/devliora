@@ -1,3 +1,5 @@
+import Reveal from "@/components/Reveal";
+
 // Intro + feature-grid body for individual technology or solution pages
 // (e.g. /technologies/dot-net-development, /solutions/furniture-ecommerce-
 // software), matching kaz.com.bd's per-item page layout: a two-tone
@@ -29,25 +31,25 @@ export default function TechnologyDetailOverview({
   features,
 }: TechnologyDetailOverviewProps) {
   return (
-    <section className="relative overflow-hidden bg-ink px-6 py-20 sm:py-24">
+    <Reveal><section className="relative overflow-hidden bg-ink px-6 py-20 sm:py-24">
       <div className="bg-grain absolute inset-0" />
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 gap-10 md:grid-cols-2">
-        <h2 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl">
+        <h2 className="text-balance font-display text-3xl font-semibold leading-tight text-paper sm:text-4xl md:text-5xl">
           {heading} <span className="text-ember">{headingAccent}</span>
           {headingSuffix ? ` ${headingSuffix}` : ""}
         </h2>
-        <p className="text-lg leading-relaxed text-wire">{paragraph}</p>
+        <p className="text-lg leading-relaxed text-wire md:text-xl">{paragraph}</p>
       </div>
 
       <div className="relative mx-auto mt-16 grid max-w-6xl grid-cols-1 gap-x-10 gap-y-12 sm:grid-cols-2 md:grid-cols-3">
         {features.map((feature) => (
-          <div key={feature.title}>
+          <div key={feature.title} className="tilt-3d rounded-xl p-2">
             <h3 className="font-display text-lg font-semibold text-ember">{feature.title}</h3>
             <div className="mt-3 border-t border-paper/15" />
-            <p className="mt-4 text-sm leading-relaxed text-wire">{feature.body}</p>
+            <p className="mt-4 text-base leading-relaxed text-wire">{feature.body}</p>
           </div>
         ))}
       </div>
-    </section>
+    </section></Reveal>
   );
 }

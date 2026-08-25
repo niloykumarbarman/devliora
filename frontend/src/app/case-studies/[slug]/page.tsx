@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import Reveal from "@/components/Reveal";
 import { fetchCaseStudyBySlug } from "@/lib/caseStudies";
 import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
 
@@ -66,7 +67,11 @@ export default async function CaseStudyDetailPage({ params }: Props) {
       />
       <Navbar />
       <main>
-        <section className="relative overflow-hidden bg-ink py-24 text-paper md:py-32">
+        <Reveal><section className="relative overflow-hidden bg-ink py-24 text-paper md:py-32">
+          <div
+            className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.15] blur-[120px] animate-ambient-drift"
+            style={{ backgroundColor: "var(--color-ember)" }}
+          />
           <div className="relative mx-auto max-w-4xl px-6">
             <div className="flex flex-wrap items-center gap-3">
               <p className="font-mono text-sm uppercase tracking-[0.2em] text-signal">
@@ -78,42 +83,42 @@ export default async function CaseStudyDetailPage({ params }: Props) {
                 </span>
               )}
             </div>
-            <h1 className="mt-4 max-w-3xl text-balance font-display text-3xl font-medium sm:text-5xl">
+            <h1 className="mt-4 max-w-3xl text-balance font-display text-4xl font-medium sm:text-5xl md:text-6xl">
               {study.title}
             </h1>
           </div>
-        </section>
+        </section></Reveal>
 
-        <section className="relative overflow-hidden bg-paper py-20 text-ink md:py-28">
+        <Reveal><section className="relative overflow-hidden bg-paper py-20 text-ink md:py-28">
           <div className="mx-auto max-w-4xl px-6">
             <div className="grid gap-12 md:grid-cols-3">
-              <div>
+              <div className="tilt-3d rounded-xl p-2">
                 <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ember">
                   Challenge
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-graphite/80">
+                <p className="mt-3 text-base leading-relaxed text-graphite/80 md:text-lg">
                   {study.challenge}
                 </p>
               </div>
-              <div>
+              <div className="tilt-3d rounded-xl p-2">
                 <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ember">
                   Solution
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-graphite/80">
+                <p className="mt-3 text-base leading-relaxed text-graphite/80 md:text-lg">
                   {study.solution}
                 </p>
               </div>
-              <div>
+              <div className="tilt-3d rounded-xl p-2">
                 <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ember">
                   Results
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-graphite/80">
+                <p className="mt-3 text-base leading-relaxed text-graphite/80 md:text-lg">
                   {study.results}
                 </p>
               </div>
             </div>
           </div>
-        </section>
+        </section></Reveal>
       </main>
       <Footer />
     </>

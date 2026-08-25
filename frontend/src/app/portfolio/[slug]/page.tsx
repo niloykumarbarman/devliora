@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import Reveal from "@/components/Reveal";
 import { fetchPortfolioBySlug, parseTechStack } from "@/lib/portfolios";
 import { resolveImageUrl } from "@/lib/hero";
 import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
@@ -61,12 +62,16 @@ export default async function PortfolioDetailPage({ params }: Props) {
       />
       <Navbar />
       <main>
-        <section className="relative overflow-hidden bg-ink py-24 text-paper md:py-32">
+        <Reveal><section className="relative overflow-hidden bg-ink py-24 text-paper md:py-32">
+          <div
+            className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.15] blur-[120px] animate-ambient-drift"
+            style={{ backgroundColor: "var(--color-signal)" }}
+          />
           <div className="relative mx-auto max-w-4xl px-6">
             <p className="font-mono text-sm uppercase tracking-[0.2em] text-signal">
               {portfolio.industry} &mdash; {portfolio.clientName}
             </p>
-            <h1 className="mt-4 max-w-3xl text-balance font-display text-3xl font-medium sm:text-5xl">
+            <h1 className="mt-4 max-w-3xl text-balance font-display text-4xl font-medium sm:text-5xl md:text-6xl">
               {portfolio.title}
             </h1>
             {techList.length > 0 && (
@@ -82,47 +87,51 @@ export default async function PortfolioDetailPage({ params }: Props) {
               </div>
             )}
           </div>
-        </section>
+        </section></Reveal>
 
-        <section className="relative overflow-hidden bg-paper py-20 text-ink md:py-28">
+        <Reveal><section className="relative overflow-hidden bg-paper py-20 text-ink md:py-28">
           <div className="mx-auto max-w-4xl px-6">
             <div className="grid gap-12 md:grid-cols-3">
-              <div>
+              <div className="tilt-3d rounded-xl p-2">
                 <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ember">
                   Challenge
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-graphite/80">
+                <p className="mt-3 text-base leading-relaxed text-graphite/80 md:text-lg">
                   {portfolio.challenge}
                 </p>
               </div>
-              <div>
+              <div className="tilt-3d rounded-xl p-2">
                 <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ember">
                   Approach
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-graphite/80">
+                <p className="mt-3 text-base leading-relaxed text-graphite/80 md:text-lg">
                   {portfolio.approach}
                 </p>
               </div>
-              <div>
+              <div className="tilt-3d rounded-xl p-2">
                 <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ember">
                   Result
                 </p>
-                <p className="mt-3 text-sm leading-relaxed text-graphite/80">
+                <p className="mt-3 text-base leading-relaxed text-graphite/80 md:text-lg">
                   {portfolio.result}
                 </p>
               </div>
             </div>
           </div>
-        </section>
+        </section></Reveal>
 
         {sortedMetrics.length > 0 && (
-          <section className="relative overflow-hidden bg-ink py-20 text-paper">
+          <Reveal><section className="relative overflow-hidden bg-ink py-20 text-paper">
             <div className="mx-auto max-w-4xl px-6">
               <div className="grid gap-px overflow-hidden rounded-xl bg-paper/10 sm:grid-cols-2 lg:grid-cols-4">
                 {sortedMetrics.map((metric) => (
                   <div
                     key={metric.label}
-                    className="bg-ink px-6 py-8 text-center"
+                    // Plain scale (no translate/rotate/tilt-3d): the
+                    // parent grid is overflow-hidden (it relies on that
+                    // for the gap-px hairline mosaic trick), which would
+                    // clip a bigger lift at the tile edges.
+                    className="relative z-0 bg-ink px-6 py-8 text-center transition-transform duration-300 hover:z-10 hover:scale-[1.05]"
                   >
                     <p className="font-display text-3xl font-semibold tabular-nums text-signal sm:text-4xl">
                       {metric.value}
@@ -134,11 +143,11 @@ export default async function PortfolioDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {sortedImages.length > 0 && (
-          <section className="relative overflow-hidden bg-paper py-20 text-ink md:py-28">
+          <Reveal><section className="relative overflow-hidden bg-paper py-20 text-ink md:py-28">
             <div className="mx-auto max-w-4xl px-6">
               <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ember">
                 Gallery
@@ -147,7 +156,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
                 {sortedImages.map((image, i) => (
                   <figure
                     key={`${image.imageUrl}-${i}`}
-                    className="overflow-hidden rounded-xl border border-ink/10 bg-graphite/5"
+                    className="tilt-3d overflow-hidden rounded-xl border border-ink/10 bg-graphite/5"
                   >
                     <div className="relative aspect-[16/10] w-full">
                       <Image
@@ -159,7 +168,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
                       />
                     </div>
                     {image.caption && (
-                      <figcaption className="px-4 py-3 text-xs leading-relaxed text-graphite/70">
+                      <figcaption className="px-4 py-3 text-sm leading-relaxed text-graphite/70">
                         {image.caption}
                       </figcaption>
                     )}
@@ -167,11 +176,11 @@ export default async function PortfolioDetailPage({ params }: Props) {
                 ))}
               </div>
             </div>
-          </section>
+          </section></Reveal>
         )}
 
         {portfolio.testimonialQuote && (
-          <section className="relative overflow-hidden bg-graphite/5 py-20 text-ink md:py-28">
+          <Reveal><section className="relative overflow-hidden bg-graphite/5 py-20 text-ink md:py-28">
             <div className="mx-auto max-w-3xl px-6 text-center">
               <blockquote className="font-display text-xl font-medium leading-relaxed text-graphite sm:text-2xl">
                 &ldquo;{portfolio.testimonialQuote}&rdquo;
@@ -185,7 +194,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
                 </p>
               )}
             </div>
-          </section>
+          </section></Reveal>
         )}
       </main>
       <Footer />
