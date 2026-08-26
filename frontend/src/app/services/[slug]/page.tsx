@@ -1407,7 +1407,7 @@ export default async function ServiceDetailPage({ params }: Props) {
   const serviceLd = serviceJsonLd({
     name: service.title,
     description: service.shortDescription,
-    slug: service.slug,
+    path: `/services/${service.slug}`,
   });
 
   return (

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata, serviceJsonLd } from "@/lib/seo";
 import { fetchTechnologyDetailPageBySlug } from "@/lib/technologyDetailPages";
 import type { SiteSettingsDto } from "@/lib/siteSettings";
 import Navbar from "@/components/layout/Navbar";
@@ -92,12 +92,21 @@ export default async function SolutionDetailPage({ params }: Props) {
     { name: "Solutions", path: "/solutions" },
     { name: page.heroTitle, path: `/solutions/${page.slug}` },
   ]);
+  const service = serviceJsonLd({
+    name: page.heroTitle,
+    description: page.metaDescription || page.overviewParagraph,
+    path: `/solutions/${page.slug}`,
+  });
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }}
       />
       <Navbar />
       <main>

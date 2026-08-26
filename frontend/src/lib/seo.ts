@@ -191,14 +191,14 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
  * development company Bangladesh") has an explicit structured signal to
  * match against, not just body text.
  */
-export function serviceJsonLd(opts: { name: string; description: string; slug: string }) {
+export function serviceJsonLd(opts: { name: string; description: string; path: string }) {
   return {
     "@context": "https://schema.org",
     "@type": "Service",
     serviceType: opts.name,
     name: opts.name,
     description: opts.description,
-    url: `${siteConfig.url}/services/${opts.slug}`,
+    url: `${siteConfig.url}${opts.path}`,
     provider: {
       "@type": "ProfessionalService",
       name: siteConfig.name,
