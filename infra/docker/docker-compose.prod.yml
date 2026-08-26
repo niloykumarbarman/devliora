@@ -47,12 +47,12 @@ services:
       Cors__AllowedOrigins__0: ${CORS_ALLOWED_ORIGIN}
       Cors__AllowedOrigins__1: https://www.devliora.com
       Assistant__GeminiApiKey: ${GEMINI_API_KEY}
-      Assistant__GeminiModel: "gemini-3.6-flash"
+      Assistant__GeminiModel: "gemini-2.0-flash"
       Assistant__GeminiDailyQuota: ${GEMINI_DAILY_QUOTA:-8}
       Telegram__BotToken: ${TELEGRAM_BOT_TOKEN}
       Telegram__WebhookSecretToken: ${TELEGRAM_WEBHOOK_SECRET}
       Telegram__GeminiApiKey: ${TELEGRAM_GEMINI_API_KEY}
-      Telegram__GeminiModel: "gemini-3.6-flash"
+      Telegram__GeminiModel: "gemini-2.0-flash"
       Telegram__GeminiDailyQuota: ${TELEGRAM_GEMINI_DAILY_QUOTA:-8}
       Telegram__AdminChatId: ${TELEGRAM_ADMIN_CHAT_ID}
     ports:

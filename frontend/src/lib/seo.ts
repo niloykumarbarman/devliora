@@ -19,7 +19,7 @@ export const siteConfig = {
   // Drop a real logo/brand image at this path (frontend/public/og-image.png,
   // 1200x630px) to replace the generated placeholder.
   ogImage: "/og-image.png",
-  contactEmail: "devliora74@gmail.com",
+  contactEmail: "info@devliora.com",
   contactPhone: "+8801766644823",
   // Real social profiles (also linked in the footer) — feeds
   // Organization schema's `sameAs`, which is how Google ties this

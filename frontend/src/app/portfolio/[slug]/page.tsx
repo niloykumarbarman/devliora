@@ -20,8 +20,8 @@ export async function generateMetadata({
 
   if (!portfolio) {
     return buildMetadata({
-      title: "Case Study | Devliora",
-      description: "Client project case study.",
+      title: "Project | Devliora",
+      description: "A project from Devliora's work.",
       path: `/portfolio/${slug}`,
     });
   }

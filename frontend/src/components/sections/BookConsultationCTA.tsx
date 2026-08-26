@@ -38,11 +38,11 @@ export default function BookConsultationCTA() {
           className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <a
-            href="mailto:devliora74@gmail.com"
+            href="mailto:info@devliora.com"
             className="group inline-flex items-center gap-2 rounded-lg border border-wire/30 bg-paper/5 px-6 py-3 font-medium text-paper transition-all hover:-translate-y-0.5 hover:border-signal/50 hover:bg-paper/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
           >
             <Mail className="h-4 w-4 text-signal" />
-            devliora74@gmail.com
+            info@devliora.com
           </a>
           <a
             href="tel:+8801606479801"
