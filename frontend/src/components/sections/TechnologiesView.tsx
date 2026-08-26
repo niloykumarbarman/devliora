@@ -36,7 +36,7 @@ export default function TechnologiesView({ technologies }: { technologies: Techn
   })).filter((g) => g.items.length > 0);
 
   return (
-    <section id="technologies" className="bg-grain relative overflow-hidden bg-ink text-paper">
+    <section id="technologies" className="bg-grain relative scroll-mt-24 overflow-hidden bg-ink text-paper">
       <div
         aria-hidden
         className="pointer-events-none absolute top-[-12%] left-[-10%] h-[440px] w-[440px] rounded-full bg-signal/15 blur-[140px] animate-ambient-drift"

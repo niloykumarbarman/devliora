@@ -47,7 +47,7 @@ export default function WhyChooseUs() {
   return (
     <section
       id="why-us"
-      className="bg-grain relative overflow-hidden bg-ink text-paper"
+      className="bg-grain relative scroll-mt-24 overflow-hidden bg-ink text-paper"
     >
       <div
         aria-hidden

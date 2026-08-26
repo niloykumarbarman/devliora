@@ -33,7 +33,7 @@ export default function ServicesView({ services }: { services: ServiceItem[] }) 
   return (
     <section
       id="services"
-      className="relative overflow-hidden bg-paper text-ink"
+      className="relative scroll-mt-24 overflow-hidden bg-paper text-ink"
     >
       <div
         aria-hidden

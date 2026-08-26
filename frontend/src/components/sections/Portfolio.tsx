@@ -120,7 +120,7 @@ export default function Portfolio() {
   };
 
   return (
-    <section id="work" className="relative overflow-hidden bg-paper text-ink">
+    <section id="work" className="relative scroll-mt-24 overflow-hidden bg-paper text-ink">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,theme(colors.ink/4)_1px,transparent_1px),linear-gradient(to_bottom,theme(colors.ink/4)_1px,transparent_1px)] bg-[size:56px_56px]"

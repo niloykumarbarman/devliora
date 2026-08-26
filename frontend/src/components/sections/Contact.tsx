@@ -57,7 +57,7 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative overflow-hidden bg-paper py-24 text-ink md:py-32"
+      className="relative scroll-mt-24 overflow-hidden bg-paper py-24 text-ink md:py-32"
     >
       <div
         className="pointer-events-none absolute inset-0 bg-[size:56px_56px] opacity-100"
