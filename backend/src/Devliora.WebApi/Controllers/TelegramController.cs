@@ -74,7 +74,26 @@ public class TelegramController : ControllerBase
             return Ok();
         }
 
-        await _sender.Send(new ProcessTelegramUpdateCommand(chatId, text), cancellationToken);
+        try
+        {
+            await _sender.Send(new ProcessTelegramUpdateCommand(chatId, text), cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            // Belt-and-suspenders: ProcessTelegramUpdateCommandHandler's own
+            // dependencies (session store, quota check) already fail open on
+            // a Redis hiccup, but this still catches anything unexpected
+            // (e.g. the Gemini call itself). Without this, an unhandled
+            // exception here 500s the webhook before SendMessageAsync is
+            // ever reached — Telegram has already accepted the incoming
+            // message by that point, so the user sees "sent" with no reply
+            // ever arriving, and no visible error either.
+            _logger.LogError(ex, "Failed to process Telegram update for chat {ChatId}", chatId);
+            await _apiClient.SendMessageAsync(
+                chatId,
+                "Sorry, something went wrong on my end. Please try again in a moment.",
+                cancellationToken);
+        }
 
         return Ok();
     }

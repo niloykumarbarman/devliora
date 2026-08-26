@@ -33,11 +33,25 @@ public class ProcessTelegramUpdateCommandHandler : IRequestHandler<ProcessTelegr
         await _sessionStore.AppendTurnAsync(request.ChatId, new ChatTurn("model", reply), cancellationToken);
         await _apiClient.SendMessageAsync(request.ChatId, reply, cancellationToken);
 
-        var externalId = request.ChatId.ToString();
-        await _persistenceService.SaveTurnAsync(
-            ChatChannel.Telegram, externalId, "user", request.Text, cancellationToken);
-        await _persistenceService.SaveTurnAsync(
-            ChatChannel.Telegram, externalId, "model", reply, cancellationToken);
+        // Best-effort: this runs after the reply has already been sent to
+        // the user, purely so the conversation shows up in /admin/conversations.
+        // Previously unguarded, a transient DB failure here (a) silently lost
+        // the conversation from the admin panel even though the user got a
+        // real reply on Telegram, and (b) would propagate up to the
+        // controller's catch block and send a confusing second "something
+        // went wrong" message after the real answer had already gone out.
+        try
+        {
+            var externalId = request.ChatId.ToString();
+            await _persistenceService.SaveTurnAsync(
+                ChatChannel.Telegram, externalId, "user", request.Text, cancellationToken);
+            await _persistenceService.SaveTurnAsync(
+                ChatChannel.Telegram, externalId, "model", reply, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to persist Telegram conversation turn for chat {ChatId}", request.ChatId);
+        }
 
         _logger.LogInformation("Processed Telegram update for chat {ChatId}", request.ChatId);
     }

@@ -40,7 +40,24 @@ public class TelegramGeminiChatService : ITelegramChatService
     {
         var quotaKey = $"{QuotaKeyPrefix}{DateTime.UtcNow:yyyy-MM-dd}";
 
-        var counter = await _cacheService.GetAsync<TelegramQuotaCounter>(quotaKey, cancellationToken);
+        TelegramQuotaCounter? counter;
+        try
+        {
+            counter = await _cacheService.GetAsync<TelegramQuotaCounter>(quotaKey, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            // Fail open: a Redis hiccup here previously threw uncaught all the
+            // way up through the webhook controller before SendMessageAsync
+            // was ever reached, so the bot silently never replied even though
+            // Telegram had already accepted the incoming message. Quota
+            // tracking is best-effort (see IncrementQuotaAsync below); treat
+            // an unreadable counter the same way — proceed as if under quota
+            // rather than dropping the reply.
+            _logger.LogWarning(ex, "Failed to read Telegram assistant daily quota counter");
+            counter = null;
+        }
+
         if (counter is not null && counter.Count >= _settings.GeminiDailyQuota)
         {
             _logger.LogWarning("Telegram assistant daily quota reached ({Count}/{Quota})", counter.Count, _settings.GeminiDailyQuota);
