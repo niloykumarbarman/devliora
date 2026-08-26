@@ -124,6 +124,22 @@ h1, h2, h3 {
   }
 }
 
+/* CI/CD pipeline rail: a soft light pulse travelling top-to-bottom along
+   a vertical gradient rail (see CiCdPipeline.tsx). Pure background-position
+   animation — GPU-cheap, no layout, and the sitewide prefers-reduced-motion
+   rule below already halts it. */
+.animate-pipeline-stream {
+  animation: pipeline-stream 3.2s linear infinite;
+}
+@keyframes pipeline-stream {
+  from {
+    background-position: 50% -60%;
+  }
+  to {
+    background-position: 50% 160%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

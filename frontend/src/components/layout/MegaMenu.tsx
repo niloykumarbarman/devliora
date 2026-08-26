@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Layers, LayoutGrid } from "lucide-react";
+import { ArrowRight, Cloud, Layers, LayoutGrid } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 import { serviceHref } from "@/lib/services";
 import { MEGA_MENU_TECHNOLOGIES } from "@/lib/megaMenuTechnologies";
@@ -91,6 +91,14 @@ export default function MegaMenu({
             <Link href="/services" onClick={onNavigate} className={viewAllClass}>
               View all services
               <ArrowRight className="h-3 w-3" />
+            </Link>
+            <Link
+              href="/cloud-devops"
+              onClick={onNavigate}
+              className="mt-4 flex items-center gap-2 rounded-md border border-signal/25 bg-signal/[0.06] px-3 py-2 font-mono text-xs font-semibold text-signal transition-colors hover:border-signal/50 hover:bg-signal/10"
+            >
+              <Cloud className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />
+              Cloud &amp; DevOps Engineering
             </Link>
           </div>
 

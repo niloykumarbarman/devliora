@@ -115,7 +115,16 @@ export function hasDetailPage(slug: string): boolean {
   return DETAIL_PAGE_SLUGS.has(slug);
 }
 
+// Services whose page lives outside the /services/[slug] system. Cloud
+// Infrastructure & DevOps has its own dedicated capability page at
+// /cloud-devops (CI/CD pipeline, cloud architecture, DevOps stack, etc.)
+// rather than a generic service-detail layout.
+const CUSTOM_SERVICE_HREFS: Record<string, string> = {
+  "cloud-infrastructure-devops": "/cloud-devops",
+};
+
 export function serviceHref(slug: string): string {
+  if (CUSTOM_SERVICE_HREFS[slug]) return CUSTOM_SERVICE_HREFS[slug];
   return hasDetailPage(slug) ? `/services/${slug}` : "/services";
 }
 
