@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { MessageCircle, X, Send, Loader2, PhoneCall, Minus } from "lucide-react";
+import { MessageCircle, X, Send, Loader2, PhoneCall, Minus, CalendarDays, Headset } from "lucide-react";
 import {
   sendAssistantMessage,
   type AssistantChatMessage,
@@ -42,12 +43,91 @@ const EMPTY_CALLBACK_FORM: CallbackFormState = {
 
 const REQUEST_CALLBACK_PHRASE = "Request a Callback";
 
+// The assistant (Gemini) naturally replies in light markdown — **bold**
+// section labels, "* "/"- " bullet lists, blank-line-separated paragraphs.
+// Rendering `msg.content` as a plain string showed those markers literally
+// (e.g. "**Web Application Development:**"), which read as broken/unpolished
+// rather than professional. This is a small, dependency-free renderer for
+// just that subset (no images/links/headings/code — the assistant doesn't
+// use those) rather than pulling in a full markdown library for one widget.
+function renderInlineMarkdown(text: string, keyPrefix: string): React.ReactNode[] {
+  return text
+    .split(/(\*\*[^*]+\*\*)/g)
+    .filter(Boolean)
+    .map((part, i) =>
+      part.startsWith("**") && part.endsWith("**") && part.length > 4 ? (
+        <strong key={`${keyPrefix}-b-${i}`} className="font-semibold">
+          {part.slice(2, -2)}
+        </strong>
+      ) : (
+        <span key={`${keyPrefix}-t-${i}`}>{part}</span>
+      )
+    );
+}
+
+function renderAssistantMessage(content: string): React.ReactNode {
+  const blocks: React.ReactNode[] = [];
+  let listItems: string[] = [];
+  let blockKey = 0;
+
+  const flushList = () => {
+    if (listItems.length === 0) return;
+    blocks.push(
+      <ul key={`ul-${blockKey++}`} className="list-disc space-y-1 pl-4">
+        {listItems.map((item, i) => (
+          <li key={i}>{renderInlineMarkdown(item, `li-${blockKey}-${i}`)}</li>
+        ))}
+      </ul>
+    );
+    listItems = [];
+  };
+
+  for (const rawLine of content.split("\n")) {
+    const line = rawLine.trim();
+    if (line === "") {
+      flushList();
+      continue;
+    }
+    const bulletMatch = line.match(/^[*-]\s+(.*)/);
+    if (bulletMatch) {
+      listItems.push(bulletMatch[1]);
+      continue;
+    }
+    flushList();
+    blocks.push(
+      <p key={`p-${blockKey++}`}>{renderInlineMarkdown(line, `p-${blockKey}`)}</p>
+    );
+  }
+  flushList();
+
+  return <div className="space-y-1.5">{blocks}</div>;
+}
+
 const SUGGESTED_QUESTIONS = [
   "What services do you offer?",
   "Tell me about your projects",
   "What's your tech stack?",
   "How can I contact you?",
 ];
+
+// Every page's <title> already carries its real, specific name (built by
+// buildMetadata in lib/seo.ts — "Web Development | Devliora", etc.), so
+// reading document.title client-side gives an accurate "here's what you're
+// looking at" label for free instead of maintaining a second route->label
+// map that would drift from the real page titles. The homepage's title has
+// no " | Devliora" suffix (root layout sets it directly) and isn't a
+// specific-enough page to reference, so it's excluded by the "/" check.
+function getPageContextLabel(pathname: string | null): string | null {
+  if (!pathname || pathname === "/" || typeof document === "undefined") return null;
+  const title = document.title.replace(/\s*\|\s*Devliora\s*$/i, "").trim();
+  return title || null;
+}
+
+function formatConversationTimestamp(date: Date): string {
+  const time = date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  const isToday = new Date().toDateString() === date.toDateString();
+  return isToday ? `Today, ${time}` : `${date.toLocaleDateString()}, ${time}`;
+}
 
 export default function AssistantChat() {
   const pathname = usePathname();
@@ -65,6 +145,9 @@ export default function AssistantChat() {
   const [callbackForm, setCallbackForm] = useState<CallbackFormState>(EMPTY_CALLBACK_FORM);
   const [callbackStatus, setCallbackStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
+  const [openedAt, setOpenedAt] = useState<Date | null>(null);
+  const [pageContextLabel, setPageContextLabel] = useState<string | null>(null);
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -79,6 +162,20 @@ export default function AssistantChat() {
       return () => clearTimeout(timeout);
     }
   }, [isOpen]);
+
+  // Freeze "opened at" the moment the panel first opens (matches the
+  // timestamp divider a real chat widget shows above the welcome message),
+  // and read the page's title then too. Set from the click handlers that
+  // open the panel (below) rather than an effect watching `isOpen` — this
+  // only ever needs to run in direct response to that click, and setting
+  // state from an effect for that causes an extra render pass for no
+  // benefit. The `prev ?? ...` guards mean it only fills in once — later
+  // opens (after closing/reopening) keep the original timestamp/context.
+  function openChatPanel() {
+    setIsOpen(true);
+    setOpenedAt((prev) => prev ?? new Date());
+    setPageContextLabel((prev) => prev ?? getPageContextLabel(pathname));
+  }
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -106,7 +203,7 @@ export default function AssistantChat() {
 
   function handleTooltipClick() {
     dismissTooltip();
-    setIsOpen(true);
+    openChatPanel();
   }
 
   const panelTransition = prefersReducedMotion
@@ -239,15 +336,20 @@ export default function AssistantChat() {
               className={isMinimized ? "flex items-center justify-between px-5 py-4" : "flex items-center justify-between border-b border-wire px-5 py-4"}
               style={DOT_GRID_STYLE}
             >
-              <div>
-                <p className="font-mono text-[11px] uppercase tracking-[0.15em] text-graphite">
-                  Devliora
-                </p>
-                <h2 className="font-display text-lg text-ink">Ask Devliora</h2>
-                <p className="mt-0.5 flex items-center gap-1.5 text-xs text-graphite">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                  Online - Ask about our services, projects, or experience
-                </p>
+              <div className="flex items-center gap-3">
+                <span
+                  aria-hidden="true"
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-signal to-ember font-display text-sm font-semibold text-paper"
+                >
+                  D
+                </span>
+                <div>
+                  <h2 className="font-display text-base leading-tight text-ink">Devliora Assistant</h2>
+                  <p className="mt-0.5 flex items-center gap-1.5 text-xs text-graphite">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                    AI Assistant &middot; Online
+                  </p>
+                </div>
               </div>
               <div className="flex items-center gap-1">
                 <button
@@ -272,23 +374,62 @@ export default function AssistantChat() {
             {!isMinimized && (
             <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
               {messages.length === 0 && !showCallbackForm && (
-                <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
-                  <MessageCircle className="h-8 w-8 text-graphite/40" />
-                  <p className="text-sm text-graphite">
-                    Ask about our services, timelines, or pricing, or request a
-                    callback below.
-                  </p>
-                  <div className="mt-2 flex flex-wrap justify-center gap-2">
-                    {SUGGESTED_QUESTIONS.map((question) => (
-                      <button
-                        key={question}
-                        type="button"
-                        onClick={() => handleSuggestedQuestion(question)}
-                        className="rounded-full border border-wire px-3 py-1.5 text-xs text-graphite transition hover:border-signal hover:text-signal"
-                      >
-                        {question}
-                      </button>
-                    ))}
+                <div className="space-y-3">
+                  {openedAt && (
+                    <p className="text-center font-mono text-[10px] uppercase tracking-[0.1em] text-graphite/40">
+                      {formatConversationTimestamp(openedAt)}
+                    </p>
+                  )}
+
+                  <div className="flex justify-start">
+                    <div className="max-w-[85%] rounded-lg rounded-bl-sm border border-wire bg-paper px-4 py-2.5 text-sm text-ink">
+                      Welcome to Devliora! I&apos;m here to help with questions
+                      about our services, past work, or getting started on a
+                      project.
+                    </div>
+                  </div>
+
+                  {pageContextLabel && (
+                    <div className="flex justify-start">
+                      <div className="max-w-[85%] rounded-lg rounded-bl-sm border border-wire bg-paper px-4 py-2.5 text-sm text-ink">
+                        Saw you&apos;re checking out {pageContextLabel}. I&apos;m
+                        available if you have questions!
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="flex flex-wrap gap-2">
+                    <Link
+                      href="/book-consultation"
+                      className="inline-flex items-center gap-1.5 rounded-full bg-signal px-3 py-1.5 text-xs font-medium text-paper shadow-[0_0_16px_-6px_var(--color-signal)] transition-all hover:-translate-y-0.5"
+                    >
+                      <CalendarDays className="h-3.5 w-3.5" />
+                      Book a meeting
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => setShowCallbackForm(true)}
+                      className="inline-flex items-center gap-1.5 rounded-full border border-wire px-3 py-1.5 text-xs font-medium text-ink transition hover:border-signal hover:text-signal"
+                    >
+                      <Headset className="h-3.5 w-3.5" />
+                      Customer Support
+                    </button>
+                  </div>
+
+                  <div>
+                    <p className="mb-1.5 text-xs text-graphite/60">Or ask something quick:</p>
+                    <div className="flex flex-wrap gap-2">
+                      {SUGGESTED_QUESTIONS.map((question) => (
+                        <button
+                          key={question}
+                          type="button"
+                          onClick={() => handleSuggestedQuestion(question)}
+                          className="rounded-full border border-wire px-3 py-1.5 text-xs text-graphite transition hover:border-signal hover:text-signal"
+                        >
+                          {question}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               )}
@@ -305,7 +446,7 @@ export default function AssistantChat() {
                         : "max-w-[85%] rounded-lg rounded-bl-sm border border-wire bg-paper px-4 py-2.5 text-sm text-ink"
                     }
                   >
-                    {msg.content}
+                    {msg.role === "model" ? renderAssistantMessage(msg.content) : msg.content}
                   </div>
                 </div>
               ))}
@@ -432,6 +573,13 @@ export default function AssistantChat() {
                   )}
                 </button>
               </form>
+              <p className="mt-2 text-center text-[10px] leading-snug text-graphite/50">
+                This chat may be saved to help our team follow up. See our{" "}
+                <Link href="/privacy" className="underline hover:text-graphite">
+                  privacy policy
+                </Link>
+                .
+              </p>
             </div>
             )}
           </motion.div>
@@ -456,7 +604,11 @@ export default function AssistantChat() {
         <motion.button
           type="button"
           onClick={() => {
-            setIsOpen((prev) => !prev);
+            if (isOpen) {
+              setIsOpen(false);
+            } else {
+              openChatPanel();
+            }
             if (showTooltip) dismissTooltip();
           }}
           whileHover={prefersReducedMotion ? undefined : { y: -2 }}
