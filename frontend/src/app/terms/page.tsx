@@ -8,7 +8,7 @@ import TermsContent from "@/components/sections/TermsContent";
 export const metadata: Metadata = buildMetadata({
   title: "Terms of Service | Devliora",
   description:
-    "The terms governing your use of the Devliora website.",
+    "The terms and conditions governing your use of the Devliora website, including acceptable use, intellectual property, service engagements, and limitation of liability.",
   path: "/terms",
 });
 

@@ -8,7 +8,7 @@ import PrivacyContent from "@/components/sections/PrivacyContent";
 export const metadata: Metadata = buildMetadata({
   title: "Privacy Policy | Devliora",
   description:
-    "How Devliora collects, uses, and protects your information.",
+    "Devliora's privacy policy: what personal and project information we collect through our website and services, how we use and store it, and the choices you have to access, correct, or delete it.",
   path: "/privacy",
 });
 
