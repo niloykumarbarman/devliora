@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, MapPin, Phone, Mail } from "lucide-react";
 import type { OfficeLocationDto } from "@/lib/officeLocations";
@@ -16,7 +17,8 @@ export default function ContactLocations({ offices }: { offices: OfficeLocationD
   return (
     <section className="relative overflow-hidden bg-ink text-paper">
       {/* Schedule-a-call banner */}
-      <a href="/book-consultation"
+      <Link
+        href="/book-consultation"
         className="group flex flex-col items-start justify-between gap-4 bg-signal px-6 py-8 transition-colors hover:bg-signal/90 sm:flex-row sm:items-center sm:px-12 sm:py-10"
       >
         <span className="font-display text-2xl font-semibold text-paper md:text-3xl">
@@ -26,7 +28,7 @@ export default function ContactLocations({ offices }: { offices: OfficeLocationD
           Book your call
           <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
         </span>
-      </a>
+      </Link>
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
         <motion.div
           {...fadeUp(0)}

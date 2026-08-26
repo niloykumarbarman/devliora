@@ -27,7 +27,7 @@ export default function BlogPostDetailContent({
           {post.excerpt}
         </p>
 
-        <div className="mt-8 whitespace-pre-line text-base leading-relaxed text-ink">
+        <div className="mt-8 whitespace-pre-line break-words text-base leading-relaxed text-ink">
           {post.content}
         </div>
       </div>

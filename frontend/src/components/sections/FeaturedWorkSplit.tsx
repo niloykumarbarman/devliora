@@ -42,9 +42,12 @@ export default function FeaturedWorkSplit({ items }: FeaturedWorkSplitProps) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="group relative flex min-h-[420px] overflow-hidden"
+            className="group relative flex flex-col overflow-hidden sm:min-h-[420px] sm:flex-row"
           >
-            <Link href={`/portfolio/${item.slug}`} className="relative w-[45%] shrink-0 overflow-hidden sm:w-1/2">
+            <Link
+              href={`/portfolio/${item.slug}`}
+              className="relative h-56 w-full shrink-0 overflow-hidden sm:h-auto sm:w-[45%] lg:w-1/2"
+            >
               {item.thumbnailUrl && (
                 <motion.img
                   src={resolveImageUrl(item.thumbnailUrl)}

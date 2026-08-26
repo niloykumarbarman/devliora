@@ -11,8 +11,10 @@ export default function SolutionsDetailList() {
   useEffect(() => {
     const hash = window.location.hash.slice(1);
     if (!hash) return;
-    document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, []);
+    document
+      .getElementById(hash)
+      ?.scrollIntoView({ behavior: shouldReduceMotion ? "auto" : "smooth", block: "start" });
+  }, [shouldReduceMotion]);
 
   return (
     <section className="relative bg-paper py-24">

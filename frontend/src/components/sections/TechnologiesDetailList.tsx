@@ -116,8 +116,10 @@ export default function TechnologiesDetailList() {
     if (technologies.length === 0) return;
     const hash = window.location.hash.slice(1);
     if (!hash) return;
-    document.getElementById(hash)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [technologies]);
+    document
+      .getElementById(hash)
+      ?.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+  }, [technologies, reducedMotion]);
 
   const groups = CATEGORY_ORDER.map((categoryId) => {
     const items = technologies
