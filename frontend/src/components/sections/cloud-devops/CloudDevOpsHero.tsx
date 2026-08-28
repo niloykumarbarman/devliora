@@ -1,7 +1,4 @@
-"use client";
-
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 const CAPABILITIES = [
@@ -17,19 +14,6 @@ const CAPABILITIES = [
 ];
 
 export default function CloudDevOpsHero() {
-  const reduceMotion = useReducedMotion();
-
-  // initial={false} (not undefined) so a reduced-motion visitor never
-  // gets an element left stuck at the server-rendered opacity:0.
-  const fade = (i: number) =>
-    reduceMotion
-      ? { initial: false as const, animate: { opacity: 1, y: 0 }, transition: { duration: 0 } }
-      : {
-          initial: { opacity: 0, y: 20 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.5, delay: i * 0.08 },
-        };
-
   return (
     <section className="bg-grain relative overflow-hidden bg-ink text-paper">
       <div
@@ -54,29 +38,29 @@ export default function CloudDevOpsHero() {
           <span className="text-ember">Cloud &amp; DevOps</span>
         </nav>
 
-        <motion.p
-          {...fade(1)}
-          className="mt-12 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-signal"
-        >
+        <p className="hero-fade-rise mt-12 font-mono text-xs font-semibold uppercase tracking-[0.2em] text-signal">
           Cloud &amp; DevOps Engineering
-        </motion.p>
+        </p>
 
-        <motion.h1
-          {...fade(2)}
-          className="mt-5 max-w-4xl text-balance font-display text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl"
-        >
-          Production infrastructure, <span className="text-signal">automated</span> and{" "}
+        <h1 className="hero-h1-rise mt-5 max-w-4xl text-balance font-display text-4xl font-semibold leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
+          Cloud Infrastructure &amp; DevOps, <span className="text-signal">automated</span> and{" "}
           <span className="text-ember">observable</span> from day one.
-        </motion.h1>
+        </h1>
 
-        <motion.p {...fade(3)} className="mt-7 max-w-2xl text-lg leading-relaxed text-paper/70">
+        <p
+          className="hero-fade-rise mt-7 max-w-2xl text-lg leading-relaxed text-paper/70"
+          style={{ animationDelay: "0.28s" }}
+        >
           Devliora designs, automates and operates cloud infrastructure for teams that
           need software to ship reliably — cloud architecture, CI/CD pipelines,
           Kubernetes, Infrastructure as Code, monitoring and cloud security, built so
           real systems can be plugged in without a redesign.
-        </motion.p>
+        </p>
 
-        <motion.div {...fade(4)} className="mt-9 flex flex-wrap gap-3">
+        <div
+          className="hero-fade-rise mt-9 flex flex-wrap gap-3"
+          style={{ animationDelay: "0.4s" }}
+        >
           <Link
             href="/contact"
             className="btn-3d inline-flex items-center gap-2 rounded-lg bg-signal px-6 py-3 font-medium text-paper shadow-[0_0_24px_-6px_var(--color-signal)] transition-colors hover:bg-signal/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal/50 focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
@@ -90,9 +74,13 @@ export default function CloudDevOpsHero() {
           >
             Discuss Your Infrastructure
           </Link>
-        </motion.div>
+        </div>
 
-        <motion.ul {...fade(5)} className="mt-12 flex flex-wrap gap-2" aria-label="Capabilities">
+        <ul
+          className="hero-fade-rise mt-12 flex flex-wrap gap-2"
+          style={{ animationDelay: "0.5s" }}
+          aria-label="Capabilities"
+        >
           {CAPABILITIES.map((cap) => (
             <li
               key={cap}
@@ -101,7 +89,7 @@ export default function CloudDevOpsHero() {
               {cap}
             </li>
           ))}
-        </motion.ul>
+        </ul>
       </div>
     </section>
   );

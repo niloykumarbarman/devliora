@@ -1,21 +1,8 @@
-"use client";
-
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 export default function PortfolioCTA() {
-  const shouldReduceMotion = useReducedMotion();
-
-  const fadeUp = shouldReduceMotion
-    ? {}
-    : {
-        initial: { opacity: 0, y: 24 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true, margin: "-60px" },
-        transition: { duration: 0.5 },
-      };
-
   return (
     <section className="bg-grain relative overflow-hidden bg-ink py-24 text-paper md:py-32">
       <div
@@ -30,10 +17,7 @@ export default function PortfolioCTA() {
         }}
       />
 
-      <motion.div
-        {...fadeUp}
-        className="relative mx-auto max-w-3xl px-6 text-center"
-      >
+      <Reveal className="relative mx-auto max-w-3xl px-6 text-center">
         <h2 className="text-balance text-3xl font-semibold leading-tight md:text-4xl">
           Your project could be{" "}
           <span className="text-signal">the next case study.</span>
@@ -50,7 +34,7 @@ export default function PortfolioCTA() {
           Start a conversation
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
         </Link>
-      </motion.div>
+      </Reveal>
     </section>
   );
 }

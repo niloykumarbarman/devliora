@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { buildMetadata, organizationJsonLd, websiteJsonLd, siteConfig } from "@/lib/seo";
+import { organizationJsonLd, websiteJsonLd, siteConfig } from "@/lib/seo";
 import Analytics from "@/components/Analytics";
-import AssistantChat from "@/components/AssistantChat";
+import AssistantChatLoader from "@/components/AssistantChatLoader";
+import JsonLd from "@/components/JsonLd";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -23,13 +24,39 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["400", "500"],
 });
 
+// Site-ownership verification tokens for Google Search Console and Bing
+// Webmaster Tools. These are NOT secrets — they end up as public <meta>
+// tags in every page's <head> — but they're kept in env vars so the
+// value isn't hard-coded and each environment can carry its own (or
+// none). Rendered only when set, so no empty `content=""` tag appears.
+// See README "Environment variables" and infra/docker/.env.example.
+const googleSiteVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+const bingSiteVerification = process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION;
+
+const verification: Metadata["verification"] = {
+  ...(googleSiteVerification ? { google: googleSiteVerification } : {}),
+  ...(bingSiteVerification
+    ? { other: { "msvalidate.01": bingSiteVerification } }
+    : {}),
+};
+
+// Root layout metadata is deliberately minimal: metadataBase, the title
+// template/fallback, a brand-level description, icons, and the
+// site-verification tokens (which are genuinely site-wide). Per-page
+// title, canonical, robots, Open Graph and Twitter tags all come from
+// buildMetadata in each route (the homepage's live in app/page.tsx).
+// buildMetadata never sets `verification`, so the value here survives
+// Next's shallow per-route merge onto every page. Keeping
+// `robots`/`openGraph` out of here means a notFound() response inherits
+// only Next's own `noindex` rather than a stray "index" tag.
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
-  ...buildMetadata({
-    title: "Devliora — Enterprise Software Engineering",
-    description: siteConfig.description,
-    path: "",
-  }),
+  title: {
+    default: "Custom Software Development Company | Devliora",
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  ...(Object.keys(verification).length > 0 ? { verification } : {}),
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -41,6 +68,18 @@ export const metadata: Metadata = {
     ],
     apple: [{ url: "/favicon-180.png", sizes: "180x180", type: "image/png" }],
   },
+};
+
+// Explicit mobile viewport. Next's implicit default is already
+// `width=device-width, initial-scale=1`; spelling it out here also lets
+// the page use the full screen on notched phones (`viewport-fit=cover`,
+// paired with `env(safe-area-inset-*)` padding in globals.css) and never
+// blocks pinch-zoom (accessibility — no `maximum-scale`/`user-scalable`).
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0E1420",
 };
 
 export default function RootLayout({
@@ -55,21 +94,14 @@ export default function RootLayout({
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-paper text-graphite">
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
         <Analytics />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd()),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(websiteJsonLd()),
-          }}
-        />
+        <JsonLd data={organizationJsonLd()} />
+        <JsonLd data={websiteJsonLd()} />
         {children}
-        <AssistantChat />
+        <AssistantChatLoader />
       </body>
     </html>
   );

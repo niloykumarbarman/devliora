@@ -1,10 +1,7 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 import { RELIABILITY_CAPABILITIES } from "@/lib/cloudDevops";
 
 export default function BuiltForProduction() {
-  const reduceMotion = useReducedMotion();
 
   return (
     <section
@@ -21,13 +18,7 @@ export default function BuiltForProduction() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-signal">
             Reliability
           </p>
@@ -38,20 +29,13 @@ export default function BuiltForProduction() {
             Nine things that are in place before a system carries real traffic — not
             added after the first incident.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-16 grid gap-px overflow-hidden rounded-sm border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">
           {RELIABILITY_CAPABILITIES.map((capability, i) => {
             const Icon = capability.icon;
             return (
-              <motion.div
-                key={capability.name}
-                initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.4, ease: "easeOut", delay: (i % 3) * 0.06 }}
-                className="bg-paper p-6 transition-colors hover:bg-white"
-              >
+              <Reveal key={capability.name} delay={(i % 3) * 0.06} className="bg-paper p-6 transition-colors hover:bg-white">
                 <Icon className="h-5 w-5 text-signal" strokeWidth={1.5} />
                 <h3 className="mt-3 font-display text-base font-semibold leading-tight">
                   {capability.name}
@@ -59,7 +43,7 @@ export default function BuiltForProduction() {
                 <p className="mt-2 text-sm leading-relaxed text-graphite/75">
                   {capability.detail}
                 </p>
-              </motion.div>
+              </Reveal>
             );
           })}
         </div>

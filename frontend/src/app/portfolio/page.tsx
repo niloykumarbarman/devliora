@@ -7,7 +7,7 @@ import PortfolioGrid from "@/components/sections/PortfolioGrid";
 import PortfolioCTA from "@/components/sections/PortfolioCTA";
 
 export const metadata: Metadata = buildMetadata({
-  title: "My Work | Devliora",
+  title: "Software Development Portfolio",
   description:
     "A visual look at the systems we have shipped — browse our work and open any project for the full case study.",
   path: "/portfolio",
@@ -17,7 +17,7 @@ export default function PortfolioPage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <PortfolioHero />
         <PortfolioGrid />
         <PortfolioCTA />

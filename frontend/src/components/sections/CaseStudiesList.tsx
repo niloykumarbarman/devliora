@@ -1,30 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowUpRight } from "lucide-react";
-import { fetchCaseStudies, type CaseStudy } from "@/lib/caseStudies";
+import {
+  fetchCaseStudies,
+  isIllustrativeCaseStudy,
+  cleanCaseStudyText,
+  type CaseStudy,
+} from "@/lib/caseStudies";
 import { resolveImageUrl } from "@/lib/hero";
-
-const ILLUSTRATIVE_SUFFIX = " (Illustrative Example)";
-
-function splitClientName(clientName: string): {
-  name: string;
-  isIllustrative: boolean;
-} {
-  if (clientName.endsWith(ILLUSTRATIVE_SUFFIX)) {
-    return {
-      name: clientName.slice(0, -ILLUSTRATIVE_SUFFIX.length),
-      isIllustrative: true,
-    };
-  }
-  return { name: clientName, isIllustrative: false };
-}
+import Reveal from "@/components/Reveal";
 
 export default function CaseStudiesList() {
-  const shouldReduceMotion = useReducedMotion();
   const [studies, setStudies] = useState<CaseStudy[]>([]);
   const [status, setStatus] = useState<"loading" | "success" | "error">(
     "loading"
@@ -50,16 +39,6 @@ export default function CaseStudiesList() {
       cancelled = true;
     };
   }, []);
-
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.5, delay: (i % 4) * 0.08 },
-        };
 
   return (
     <section className="relative overflow-hidden bg-paper py-24 text-ink md:py-32">
@@ -104,13 +83,13 @@ export default function CaseStudiesList() {
           {status === "success" && studies.length > 0 && (
             <div className="flex flex-col gap-px overflow-hidden rounded-xl border border-ink/10 bg-ink/10">
               {studies.map((study, i) => {
-                const { name, isIllustrative } = splitClientName(
-                  study.clientName
-                );
+                const name = cleanCaseStudyText(study.clientName);
+                const isIllustrative = isIllustrativeCaseStudy(study);
                 return (
-                  <motion.article
+                  <Reveal
                     key={study.id}
-                    {...fadeUp(i)}
+                    as="article"
+                    delay={(i % 4) * 0.08}
                     className="group bg-paper p-8 transition-colors duration-300 hover:bg-ink/[0.02] md:p-12"
                   >
                     {/* Scale-only (no translate/rotate/tilt-3d): the
@@ -125,7 +104,7 @@ export default function CaseStudiesList() {
                         <div className="relative mb-6 h-48 w-full overflow-hidden rounded-lg">
                           <Image
                             src={resolveImageUrl(study.coverImageUrl)}
-                            alt=""
+                            alt={cleanCaseStudyText(study.title)}
                             fill
                             sizes="(min-width: 768px) 800px, 100vw"
                             className="object-cover"
@@ -134,17 +113,17 @@ export default function CaseStudiesList() {
                       )}
                       <div className="flex flex-wrap items-center gap-3">
                       <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-signal">
-                        {study.industry} — {name}
+                        {cleanCaseStudyText(study.industry)} — {name}
                       </p>
                       {isIllustrative && (
                         <span className="rounded-sm border border-ember/30 px-2 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-ember">
-                          Illustrative Example
+                          Illustrative
                         </span>
                       )}
                     </div>
 
                     <h3 className="mt-3 text-2xl font-semibold leading-snug tracking-tight text-graphite sm:text-3xl">
-                      {study.title}
+                      {cleanCaseStudyText(study.title)}
                     </h3>
 
                     <div className="mt-8 grid gap-6 sm:grid-cols-3">
@@ -173,12 +152,12 @@ export default function CaseStudiesList() {
                         </p>
                       </div>
                     </div>
-                  <span className="mt-6 inline-flex items-center gap-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-graphite/50 transition-colors group-hover:text-ember">
+                  <span className="mt-6 inline-flex items-center gap-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-graphite/65 transition-colors group-hover:text-ember">
                         Read full case study
                         <ArrowUpRight className="h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                       </span>
                       </Link>
-                    </motion.article>
+                    </Reveal>
                 );
               })}
             </div>

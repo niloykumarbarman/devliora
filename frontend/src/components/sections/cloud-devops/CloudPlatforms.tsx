@@ -1,13 +1,10 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 import { CheckCircle2 } from "lucide-react";
 import { CLOUD_PLATFORMS } from "@/lib/cloudDevops";
 import { getTechIcon } from "@/lib/techIcons";
 import TechBrandIcon from "@/components/TechBrandIcon";
 
 export default function CloudPlatforms() {
-  const reduceMotion = useReducedMotion();
 
   return (
     <section
@@ -20,13 +17,7 @@ export default function CloudPlatforms() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-signal">
             Cloud Technologies
           </p>
@@ -37,21 +28,14 @@ export default function CloudPlatforms() {
             The right platform depends on the workload, the existing estate and the
             budget model. Here is where each one earns its place.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {CLOUD_PLATFORMS.map((platform, i) => {
             const Icon = platform.icon;
             const hasBrandIcon = Boolean(getTechIcon(platform.name));
             return (
-              <motion.article
-                key={platform.name}
-                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.07 }}
-                className="tilt-3d group flex flex-col rounded-sm border border-ink/10 bg-white/60 p-6 transition-colors hover:border-ink/25"
-              >
+              <Reveal key={platform.name} as="article" delay={i * 0.07} className="tilt-3d group flex flex-col rounded-sm border border-ink/10 bg-white/60 p-6 transition-colors hover:border-ink/25">
                 <div className="flex items-center gap-3">
                   <span
                     className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-ink/10"
@@ -67,7 +51,7 @@ export default function CloudPlatforms() {
                     <h3 className="font-display text-lg font-semibold leading-tight">
                       {platform.name}
                     </h3>
-                    <p className="font-mono text-[0.7rem] uppercase tracking-wide text-graphite/50">
+                    <p className="font-mono text-[0.7rem] uppercase tracking-wide text-graphite/65">
                       {platform.tagline}
                     </p>
                   </div>
@@ -88,7 +72,7 @@ export default function CloudPlatforms() {
                     </li>
                   ))}
                 </ul>
-              </motion.article>
+              </Reveal>
             );
           })}
         </div>

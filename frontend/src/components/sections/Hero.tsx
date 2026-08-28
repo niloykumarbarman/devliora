@@ -3,7 +3,10 @@ import HeroView from "./HeroView";
 
 const FALLBACK_HERO: HeroDto = {
   id: "fallback",
-  title: "We architect the systems your business runs on.",
+  // Also the page's H1 when the hero API is unavailable. Keep it aligned
+  // with the homepage's primary intent ("custom software development
+  // company"); the live value is edited in /admin/hero.
+  title: "Custom software development for teams that need it built right.",
   subtitle:
     "Devliora designs, builds, and hardens production software for enterprise teams — APIs, platforms, and the infrastructure that keeps them connected under real load.",
   primaryCtaText: "Start a project",

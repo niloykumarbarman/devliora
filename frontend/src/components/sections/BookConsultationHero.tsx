@@ -1,10 +1,4 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-
 export default function BookConsultationHero() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <section className="relative overflow-hidden bg-ink py-32 sm:py-40">
       <div className="bg-grain absolute inset-0 opacity-40" />
@@ -19,25 +13,18 @@ export default function BookConsultationHero() {
       <div className="pointer-events-none absolute -top-32 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-signal/20 blur-[120px] animate-ambient-drift" />
 
       <div className="relative mx-auto max-w-3xl px-6 text-center">
-        <motion.h1
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 16 }}
-          animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="mt-6 text-balance font-display text-4xl font-semibold text-paper sm:text-5xl md:text-6xl"
-        >
+        <h1 className="hero-h1-rise mt-6 text-balance font-display text-4xl font-semibold text-paper sm:text-5xl md:text-6xl">
           Book a free consultation.{" "}
           <span className="text-signal">Start with clarity.</span>
-        </motion.h1>
-        <motion.p
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 16 }}
-          animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mx-auto mt-6 max-w-xl text-lg text-wire"
+        </h1>
+        <p
+          className="hero-fade-rise mx-auto mt-6 max-w-xl text-lg text-wire"
+          style={{ animationDelay: "0.2s" }}
         >
           Tell us about your project and preferred timing. One of our
           engineers will reach out to schedule a focused session on scope,
           timeline, and approach.
-        </motion.p>
+        </p>
       </div>
     </section>
   );

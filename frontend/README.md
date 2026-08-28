@@ -63,13 +63,36 @@ sections rather than crashing.
 ### Environment variables
 
 All are `NEXT_PUBLIC_*` and are **baked in at build time** (see `Dockerfile`
-build args). Changing them in production requires a rebuild.
+build args). Changing them in production requires a rebuild. None are secrets —
+the analytics IDs and verification tokens are all public once the site is live;
+they're env vars only so nothing is hard-coded and each environment sets its own.
 
 | Variable | Purpose |
 |---|---|
 | `NEXT_PUBLIC_API_URL` | Base URL of the backend API, e.g. `https://devliora.com/api` |
-| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 ID (`G-…`). Analytics only loads if set. |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 Measurement ID (`G-…`). Analytics only loads if set. |
 | `NEXT_PUBLIC_CLARITY_PROJECT_ID` | Microsoft Clarity project ID. Only loads if set. |
+| `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console "HTML tag" token → `google-site-verification` meta tag. Rendered only if set. |
+| `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Bing Webmaster Tools "HTML Meta Tag" token → `msvalidate.01` meta tag. Rendered only if set. |
+
+Private credentials (API keys, JWT secret, Telegram tokens) are backend-only and
+never `NEXT_PUBLIC_*`.
+
+### Search Console / Bing / analytics setup
+
+1. **Google Search Console** — add the `https://devliora.com` property, choose
+   the *HTML tag* method, put the token in `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`,
+   rebuild/redeploy, then click Verify. Afterwards submit
+   `https://devliora.com/sitemap.xml` under *Sitemaps* (it's already linked from
+   `/robots.txt`).
+2. **Bing Webmaster Tools** — either *Import* the verified Search Console
+   property, or use the *HTML Meta Tag* method with
+   `NEXT_PUBLIC_BING_SITE_VERIFICATION`. The sitemap is discovered via
+   `robots.txt`.
+3. **GA4** — create a Web data stream at analytics.google.com, set
+   `NEXT_PUBLIC_GA_MEASUREMENT_ID`. Loaded lazily by `src/components/Analytics.tsx`.
+4. **Microsoft Clarity** — create a project at clarity.microsoft.com, set
+   `NEXT_PUBLIC_CLARITY_PROJECT_ID`. Also loaded by `Analytics.tsx`.
 
 ## Scripts
 

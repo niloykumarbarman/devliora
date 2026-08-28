@@ -47,17 +47,25 @@ const FOOTER_LINKS = {
     { href: "/solutions", label: "Solutions" },
     { href: "/industries", label: "Industries" },
     { href: "/technologies", label: "Technologies" },
+    { href: "/locations", label: "Where We Work" },
     { href: "/case-studies", label: "Case Studies" },
     { href: "/contact", label: "Contact" },
     { href: "/blog", label: "Blog" },
     { href: "/book-consultation", label: "Book Consultation" },
   ],
   Services: [
-    { href: "/services", label: "Platform engineering" },
-    { href: "/services", label: "API design" },
-    { href: "/services", label: "System migration" },
+    { href: "/custom-software-development", label: "Custom software development" },
+    { href: "/web-development", label: "Web development" },
+    { href: "/services/ai-development", label: "AI development" },
+    { href: "/cloud-devops", label: "Cloud & DevOps engineering" },
+    { href: "/services/software-quality-assurance", label: "QA & software testing" },
+    { href: "/legacy-modernization", label: "Legacy modernization" },
+    { href: "/enterprise-application-development", label: "Enterprise applications" },
+    { href: "/services/staff-augmentation", label: "Dedicated development teams" },
+    { href: "/services/it-consulting", label: "IT consulting" },
   ],
   Legal: [
+    { href: "/security", label: "Security" },
     { href: "/privacy", label: "Privacy policy" },
     { href: "/terms", label: "Terms of service" },
   ],
@@ -133,7 +141,7 @@ export default async function Footer() {
           </div>
 
           <div>
-            <p className="font-mono text-xs font-bold uppercase tracking-wider text-paper/40">
+            <p className="font-mono text-xs font-bold uppercase tracking-wider text-paper/55">
               Offices
             </p>
             <ul className="mt-4 space-y-6">
@@ -163,7 +171,7 @@ export default async function Footer() {
 
           {Object.entries(FOOTER_LINKS).map(([heading, links]) => (
             <div key={heading}>
-              <p className="font-mono text-xs font-bold uppercase tracking-wider text-paper/40">
+              <p className="font-mono text-xs font-bold uppercase tracking-wider text-paper/55">
                 {heading}
               </p>
               <ul className="mt-4 space-y-3">
@@ -197,7 +205,7 @@ export default async function Footer() {
           </p>
         </div>
 
-        <div className="mt-10 flex flex-col gap-4 border-t border-paper/10 pt-8 font-mono text-xs text-paper/40 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-10 flex flex-col gap-4 border-t border-paper/10 pt-8 font-mono text-xs text-paper/55 sm:flex-row sm:items-center sm:justify-between">
           <p>&copy; {new Date().getFullYear()} Devliora Systems. All rights reserved.</p>
           <p>Built with Next.js &amp; ASP.NET Core</p>
         </div>

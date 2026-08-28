@@ -7,7 +7,7 @@ import IndustriesDetailList from "@/components/sections/IndustriesDetailList";
 import IndustriesCTA from "@/components/sections/IndustriesCTA";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Industries | Devliora",
+  title: "Industries We Build Software For",
   description:
     "Industries where Devliora has built the deepest domain context: FinTech, Healthcare, E-commerce, Logistics, SaaS, and EdTech.",
   path: "/industries",
@@ -17,7 +17,7 @@ export default function IndustriesPage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <IndustriesHero />
         <IndustriesDetailList />
         <IndustriesCTA />

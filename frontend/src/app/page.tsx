@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+import { buildMetadata, faqPageJsonLd, webPageJsonLd } from "@/lib/seo";
+import { fetchFaqs } from "@/lib/faq";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
@@ -14,12 +17,38 @@ import Testimonials from "@/components/sections/Testimonials";
 import TrustGuarantees from "@/components/sections/TrustGuarantees";
 import FAQ from "@/components/sections/FAQ";
 import Contact from "@/components/sections/Contact";
+import JsonLd from "@/components/JsonLd";
 
-export default function Home() {
+export const metadata: Metadata = buildMetadata({
+  title: "Custom Software Development Company | Devliora",
+  absoluteTitle: true,
+  description:
+    "Custom software development, AI, cloud, DevOps and enterprise software engineering services for growing businesses — designed, built and shipped by Devliora.",
+  path: "",
+});
+
+export default async function Home() {
+  const faqs = await fetchFaqs();
+  const faqLd = faqPageJsonLd(
+    faqs.map((f) => ({ question: f.question, answer: f.answer })),
+    ""
+  );
+  const webPage = webPageJsonLd({
+    path: "",
+    name: "Custom Software Development Company | Devliora",
+    description:
+      "Custom software development, AI, cloud, DevOps and enterprise software engineering services for growing businesses.",
+    hasBreadcrumb: false,
+  });
+
   return (
     <>
+      <JsonLd data={webPage} />
+      {faqLd && (
+        <JsonLd data={faqLd} />
+      )}
       <Navbar />
-      <main className="flex-1">
+      <main id="main-content" tabIndex={-1} className="flex-1">
         <Hero />
         <Capabilities />
         {/* Moved ahead of ClientShowcase — a Feb-2026 external audit

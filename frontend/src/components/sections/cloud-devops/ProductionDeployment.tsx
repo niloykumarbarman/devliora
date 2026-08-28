@@ -1,11 +1,8 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 import { ChevronRight } from "lucide-react";
 import { DEPLOY_WORKFLOW, ZERO_DOWNTIME_POINTS } from "@/lib/cloudDevops";
 
 export default function ProductionDeployment() {
-  const reduceMotion = useReducedMotion();
 
   return (
     <section
@@ -22,13 +19,7 @@ export default function ProductionDeployment() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-signal">
             Production Deployment
           </p>
@@ -39,16 +30,10 @@ export default function ProductionDeployment() {
             Everything up to staging is automated. A person approves the promotion to
             production; everything after it is automated again.
           </p>
-        </motion.div>
+        </Reveal>
 
         {/* Workflow chips */}
-        <motion.ol
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="mt-14 flex flex-wrap items-stretch gap-2"
-        >
+        <Reveal as="ol" className="mt-14 flex flex-wrap items-stretch gap-2">
           {DEPLOY_WORKFLOW.map((step, i) => {
             const Icon = step.icon;
             return (
@@ -77,16 +62,10 @@ export default function ProductionDeployment() {
               </li>
             );
           })}
-        </motion.ol>
+        </Reveal>
 
         {/* Zero-downtime concept */}
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-40px" }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-          className="mt-16 rounded-lg border border-signal/20 bg-signal/[0.05] p-6 sm:p-8"
-        >
+        <Reveal className="mt-16 rounded-lg border border-signal/20 bg-signal/[0.05] p-6 sm:p-8">
           <h3 className="font-display text-xl font-semibold">
             Zero-downtime deployment
           </h3>
@@ -110,7 +89,7 @@ export default function ProductionDeployment() {
               );
             })}
           </div>
-        </motion.div>
+        </Reveal>
       </div>
     </section>
   );

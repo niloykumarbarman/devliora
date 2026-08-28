@@ -1,10 +1,7 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 import { SECURITY_CONTROLS } from "@/lib/cloudDevops";
 
 export default function CloudSecurity() {
-  const reduceMotion = useReducedMotion();
 
   return (
     <section
@@ -21,13 +18,7 @@ export default function CloudSecurity() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-signal">
             Cloud Security
           </p>
@@ -39,20 +30,13 @@ export default function CloudSecurity() {
             Ten controls that are wired into the infrastructure and the pipeline from
             the first commit.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-2">
           {SECURITY_CONTROLS.map((control, i) => {
             const Icon = control.icon;
             return (
-              <motion.div
-                key={control.name}
-                initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.4, ease: "easeOut", delay: (i % 2) * 0.06 }}
-                className="flex gap-4 rounded-sm border border-paper/10 bg-graphite/30 p-5 transition-colors hover:border-signal/40"
-              >
+              <Reveal key={control.name} delay={(i % 2) * 0.06} className="flex gap-4 rounded-sm border border-paper/10 bg-graphite/30 p-5 transition-colors hover:border-signal/40">
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-paper/10 bg-paper/[0.04]">
                   <Icon className="h-5 w-5 text-signal" strokeWidth={1.75} />
                 </span>
@@ -64,7 +48,7 @@ export default function CloudSecurity() {
                     {control.detail}
                   </p>
                 </div>
-              </motion.div>
+              </Reveal>
             );
           })}
         </div>

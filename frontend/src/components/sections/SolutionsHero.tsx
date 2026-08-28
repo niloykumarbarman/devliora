@@ -1,10 +1,4 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-
 export default function SolutionsHero() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <section className="relative overflow-hidden bg-ink py-28 md:py-36">
       <div className="bg-grain absolute inset-0" />
@@ -19,24 +13,17 @@ export default function SolutionsHero() {
 
       <div className="relative mx-auto max-w-4xl px-6">
 
-        <motion.h1
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.08 }}
-          className="mt-4 text-balance font-display text-4xl font-semibold text-paper md:text-5xl"
-        >
-          Solutions built around <span className="text-signal">your outcomes</span>
-        </motion.h1>
+        <h1 className="hero-h1-rise mt-4 text-balance font-display text-4xl font-semibold text-paper md:text-5xl">
+          Software Solutions Built Around <span className="text-signal">Your Outcomes</span>
+        </h1>
 
-        <motion.p
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.16 }}
-          className="mt-6 max-w-2xl text-lg text-wire"
+        <p
+          className="hero-fade-rise mt-6 max-w-2xl text-lg text-wire"
+          style={{ animationDelay: "0.16s" }}
         >
           Where our services describe what we do, our solutions describe the
           problems we solve — from legacy modernization to AI integration.
-        </motion.p>
+        </p>
       </div>
     </section>
   );

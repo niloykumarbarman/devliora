@@ -1,15 +1,4 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-
 export default function CaseStudiesHero() {
-  const reducedMotion = useReducedMotion();
-
-  const fadeUp = {
-    initial: { opacity: 0, y: reducedMotion ? 0 : 24 },
-    animate: { opacity: 1, y: 0 },
-  };
-
   return (
     <section className="relative overflow-hidden bg-ink px-6 py-28 sm:py-32">
       <div className="bg-grain pointer-events-none absolute inset-0" />
@@ -27,24 +16,19 @@ export default function CaseStudiesHero() {
 
       <div className="relative mx-auto max-w-4xl text-center">
 
-        <motion.h1
-          {...fadeUp}
-          transition={{ duration: 0.5, delay: 0.08 }}
-          className="mt-6 text-balance font-display text-4xl font-medium text-paper sm:text-5xl md:text-6xl"
-        >
-          Real problems, <span className="text-signal">real systems</span>,
-          real outcomes
-        </motion.h1>
+        <h1 className="hero-h1-rise mt-6 text-balance font-display text-4xl font-medium text-paper sm:text-5xl md:text-6xl">
+          Software Engineering <span className="text-signal">Case Studies</span>
+        </h1>
 
-        <motion.p
-          {...fadeUp}
-          transition={{ duration: 0.5, delay: 0.16 }}
-          className="mx-auto mt-6 max-w-2xl text-lg text-wire"
+        <p
+          className="hero-fade-rise mx-auto mt-6 max-w-2xl text-lg text-wire"
+          style={{ animationDelay: "0.16s" }}
         >
-          A closer look at how we approach hard engineering problems, from
-          the constraint we started with to the system running in production
-          today.
-        </motion.p>
+          Representative walk-throughs of the work we do — the constraint we
+          start from, the system we build, and the outcome. Where an engagement
+          is confidential, the client name and some specifics are composite;
+          those are marked <span className="text-ember">Illustrative</span>.
+        </p>
       </div>
     </section>
   );

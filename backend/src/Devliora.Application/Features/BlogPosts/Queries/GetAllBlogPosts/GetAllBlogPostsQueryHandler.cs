@@ -37,7 +37,8 @@ public class GetAllBlogPostsQueryHandler : IRequestHandler<GetAllBlogPostsQuery,
                 Excerpt = b.Excerpt,
                 CoverImageUrl = b.CoverImageUrl,
                 AuthorName = b.AuthorName,
-                PublishedAt = b.PublishedAt
+                PublishedAt = b.PublishedAt,
+                UpdatedAt = b.UpdatedAt
             })
             .ToListAsync(cancellationToken);
 

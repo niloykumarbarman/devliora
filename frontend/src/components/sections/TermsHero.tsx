@@ -1,10 +1,4 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-
 export default function TermsHero() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <section className="relative overflow-hidden bg-ink py-28 md:py-36">
       <div className="bg-grain absolute inset-0" />
@@ -19,33 +13,24 @@ export default function TermsHero() {
 
       <div className="relative mx-auto max-w-4xl px-6">
 
-        <motion.h1
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.08 }}
-          className="mt-4 text-balance font-display text-4xl font-semibold text-paper md:text-5xl"
-        >
+        <h1 className="hero-h1-rise mt-4 text-balance font-display text-4xl font-semibold text-paper md:text-5xl">
           The terms behind every <span className="text-signal">engagement</span>
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.16 }}
-          className="mt-6 max-w-2xl text-lg text-wire"
+        <p
+          className="hero-fade-rise mt-6 max-w-2xl text-lg text-wire"
+          style={{ animationDelay: "0.16s" }}
         >
           These terms govern your use of this website and, where applicable,
           the services Devliora provides. Please read them carefully.
-        </motion.p>
+        </p>
 
-        <motion.p
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.24 }}
-          className="mt-4 font-mono text-xs uppercase tracking-widest text-wire/70"
+        <p
+          className="hero-fade-rise mt-4 font-mono text-xs uppercase tracking-widest text-wire/70"
+          style={{ animationDelay: "0.24s" }}
         >
           Last updated: July 21, 2026
-        </motion.p>
+        </p>
       </div>
     </section>
   );

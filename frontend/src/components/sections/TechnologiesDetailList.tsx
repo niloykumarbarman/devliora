@@ -3,8 +3,9 @@
 import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Reveal from "@/components/Reveal";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 import TechBrandIcon from "@/components/TechBrandIcon";
 import { getTechIcon } from "@/lib/techIcons";
 import { fetchTechnologies, TechnologyDto } from "@/lib/technologies";
@@ -103,7 +104,7 @@ const CATEGORY_COPY: Record<
 };
 
 export default function TechnologiesDetailList() {
-  const reducedMotion = useReducedMotion();
+  const reducedMotion = usePrefersReducedMotion();
   const [technologies, setTechnologies] = useState<TechnologyDto[]>([]);
   const [siteSettings, setSiteSettings] = useState<SiteSettingsDto | null>(null);
 
@@ -151,40 +152,33 @@ export default function TechnologiesDetailList() {
           />
 
           <div className="relative mx-auto max-w-6xl">
-            <motion.h2
-              initial={{ opacity: 0, y: reducedMotion ? 0 : 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5 }}
+            <Reveal
+              as="h2"
               className={`max-w-2xl text-balance font-display text-3xl font-medium sm:text-4xl ${
                 i % 2 === 0 ? "text-ink" : "text-paper"
               }`}
             >
               {group.copy.headingAccent && <span className="text-ember">{group.copy.headingAccent} </span>}
               {group.copy.heading}
-            </motion.h2>
+            </Reveal>
 
-            <motion.p
-              initial={{ opacity: 0, y: reducedMotion ? 0 : 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: 0.08 }}
+            <Reveal
+              as="p"
+              delay={0.08}
               className={`mt-5 inline-block max-w-md border-b pb-3 italic ${
                 i % 2 === 0 ? "border-signal/40 text-graphite/70" : "border-signal/40 text-wire"
               }`}
             >
               {group.copy.tagline}
-            </motion.p>
+            </Reveal>
 
-            <motion.p
-              initial={{ opacity: 0, y: reducedMotion ? 0 : 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: 0.16 }}
+            <Reveal
+              as="p"
+              delay={0.16}
               className={`mt-5 max-w-2xl ${i % 2 === 0 ? "text-graphite" : "text-wire"}`}
             >
               {group.copy.paragraph}
-            </motion.p>
+            </Reveal>
 
             <div
               className={`mt-12 grid grid-cols-1 gap-10 md:items-start ${
@@ -192,27 +186,18 @@ export default function TechnologiesDetailList() {
               }`}
             >
               {imageUrl && (
-                <motion.div
-                  initial={{ opacity: 0, y: reducedMotion ? 0 : 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.5 }}
-                  className="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-graphite md:max-w-sm"
-                >
+                <Reveal className="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-graphite md:max-w-sm">
                   <Image src={resolveImageUrl(imageUrl)} alt="" fill sizes="(min-width: 768px) 33vw, 100vw" className="object-cover" />
-                </motion.div>
+                </Reveal>
               )}
 
               <div className="grid grid-cols-1 gap-x-10 gap-y-8 sm:grid-cols-2">
                 {group.items.map((tool, idx) => {
                   const hasIcon = !!getTechIcon(tool.name);
                   return (
-                    <motion.div
+                    <Reveal
                       key={tool.id}
-                      initial={{ opacity: 0, y: reducedMotion ? 0 : 16 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-40px" }}
-                      transition={{ duration: 0.4, delay: idx * 0.05 }}
+                      delay={idx * 0.05}
                       className="flex items-start gap-3"
                     >
                       {hasIcon ? (
@@ -230,7 +215,7 @@ export default function TechnologiesDetailList() {
                           </p>
                         )}
                       </div>
-                    </motion.div>
+                    </Reveal>
                   );
                 })}
               </div>

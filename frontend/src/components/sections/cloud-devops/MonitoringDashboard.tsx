@@ -1,9 +1,7 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import { DASHBOARD_METRICS, type DashboardMetric } from "@/lib/cloudDevops";
+import Reveal from "@/components/Reveal";
 
-function Sparkline({ series, warn, animate }: { series: number[]; warn: boolean; animate: boolean }) {
+function Sparkline({ series, warn }: { series: number[]; warn: boolean }) {
   const width = 100;
   const height = 40;
   const max = Math.max(...series, 1);
@@ -26,7 +24,7 @@ function Sparkline({ series, warn, animate }: { series: number[]; warn: boolean;
       aria-hidden
     >
       <polygon points={area} fill={stroke} opacity={0.14} />
-      <motion.polyline
+      <polyline
         points={line}
         fill="none"
         stroke={stroke}
@@ -34,26 +32,18 @@ function Sparkline({ series, warn, animate }: { series: number[]; warn: boolean;
         strokeLinecap="round"
         strokeLinejoin="round"
         vectorEffect="non-scaling-stroke"
-        initial={animate ? { pathLength: 0 } : false}
-        whileInView={animate ? { pathLength: 1 } : undefined}
-        viewport={{ once: true }}
-        transition={{ duration: 0.9, ease: "easeInOut" }}
       />
     </svg>
   );
 }
 
 function MetricTile({ metric, index }: { metric: DashboardMetric; index: number }) {
-  const reduceMotion = useReducedMotion();
   const Icon = metric.icon;
   const warn = metric.status === "warn";
 
   return (
-    <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: 0.4, ease: "easeOut", delay: (index % 4) * 0.05 }}
+    <Reveal
+      delay={(index % 4) * 0.05}
       className="rounded-sm border border-paper/10 bg-graphite/30 p-4"
     >
       <div className="flex items-center justify-between">
@@ -75,15 +65,13 @@ function MetricTile({ metric, index }: { metric: DashboardMetric; index: number 
       <p className="mt-3 font-display text-2xl font-semibold text-paper">{metric.value}</p>
       <p className="text-xs text-paper/50">{metric.caption}</p>
       <div className="mt-3">
-        <Sparkline series={metric.series} warn={warn} animate={!reduceMotion} />
+        <Sparkline series={metric.series} warn={warn} />
       </div>
-    </motion.div>
+    </Reveal>
   );
 }
 
 export default function MonitoringDashboard() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section
       id="monitoring-dashboard"
@@ -99,13 +87,7 @@ export default function MonitoringDashboard() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-signal">
             Monitoring &amp; Observability
           </p>
@@ -116,7 +98,7 @@ export default function MonitoringDashboard() {
             Golden signals and capacity on one screen, backed by Prometheus, Grafana
             and Loki.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-10 rounded-lg border border-paper/10 bg-ink/60 p-4 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3 border-b border-paper/10 pb-4">
@@ -138,7 +120,7 @@ export default function MonitoringDashboard() {
           </div>
         </div>
 
-        <p className="mt-4 font-mono text-xs text-paper/40">
+        <p className="mt-4 font-mono text-xs text-paper/55">
           Values shown are sample data for layout purposes. The component takes plain
           numbers and would render a live Prometheus feed the same way.
         </p>

@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Reveal from "@/components/Reveal";
 import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
 import { serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
@@ -75,7 +75,6 @@ async function fetchFeaturedTestimonial(): Promise<Testimonial | null> {
 }
 
 export default function ServicesHero() {
-  const shouldReduceMotion = useReducedMotion();
   // Four independent, admin-editable images (Site Settings) — one per
   // image slot on this page, per explicit request (not a single reused
   // image anymore).
@@ -102,23 +101,6 @@ export default function ServicesHero() {
     };
   }, []);
 
-  // whileInView (not animate) so sections below the fold reveal on scroll,
-  // matching the rest of the site's convention (ClientSpotlight,
-  // FeaturedWorkSplit, ServicesCTA, etc.) — with `animate`, everything on
-  // this long page was fading in within ~1s of page load regardless of
-  // scroll position, so content far down the page (Pricing models, Global
-  // delivery, Tailored Solutions) was already fully visible before the
-  // user ever scrolled to it.
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.5, delay: i * 0.08 },
-        };
-
   return (
     <>
       {/* Full-bleed page-title banner, same pattern every other detail
@@ -137,7 +119,7 @@ export default function ServicesHero() {
           )}
           <div className="absolute inset-0 bg-ink/70" />
           <h1 className="relative text-balance text-center font-display text-5xl font-semibold leading-tight md:text-7xl">
-            Services
+            Custom Software Development Services
           </h1>
         </div>
 
@@ -172,29 +154,31 @@ export default function ServicesHero() {
         <div className="relative mx-auto max-w-6xl px-6">
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
             <div>
-              <motion.h2
-                {...fadeUp(1)}
+              <Reveal
+                as="h2"
+                delay={0.08}
                 className="text-balance font-display text-4xl font-semibold leading-tight md:text-5xl"
               >
                 Engineering Services
-              </motion.h2>
+              </Reveal>
 
-              <motion.p
-                {...fadeUp(2)}
+              <Reveal
+                as="p"
+                delay={0.16}
                 className="mt-5 inline-block max-w-md border-b border-ember/40 pb-3 italic text-paper/60"
               >
                 Crafting reliable software, one line of code at a time.
-              </motion.p>
+              </Reveal>
 
-              <motion.p {...fadeUp(3)} className="mt-5 max-w-md text-paper/70">
+              <Reveal as="p" delay={0.24} className="mt-5 max-w-md text-paper/70">
                 We turn your ideas into dependable software. Our engineers and
                 specialists work closely with you to deliver solutions built
                 around your actual requirements — not a generic package.
                 Whether it&apos;s a customer-facing web app or a complex
                 enterprise system, we&apos;ve got you covered.
-              </motion.p>
+              </Reveal>
 
-              <motion.div {...fadeUp(4)} className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
+              <Reveal delay={0.32} className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
                 {STATIC_SERVICE_LINKS.map((column, colIndex) => (
                   <div key={colIndex} className="flex flex-col gap-2">
                     {column.map((service) => (
@@ -208,11 +192,11 @@ export default function ServicesHero() {
                     ))}
                   </div>
                 ))}
-              </motion.div>
+              </Reveal>
             </div>
 
-            <motion.div
-              {...fadeUp(2)}
+            <Reveal
+              delay={0.16}
               className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite md:aspect-square"
             >
               {engineeringImageUrl && (
@@ -224,7 +208,7 @@ export default function ServicesHero() {
                   className="object-cover"
                 />
               )}
-            </motion.div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -278,7 +262,7 @@ export default function ServicesHero() {
                     {testimonial.clientPhotoUrl && (
                       <Image
                         src={resolveImageUrl(testimonial.clientPhotoUrl)}
-                        alt=""
+                        alt={testimonial.clientName}
                         width={40}
                         height={40}
                         className="h-10 w-10 rounded-full object-cover"
@@ -305,14 +289,13 @@ export default function ServicesHero() {
                 Advanced Technologies
               </h2>
               <p className="mt-5 inline-block max-w-md border-b border-ember/40 pb-3 italic text-paper/60">
-                Cutting-Edge Tech, Timeless Quality
+                A small, proven stack — chosen to last, not to impress.
               </p>
               <p className="mt-5 max-w-md text-paper/70">
-                Dive into the future with Devliora&apos;s top-notch technology
-                stack. We stay ahead of the curve, embracing the latest
-                advancements to ensure your project is built on a foundation
-                of innovation and reliability — from AI and machine learning
-                to cloud computing and beyond.
+                Most of our work runs on .NET, Node.js or Python behind React
+                and Next.js, with PostgreSQL and Redis for data and AWS or
+                Azure underneath. We add to that list only when a project has
+                a real reason to, and we tell you what that reason is.
               </p>
 
               <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
@@ -369,7 +352,7 @@ export default function ServicesHero() {
       <section className="relative overflow-hidden bg-ink py-16 text-paper md:py-20">
         <div className="mx-auto max-w-6xl px-6">
           <div className="grid gap-12 md:grid-cols-2 md:gap-16">
-            <motion.div {...fadeUp(0)}>
+            <Reveal>
               <h2 className="text-balance font-display text-4xl font-semibold leading-tight md:text-5xl">
                 Global delivery
               </h2>
@@ -381,9 +364,9 @@ export default function ServicesHero() {
                 engineering practice with modern tooling to create
                 reliable, maintainable solutions.
               </p>
-            </motion.div>
+            </Reveal>
 
-            <motion.div {...fadeUp(1)}>
+            <Reveal delay={0.08}>
               <h2 className="text-balance font-display text-4xl font-semibold leading-tight md:text-5xl">
                 Our talent pool
               </h2>
@@ -397,7 +380,7 @@ export default function ServicesHero() {
                   </div>
                 ))}
               </div>
-            </motion.div>
+            </Reveal>
           </div>
         </div>
       </section>
@@ -411,29 +394,30 @@ export default function ServicesHero() {
         <div className="relative mx-auto max-w-6xl px-6">
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
             <div>
-              <motion.h2
-                {...fadeUp(0)}
+              <Reveal
+                as="h2"
                 className="text-balance font-display text-4xl font-semibold leading-tight md:text-5xl"
               >
                 Tailored Solutions
-              </motion.h2>
+              </Reveal>
 
-              <motion.p
-                {...fadeUp(1)}
+              <Reveal
+                as="p"
+                delay={0.08}
                 className="mt-5 inline-block max-w-md border-b border-ember/40 pb-3 italic text-paper/60"
               >
                 Tailored Solutions for Tomorrow&apos;s Challenges
-              </motion.p>
+              </Reveal>
 
-              <motion.p {...fadeUp(2)} className="mt-5 max-w-md text-paper/70">
+              <Reveal as="p" delay={0.16} className="mt-5 max-w-md text-paper/70">
                 We believe in solutions that fit like a glove. Our bespoke
                 approach means we listen, understand, and deliver precisely
                 what your business needs to thrive in a competitive
                 landscape. No cookie-cutter templates here — just
                 personalized strategies that solve your unique problems.
-              </motion.p>
+              </Reveal>
 
-              <motion.div {...fadeUp(3)} className="mt-8 flex flex-col gap-3">
+              <Reveal delay={0.24} className="mt-8 flex flex-col gap-3">
                 {SOLUTIONS.map((solution) => (
                   <Link
                     key={solution.id}
@@ -443,11 +427,11 @@ export default function ServicesHero() {
                     {solution.title}
                   </Link>
                 ))}
-              </motion.div>
+              </Reveal>
             </div>
 
-            <motion.div
-              {...fadeUp(2)}
+            <Reveal
+              delay={0.16}
               className="relative aspect-[4/3] overflow-hidden rounded-lg bg-graphite md:aspect-square"
             >
               {solutionsImageUrl && (
@@ -459,7 +443,7 @@ export default function ServicesHero() {
                   className="object-cover"
                 />
               )}
-            </motion.div>
+            </Reveal>
           </div>
         </div>
       </section>

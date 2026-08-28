@@ -10,4 +10,8 @@ public class BlogPostDetailDto
     public string CoverImageUrl { get; set; } = string.Empty;
     public string AuthorName { get; set; } = string.Empty;
     public DateTime? PublishedAt { get; set; }
+
+    // Last edit timestamp, for an accurate Article `dateModified`. Null
+    // if the post has never been edited since publish.
+    public DateTime? UpdatedAt { get; set; }
 }

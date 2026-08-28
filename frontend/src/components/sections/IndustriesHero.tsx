@@ -1,10 +1,4 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-
 export default function IndustriesHero() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <section className="relative overflow-hidden bg-ink py-28 md:py-36">
       <div className="bg-grain absolute inset-0" />
@@ -19,24 +13,17 @@ export default function IndustriesHero() {
 
       <div className="relative mx-auto max-w-4xl px-6">
 
-        <motion.h1
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.08 }}
-          className="mt-4 text-balance font-display text-4xl font-semibold text-paper md:text-5xl"
-        >
-          Domain context, <span className="text-signal">not guesswork</span>
-        </motion.h1>
+        <h1 className="hero-h1-rise mt-4 text-balance font-display text-4xl font-semibold text-paper md:text-5xl">
+          Industries We Build <span className="text-signal">Software</span> For
+        </h1>
 
-        <motion.p
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.16 }}
-          className="mt-6 max-w-2xl text-lg text-wire"
+        <p
+          className="hero-fade-rise mt-6 max-w-2xl text-lg text-wire"
+          style={{ animationDelay: "0.16s" }}
         >
           Every industry has its own constraints, compliance needs, and
-          failure modes. Here's where we've built the deepest context.
-        </motion.p>
+          failure modes. Here&rsquo;s where we&rsquo;ve built the deepest context.
+        </p>
       </div>
     </section>
   );

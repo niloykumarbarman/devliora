@@ -1,7 +1,5 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import { Fingerprint, Lock, TimerReset, GitBranch } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 type Reason = {
   icon: typeof Fingerprint;
@@ -42,8 +40,6 @@ const REASONS: Reason[] = [
 ];
 
 export default function WhyChooseUs() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section
       id="why-us"
@@ -63,13 +59,7 @@ export default function WhyChooseUs() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <h2 className="mt-5 text-balance font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             Built by people who{" "}
             <span className="text-signal">get paged when it breaks</span>.
@@ -78,31 +68,16 @@ export default function WhyChooseUs() {
             We are engineers first. That shapes every decision we make,
             long before a client ever sees the interface.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-16 grid gap-8 sm:grid-cols-2">
           {REASONS.map((reason, i) => {
             const Icon = reason.icon;
             return (
-              <motion.div
+              <Reveal
                 key={reason.title}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={
-                  reduceMotion
-                    ? { duration: 0.3 }
-                    : { duration: 0.5, ease: "easeOut", delay: i * 0.08 }
-                }
-                // whileHover, not a CSS :hover class: once this motion.div's
-                // own whileInView settles, Framer Motion leaves a permanent
-                // inline `transform` on it that would beat any CSS class's
-                // :hover transform. A plain lift (no rotate) — these are
-                // borderless (just a top divider), not boxed cards, so a
-                // 3D tilt wouldn't read as "depth" without a card surface
-                // under it.
-                whileHover={reduceMotion ? undefined : { y: -4 }}
-                className="border-t border-paper/10 pt-7"
+                delay={i * 0.08}
+                className="hover-lift border-t border-paper/10 pt-7"
               >
                 <Icon className="h-6 w-6 text-signal" strokeWidth={1.75} />
                 <h3 className="mt-5 font-display text-xl font-semibold tracking-tight">
@@ -114,7 +89,7 @@ export default function WhyChooseUs() {
                 <p className="mt-4 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ember">
                   {reason.proof}
                 </p>
-              </motion.div>
+              </Reveal>
             );
           })}
         </div>

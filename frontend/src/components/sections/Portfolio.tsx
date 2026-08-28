@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
+import Reveal from "@/components/Reveal";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 type Project = {
   client: string;
@@ -68,7 +69,7 @@ function ProjectCard({ project, isSignal }: { project: Project; isSignal: boolea
           <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
         </span>
       </div>
-      <p className="mt-3 font-mono text-xs text-graphite/50">
+      <p className="mt-3 font-mono text-xs text-graphite/65">
         {project.client}
       </p>
 
@@ -94,7 +95,7 @@ function ProjectCard({ project, isSignal }: { project: Project; isSignal: boolea
 }
 
 export default function Portfolio() {
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const count = PROJECTS.length;
@@ -131,13 +132,7 @@ export default function Portfolio() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <h2 className="mt-5 text-balance font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             Systems we have{" "}
             <span className="text-signal">put into production</span>.
@@ -146,7 +141,7 @@ export default function Portfolio() {
             A sample of the platforms, migrations, and integrations we
             have shipped for teams that could not afford downtime.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div
           className="relative mt-16"
@@ -171,19 +166,20 @@ export default function Portfolio() {
                 ? "shadow-[0_20px_70px_-15px_rgba(47,92,255,0.35)]"
                 : "shadow-[0_20px_70px_-15px_rgba(255,122,69,0.35)]";
 
+              const translate = reduceMotion ? "0%" : `${offset * 62}%`;
+              const rotate = reduceMotion ? 0 : offset * -28;
               return (
-                <motion.article
+                <article
                   key={project.title}
-                  animate={{
-                    x: reduceMotion ? 0 : `${offset * 62}%`,
-                    scale: isActive ? 1 : 0.82,
-                    rotateY: reduceMotion ? 0 : offset * -28,
+                  style={{
+                    transformStyle: "preserve-3d",
+                    transform: `translateX(${translate}) scale(${isActive ? 1 : 0.82}) rotateY(${rotate}deg)`,
                     opacity: visible ? (isActive ? 1 : 0.45) : 0,
                     zIndex: 10 - absOffset,
                     pointerEvents: isActive ? "auto" : "none",
+                    transition:
+                      "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
                   }}
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  style={{ transformStyle: "preserve-3d" }}
                   className={`absolute w-[88%] max-w-md rounded-xl bg-paper p-8 sm:p-10 ${
                     isActive
                       ? `${activeBorder} ${activeShadow}`
@@ -191,32 +187,37 @@ export default function Portfolio() {
                   }`}
                 >
                   <ProjectCard project={project} isSignal={isSignal} />
-                </motion.article>
+                </article>
               );
             })}
           </div>
 
-          <div className="mt-10 flex items-center justify-center gap-6">
+          <div className="mt-10 flex items-center justify-center gap-3 sm:gap-6">
             <button
               type="button"
               onClick={() => handleManualNav(goPrev)}
               aria-label="Previous project"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-wire text-ink transition-colors hover:border-signal hover:text-signal"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-wire text-ink transition-colors hover:border-signal hover:text-signal"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center">
               {PROJECTS.map((project, i) => (
                 <button
                   key={project.title}
                   type="button"
                   onClick={() => handleManualNav(() => goTo(i))}
                   aria-label={`Go to project ${i + 1}`}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    active === i ? "w-8 bg-signal" : "w-2 bg-ink/15 hover:bg-ink/30"
-                  }`}
-                />
+                  aria-current={active === i}
+                  className="flex h-11 w-8 items-center justify-center"
+                >
+                  <span
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      active === i ? "w-8 bg-signal" : "w-2 bg-ink/15"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
 
@@ -224,7 +225,7 @@ export default function Portfolio() {
               type="button"
               onClick={() => handleManualNav(goNext)}
               aria-label="Next project"
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-wire text-ink transition-colors hover:border-signal hover:text-signal"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-wire text-ink transition-colors hover:border-signal hover:text-signal"
             >
               <ChevronRight className="h-4 w-4" />
             </button>

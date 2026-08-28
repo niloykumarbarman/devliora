@@ -3,12 +3,10 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
 
 export default function PortfolioHero() {
-  const shouldReduceMotion = useReducedMotion();
   const [heroImageUrl, setHeroImageUrl] = useState("");
 
   useEffect(() => {
@@ -22,15 +20,6 @@ export default function PortfolioHero() {
       cancelled = true;
     };
   }, []);
-
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.5, delay: i * 0.08 },
-        };
 
   return (
     <section className="relative overflow-hidden bg-ink text-paper">
@@ -52,12 +41,9 @@ export default function PortfolioHero() {
         )}
         <div className="absolute inset-0 bg-ink/70" />
 
-        <motion.h1
-          {...fadeUp(1)}
-          className="relative text-balance text-5xl font-semibold leading-tight md:text-7xl"
-        >
-          Our work
-        </motion.h1>
+        <h1 className="hero-h1-rise relative text-balance text-5xl font-semibold leading-tight md:text-7xl">
+          Software Development Portfolio
+        </h1>
       </div>
 
       <div className="relative border-t border-paper/10 bg-ink">

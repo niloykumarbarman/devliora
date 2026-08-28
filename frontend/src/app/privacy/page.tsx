@@ -6,9 +6,9 @@ import PrivacyHero from "@/components/sections/PrivacyHero";
 import PrivacyContent from "@/components/sections/PrivacyContent";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Privacy Policy | Devliora",
+  title: "Privacy Policy",
   description:
-    "Devliora's privacy policy: what personal and project information we collect through our website and services, how we use and store it, and the choices you have to access, correct, or delete it.",
+    "Devliora's privacy policy: what personal and project information we collect, how we use and store it, and how to access, correct, or delete it.",
   path: "/privacy",
 });
 
@@ -16,7 +16,7 @@ export default function PrivacyPage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <PrivacyHero />
         <PrivacyContent />
       </main>

@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import { submitContactMessage } from "@/lib/contactMessages";
+import Reveal from "@/components/Reveal";
 
 type FormState = {
   fullName: string;
@@ -24,19 +24,8 @@ const INITIAL_STATE: FormState = {
 };
 
 export default function ContactForm() {
-  const shouldReduceMotion = useReducedMotion();
   const [form, setForm] = useState<FormState>(INITIAL_STATE);
   const [status, setStatus] = useState<SubmitStatus>("idle");
-
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.5, delay: i * 0.08 },
-        };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -69,9 +58,11 @@ export default function ContactForm() {
       />
 
       <div className="relative mx-auto max-w-3xl px-6">
-        <motion.form
-          {...fadeUp(0)}
+        <Reveal>
+        <form
           onSubmit={handleSubmit}
+          aria-label="Contact form"
+          aria-busy={status === "submitting"}
           className="grid gap-6 md:grid-cols-2"
         >
           <div className="flex flex-col gap-2">
@@ -120,7 +111,7 @@ export default function ContactForm() {
               className="font-mono text-xs uppercase tracking-[0.15em] text-graphite/60"
             >
               Phone{" "}
-              <span className="normal-case tracking-normal text-graphite/40">
+              <span className="normal-case tracking-normal text-graphite/60">
                 (optional)
               </span>
             </label>
@@ -200,21 +191,22 @@ export default function ContactForm() {
             </button>
 
             {status === "success" && (
-              <p className="mt-4 text-sm text-graphite/60">
+              <p role="status" className="mt-4 text-sm text-graphite/70">
                 Thanks for reaching out. We typically respond within 48
                 hours.
               </p>
             )}
 
             {status === "error" && (
-              <p className="mt-4 flex items-center gap-2 text-sm text-ember">
+              <p role="alert" className="mt-4 flex items-center gap-2 text-sm text-ember">
                 <AlertCircle className="h-4 w-4" />
                 Something went wrong sending your message. Please try again
                 or email us directly.
               </p>
             )}
           </div>
-        </motion.form>
+        </form>
+        </Reveal>
       </div>
     </section>
   );

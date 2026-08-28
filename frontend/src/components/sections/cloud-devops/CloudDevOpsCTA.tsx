@@ -1,24 +1,8 @@
-"use client";
-
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 export default function CloudDevOpsCTA() {
-  const reduceMotion = useReducedMotion();
-
-  // initial={false} (not undefined) so a reduced-motion visitor never
-  // gets a section left stuck at the server-rendered opacity:0 — it
-  // renders visible immediately, with no enter animation.
-  const fade = reduceMotion
-    ? { initial: false as const, whileInView: { opacity: 1, y: 0 }, viewport: { once: true }, transition: { duration: 0 } }
-    : {
-        initial: { opacity: 0, y: 24 },
-        whileInView: { opacity: 1, y: 0 },
-        viewport: { once: true, margin: "-60px" },
-        transition: { duration: 0.5 },
-      };
-
   return (
     <section className="bg-grain relative overflow-hidden bg-ink py-24 text-paper md:py-32">
       <div
@@ -30,7 +14,7 @@ export default function CloudDevOpsCTA() {
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,theme(colors.paper/4)_1px,transparent_1px),linear-gradient(to_bottom,theme(colors.paper/4)_1px,transparent_1px)] bg-[size:56px_56px]"
       />
 
-      <motion.div {...fade} className="relative mx-auto max-w-3xl px-6 text-center">
+      <Reveal className="relative mx-auto max-w-3xl px-6 text-center">
         <h2 className="text-balance font-display text-3xl font-semibold leading-tight md:text-4xl">
           Build a More Reliable <span className="text-signal">Cloud Infrastructure</span>
         </h2>
@@ -55,7 +39,7 @@ export default function CloudDevOpsCTA() {
             Discuss Your Infrastructure
           </Link>
         </div>
-      </motion.div>
+      </Reveal>
     </section>
   );
 }

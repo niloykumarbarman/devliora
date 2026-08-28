@@ -54,7 +54,7 @@ export default function TechnologyDetailSelectedWork({
                 {project.thumbnailUrl ? (
                   <Image
                     src={resolveImageUrl(project.thumbnailUrl)}
-                    alt=""
+                    alt={project.title}
                     fill
                     sizes="(min-width: 768px) 50vw, 100vw"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"

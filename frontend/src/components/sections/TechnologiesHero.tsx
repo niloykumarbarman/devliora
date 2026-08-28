@@ -37,7 +37,7 @@ export default function TechnologiesHero() {
         )}
         <div className="absolute inset-0 bg-ink/70" />
         <h1 className="relative text-balance text-center font-display text-5xl font-semibold leading-tight md:text-7xl">
-          Technologies
+          Technologies We Build With
         </h1>
       </div>
 

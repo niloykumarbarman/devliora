@@ -1,12 +1,10 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { IAC_STEPS, IAC_CODE_LINES } from "@/lib/cloudDevops";
+import Reveal from "@/components/Reveal";
 
 export default function InfrastructureAsCode() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section
       id="infrastructure-as-code"
@@ -18,13 +16,7 @@ export default function InfrastructureAsCode() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-signal">
             Infrastructure as Code
           </p>
@@ -36,7 +28,7 @@ export default function InfrastructureAsCode() {
             applied by automation, so staging and production never quietly drift
             apart.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-16 grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
           {/* Workflow */}
@@ -44,13 +36,11 @@ export default function InfrastructureAsCode() {
             {IAC_STEPS.map((step, i) => {
               const Icon = step.icon;
               return (
-                <motion.li
+                <Reveal
                   key={step.label}
-                  initial={reduceMotion ? false : { opacity: 0, x: -12 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.4, ease: "easeOut", delay: i * 0.08 }}
-                  className="flex gap-4 rounded-sm border border-ink/10 bg-white/60 p-4"
+                  as="li"
+                  delay={i * 0.08}
+                  className="reveal-from-left flex gap-4 rounded-sm border border-ink/10 bg-white/60 p-4"
                 >
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-ink/10 bg-signal/[0.08] font-mono text-xs font-semibold text-signal">
                     {String(i + 1).padStart(2, "0")}
@@ -62,17 +52,14 @@ export default function InfrastructureAsCode() {
                     </p>
                     <p className="mt-1 text-sm leading-relaxed text-graphite/75">{step.detail}</p>
                   </div>
-                </motion.li>
+                </Reveal>
               );
             })}
           </ol>
 
           {/* Code visual */}
-          <motion.figure
-            initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+          <Reveal
+            as="figure"
             className="overflow-hidden rounded-lg border border-ink/15 shadow-[0_24px_48px_-24px_rgba(14,20,32,0.4)]"
           >
             <div className="flex items-center gap-2 border-b border-white/10 bg-[#1e1e1e] px-4 py-2.5">
@@ -100,14 +87,12 @@ export default function InfrastructureAsCode() {
               Illustrative configuration — the secret is read from a variable, never
               hard-coded.
             </figcaption>
-          </motion.figure>
+          </Reveal>
         </div>
 
-        <motion.p
-          initial={reduceMotion ? false : { opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+        <Reveal
+          as="p"
+          delay={0.2}
           className="mt-10 flex flex-wrap items-center gap-2 font-mono text-xs text-graphite/60"
         >
           {IAC_STEPS.map((step, i) => (
@@ -116,7 +101,7 @@ export default function InfrastructureAsCode() {
               {step.label}
             </span>
           ))}
-        </motion.p>
+        </Reveal>
       </div>
     </section>
   );

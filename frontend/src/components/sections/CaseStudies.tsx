@@ -1,6 +1,4 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 
 type CaseStudy = {
   client: string;
@@ -43,8 +41,6 @@ const CASE_STUDIES: CaseStudy[] = [
 ];
 
 export default function CaseStudies() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section
       id="case-studies"
@@ -64,37 +60,35 @@ export default function CaseStudies() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <h2 className="mt-5 text-balance font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             Two problems that{" "}
             <span className="text-signal">could not stay unsolved</span>.
           </h2>
-        </motion.div>
+          <p className="mt-4 text-wire">
+            Illustrative examples — representative of the work we do, with
+            composite client names while our first named case studies are
+            prepared.
+          </p>
+        </Reveal>
 
         <div className="mt-16 flex flex-col gap-px overflow-hidden rounded-sm border border-paper/10 bg-paper/10">
           {CASE_STUDIES.map((study, i) => (
-            <motion.article
+            <Reveal
               key={study.client}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={
-                reduceMotion
-                  ? { duration: 0.3 }
-                  : { duration: 0.5, ease: "easeOut", delay: i * 0.1 }
-              }
+              as="article"
+              delay={i * 0.1}
               className="grid gap-10 bg-ink p-8 md:grid-cols-[2fr_1fr] md:p-12"
             >
               <div>
-                <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-paper/45">
-                  {study.industry} — {study.client}
-                </p>
+                <div className="flex flex-wrap items-center gap-3">
+                  <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-paper/55">
+                    {study.industry} — {study.client}
+                  </p>
+                  <span className="rounded-sm border border-ember/30 px-2 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-ember">
+                    Illustrative
+                  </span>
+                </div>
                 <h3 className="mt-3 font-display text-2xl font-semibold leading-snug tracking-tight sm:text-3xl">
                   {study.title}
                 </h3>
@@ -131,11 +125,11 @@ export default function CaseStudies() {
                 <p className="font-display text-5xl font-semibold tabular-nums text-signal">
                   {study.metric}
                 </p>
-                <p className="mt-2 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-paper/45">
+                <p className="mt-2 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-paper/55">
                   {study.metricLabel}
                 </p>
               </div>
-            </motion.article>
+            </Reveal>
           ))}
         </div>
       </div>

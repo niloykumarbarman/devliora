@@ -1,19 +1,4 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-
 export default function AboutHero() {
-  const shouldReduceMotion = useReducedMotion();
-
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.5, delay: i * 0.08 },
-        };
-
   return (
     <section className="bg-grain relative overflow-hidden bg-ink py-28 text-paper md:py-36">
       <div
@@ -30,23 +15,20 @@ export default function AboutHero() {
 
       <div className="relative mx-auto max-w-4xl px-6 text-center">
 
-        <motion.h1
-          {...fadeUp(1)}
-          className="mt-6 text-balance text-4xl font-semibold leading-tight md:text-6xl"
-        >
+        <h1 className="hero-h1-rise mt-6 text-balance text-4xl font-semibold leading-tight md:text-6xl">
           Founder-led. <span className="text-signal">Production-grade.</span>{" "}
           No shortcuts.
-        </motion.h1>
+        </h1>
 
-        <motion.p
-          {...fadeUp(2)}
-          className="mx-auto mt-6 max-w-2xl text-lg text-paper/70"
+        <p
+          className="hero-fade-rise mx-auto mt-6 max-w-2xl text-lg text-paper/70"
+          style={{ animationDelay: "0.16s" }}
         >
           Devliora is built and led by Niloy Kumar Barman — a software
           engineer who believes enterprise clients deserve the same security,
           transparency, and engineering rigor that large teams promise but
           rarely deliver in full.
-        </motion.p>
+        </p>
       </div>
     </section>
   );

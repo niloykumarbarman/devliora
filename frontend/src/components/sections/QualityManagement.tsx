@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { motion, useReducedMotion } from "framer-motion";
 import { resolveImageUrl } from "@/lib/hero";
 import { fetchPartners, type PartnerDto } from "@/lib/partners";
+import Reveal from "@/components/Reveal";
 
 // No fabricated numbers/credentials here — generic capability claims,
 // safe to state as Devliora's own, matching the reference's own bullets
@@ -25,7 +25,6 @@ type QualityManagementProps = {
 // differs slightly). Real, admin-managed Partners logos stand in for the
 // reference's Clutch/Glassdoor/G2/GoodFirms row, same reasoning as before.
 export default function QualityManagement({ description }: QualityManagementProps) {
-  const shouldReduceMotion = useReducedMotion();
   const [partners, setPartners] = useState<PartnerDto[]>([]);
 
   useEffect(() => {
@@ -38,44 +37,34 @@ export default function QualityManagement({ description }: QualityManagementProp
     };
   }, []);
 
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.5, delay: i * 0.08 },
-        };
-
   return (
     <section className="relative overflow-hidden bg-ink py-16 text-paper md:py-20">
       <div className="mx-auto max-w-6xl px-6">
-        <motion.h2
-          {...fadeUp(0)}
+        <Reveal
+          as="h2"
           className="text-balance font-display text-4xl font-semibold leading-tight md:text-5xl"
         >
           Quality management
-        </motion.h2>
+        </Reveal>
 
         <div className="mt-10 grid gap-10 md:grid-cols-2 md:gap-16">
-          <motion.p {...fadeUp(1)} className="max-w-md text-paper/70">
+          <Reveal as="p" delay={0.08} className="max-w-md text-paper/70">
             {description}
-          </motion.p>
+          </Reveal>
 
-          <motion.ul {...fadeUp(2)} className="flex flex-col gap-5">
+          <Reveal as="ul" delay={0.16} className="flex flex-col gap-5">
             {QUALITY_BULLETS.map((bullet) => (
               <li key={bullet} className="flex items-start gap-3">
                 <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ember" />
                 <span className="font-semibold text-ember">{bullet}</span>
               </li>
             ))}
-          </motion.ul>
+          </Reveal>
         </div>
 
         {partners.length > 0 && (
-          <motion.div
-            {...fadeUp(3)}
+          <Reveal
+            delay={0.24}
             className="mt-16 flex flex-wrap items-center justify-center gap-x-14 gap-y-8 border-t border-paper/10 pt-12"
           >
             {partners.slice(0, 6).map((partner) =>
@@ -95,7 +84,7 @@ export default function QualityManagement({ description }: QualityManagementProp
                 </span>
               ),
             )}
-          </motion.div>
+          </Reveal>
         )}
       </div>
     </section>

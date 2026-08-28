@@ -1,7 +1,5 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import { ShieldCheck, GitCommitHorizontal, Gauge, MessageSquareText } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 const PRINCIPLES = [
   {
@@ -31,18 +29,6 @@ const PRINCIPLES = [
 ];
 
 export default function AboutPrinciples() {
-  const shouldReduceMotion = useReducedMotion();
-
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.5, delay: i * 0.08 },
-        };
-
   return (
     <section className="bg-grain relative overflow-hidden bg-ink py-24 text-paper md:py-32">
       <div
@@ -59,20 +45,21 @@ export default function AboutPrinciples() {
 
       <div className="relative mx-auto max-w-6xl px-6">
 
-        <motion.h2
-          {...fadeUp(1)}
+        <Reveal
+          as="h2"
+          delay={0.08}
           className="mt-4 max-w-2xl text-balance text-3xl font-semibold leading-tight md:text-4xl"
         >
           How Devliora <span className="text-signal">actually works.</span>
-        </motion.h2>
+        </Reveal>
 
         <div className="mt-14 grid gap-px overflow-hidden rounded-xl bg-paper/10 sm:grid-cols-2">
           {PRINCIPLES.map((principle, i) => {
             const Icon = principle.icon;
             return (
-              <motion.div
+              <Reveal
                 key={principle.title}
-                {...fadeUp(i + 2)}
+                delay={(i + 2) * 0.08}
                 className="bg-ink p-8"
               >
                 <Icon className="h-6 w-6 text-signal" strokeWidth={1.75} />
@@ -80,7 +67,7 @@ export default function AboutPrinciples() {
                 <p className="mt-3 text-sm leading-relaxed text-paper/60">
                   {principle.detail}
                 </p>
-              </motion.div>
+              </Reveal>
             );
           })}
         </div>

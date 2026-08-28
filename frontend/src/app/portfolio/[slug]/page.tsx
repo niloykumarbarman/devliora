@@ -7,6 +7,7 @@ import Reveal from "@/components/Reveal";
 import { fetchPortfolioBySlug, parseTechStack } from "@/lib/portfolios";
 import { resolveImageUrl } from "@/lib/hero";
 import { breadcrumbJsonLd, buildMetadata } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -20,14 +21,16 @@ export async function generateMetadata({
 
   if (!portfolio) {
     return buildMetadata({
-      title: "Project | Devliora",
-      description: "A project from Devliora's work.",
+      title: "Project not found",
+      description: "This project could not be found.",
       path: `/portfolio/${slug}`,
+      noindex: true,
     });
   }
 
   return buildMetadata({
-    title: `${portfolio.title} | Devliora`,
+    // CMS titles sometimes end in a period — trim it before appending.
+    title: `${portfolio.title.replace(/[.\s]+$/, "")} — Project`,
     description: portfolio.result.slice(0, 160),
     path: `/portfolio/${portfolio.slug}`,
   });
@@ -56,12 +59,9 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
+      <JsonLd data={breadcrumb} />
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <Reveal><section className="relative overflow-hidden bg-ink py-24 text-paper md:py-32">
           <div
             className="pointer-events-none absolute -top-40 left-1/2 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.15] blur-[120px] animate-ambient-drift"

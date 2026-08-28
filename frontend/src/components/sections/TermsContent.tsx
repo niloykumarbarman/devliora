@@ -1,8 +1,12 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 
 const sections = [
+  {
+    title: "Who Operates This Site",
+    body: [
+      "This website, devliora.com, is operated by Devliora, a software engineering company that trades as Devliora Systems, with delivery teams in Australia and Bangladesh. References to \"Devliora\", \"we\", or \"us\" in these terms mean that company. Questions about these terms can be emailed to info@devliora.com.",
+    ],
+  },
   {
     title: "Acceptance of Terms",
     body: [
@@ -72,8 +76,6 @@ const sections = [
 ];
 
 export default function TermsContent() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <section className="relative bg-paper py-24">
       <div className="absolute inset-0 bg-[size:56px_56px] bg-[linear-gradient(to_right,rgba(14,20,32,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,20,32,0.04)_1px,transparent_1px)]" />
@@ -81,12 +83,9 @@ export default function TermsContent() {
       <div className="relative mx-auto max-w-3xl px-6">
         <div className="space-y-px overflow-hidden rounded-2xl border border-ink/10 bg-ink/10">
           {sections.map((section, i) => (
-            <motion.div
+            <Reveal
               key={section.title}
-              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
+              delay={i * 0.08}
               className="bg-paper p-6 md:p-8"
             >
               <h2 className="font-display text-xl font-semibold text-ink">
@@ -97,7 +96,7 @@ export default function TermsContent() {
                   <p key={idx}>{paragraph}</p>
                 ))}
               </div>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </div>

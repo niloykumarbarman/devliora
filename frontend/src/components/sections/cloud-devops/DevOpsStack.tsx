@@ -1,10 +1,7 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 import { DEVOPS_STACK, DEVOPS_CATEGORY_ORDER } from "@/lib/cloudDevops";
 
 export default function DevOpsStack() {
-  const reduceMotion = useReducedMotion();
 
   const grouped = DEVOPS_CATEGORY_ORDER.map((category) => ({
     category,
@@ -26,13 +23,7 @@ export default function DevOpsStack() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-signal">
             DevOps Technology Stack
           </p>
@@ -43,17 +34,11 @@ export default function DevOpsStack() {
             Not a logo wall. Every tool below is here because it solves a specific
             problem in building, shipping and running software — and here is which one.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-16 space-y-12">
           {grouped.map((group, groupIndex) => (
-            <motion.div
-              key={group.category}
-              initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: groupIndex * 0.05 }}
-            >
+            <Reveal key={group.category} delay={groupIndex * 0.05}>
               <h3 className="font-mono text-xs font-semibold uppercase tracking-widest text-paper/50">
                 {group.category}
               </h3>
@@ -80,7 +65,7 @@ export default function DevOpsStack() {
                   );
                 })}
               </div>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </div>

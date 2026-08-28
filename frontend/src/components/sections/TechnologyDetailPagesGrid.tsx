@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { fetchAllTechnologyDetailPages, type TechnologyDetailPageSummaryDto } from "@/lib/technologyDetailPages";
+import Reveal from "@/components/Reveal";
 
 // Links every admin-managed detail page (rendered by /technologies/[slug]
 // or /solutions/[slug]) from the matching index page, so a page created
@@ -27,7 +27,6 @@ export default function TechnologyDetailPagesGrid({
   subheading,
 }: TechnologyDetailPagesGridProps) {
   const [pages, setPages] = useState<TechnologyDetailPageSummaryDto[]>([]);
-  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     fetchAllTechnologyDetailPages().then((all) =>
@@ -40,47 +39,32 @@ export default function TechnologyDetailPagesGrid({
   return (
     <section className="relative overflow-hidden bg-paper px-6 py-16 sm:py-20">
       <div className="mx-auto max-w-6xl">
-        <motion.h2
-          initial={{ opacity: 0, y: reducedMotion ? 0 : 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
+        <Reveal
+          as="h2"
           className="animate-gradient-text font-display text-2xl font-semibold sm:text-3xl"
         >
           {heading}
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: reducedMotion ? 0 : 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5, delay: 0.08 }}
-          className="mt-2 text-graphite/70"
-        >
+        </Reveal>
+        <Reveal as="p" delay={0.08} className="mt-2 text-graphite/70">
           {subheading}
-        </motion.p>
+        </Reveal>
 
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {pages.map((page, idx) => (
-            <motion.div
-              key={page.slug}
-              initial={{ opacity: 0, y: reducedMotion ? 0 : 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.4, delay: idx * 0.06 }}
-            >
+            <Reveal key={page.slug} delay={idx * 0.06}>
               <Link
                 href={`${basePath}/${page.slug}`}
                 className="group flex items-center justify-between gap-3 rounded-lg border border-wire/60 bg-paper px-5 py-4 transition-colors hover:border-signal"
               >
                 <div>
-                  <p className="font-mono text-xs uppercase tracking-wide text-graphite/50">
+                  <p className="font-mono text-xs uppercase tracking-wide text-graphite/65">
                     {page.technologyName}
                   </p>
                   <p className="mt-1 font-display text-lg font-medium text-ink">{page.heroTitle}</p>
                 </div>
-                <ArrowUpRight className="h-5 w-5 shrink-0 text-graphite/40 transition-colors group-hover:text-signal" />
+                <ArrowUpRight className="h-5 w-5 shrink-0 text-graphite/60 transition-colors group-hover:text-signal" />
               </Link>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </div>

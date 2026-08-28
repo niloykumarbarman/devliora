@@ -48,7 +48,10 @@ import { fetchFaqsForService } from "@/lib/faq";
 import FAQView from "@/components/sections/FAQView";
 import { MEGA_MENU_TECHNOLOGIES } from "@/lib/megaMenuTechnologies";
 import { API_BASE_URL } from "@/lib/apiConfig";
-import { breadcrumbJsonLd, buildMetadata, serviceJsonLd } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata, serviceJsonLd, faqPageJsonLd, webPageJsonLd } from "@/lib/seo";
+import RelatedLinks from "@/components/sections/RelatedLinks";
+import { serviceCrossLinks } from "@/lib/crossLinks";
+import { SERVICE_WHO_AND_PROBLEMS } from "@/lib/serviceContent";
 import { getTechIcon } from "@/lib/techIcons";
 import TechBrandIcon from "@/components/TechBrandIcon";
 import ServiceTabs, {
@@ -64,6 +67,7 @@ import QualityManagement from "@/components/sections/QualityManagement";
 import ExpandableServiceCards from "@/components/sections/ExpandableServiceCards";
 import PricingModels from "@/components/sections/PricingModels";
 import { fetchPortfolios, fetchPortfolioBySlug, type Portfolio } from "@/lib/portfolios";
+import JsonLd from "@/components/JsonLd";
 
 async function safeFetchTechnologies() {
   try {
@@ -189,14 +193,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const service = await fetchServiceBySlug(baseSlug);
   if (!service) {
     return buildMetadata({
-      title: "Service | Devliora",
-      description: "Service details.",
+      title: "Service not found",
+      description: "This service page could not be found.",
       path: `/services/${canonicalSlug}`,
+      noindex: true,
     });
   }
   const tab = tabLabel ? SERVICE_TABS[baseSlug]?.find((t) => t.label === tabLabel) : null;
   return buildMetadata({
-    title: `${tab ? tab.heading : service.title} | Devliora`,
+    title: tab ? tab.heading : service.title,
     description: tab ? tab.body : service.shortDescription,
     path: `/services/${canonicalSlug}`,
   });
@@ -326,7 +331,7 @@ const WHY_CHOOSE_US_EXTRA_CARDS: ServiceCapability[] = [
 ];
 
 const WHY_CHOOSE_US_CLOSING_CTA: ServiceClosingCta = {
-  text: "Schedule a free consultation with our software development experts.",
+  text: "Book a free consultation. Tell us the problem, and we will tell you how we would approach it.",
   buttonText: "Book now",
   href: "/book-consultation",
 };
@@ -417,28 +422,28 @@ const DEDICATED_DEV_CENTER = [
 // section sits below the tabs as a shared block, not inside them.
 const SOFTWARE_ESSENTIALS = [
   {
-    title: "Lightning-Fast Performance",
-    body: "Built with efficient code, smart caching, and optimized rendering, so your software stays fast even as usage grows.",
+    title: "Performance under load",
+    body: "Caching, query tuning, and pagination are part of the build, so response times hold as data and traffic grow rather than degrading quietly.",
   },
   {
-    title: "Rock-Solid Security",
-    body: "Data protection is built in from the start — encrypted transfers, secure sessions, and hardening against common threats.",
+    title: "Security in the first commit",
+    body: "Encrypted transport, short-lived sessions, rate-limited auth endpoints, and audit logging — set up before feature work starts, not after.",
   },
   {
-    title: "Seamless Interoperability",
-    body: "Your software connects cleanly with the third-party tools and internal systems it needs to talk to.",
+    title: "Integrations that stay connected",
+    body: "Third-party APIs and internal systems are connected through documented, monitored endpoints, so a change on their side is caught before it breaks yours.",
   },
   {
-    title: "Tailored Personalization",
-    body: "We design experiences that adapt to each user, from smart defaults to targeted content.",
+    title: "Roles and permissions that fit",
+    body: "Access control modelled around how your organisation actually works, so people see what they should and nothing they shouldn't.",
   },
   {
-    title: "User-First Experience",
-    body: "Our design process centers on the user, resulting in interfaces that are intuitive from first use to final release.",
+    title: "Interfaces people can use unassisted",
+    body: "Flows tested with real users and built to be keyboard-navigable and screen-reader-friendly, not retrofitted for accessibility later.",
   },
   {
-    title: "Uncompromising Compliance",
-    body: "We build with the regulatory and data-handling standards your industry requires, from day one.",
+    title: "Data handling that meets the bar",
+    body: "Retention, access, and export built to the standards your sector requires — GDPR, HIPAA, SOC 2 controls — from the start rather than bolted on for an audit.",
   },
 ];
 
@@ -484,8 +489,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         steps: APPROACH_STEPS,
       },
       roadmap: {
-        tagline: "Crafting web experiences that are fast, secure, and built to grow with your business.",
-        body: "At Devliora, we build web applications with a clear focus on usability, reliability, and your business goals. From early idea shaping to UX/UI design, development, testing, and ongoing support, our team stays involved throughout the entire process. With over a decade of experience, we understand how to create applications that run smoothly and adapt well to your needs.",
+        tagline: "Web applications built around how the business actually runs.",
+        body: "We build web applications around your real workflows, not a feature checklist. The same team shapes the idea, designs the interface, writes the code, tests it, and supports it after launch — so a decision made in week one doesn't become someone else's problem in month three.",
         steps: [
           {
             title: "Development",
@@ -529,31 +534,31 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         source: "Glassdoor",
       },
       scope: {
-        intro: "We cover every stage of web application development with a balance of precision and creativity. Here's an overview of what our web development services include.",
+        intro: "We work through every stage of a web build. Here is what each one actually involves.",
         items: [
           {
-            title: "Conceptualization & Ideation",
-            body: "We collaborate with you to brainstorm and refine innovative ideas. Detailed project scopes and timelines are crafted to align with your vision.",
+            title: "Discovery & scope",
+            body: "We map the domain, the constraints, and the failure modes with you, then agree a scope and timeline before any code is written.",
           },
           {
-            title: "Architecture & Design",
-            body: "Our team creates scalable and robust architectures that form the backbone of your application. Engaging and responsive designs ensure a seamless user experience across devices.",
+            title: "Architecture & design",
+            body: "The data model, the API contracts, and the interface are drafted and reviewed together, so the system is coherent before it exists.",
           },
           {
-            title: "Development & Customization",
-            body: "Our expert developers build custom features tailored to your specific business needs. We employ cutting-edge technologies to ensure high performance and security.",
+            title: "Development",
+            body: "Features ship in small, deployable increments — each one tested and reviewed on its own, not merged in a single batch at the end.",
           },
           {
-            title: "Integration & Automation",
-            body: "Seamless integration with third-party services and APIs enhances functionality. Automation of repetitive tasks increases efficiency and reduces operational costs.",
+            title: "Integration",
+            body: "We connect the app to the rest of your stack — internal systems, third-party APIs, payment and identity providers — through documented, monitored integration points.",
           },
           {
-            title: "Testing & Optimization",
-            body: "Comprehensive testing ensures bug-free, optimized performance. Continuous performance monitoring and tuning maintain peak efficiency.",
+            title: "Testing",
+            body: "Functional, performance, and cross-browser checks run before every release, with automated regression coverage so a fixed bug stays fixed.",
           },
           {
-            title: "Launch & Beyond",
-            body: "We handle strategic deployment for a successful launch. Ongoing support and iterative enhancements keep your application ahead of the curve.",
+            title: "Launch & support",
+            body: "We plan the release to avoid downtime, then stay on for monitoring, hardening, and the changes that only surface once real users are on it.",
           },
         ],
       },
@@ -581,8 +586,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       caseStudiesIntro: {
         highlight: "Success Stats",
         rest: "That Speak Volumes",
-        tagline: "Real Results, Real Impact, The Devliora Cases.",
-        body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
+        tagline: "What the work looked like, start to finish.",
+        body: "A few engagements in more detail — the constraint we started from, the system we built, and what changed for the client. Where a project is under NDA, client names and some specifics are composite and marked as illustrative.",
         ctaText: "Ready to turn ideas into reality?",
       },
       // Web tab only, per explicit request. Purely descriptive
@@ -593,27 +598,27 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         before: "Reliable Solutions with",
         highlight: "Thoughtful",
         after: "Engineering",
-        body: "From complex business systems to scalable, everyday web applications, our engineering practice focuses on clarity, performance, and long-term stability. We design software with careful attention to security, maintainability, and your specific needs, ensuring smooth integration and room for future evolution.",
+        body: "Whether it is a line-of-business system or a customer-facing app, the priorities are the same: it should be correct, it should stay maintainable as it grows, and the next engineer to open the codebase should be able to follow it.",
         items: [
           {
-            title: "Flexible deployment options",
-            body: "We build software that runs dependably across different operating systems and environments, giving teams a consistent experience wherever they work.",
+            title: "Reproducible environments",
+            body: "The same build runs the same way in staging and production, on your cloud or ours, so \"works on my machine\" stops being a category of bug.",
           },
           {
-            title: "Streamlined development flow",
-            body: "Our streamlined engineering workflows and toolkits help shorten development cycles while maintaining clean, reliable output.",
+            title: "Visible, reviewable delivery",
+            body: "Small commits on a steady cadence, CI checks on every change, and a public history you can read — nothing ships unreviewed.",
           },
           {
-            title: "Security-first approach",
-            body: "Security principles are applied from the ground up, helping protect your systems and data throughout the entire lifecycle.",
+            title: "Security in the first build",
+            body: "Authentication, rate limiting, encryption, and audit logging are part of the initial architecture, not a hardening pass added before launch.",
           },
           {
-            title: "Designed to scale",
-            body: "Our solutions grow naturally with your business, staying stable and efficient even as user needs and workloads increase.",
+            title: "Sized to where you are heading",
+            body: "We build for the growth you can see coming, without paying up front for scale you may never need.",
           },
           {
-            title: "Versatile engineering toolkit",
-            body: "We draw from a wide range of engineering tools, frameworks, and practices to support functionality and ensure a smooth build process.",
+            title: "A small, proven toolkit",
+            body: "We use a focused set of tools well rather than chasing every new framework. A new one is adopted only when it clearly earns its place.",
           },
         ],
       },
@@ -626,7 +631,7 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       whyChooseUs: {
         ctaText: "Ready to turn ideas into reality?",
         heading: "Why Choose Devliora for Your Web Application Development Needs?",
-        tagline: "Unmatched Expertise and Dedication",
+        tagline: "Engineers first — that shapes every call we make.",
         reasons: [
           {
             title: "Client-Centric Approach",
@@ -662,8 +667,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       deliveryFramework: {
         highlight: "From Code to Launch",
         rest: "Devliora's Complete Delivery Framework",
-        tagline: "Crafting Solutions with Care – We Build, You Excel!",
-        body: "Devliora drives the entire development process, from initial concept to final deployment. Whether starting from scratch or stepping in at any stage of your software's lifecycle, we ensure seamless execution. We also provide ongoing post-launch support, offering long-term maintenance and updates to keep your solutions running smoothly.",
+        tagline: "One team from the first commit to production, and after it.",
+        body: "We take a project from the first conversation to production and stay on afterward — or step in partway through an existing build. Each stage has a defined output and a check before the next one starts, so there are no silent handoffs and no \"it's basically done\" that isn't.",
         steps: [
           { title: "Analysis", checkpoint: "Requirements Testing" },
           { title: "Design", checkpoint: "UX/UI Testing" },
@@ -673,15 +678,11 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           { title: "Support" },
         ],
       },
-      // Heading/tagline/body match the reference; "our in-house R&D" is
-      // reworded to "continuous learning" since it implies a formal R&D
-      // department Devliora doesn't have — same reasoning as the
-      // "CTO office" / "Centers of Excellence" rewrite above.
       techIntro: {
         ctaText: "Ready to turn ideas into reality?",
         heading: "Technologies we work with",
-        tagline: "Driven by a mix of cutting-edge tech, endless innovation, and continuous learning.",
-        body: "We leverage a wide range of technologies to build powerful, customized solutions tailored to your needs. Our team uses proven tools and methodologies to stay current with the tech landscape, aiming for reliable, future-ready software.",
+        tagline: "The stack picked for the problem, not the pitch.",
+        body: "Most of our web work is TypeScript, React and Next.js on the front end with .NET, Node.js or Python behind it. We choose tools that are well-supported, straightforward to hire against, and something your team can maintain after we hand over — not whatever is trending.",
         // Reference has a Web/Mobile/Desktop toggle here; clicking a
         // pill switches the site's own real tabs above (same three
         // platforms, since Desktop is a genuine Devliora offering). See
@@ -712,8 +713,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         steps: APPROACH_STEPS,
       },
       roadmap: {
-        tagline: "Building secure, feature-rich mobile experiences that move your business forward.",
-        body: "At Devliora, we build mobile applications with a clear focus on usability, reliability, and your business goals. From early idea shaping to UX/UI design, development, testing, and ongoing support, our team stays involved throughout the entire process. With over a decade of experience, we understand how to create apps that run smoothly and adapt well to your needs.",
+        tagline: "Mobile apps built around real user workflows.",
+        body: "We build mobile apps around how people will actually use them, not a feature checklist. The same team shapes the idea, designs the UX, writes the code, tests it across real devices, and supports it after release — so early decisions don't turn into rework later.",
         steps: [
           {
             title: "Development",
@@ -803,8 +804,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       caseStudiesIntro: {
         highlight: "Success Stats",
         rest: "That Speak Volumes",
-        tagline: "Real Results, Real Impact, The Devliora Cases.",
-        body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
+        tagline: "What the work looked like, start to finish.",
+        body: "A few engagements in more detail — the constraint we started from, the system we built, and what changed for the client. Where a project is under NDA, client names and some specifics are composite and marked as illustrative.",
         ctaText: "Ready to turn ideas into reality?",
       },
       // Mobile tab, mirroring Web's "Reliable Solutions with Thoughtful
@@ -815,34 +816,34 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
         before: "Reliable Mobile Solutions with",
         highlight: "Thoughtful",
         after: "Engineering",
-        body: "From consumer-facing apps to complex mobile platforms, our engineering practice focuses on clarity, performance, and long-term stability. We design mobile software with careful attention to security, maintainability, and your specific needs, ensuring smooth integration and room for future evolution.",
+        body: "From a consumer app to an internal tool for field staff, the priorities hold: it should feel fast on a mid-range phone, keep working on a poor connection, and stay maintainable as the OS and store rules keep moving underneath it.",
         items: [
           {
-            title: "Cross-platform reach",
-            body: "We build apps that run dependably across iOS and Android, giving your users a consistent experience regardless of device.",
+            title: "One codebase, both platforms — when it fits",
+            body: "We use cross-platform (React Native, Flutter) where it saves real effort, and go native where the app genuinely needs it. We say which and why up front.",
           },
           {
-            title: "Streamlined development flow",
-            body: "Our streamlined mobile engineering workflows and toolkits help shorten development cycles while maintaining clean, reliable output.",
+            title: "Built for the real device",
+            body: "Tested on actual hardware and slow networks, not just the simulator — offline states, low memory, and interrupted flows are handled, not assumed away.",
           },
           {
-            title: "Security-first approach",
-            body: "Security principles are applied from the ground up, protecting user data and device-level access throughout the app's lifecycle.",
+            title: "Security on the device",
+            body: "Secure storage for tokens and credentials, certificate pinning where it matters, and no sensitive data sitting in logs or local caches.",
           },
           {
-            title: "Designed to scale",
-            body: "Our apps grow naturally with your user base, staying fast and stable even as usage and feature demands increase.",
+            title: "Ready for store review",
+            body: "We handle the App Store and Play Store submission, the metadata, and the review back-and-forth, and set up a release pipeline your team can run after handover.",
           },
           {
-            title: "Versatile engineering toolkit",
-            body: "We draw from a wide range of native and cross-platform tools and frameworks to support functionality and ensure a smooth build process.",
+            title: "Instrumented from day one",
+            body: "Crash reporting and basic analytics are wired in before launch, so you find out about a bad release from a dashboard rather than a one-star review.",
           },
         ],
       },
       whyChooseUs: {
         ctaText: "Ready to turn ideas into reality?",
         heading: "Why Choose Devliora for Your Mobile Application Development Needs?",
-        tagline: "Unmatched Expertise and Dedication",
+        tagline: "Engineers first — that shapes every call we make.",
         reasons: [
           {
             title: "Client-Centric Approach",
@@ -878,8 +879,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       deliveryFramework: {
         highlight: "From Code to Launch",
         rest: "Devliora's Complete Delivery Framework",
-        tagline: "Crafting Solutions with Care – We Build, You Excel!",
-        body: "Devliora drives the entire development process, from initial concept to final deployment. Whether starting from scratch or stepping in at any stage of your mobile app's lifecycle, we ensure seamless execution. We also provide ongoing post-launch support, offering long-term maintenance and updates to keep your apps running smoothly.",
+        tagline: "One team from the first commit to production, and after it.",
+        body: "We take a mobile project from the first conversation to store release and stay on afterward — or step in partway through an existing app. Each stage has a defined output and a check before the next one starts, so nothing is handed off half-finished.",
         steps: [
           { title: "Analysis", checkpoint: "Requirements Testing" },
           { title: "Design", checkpoint: "UX/UI Testing" },
@@ -891,9 +892,9 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       },
       techIntro: {
         ctaText: "Ready to turn ideas into reality?",
-        heading: "Powering your mobile vision with cutting-edge tech",
-        tagline: "Bringing mobile ideas to life with next-gen tech.",
-        body: "Our mobile application development approach focuses on thoughtful use of modern technologies to build reliable, well-designed apps. Across iOS and Android, we combine practical engineering with considered design to address your specific requirements. Our team works with current tools and frameworks to ensure long-term maintainability — from native to hybrid and cross-platform, we support the full journey from concept to launch.",
+        heading: "The mobile stack we build on",
+        tagline: "Native where it matters, cross-platform where it pays off.",
+        body: "For iOS we use Swift, for Android Kotlin, and for shared codebases React Native or Flutter. Which one a project uses is a decision we make with you early, based on how much the app leans on device features, how large the team maintaining it will be, and how fast you need both platforms live.",
         // Same real Web/Mobile/Desktop tab toggle as the Web tab — see
         // note on that tab's techIntro.
         showTabToggle: true,
@@ -960,8 +961,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       // attribution — not a Devliora claim — same treatment as the
       // Accenture research citation elsewhere on this site.
       security: {
-        heading: "Fortifying your desktop app with top-notch security",
-        body: "We embed cybersecurity throughout our desktop app development, using threat modeling, input validation, and security headers. Our approach includes data encryption and SAST/DAST testing, with continuous exploration of new security measures to stay ahead of threats.",
+        heading: "Security built into the desktop build",
+        body: "Threat modelling at design time, input validation and secure defaults in the code, encrypted storage for anything sensitive on the machine, and SAST/DAST scans in the pipeline. A signed, verifiable update channel so users are not installing something unchecked.",
         checklist: [
           "Embedded Cybersecurity",
           "Threat Modeling",
@@ -985,8 +986,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       // reference exactly rather than editorialize its content.
       targetUsers: {
         heading: "Desktop apps for your target users",
-        tagline: "Crafting desktop experiences that engage, empower, and elevate your users.",
-        body: "At Devliora, we excel in developing both enterprise and consumer-facing desktop applications. For every unique user group, we tailor feature sets and user experiences that perfectly align with their needs and preferences.",
+        tagline: "Different feature sets for the people who run the business and the people who buy from it.",
+        body: "We build desktop applications for two very different audiences: internal users who live in the tool all day and need speed and keyboard-first flows, and consumers who open it occasionally and need it to be obvious. The feature set and the interface are shaped around whichever one you are building for.",
         groups: [
           {
             heading: "For business users",
@@ -1029,16 +1030,16 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       // capability, so it's left out rather than implied as Devliora's.
       roadmap: {
         tagline: "Building stable, high-performance desktop software for long-term use.",
-        body: "We transform ideas into reliable desktop applications designed for performance, security, and usability. From early planning and design to development, testing, and long-term support, we manage every stage of the process. Our experience helps ensure desktop solutions that remain dependable as business needs evolve.",
+        body: "We build desktop software for the cases where a browser tab is not enough: offline capability, deep OS integration, heavy local processing, or direct hardware access. The same team handles planning, build, testing, packaging, and the update mechanism that follows.",
         steps: [
           {
             title: "Healthcare",
-            body: "Our desktop applications for healthcare streamline patient management, improve clinical workflows, and ensure compliance with regulations. We offer solutions that enhance both provider and patient experiences.",
+            body: "In healthcare, a desktop client is usually where clinical staff spend the day — patient records, scheduling, and messaging that has to keep working during an outage and stay inside compliance boundaries.",
             bullets: ["Efficient patient data management", "Secure communication channels"],
           },
           {
             title: "Finance",
-            body: "In finance, our desktop solutions optimize transaction processing, enhance data security, and ensure compliance with financial regulations. We provide tools that support robust financial management and analytics.",
+            body: "Finance desktop tools tend to be about throughput and control: fast data entry, strict access rules, an audit trail on every action, and analytics that run locally on large datasets.",
             bullets: [
               "Streamlined transaction processing",
               "Advanced data security features",
@@ -1047,20 +1048,20 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
           },
           {
             title: "Furniture eCommerce",
-            body: "Our desktop applications for furniture eCommerce help you manage inventory, track orders, and enhance the online shopping experience. We design solutions that drive sales and improve customer satisfaction.",
+            body: "For an eCommerce back office, the desktop app is the operations hub — inventory, orders, fulfilment, and returns — kept in sync with the storefront and the warehouse.",
           },
           {
             title: "Telecom",
-            body: "In telecom, our desktop applications enhance customer service management, streamline billing processes, and support network monitoring. We provide solutions that improve service delivery and operational efficiency.",
+            body: "Telecom back-office software covers customer accounts, billing runs, and network monitoring dashboards that need to refresh continuously without bogging down the machine.",
             bullets: ["Customer service management", "Network performance monitoring"],
           },
           {
             title: "Logistics",
-            body: "Our desktop solutions for logistics optimize route planning, track shipments, and manage fleet operations. We deliver tools that improve operational efficiency and reduce costs.",
+            body: "In logistics, the desktop tool is where planners work: route building, live shipment tracking, and fleet status, often pulling from several systems into one screen.",
           },
           {
             title: "Retail",
-            body: "For retail, our desktop apps streamline point-of-sale systems, manage inventory, and offer real-time sales analytics. We create solutions that boost efficiency and enhance the shopping experience.",
+            body: "Retail desktop software runs the point of sale and stock room: it has to stay usable offline, sync when the connection returns, and reconcile cleanly at the end of the day.",
           },
         ],
       },
@@ -1069,7 +1070,7 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       // Development" section — cost-control practices rather than cost
       // factors, since that's what the reference actually covers here.
       scope: {
-        intro: "Building a desktop application doesn't have to be costly. We focus on practical ways to manage budgets while delivering dependable, high-quality solutions. By reusing proven components, streamlining development, and offering flexible engagement models, we help maximize value. The approach prioritizes efficiency and cost control without compromising quality.",
+        intro: "A few practical ways we keep a desktop build from getting expensive without cutting the parts that matter.",
         ctaText: "Ready to turn ideas into reality?",
         items: [
           {
@@ -1104,8 +1105,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       caseStudiesIntro: {
         highlight: "Success Stats",
         rest: "That Speak Volumes",
-        tagline: "Real Results, Real Impact, The Devliora Cases.",
-        body: "Explore our work across diverse industries. See how we've tackled real challenges and delivered outcomes our clients can point to — each case study reflects our commitment to quality.",
+        tagline: "What the work looked like, start to finish.",
+        body: "A few engagements in more detail — the constraint we started from, the system we built, and what changed for the client. Where a project is under NDA, client names and some specifics are composite and marked as illustrative.",
       },
       // No "Reliable Solutions with Thoughtful Engineering" section on
       // Desktop — verified the reference's own Desktop page doesn't
@@ -1114,7 +1115,7 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       whyChooseUs: {
         ctaText: "Ready to turn ideas into reality?",
         heading: "Why Choose Devliora for Your Desktop Application Development Needs?",
-        tagline: "Unmatched Expertise and Dedication",
+        tagline: "Engineers first — that shapes every call we make.",
         reasons: [
           {
             title: "Client-Centric Approach",
@@ -1149,8 +1150,8 @@ const SERVICE_TABS: Record<string, ServiceTab[]> = {
       deliveryFramework: {
         highlight: "Our Desktop App",
         rest: "Development Framework",
-        tagline: "Crafting desktop apps with flair, precision, and a touch of magic",
-        body: "We help turn initial ideas into well-crafted desktop applications, guiding the process from early planning through testing and release. The focus is on building software that is both reliable and easy to use, with a clear, collaborative development process throughout.",
+        tagline: "A defined output and a review at every stage — no half-finished handoffs.",
+        body: "Each stage below produces something concrete — a spec, a working build, a signed installer — and is reviewed before the next one starts, so you can see where a project stands without having to ask.",
         steps: [
           {
             title: "Discovery",
@@ -1347,6 +1348,8 @@ export default async function ServiceDetailPage({ params }: Props) {
         }
       : null;
 
+  const whoAndProblems = SERVICE_WHO_AND_PROBLEMS[service.slug] ?? null;
+
   const rawCheckpoints = ROADMAP_CHECKPOINTS[service.slug];
   const checkpoints =
     rawCheckpoints && rawCheckpoints.length === service.includes.length ? rawCheckpoints : null;
@@ -1409,19 +1412,26 @@ export default async function ServiceDetailPage({ params }: Props) {
     description: service.shortDescription,
     path: `/services/${service.slug}`,
   });
+  const faqLd = faqPageJsonLd(
+    serviceFaqs.map((f) => ({ question: f.question, answer: f.answer })),
+    `/services/${service.slug}`
+  );
+  const webPageLd = webPageJsonLd({
+    path: `/services/${service.slug}`,
+    name: `${service.title} | Devliora`,
+    description: service.shortDescription,
+  });
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceLd) }}
-      />
+      <JsonLd data={breadcrumb} />
+      <JsonLd data={serviceLd} />
+      <JsonLd data={webPageLd} />
+      {faqLd && (
+        <JsonLd data={faqLd} />
+      )}
       <Navbar />
-      <main className="bg-ink text-paper">
+      <main id="main-content" tabIndex={-1} className="bg-ink text-paper">
         {service.slug === "digital-design" ? (
           /* Split hero: breadcrumb + heading/tagline/description + static
              service list on the left, this service's own hero image (set
@@ -1577,6 +1587,50 @@ export default async function ServiceDetailPage({ params }: Props) {
           </>
         )}
 
+        {/* "Who it's for" / "Problems it solves" — the two things a
+            search visitor wants answered before scrolling. Copy is
+            frontend-authored per slug (see lib/serviceContent.ts); the
+            section is skipped for any slug without an entry. */}
+        {whoAndProblems && (
+          <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
+            <div className="mx-auto max-w-5xl px-6">
+              {whoAndProblems.intro && (
+                <p className="max-w-3xl text-lg leading-relaxed text-paper/80">
+                  {whoAndProblems.intro}
+                </p>
+              )}
+              <div className="mt-12 grid gap-12 md:grid-cols-2 md:gap-16">
+                <div>
+                  <h2 className="font-display text-2xl font-semibold text-paper sm:text-3xl">
+                    Who it&apos;s for
+                  </h2>
+                  <ul className="mt-6 space-y-4">
+                    {whoAndProblems.forWho.map((item) => (
+                      <li key={item} className="flex gap-3 text-paper/75">
+                        <span aria-hidden className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-signal" />
+                        <span className="leading-relaxed">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <h2 className="font-display text-2xl font-semibold text-paper sm:text-3xl">
+                    Problems it solves
+                  </h2>
+                  <ul className="mt-6 space-y-4">
+                    {whoAndProblems.problems.map((item) => (
+                      <li key={item} className="flex gap-3 text-paper/75">
+                        <span aria-hidden className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ember" />
+                        <span className="leading-relaxed">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section></Reveal>
+        )}
+
         {/* "Key facts at a glance" — Performance & Reliability Engineering
             only, static. NOTE: the reference's facts included specific
             claimed figures ("3,600+ concurrent users simulated per test",
@@ -1656,35 +1710,34 @@ export default async function ServiceDetailPage({ params }: Props) {
                   {renderHighlightedHeading("{More solutions} designed to deliver meaningful outcomes.")}
                 </h2>
                 <p className="text-paper/70">
-                  Our teams combine thoughtful design with dependable engineering. From
-                  cross-platform applications using Flutter to clean frontend interfaces and
-                  reliable database solutions with SQL Server and MySQL, we support a wide range
-                  of needs. Our cloud specialists design scalable, secure AWS environments that
-                  enable teams to build and iterate with confidence.
+                  Load testing is usually one part of a wider engagement. The same engineers also
+                  work on the application and database changes the test results point to, and on
+                  the cloud environment the system runs in — so a bottleneck we find is a
+                  bottleneck we can help fix, not just report.
                 </p>
               </div>
 
               <div className="mt-16 grid gap-x-16 gap-y-12 sm:grid-cols-2">
                 {[
                   {
-                    title: "Flutter Development",
-                    body: "Craft beautiful, high-performance apps with our Flutter experts, ready to bring your vision to life across all platforms.",
+                    title: "Frontend & mobile",
+                    body: "React, Next.js and Flutter work to cut the rendering and network cost that shows up as slow pages under real conditions.",
                   },
                   {
-                    title: "Frontend Development",
-                    body: "Deliver stunning, user-centric interfaces with our seasoned frontend developers who blend creativity with code.",
+                    title: "SQL Server & MySQL",
+                    body: "Query plans, indexing, and connection-pool tuning for the database contention that most load tests eventually trace back to.",
                   },
                   {
-                    title: "SQL Server Development",
-                    body: "Optimize your data management with our skilled SQL Server developers, ensuring robust and scalable database solutions.",
+                    title: "APIs & services",
+                    body: "Caching, pagination, and concurrency limits on the endpoints that fall over first when traffic climbs.",
                   },
                   {
-                    title: "MySQL Development",
-                    body: "Leverage the strength of MySQL with our developers who excel at building efficient and reliable databases.",
+                    title: "AWS & cloud",
+                    body: "Auto-scaling policies, instance sizing, and load-balancer configuration set against what the tests actually showed.",
                   },
                   {
-                    title: "AWS Development",
-                    body: "Scale effortlessly with our AWS experts, mastering cloud solutions tailored to your business needs.",
+                    title: "Reporting",
+                    body: "Results written up as a ranked list of what to change and the expected effect of each, not a wall of graphs.",
                   },
                 ].map((item) => (
                   <div key={item.title}>
@@ -1862,8 +1915,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               <div className="flex flex-col sm:flex-row">
                 <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                   <p className="max-w-lg text-lg font-medium leading-snug text-paper">
-                    Transform your business with cutting-edge IT solutions and tailored
-                    strategies.
+                    A second opinion on the decision before you commit the budget.
                   </p>
                 </div>
                 <Link
@@ -2674,7 +2726,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                         {step}
                       </div>
                       {i < steps.length - 1 && (
-                        <ChevronRight className="h-5 w-5 shrink-0 text-paper/40" />
+                        <ChevronRight className="h-5 w-5 shrink-0 text-paper/55" />
                       )}
                     </div>
                   ),
@@ -3222,7 +3274,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                         {testimonial.clientPhotoUrl ? (
                           <Image
                             src={resolveImageUrl(testimonial.clientPhotoUrl)}
-                            alt=""
+                            alt={testimonial.clientName}
                             width={44}
                             height={44}
                             className="h-11 w-11 shrink-0 rounded-full object-cover"
@@ -3256,9 +3308,9 @@ export default async function ServiceDetailPage({ params }: Props) {
                     Cutting-edge tech, timeless quality.
                   </p>
                   <p className="mt-4 text-base leading-relaxed text-paper/70">
-                    We stay ahead of the curve, embracing the latest advancements so every AI
-                    project is built on a foundation of innovation and reliability — from machine
-                    learning to cloud computing and beyond.
+                    We use the model that fits the task — a fine-tuned classifier, a retrieval setup over your
+                    own documents, or a hosted LLM API — and we measure how often it is right before
+                    it ships. TensorFlow and PyTorch for training, Python for the pipeline around it.
                   </p>
                   <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
                     {MEGA_MENU_TECHNOLOGIES.map((tech) => (
@@ -3573,10 +3625,9 @@ export default async function ServiceDetailPage({ params }: Props) {
                     </p>
                   </div>
                   <p className="text-paper/70 md:pt-2">
-                    Across industries, we craft custom solutions designed to meet the specific
-                    needs of healthcare, telecom, finance, automotive, and retail. Our expertise
-                    ensures seamless integration and optimization of operations. From concept to
-                    execution, we deliver technology that empowers.
+                    Every sector has its own constraints — compliance rules, integration points, data-handling
+                    expectations. We factor those in from the first design conversation rather than
+                    discovering them during review.
                   </p>
                 </div>
 
@@ -4010,8 +4061,9 @@ export default async function ServiceDetailPage({ params }: Props) {
                     Our digital marketing services
                   </h2>
                   <p className="mt-5 max-w-md text-paper/70">
-                    We build digital marketing strategies that empower your business to drive
-                    engagement, increase brand visibility, and maximize return on investment.
+                    We run marketing around one of three goals at a time — visibility, leads, or conversion —
+                    on the channels that fit your audience, with tracking in place so you can see
+                    which spend is returning.
                   </p>
                 </div>
                 <div className="relative min-h-[260px] flex-1">
@@ -4406,7 +4458,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                       {imageSrc ? (
                         <Image
                           src={resolveImageUrl(imageSrc)}
-                          alt=""
+                          alt={card.title}
                           fill
                           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -4595,8 +4647,8 @@ export default async function ServiceDetailPage({ params }: Props) {
               <div className="flex flex-col sm:flex-row">
                 <div className="flex-1 px-6 py-8 sm:px-10 sm:pl-[max(1.5rem,calc(50vw_-_36rem_+_2.5rem))]">
                   <p className="max-w-lg text-lg font-medium leading-snug text-paper">
-                    Top-tier engineers skilled in JMeter and performance testing. Ready to
-                    elevate your project?
+                    Engineers who run distributed load tests with JMeter and k6, and read the
+                    results. Available for a one-off audit or an ongoing engagement.
                   </p>
                 </div>
                 <Link
@@ -4828,7 +4880,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                     {study.coverImageUrl && (
                       <Image
                         src={resolveImageUrl(study.coverImageUrl)}
-                        alt=""
+                        alt={study.title}
                         fill
                         sizes="(min-width: 1024px) 25vw, 50vw"
                         className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -4872,7 +4924,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                     {cell.post.coverImageUrl && (
                       <Image
                         src={resolveImageUrl(cell.post.coverImageUrl)}
-                        alt=""
+                        alt={cell.post.title}
                         fill
                         sizes="(min-width: 1024px) 25vw, 50vw"
                         className="object-cover"
@@ -4937,7 +4989,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                     {testimonial.clientPhotoUrl ? (
                       <Image
                         src={resolveImageUrl(testimonial.clientPhotoUrl)}
-                        alt=""
+                        alt={testimonial.clientName}
                         width={44}
                         height={44}
                         className="h-11 w-11 shrink-0 rounded-full object-cover"
@@ -5196,6 +5248,8 @@ export default async function ServiceDetailPage({ params }: Props) {
             }
           />
         )}
+
+        <RelatedLinks groups={serviceCrossLinks(service.slug)} dark />
 
         {/* CTA */}
         <Reveal><section className="relative overflow-hidden border-t border-paper/10 py-24 md:py-32">

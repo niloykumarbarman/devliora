@@ -423,6 +423,7 @@ export default function ServiceTabs({
       ? curatedForTab.map((t) => ({
           id: t.caseStudyId,
           slug: t.caseStudySlug,
+          title: t.caseStudyTitle,
           industry: t.caseStudyIndustry,
           results: t.caseStudyResults,
           coverImageUrl: t.caseStudyCoverImageUrl,
@@ -430,6 +431,7 @@ export default function ServiceTabs({
       : caseStudies.slice(0, 4).map((s) => ({
           id: s.id,
           slug: s.slug,
+          title: s.title,
           industry: s.industry,
           results: s.results,
           coverImageUrl: s.coverImageUrl,
@@ -444,25 +446,29 @@ export default function ServiceTabs({
   return (
     <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-28">
       <div className="mx-auto max-w-5xl px-6">
-        {/* flex-wrap used to wrap this onto a second, awkwardly centered
-            line on narrow phones (~320px, e.g. iPhone SE) since 3 pills
-            don't quite fit one row there. A tab bar should never wrap —
-            it should either fit or scroll horizontally, so this is now a
-            no-wrap row that scrolls on overflow instead. */}
-        <div className="no-scrollbar flex flex-nowrap justify-center gap-2 overflow-x-auto">
-          {tabs.map((tab, i) => (
-            <button
-              key={tab.label}
-              type="button"
-              onClick={() => goToTab(i)}
-              aria-pressed={i === active}
-              className={`shrink-0 rounded-full px-6 py-2.5 font-mono text-sm font-semibold transition-colors ${
-                i === active ? "bg-ember text-ink" : "text-paper/60 hover:text-paper"
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+        {/* A tab bar should never wrap — it fits and centres, or it
+            scrolls horizontally. The inner row is `min-w-full w-max`, so
+            `justify-center` centres the tabs when they fit but the row
+            grows past the viewport when they don't, keeping every tab
+            reachable by scrolling from the left (plain `justify-center` +
+            `overflow-x-auto` clips the leading tabs off the scroll
+            origin). `-mx-6 px-6` lets it bleed to the screen edges. */}
+        <div className="no-scrollbar -mx-6 overflow-x-auto px-6">
+          <div className="flex w-max min-w-full flex-nowrap justify-center gap-2">
+            {tabs.map((tab, i) => (
+              <button
+                key={tab.label}
+                type="button"
+                onClick={() => goToTab(i)}
+                aria-pressed={i === active}
+                className={`shrink-0 rounded-full px-6 py-2.5 font-mono text-sm font-semibold transition-colors ${
+                  i === active ? "bg-ember text-ink" : "text-paper/60 hover:text-paper"
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="mt-16 grid gap-10 md:grid-cols-2 md:items-start">
@@ -502,7 +508,7 @@ export default function ServiceTabs({
 
                 <div className="mt-10 flex items-center gap-6">
                   <div className="relative h-28 w-28 shrink-0">
-                    <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90">
+                    <svg viewBox="0 0 100 100" className="h-full w-full -rotate-90" aria-hidden="true">
                       <defs>
                         <linearGradient id="securityStatRing" x1="0%" y1="0%" x2="100%" y2="100%">
                           <stop offset="0%" stopColor="var(--color-paper)" />
@@ -910,7 +916,7 @@ export default function ServiceTabs({
                 {study.coverImageUrl && (
                   <Image
                     src={resolveImageUrl(study.coverImageUrl)}
-                    alt=""
+                    alt={study.title}
                     fill
                     sizes="(min-width: 1024px) 25vw, 50vw"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
@@ -1017,7 +1023,7 @@ export default function ServiceTabs({
                     {testimonial.clientPhotoUrl ? (
                       <Image
                         src={resolveImageUrl(testimonial.clientPhotoUrl)}
-                        alt=""
+                        alt={testimonial.clientName}
                         width={44}
                         height={44}
                         className="h-11 w-11 shrink-0 rounded-full object-cover"

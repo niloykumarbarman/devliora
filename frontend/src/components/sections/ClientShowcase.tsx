@@ -1,6 +1,4 @@
-"use client";
-
-import { motion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 import DraggableMarquee from "@/components/DraggableMarquee";
 
 const CLIENTS = [
@@ -17,20 +15,14 @@ export default function ClientShowcase() {
   return (
     <section className="relative overflow-hidden bg-paper">
       <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center"
-        >
+        <Reveal className="text-center">
           <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
             Representative engagements
           </h2>
           <p className="mt-2 text-sm text-graphite/60">
             Illustrative client examples — public case studies are in progress.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="relative mt-10 overflow-hidden">
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-paper to-transparent" />

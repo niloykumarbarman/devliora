@@ -7,7 +7,7 @@ import BlogPostList from "@/components/sections/BlogPostList";
 import BlogCTA from "@/components/sections/BlogCTA";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Blog | Devliora",
+  title: "Engineering Blog",
   description:
     "Engineering practices, architecture decisions, and lessons from building enterprise systems.",
   path: "/blog",
@@ -17,7 +17,7 @@ export default function BlogPage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <BlogHero />
         <BlogPostList />
         <BlogCTA />

@@ -115,6 +115,14 @@ export function hasDetailPage(slug: string): boolean {
   return DETAIL_PAGE_SLUGS.has(slug);
 }
 
+// Slugs whose /services/[slug] route deliberately renders a *different*
+// service's content and canonical URL — currently just the retired
+// "Software Resource Rental" page, which is aliased to Performance
+// Testing (an intentional product decision; see the SLUG_ALIASES block
+// in app/services/[slug]/page.tsx). Such a slug is not a canonical URL
+// of its own, so it must be kept out of the sitemap.
+export const NON_CANONICAL_SERVICE_SLUGS = new Set(["software-resource-rental"]);
+
 // Services whose page lives outside the /services/[slug] system. Cloud
 // Infrastructure & DevOps has its own dedicated capability page at
 // /cloud-devops (CI/CD pipeline, cloud architecture, DevOps stack, etc.)

@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { Layers } from "lucide-react";
 import Image from "next/image";
+import Reveal from "@/components/Reveal";
 
 type ServiceItem = {
   id: string;
@@ -17,7 +17,6 @@ type ServiceItem = {
 };
 
 export default function ServicesView({ services }: { services: ServiceItem[] }) {
-  const reduceMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [hoverCapable, setHoverCapable] = useState(true);
 
@@ -45,13 +44,7 @@ export default function ServicesView({ services }: { services: ServiceItem[] }) 
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <h2 className="mt-5 text-balance font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             Engineering built for{" "}
             <span className="text-signal">systems that outlast us</span>.
@@ -61,10 +54,10 @@ export default function ServicesView({ services }: { services: ServiceItem[] }) 
             get right the first time, and hardest to unwind if they go
             wrong.
           </p>
-        </motion.div>
+        </Reveal>
 
         {services.length === 0 ? (
-          <p className="mt-16 text-center text-sm text-graphite/50">
+          <p className="mt-16 text-center text-sm text-graphite/65">
             No services available yet.
           </p>
         ) : (
@@ -82,27 +75,11 @@ export default function ServicesView({ services }: { services: ServiceItem[] }) 
                     onClick: () => handleCardClick(i),
                   };
               return (
-                <motion.div
+                <Reveal
                   key={service.id}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={
-                    reduceMotion
-                      ? { duration: 0.3 }
-                      : { duration: 0.5, ease: "easeOut", delay: i * 0.08 }
-                  }
-                  // whileHover (not a CSS :hover class) because this is a
-                  // motion.div: once its own whileInView animation settles,
-                  // Framer Motion leaves a permanent inline `transform`
-                  // style on the element, which would silently beat any
-                  // CSS class's :hover transform every time. Plain scale
-                  // (no translate/rotate) since the parent grid relies on
-                  // its own `overflow-hidden` for the gap-px hairline
-                  // mosaic trick, which would clip a bigger lift.
-                  whileHover={reduceMotion ? undefined : { scale: 1.03, zIndex: 10 }}
+                  delay={i * 0.08}
                   {...hoverHandlers}
-                  className={`group relative z-0 cursor-pointer p-8 transition-colors duration-300 ${
+                  className={`hover-pop group relative z-0 cursor-pointer p-8 transition-colors duration-300 ${
                     isActive ? "bg-ink text-paper" : "bg-paper"
                   }`}
                 >
@@ -132,7 +109,7 @@ export default function ServicesView({ services }: { services: ServiceItem[] }) 
                     </span>
                     <span
                       className={`font-mono text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 ${
-                        isActive ? "text-paper/40" : "text-graphite/40"
+                        isActive ? "text-paper/55" : "text-graphite/60"
                       }`}
                     >
                       /{service.slug}
@@ -148,7 +125,7 @@ export default function ServicesView({ services }: { services: ServiceItem[] }) 
                   >
                     {service.shortDescription}
                   </p>
-                </motion.div>
+                </Reveal>
               );
             })}
           </div>

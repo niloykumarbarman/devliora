@@ -3,8 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import Reveal from "@/components/Reveal";
 import { fetchPortfolios, type Portfolio } from "@/lib/portfolios";
 import { resolveImageUrl } from "@/lib/hero";
 
@@ -35,7 +35,6 @@ const CARD_THEMES = [
 ];
 
 export default function PortfolioGrid() {
-  const shouldReduceMotion = useReducedMotion();
   const [items, setItems] = useState<Portfolio[]>([]);
   const [status, setStatus] = useState<"loading" | "success" | "error">(
     "loading"
@@ -74,16 +73,6 @@ export default function PortfolioGrid() {
     if (activeIndustry === "All") return items;
     return items.filter((item) => item.industry === activeIndustry);
   }, [items, activeIndustry]);
-
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.5, delay: (i % 6) * 0.08 },
-        };
 
   return (
     <section className="relative overflow-hidden bg-paper py-24 text-ink md:py-32">
@@ -157,16 +146,12 @@ export default function PortfolioGrid() {
               {filteredItems.map((item, i) => {
                 const theme = CARD_THEMES[i % CARD_THEMES.length];
                 return (
-                  <motion.article
+                  <Reveal
                     key={item.id}
-                    {...fadeUp(i)}
+                    as="article"
+                    delay={(i % 6) * 0.08}
                     className="overflow-hidden rounded-xl"
                   >
-                    {/* tilt-3d goes on this inner Link, not the
-                        motion.article above: once that article's own
-                        fadeUp animation settles, Framer Motion leaves a
-                        permanent inline `transform` on it, which would
-                        silently beat a CSS :hover transform every time. */}
                     <Link
                       href={`/portfolio/${item.slug}`}
                       className="tilt-3d group flex h-full flex-col sm:flex-row"
@@ -204,7 +189,7 @@ export default function PortfolioGrid() {
                         </span>
                       </div>
                     </Link>
-                  </motion.article>
+                  </Reveal>
                 );
               })}
             </div>

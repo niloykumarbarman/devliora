@@ -1,9 +1,7 @@
-"use client";
-
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
+import Reveal from "@/components/Reveal";
 
 export type ClientSpotlightItem = {
   slug: string;
@@ -23,47 +21,33 @@ type ClientSpotlightProps = {
 // from) — not written for any one service page, so this renders the same
 // on every /services/[slug] detail page that has featured portfolios.
 export default function ClientSpotlight({ items }: ClientSpotlightProps) {
-  const shouldReduceMotion = useReducedMotion();
-
   if (items.length === 0) return null;
 
   return (
     <section className="relative overflow-hidden border-t border-paper/10 py-20 md:py-24">
       <div className="mx-auto max-w-6xl px-6">
-        <motion.h2
-          initial={shouldReduceMotion ? undefined : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
+        <Reveal
+          as="h2"
           className="font-display text-3xl font-bold text-paper sm:text-4xl"
         >
           Client spotlight: selected work
-        </motion.h2>
+        </Reveal>
 
         <div className="mt-12 grid gap-x-10 gap-y-14 md:grid-cols-2">
           {items.map((item, i) => (
-            <motion.div
+            <Reveal
               key={item.slug}
-              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 32 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.6, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+              delay={i * 0.15}
               className="group border-b border-paper/10 pb-12"
             >
-              {/* tilt-3d on this inner Link, not the motion.div above: once
-                  that div's own whileInView settles, Framer Motion leaves a
-                  permanent inline `transform` on it, which would silently
-                  beat a CSS :hover transform every time. */}
               <Link href={`/portfolio/${item.slug}`} className="tilt-3d block">
                 <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-graphite">
                   {item.thumbnailUrl && (
-                    <motion.img
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
                       src={resolveImageUrl(item.thumbnailUrl)}
-                      alt=""
-                      initial={shouldReduceMotion ? undefined : { scale: 1.12 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true, margin: "-80px" }}
-                      transition={{ duration: 1, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] }}
+                      alt={item.title}
+                      loading="lazy"
                       className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   )}
@@ -94,7 +78,7 @@ export default function ClientSpotlight({ items }: ClientSpotlightProps) {
                 Read more
                 <ArrowRight className="h-3 w-3 transition-transform group-hover/link:translate-x-0.5" />
               </Link>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </div>

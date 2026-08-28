@@ -2,7 +2,6 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { motion, useReducedMotion } from "framer-motion";
 import { LogIn, Loader2, AlertCircle } from "lucide-react";
 import { loginAdmin, setAdminToken, setAdminRefreshToken } from "@/lib/adminAuth";
 
@@ -10,19 +9,10 @@ type SubmitStatus = "idle" | "submitting" | "error";
 
 export default function AdminLoginPage() {
   const router = useRouter();
-  const shouldReduceMotion = useReducedMotion();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [status, setStatus] = useState<SubmitStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
-
-  const fadeUp = shouldReduceMotion
-    ? {}
-    : {
-        initial: { opacity: 0, y: 24 },
-        animate: { opacity: 1, y: 0 },
-        transition: { duration: 0.5 },
-      };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -56,7 +46,7 @@ export default function AdminLoginPage() {
         }}
       />
 
-      <motion.div {...fadeUp} className="relative w-full max-w-md px-6">
+      <div className="admin-fade-in relative w-full max-w-md px-6">
         <span className="font-mono text-sm uppercase tracking-[0.2em] text-signal">
           /admin/login
         </span>
@@ -129,7 +119,7 @@ export default function AdminLoginPage() {
             )}
           </button>
         </form>
-      </motion.div>
+      </div>
     </section>
   );
 }

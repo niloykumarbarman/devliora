@@ -1,6 +1,4 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 
 type Step = {
   number: string;
@@ -36,8 +34,6 @@ const STEPS: Step[] = [
 ];
 
 export default function Process() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section id="process" className="relative scroll-mt-24 overflow-hidden bg-paper text-ink">
       <div
@@ -50,13 +46,7 @@ export default function Process() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <h2 className="mt-5 text-balance font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             A sequence we{" "}
             <span className="text-signal">don&apos;t skip steps in</span>.
@@ -65,20 +55,13 @@ export default function Process() {
             Four stages, applied in order, every time. Predictability is
             part of what we are selling.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-16 grid gap-px overflow-hidden rounded-sm border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:grid-cols-4">
           {STEPS.map((step, i) => (
-            <motion.div
+            <Reveal
               key={step.number}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={
-                reduceMotion
-                  ? { duration: 0.3 }
-                  : { duration: 0.5, ease: "easeOut", delay: i * 0.08 }
-              }
+              delay={i * 0.08}
               className="relative bg-paper p-8"
             >
               <span className="font-mono text-sm tabular-nums text-ember">
@@ -90,7 +73,7 @@ export default function Process() {
               <p className="mt-3 text-sm leading-relaxed text-graphite/75">
                 {step.description}
               </p>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </div>

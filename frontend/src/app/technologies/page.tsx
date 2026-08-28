@@ -10,9 +10,9 @@ import TechnologiesMethodologies from "@/components/sections/TechnologiesMethodo
 import TechnologiesCTA from "@/components/sections/TechnologiesCTA";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Technologies | Devliora",
+  title: "Technologies & Platforms We Build With",
   description:
-    "The tools and platforms Devliora relies on to build reliable, secure, and maintainable software.",
+    "The languages, frameworks and cloud platforms Devliora builds on — .NET, Java, Python, Node.js, React, AWS and Azure — and why we reach for each.",
   path: "/technologies",
 });
 
@@ -20,7 +20,7 @@ export default function TechnologiesPage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <TechnologiesHero />
         <TechnologyDetailPagesGrid
           pageType="technology"

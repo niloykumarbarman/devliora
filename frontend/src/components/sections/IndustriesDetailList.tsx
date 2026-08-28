@@ -3,11 +3,10 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
 import { fetchIndustries, type IndustryDto } from "@/lib/industries";
+import Reveal from "@/components/Reveal";
 
 export default function IndustriesDetailList() {
-  const shouldReduceMotion = useReducedMotion();
   const [industries, setIndustries] = useState<IndustryDto[]>([]);
 
   useEffect(() => {
@@ -20,18 +19,15 @@ export default function IndustriesDetailList() {
 
       <div className="relative mx-auto max-w-5xl px-6">
         <h2 className="mt-4 max-w-2xl text-balance font-display text-3xl font-semibold text-ink md:text-4xl">
-          Industries where we've built real context
+          Industries where we&apos;ve built real context
         </h2>
 
         {industries.length > 0 && (
           <div className="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:grid-cols-3">
             {industries.map((industry, i) => (
-              <motion.div
+              <Reveal
                 key={industry.id}
-                initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
+                delay={i * 0.08}
                 className="bg-paper"
               >
                 <Link
@@ -45,10 +41,10 @@ export default function IndustriesDetailList() {
                     <h3 className="font-display text-xl font-semibold text-ink">
                       {industry.name}
                     </h3>
-                    <ArrowUpRight className="h-4 w-4 shrink-0 text-graphite/40 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-signal" />
+                    <ArrowUpRight className="h-4 w-4 shrink-0 text-graphite/60 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-signal" />
                   </div>
                 </Link>
-              </motion.div>
+              </Reveal>
             ))}
           </div>
         )}

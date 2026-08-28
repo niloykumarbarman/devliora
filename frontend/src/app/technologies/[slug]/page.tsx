@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { breadcrumbJsonLd, buildMetadata, serviceJsonLd } from "@/lib/seo";
+import { breadcrumbJsonLd, buildMetadata, serviceJsonLd, faqPageJsonLd, webPageJsonLd } from "@/lib/seo";
 import { fetchTechnologyDetailPageBySlug } from "@/lib/technologyDetailPages";
 import type { SiteSettingsDto } from "@/lib/siteSettings";
 import Navbar from "@/components/layout/Navbar";
@@ -22,7 +22,10 @@ import TransformTeamCTA from "@/components/sections/TransformTeamCTA";
 import TailoredTechSolutions from "@/components/sections/TailoredTechSolutions";
 import EnhanceTeamCTA from "@/components/sections/EnhanceTeamCTA";
 import TechnologiesCTA from "@/components/sections/TechnologiesCTA";
+import RelatedLinks from "@/components/sections/RelatedLinks";
+import { techCrossLinks } from "@/lib/crossLinks";
 import { ShieldCheck } from "lucide-react";
+import JsonLd from "@/components/JsonLd";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -60,14 +63,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!page || page.pageType === "solution") {
     return buildMetadata({
-      title: "Technology | Devliora",
-      description: "Technologies Devliora builds with.",
+      title: "Technology not found",
+      description: "This technology page could not be found.",
       path: `/technologies/${slug}`,
+      noindex: true,
     });
   }
 
   return buildMetadata({
-    title: `${page.heroTitle} | Devliora`,
+    title: page.heroTitle,
     description: page.metaDescription || page.overviewParagraph,
     path: `/technologies/${page.slug}`,
   });
@@ -101,19 +105,26 @@ export default async function TechnologyDetailPage({ params }: Props) {
     description: page.metaDescription || page.overviewParagraph,
     path: `/technologies/${page.slug}`,
   });
+  const webPage = webPageJsonLd({
+    path: `/technologies/${page.slug}`,
+    name: `${page.heroTitle} | Devliora`,
+    description: page.metaDescription || undefined,
+  });
+  const faqLd = faqPageJsonLd(
+    page.faqs.map((f) => ({ question: f.question, answer: f.answer })),
+    `/technologies/${page.slug}`
+  );
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }}
-      />
+      <JsonLd data={breadcrumb} />
+      <JsonLd data={service} />
+      <JsonLd data={webPage} />
+      {faqLd && (
+        <JsonLd data={faqLd} />
+      )}
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <TechnologyDetailHero title={page.heroTitle} imageUrl={page.heroImageUrl} />
         <TechnologyDetailOverview
           heading={page.overviewHeading}
@@ -152,6 +163,11 @@ export default async function TechnologyDetailPage({ params }: Props) {
         <TailoredTechSolutions />
         <EnhanceTeamCTA />
         <TechnologyDetailSelectedWork heading="More from our portfolio" start={4} />
+        <RelatedLinks
+          groups={techCrossLinks(page.slug)}
+          heading={`${page.technologyName} — explore related`}
+          dark
+        />
         <TechnologiesCTA />
       </main>
       <Footer />

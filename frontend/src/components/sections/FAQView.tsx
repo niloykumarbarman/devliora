@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Plus } from "lucide-react";
 import { type FaqDto } from "@/lib/faq";
+import Reveal from "@/components/Reveal";
 
 type FAQViewProps = {
   faqs: FaqDto[];
@@ -13,7 +13,6 @@ type FAQViewProps = {
 };
 
 export default function FAQView({ faqs, heading }: FAQViewProps) {
-  const reduceMotion = useReducedMotion();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   if (faqs.length === 0) {
@@ -32,12 +31,7 @@ export default function FAQView({ faqs, heading }: FAQViewProps) {
       />
 
       <div className="relative mx-auto max-w-4xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
+        <Reveal>
           <h2 className="mt-5 text-balance font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             {heading ?? (
               <>
@@ -46,50 +40,48 @@ export default function FAQView({ faqs, heading }: FAQViewProps) {
               </>
             )}
           </h2>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-14 flex flex-col divide-y divide-paper/10 border-t border-paper/10">
           {faqs.map((faq, i) => {
             const isOpen = openIndex === i;
             return (
               <div key={faq.id}>
-                <button
-                  type="button"
-                  onClick={() => setOpenIndex(isOpen ? null : i)}
-                  aria-expanded={isOpen}
-                  className="flex w-full items-center justify-between gap-6 py-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal"
-                >
-                  <span className="font-display text-lg font-medium tracking-tight sm:text-xl">
-                    {faq.question}
-                  </span>
-                  <Plus
-                    className={
-                      isOpen
-                        ? "h-5 w-5 shrink-0 rotate-45 text-ember transition-transform duration-300"
-                        : "h-5 w-5 shrink-0 text-paper/50 transition-transform duration-300"
-                    }
-                    strokeWidth={1.75}
-                  />
-                </button>
-                <AnimatePresence initial={false}>
-                  {isOpen && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={
-                        reduceMotion
-                          ? { duration: 0.15 }
-                          : { duration: 0.3, ease: "easeInOut" }
+                <h3 className="m-0">
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(isOpen ? null : i)}
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-panel-${faq.id}`}
+                    id={`faq-trigger-${faq.id}`}
+                    className="flex w-full items-center justify-between gap-6 py-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-signal"
+                  >
+                    <span className="font-display text-lg font-medium tracking-tight sm:text-xl">
+                      {faq.question}
+                    </span>
+                    <Plus
+                      className={
+                        isOpen
+                          ? "h-5 w-5 shrink-0 rotate-45 text-ember transition-transform duration-300"
+                          : "h-5 w-5 shrink-0 text-paper/50 transition-transform duration-300"
                       }
-                      className="overflow-hidden"
-                    >
-                      <p className="pb-6 pr-10 text-sm leading-relaxed text-paper/70">
-                        {faq.answer}
-                      </p>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                      strokeWidth={1.75}
+                    />
+                  </button>
+                </h3>
+                <div
+                  id={`faq-panel-${faq.id}`}
+                  role="region"
+                  aria-labelledby={`faq-trigger-${faq.id}`}
+                  className="accordion-panel"
+                  data-open={isOpen}
+                >
+                  <div>
+                    <p className="pb-6 pr-10 text-sm leading-relaxed text-paper/70">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
               </div>
             );
           })}

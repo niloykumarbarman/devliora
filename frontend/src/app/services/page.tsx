@@ -6,9 +6,12 @@ import ServicesHero from "@/components/sections/ServicesHero";
 import ServicesCTA from "@/components/sections/ServicesCTA";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Services | Devliora",
+  // Distinct from the /custom-software-development pillar page, which owns
+  // the exact "Custom Software Development" head term. This hub page
+  // covers the full service range, so its title reflects the breadth.
+  title: "Software Development & Technology Services",
   description:
-    "Platform engineering, API design, system migration, cloud infrastructure, security engineering, and performance engineering — scoped in detail.",
+    "Software development, AI, cloud, DevOps, QA and IT consulting — every Devliora service scoped in detail, with the engineering standards behind it.",
   path: "/services",
 });
 
@@ -16,7 +19,7 @@ export default function ServicesPage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <ServicesHero />
         <ServicesCTA />
       </main>

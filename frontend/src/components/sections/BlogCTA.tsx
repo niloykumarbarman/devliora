@@ -1,12 +1,8 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 
 export default function BlogCTA() {
-  const reducedMotion = useReducedMotion();
-
   return (
     <section className="relative overflow-hidden bg-ink px-6 py-24 sm:py-28">
       <div className="bg-grain pointer-events-none absolute inset-0" />
@@ -21,13 +17,7 @@ export default function BlogCTA() {
         }}
       />
 
-      <motion.div
-        initial={{ opacity: 0, y: reducedMotion ? 0 : 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.5 }}
-        className="relative mx-auto max-w-2xl text-center"
-      >
+      <Reveal className="relative mx-auto max-w-2xl text-center">
 
         <h2 className="mt-6 text-balance font-display text-3xl font-medium text-paper sm:text-4xl">
           Have a project that needs{" "}
@@ -49,7 +39,7 @@ export default function BlogCTA() {
             className="transition-transform duration-200 group-hover:translate-x-1"
           />
         </Link>
-      </motion.div>
+      </Reveal>
     </section>
   );
 }

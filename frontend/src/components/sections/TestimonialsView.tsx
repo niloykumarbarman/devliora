@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import Image from "next/image";
 import { resolveImageUrl } from "@/lib/hero";
+import Reveal from "@/components/Reveal";
 
 type TestimonialItem = {
   id: string;
@@ -19,7 +19,6 @@ type TestimonialItem = {
 const PER_PAGE = 3;
 
 export default function TestimonialsView({ items }: { items: TestimonialItem[] }) {
-  const shouldReduceMotion = useReducedMotion();
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(PER_PAGE);
 
@@ -53,30 +52,17 @@ export default function TestimonialsView({ items }: { items: TestimonialItem[] }
       />
 
       <div className="relative mx-auto max-w-6xl px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <h2 className="text-balance font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             What clients say{" "}
             <span className="text-signal">after we ship</span>.
           </h2>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-16 min-h-[420px]">
-          <AnimatePresence mode="wait">
-            <motion.div
+            <div
               key={page}
-              initial={{ opacity: 0, x: 24 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -24 }}
-              transition={
-                shouldReduceMotion ? { duration: 0.2 } : { duration: 0.4, ease: "easeOut" }
-              }
-              className="grid gap-8 lg:grid-cols-3"
+              className="carousel-swap grid gap-8 lg:grid-cols-3"
             >
               {visible.map((item, i) => {
                 const isSignal = i % 2 === 0;
@@ -112,7 +98,7 @@ export default function TestimonialsView({ items }: { items: TestimonialItem[] }
                     {item.clientPhotoUrl ? (
                       <Image
                         src={resolveImageUrl(item.clientPhotoUrl)}
-                        alt=""
+                        alt={item.clientName}
                         width={40}
                         height={40}
                         className={`h-10 w-10 shrink-0 rounded-full object-cover ring-2 ${ringClass}`}
@@ -126,7 +112,7 @@ export default function TestimonialsView({ items }: { items: TestimonialItem[] }
                       <p className="text-sm font-semibold text-graphite">
                         {item.clientName}
                       </p>
-                      <p className="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-graphite/50">
+                      <p className="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-graphite/65">
                         {item.clientTitle}
                         {item.clientCompany ? ` — ${item.clientCompany}` : ""}
                       </p>
@@ -139,22 +125,26 @@ export default function TestimonialsView({ items }: { items: TestimonialItem[] }
                 </div>
                 );
                 })}
-            </motion.div>
-          </AnimatePresence>
+            </div>
         </div>
 
         {pageCount > 1 && (
-          <div className="mt-12 flex items-center justify-center gap-2">
+          <div className="mt-12 flex items-center justify-center">
             {Array.from({ length: pageCount }).map((_, i) => (
               <button
                 key={i}
                 type="button"
                 onClick={() => setPage(i)}
                 aria-label={`Go to testimonials page ${i + 1}`}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  page === i ? "w-8 bg-signal" : "w-2 bg-ink/15 hover:bg-ink/30"
-                }`}
-              />
+                aria-current={page === i}
+                className="flex h-11 w-8 items-center justify-center"
+              >
+                <span
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    page === i ? "w-8 bg-signal" : "w-2 bg-ink/15"
+                  }`}
+                />
+              </button>
             ))}
           </div>
         )}

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { Send, Loader2, CheckCircle2 } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 type FormState = {
   name: string;
@@ -21,19 +21,8 @@ const INITIAL_STATE: FormState = {
 };
 
 export default function Contact() {
-  const shouldReduceMotion = useReducedMotion();
   const [form, setForm] = useState<FormState>(INITIAL_STATE);
   const [status, setStatus] = useState<SubmitStatus>("idle");
-
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.5, delay: i * 0.08 },
-        };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -68,7 +57,7 @@ export default function Contact() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6">
-        <motion.div {...fadeUp(0)} className="max-w-2xl">
+        <Reveal className="max-w-2xl">
           <h2 className="mt-4 text-balance text-4xl font-semibold leading-tight text-graphite md:text-5xl">
             Tell us what you are building.{" "}
             <span className="text-signal">We will tell you how.</span>
@@ -78,12 +67,14 @@ export default function Contact() {
             will respond within 48 hours with a clear, honest read on scope,
             timeline, and approach.
           </p>
-        </motion.div>
+        </Reveal>
 
-        <motion.form
-          {...fadeUp(1)}
+        <Reveal delay={0.08} className="mt-14">
+        <form
           onSubmit={handleSubmit}
-          className="mt-14 grid gap-6 md:grid-cols-2"
+          aria-label="Contact form"
+          aria-busy={status === "submitting"}
+          className="grid gap-6 md:grid-cols-2"
         >
           <div className="flex flex-col gap-2">
             <label
@@ -129,7 +120,7 @@ export default function Contact() {
               className="font-mono text-xs uppercase tracking-[0.15em] text-graphite/60"
             >
               Company{" "}
-              <span className="normal-case tracking-normal text-graphite/40">
+              <span className="normal-case tracking-normal text-graphite/60">
                 (optional)
               </span>
             </label>
@@ -188,13 +179,14 @@ export default function Contact() {
             </button>
 
             {status === "success" && (
-              <p className="mt-4 text-sm text-graphite/60">
+              <p role="status" className="mt-4 text-sm text-graphite/70">
                 This form is not yet connected to our backend — a real
                 submission pipeline is coming in a future update.
               </p>
             )}
           </div>
-        </motion.form>
+        </form>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,10 +1,7 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 import { SITE_STACK } from "@/lib/cloudDevops";
 
 export default function SiteTechArchitecture() {
-  const reduceMotion = useReducedMotion();
 
   return (
     <section
@@ -21,13 +18,7 @@ export default function SiteTechArchitecture() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-signal">
             Technology Architecture
           </p>
@@ -38,20 +29,13 @@ export default function SiteTechArchitecture() {
             Not a hypothetical reference architecture — the same choices we apply to
             client work, applied here.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {SITE_STACK.map((group, i) => {
             const Icon = group.icon;
             return (
-              <motion.div
-                key={group.category}
-                initial={reduceMotion ? false : { opacity: 0, y: 14 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.4, ease: "easeOut", delay: (i % 3) * 0.06 }}
-                className="flex flex-col rounded-sm border border-paper/10 bg-graphite/30 p-5"
-              >
+              <Reveal key={group.category} delay={(i % 3) * 0.06} className="flex flex-col rounded-sm border border-paper/10 bg-graphite/30 p-5">
                 <div className="flex items-center gap-2.5">
                   <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-paper/10 bg-paper/[0.04]">
                     <Icon className="h-5 w-5 text-signal" strokeWidth={1.75} />
@@ -71,7 +55,7 @@ export default function SiteTechArchitecture() {
                     </li>
                   ))}
                 </ul>
-              </motion.div>
+              </Reveal>
             );
           })}
         </div>

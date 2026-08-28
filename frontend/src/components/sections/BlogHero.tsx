@@ -1,15 +1,4 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
-
 export default function BlogHero() {
-  const reducedMotion = useReducedMotion();
-
-  const fadeUp = {
-    initial: { opacity: 0, y: reducedMotion ? 0 : 24 },
-    animate: { opacity: 1, y: 0 },
-  };
-
   return (
     <section className="relative overflow-hidden bg-ink px-6 py-28 sm:py-32">
       <div className="bg-grain pointer-events-none absolute inset-0" />
@@ -27,23 +16,18 @@ export default function BlogHero() {
 
       <div className="relative mx-auto max-w-4xl text-center">
 
-        <motion.h1
-          {...fadeUp}
-          transition={{ duration: 0.5, delay: 0.08 }}
-          className="mt-6 text-balance font-display text-4xl font-medium text-paper sm:text-5xl md:text-6xl"
-        >
-          Notes on <span className="text-signal">building software</span>{" "}
-          that lasts
-        </motion.h1>
+        <h1 className="hero-h1-rise mt-6 text-balance font-display text-4xl font-medium text-paper sm:text-5xl md:text-6xl">
+          Engineering <span className="text-signal">notes</span>{" "}
+          on software, AI &amp; cloud
+        </h1>
 
-        <motion.p
-          {...fadeUp}
-          transition={{ duration: 0.5, delay: 0.16 }}
-          className="mx-auto mt-6 max-w-2xl text-lg text-wire"
+        <p
+          className="hero-fade-rise mx-auto mt-6 max-w-2xl text-lg text-wire"
+          style={{ animationDelay: "0.16s" }}
         >
           Engineering practices, architecture decisions, and lessons from
           building enterprise systems, written by the people who build them.
-        </motion.p>
+        </p>
       </div>
     </section>
   );

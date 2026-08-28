@@ -39,7 +39,8 @@ public class GetBlogPostBySlugQueryHandler : IRequestHandler<GetBlogPostBySlugQu
                 Content = b.Content,
                 CoverImageUrl = b.CoverImageUrl,
                 AuthorName = b.AuthorName,
-                PublishedAt = b.PublishedAt
+                PublishedAt = b.PublishedAt,
+                UpdatedAt = b.UpdatedAt
             })
             .FirstOrDefaultAsync(cancellationToken);
 

@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Handshake } from "lucide-react";
 import Image from "next/image";
 import { resolveImageUrl } from "@/lib/hero";
+import Reveal from "@/components/Reveal";
 
 type PartnerDto = {
   id: string;
@@ -25,7 +25,6 @@ function getPerPage(width: number) {
 }
 
 export default function PartnersView({ partners }: { partners: PartnerDto[] }) {
-  const reduceMotion = useReducedMotion();
   const [page, setPage] = useState(0);
   const [perPage, setPerPage] = useState(4);
 
@@ -55,22 +54,14 @@ export default function PartnersView({ partners }: { partners: PartnerDto[] }) {
   return (
     <section className="relative overflow-hidden bg-paper">
       <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={
-            reduceMotion ? { duration: 0.3 } : { duration: 0.6, ease: "easeOut" }
-          }
-          className="mb-12"
-        >
+        <Reveal className="mb-12">
           <h2 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl md:text-5xl">
             Meet Our <span className="text-signal">Partners</span>
           </h2>
           <p className="mt-3 text-base text-graphite/60 md:text-lg">
             Who are helping us grow, thank you.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="relative flex items-center">
           {showArrows && (
@@ -78,61 +69,53 @@ export default function PartnersView({ partners }: { partners: PartnerDto[] }) {
               type="button"
               onClick={goPrev}
               aria-label="Previous partners"
-              className="absolute left-0 z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-wire bg-paper text-ink shadow-sm transition-colors hover:border-signal hover:text-signal"
+              className="absolute left-0 z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-wire bg-paper text-ink shadow-sm transition-colors hover:border-signal hover:text-signal"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
           )}
 
           <div className="flex min-h-[160px] w-full items-center justify-center overflow-hidden px-16">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={page}
-                initial={{ opacity: 0, x: 24 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -24 }}
-                transition={
-                  reduceMotion ? { duration: 0.2 } : { duration: 0.4, ease: "easeOut" }
-                }
-                className="flex w-full flex-wrap items-center justify-center gap-x-8 gap-y-10 sm:gap-x-10"
-              >
-                {visible.map((partner) => {
-                  const content = partner.logoUrl ? (
-                    <div className="relative h-16 w-[180px] transition-transform duration-300 hover:scale-110 sm:h-20 sm:w-[200px] lg:h-24 lg:w-[240px]">
-                      <Image
-                        src={resolveImageUrl(partner.logoUrl)}
-                        alt={partner.name}
-                        fill
-                        sizes="240px"
-                        className="object-contain"
-                      />
-                    </div>
-                  ) : (
-                    <span className="flex items-center gap-2 font-mono text-lg text-graphite/60">
-                      <Handshake className="h-7 w-7" strokeWidth={1.6} />
-                      {partner.name}
-                    </span>
-                  );
+            <div
+              key={page}
+              className="carousel-swap flex w-full flex-wrap items-center justify-center gap-x-8 gap-y-10 sm:gap-x-10"
+            >
+              {visible.map((partner) => {
+                const content = partner.logoUrl ? (
+                  <div className="relative h-16 w-[180px] transition-transform duration-300 hover:scale-110 sm:h-20 sm:w-[200px] lg:h-24 lg:w-[240px]">
+                    <Image
+                      src={resolveImageUrl(partner.logoUrl)}
+                      alt={partner.name}
+                      fill
+                      sizes="240px"
+                      className="object-contain"
+                    />
+                  </div>
+                ) : (
+                  <span className="flex items-center gap-2 font-mono text-lg text-graphite/60">
+                    <Handshake className="h-7 w-7" strokeWidth={1.6} />
+                    {partner.name}
+                  </span>
+                );
 
-                  return (
-                    <div key={partner.id} className="flex items-center justify-center">
-                      {partner.websiteUrl ? (
-                        <a
-                          href={partner.websiteUrl}
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          aria-label={partner.name}
-                        >
-                          {content}
-                        </a>
-                      ) : (
-                        content
-                      )}
-                    </div>
-                  );
-                })}
-              </motion.div>
-            </AnimatePresence>
+                return (
+                  <div key={partner.id} className="flex items-center justify-center">
+                    {partner.websiteUrl ? (
+                      <a
+                        href={partner.websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                        aria-label={partner.name}
+                      >
+                        {content}
+                      </a>
+                    ) : (
+                      content
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {showArrows && (
@@ -140,7 +123,7 @@ export default function PartnersView({ partners }: { partners: PartnerDto[] }) {
               type="button"
               onClick={goNext}
               aria-label="Next partners"
-              className="absolute right-0 z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-wire bg-paper text-ink shadow-sm transition-colors hover:border-signal hover:text-signal"
+              className="absolute right-0 z-10 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-wire bg-paper text-ink shadow-sm transition-colors hover:border-signal hover:text-signal"
             >
               <ChevronRight className="h-4 w-4" />
             </button>

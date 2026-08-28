@@ -1,5 +1,3 @@
-"use client";
-import { motion } from "framer-motion";
 import {
   Compass,
   Hammer,
@@ -11,6 +9,7 @@ import {
   LifeBuoy,
   type LucideIcon,
 } from "lucide-react";
+import Reveal from "@/components/Reveal";
 import DraggableMarquee from "@/components/DraggableMarquee";
 
 type Capability = {
@@ -34,13 +33,7 @@ export default function Capabilities() {
   return (
     <section className="relative overflow-hidden bg-ink">
       <div className="mx-auto max-w-6xl px-6 py-16 md:py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center"
-        >
+        <Reveal className="text-center">
           <h2 className="mt-3 font-display text-2xl font-semibold tracking-tight text-paper sm:text-3xl">
             The engineering lifecycle, end to end.
           </h2>
@@ -50,7 +43,7 @@ export default function Capabilities() {
           <p className="mt-4 font-mono text-xs uppercase tracking-[0.15em] text-ember">
             Built by people who get paged when it breaks.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="relative mt-10 overflow-hidden">
           <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-ink to-transparent" />
@@ -79,7 +72,7 @@ export default function Capabilities() {
                     <p className="font-display text-base font-semibold text-paper">
                       {cap.label}
                     </p>
-                    <p className="mt-1 font-mono text-[11px] text-paper/45">
+                    <p className="mt-1 font-mono text-[11px] text-paper/55">
                       {cap.detail}
                     </p>
                   </div>

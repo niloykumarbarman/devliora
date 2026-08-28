@@ -1,8 +1,13 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 
 const sections = [
+  {
+    title: "Who We Are",
+    body: [
+      "This website, devliora.com, is operated by Devliora (\"Devliora\", \"we\", \"us\"), a software engineering company that trades as Devliora Systems, with delivery teams in Australia and Bangladesh. Devliora is responsible for the personal information collected through this site and through our services.",
+      "For any question about this policy or the information we hold about you, email info@devliora.com or use the contact page.",
+    ],
+  },
   {
     title: "Information We Collect",
     body: [
@@ -32,7 +37,7 @@ const sections = [
   {
     title: "Data Security",
     body: [
-      "We apply industry-standard safeguards, including encrypted transport, hashed credentials, and access controls, to protect information from unauthorized access, alteration, or disclosure.",
+      "We apply the safeguards described on our security page — encrypted transport, hashed credentials, short-lived authentication tokens, rate limiting, audit logging, and least-privilege access — to protect information from unauthorized access, alteration, or disclosure. Vulnerability reports can be sent to info@devliora.com.",
     ],
   },
   {
@@ -62,14 +67,12 @@ const sections = [
   {
     title: "Contact Us",
     body: [
-      "Questions about this policy or your data can be sent through our contact page, and we will respond as soon as possible.",
+      "Questions about this policy, or a request to access, correct, or delete your data, can be emailed to info@devliora.com or sent through the contact page. We aim to respond within a reasonable period, and always within any timeframe set by applicable law.",
     ],
   },
 ];
 
 export default function PrivacyContent() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <section className="relative bg-paper py-24">
       <div className="absolute inset-0 bg-[size:56px_56px] bg-[linear-gradient(to_right,rgba(14,20,32,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(14,20,32,0.04)_1px,transparent_1px)]" />
@@ -77,12 +80,9 @@ export default function PrivacyContent() {
       <div className="relative mx-auto max-w-3xl px-6">
         <div className="space-y-px overflow-hidden rounded-2xl border border-ink/10 bg-ink/10">
           {sections.map((section, i) => (
-            <motion.div
+            <Reveal
               key={section.title}
-              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
+              delay={i * 0.08}
               className="bg-paper p-6 md:p-8"
             >
               <h2 className="font-display text-xl font-semibold text-ink">
@@ -93,7 +93,7 @@ export default function PrivacyContent() {
                   <p key={idx}>{paragraph}</p>
                 ))}
               </div>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </div>

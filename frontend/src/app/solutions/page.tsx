@@ -8,9 +8,9 @@ import SolutionsDetailList from "@/components/sections/SolutionsDetailList";
 import SolutionsCTA from "@/components/sections/SolutionsCTA";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Solutions | Devliora",
+  title: "Software Solutions & Modernization",
   description:
-    "Outcome-focused solutions from Devliora: custom software, modernization, cloud, data, and AI integration.",
+    "Outcome-focused engagements from Devliora: custom platforms, legacy modernization, cloud migration, data pipelines and practical AI integration.",
   path: "/solutions",
 });
 
@@ -18,7 +18,7 @@ export default function SolutionsPage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <SolutionsHero />
         <TechnologyDetailPagesGrid
           pageType="solution"

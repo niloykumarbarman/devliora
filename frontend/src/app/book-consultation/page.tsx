@@ -7,7 +7,7 @@ import BookConsultationForm from "@/components/sections/BookConsultationForm";
 import BookConsultationCTA from "@/components/sections/BookConsultationCTA";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Book a Consultation | Devliora",
+  title: "Book a Free Consultation",
   description:
     "Book a free consultation with Devliora. Tell us about your project and preferred timing, and one of our engineers will reach out to schedule a focused session.",
   path: "/book-consultation",
@@ -17,7 +17,7 @@ export default function BookConsultationPage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <BookConsultationHero />
         <BookConsultationForm />
         <BookConsultationCTA />

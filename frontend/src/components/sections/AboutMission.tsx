@@ -1,16 +1,6 @@
-"use client";
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
+
 export default function AboutMission() {
-  const shouldReduceMotion = useReducedMotion();
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.5, delay: i * 0.08 },
-        };
   return (
     <section className="relative overflow-hidden bg-paper py-24 text-ink md:py-32">
       <div
@@ -21,14 +11,15 @@ export default function AboutMission() {
         }}
       />
       <div className="relative mx-auto max-w-3xl px-6">
-        <motion.h2
-          {...fadeUp(1)}
+        <Reveal
+          as="h2"
+          delay={0.08}
           className="mt-4 text-balance text-3xl font-semibold leading-tight text-graphite md:text-4xl"
         >
           Most agencies sell a team.{" "}
           <span className="text-signal">Devliora sells a standard.</span>
-        </motion.h2>
-        <motion.div {...fadeUp(2)} className="mt-6 space-y-4 text-lg text-graphite/70">
+        </Reveal>
+        <Reveal delay={0.16} className="mt-6 space-y-4 text-lg text-graphite/70">
           <p>
             Devliora started from a simple frustration: enterprise clients
             are routinely sold &ldquo;best practices&rdquo; that never make it
@@ -37,10 +28,10 @@ export default function AboutMission() {
             caching layers that were never cache-invalidated correctly.
           </p>
           <p>
-            Every claim on this site is backed by a running system: JWT
-            rotation with revocation, per-IP rate limiting, Redis cache-aside
-            across every domain entity, and a public, linear commit history
-            you can actually read.
+            Every claim on this site is backed by a running system: this
+            website and its API, which use the same refresh-token rotation
+            with revocation, per-IP rate limiting, Redis cache-aside, and
+            reviewable commit history that client engagements do.
           </p>
           <p>
             The goal isn&apos;t to look like a large agency. It&apos;s to
@@ -48,11 +39,8 @@ export default function AboutMission() {
             overhead &mdash; and to be honest about what that does and
             doesn&apos;t mean for you as a client.
           </p>
-        </motion.div>
-        <motion.div
-          {...fadeUp(3)}
-          className="mt-12 grid gap-6 sm:grid-cols-2"
-        >
+        </Reveal>
+        <Reveal delay={0.24} className="mt-12 grid gap-6 sm:grid-cols-2">
           <div className="rounded-lg border border-wire bg-paper p-6">
             <span className="font-mono text-xs uppercase tracking-[0.15em] text-signal">
               Our Mission
@@ -73,7 +61,7 @@ export default function AboutMission() {
               their vendor actually did the work they paid for.
             </p>
           </div>
-        </motion.div>
+        </Reveal>
       </div>
     </section>
   );

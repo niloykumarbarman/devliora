@@ -1,7 +1,5 @@
-"use client";
-
 import { ListOrdered, RefreshCw, Kanban as KanbanIcon } from "lucide-react";
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 
 // Matches kaz.com.bd/technologies' "Software development methodologies"
 // section. Heading, intro paragraph, and all three method descriptions +
@@ -41,8 +39,6 @@ const METHODOLOGIES = [
 ];
 
 export default function TechnologiesMethodologies() {
-  const reducedMotion = useReducedMotion();
-
   return (
     <section className="relative overflow-hidden bg-paper px-6 py-20 sm:py-24">
       <div
@@ -54,43 +50,28 @@ export default function TechnologiesMethodologies() {
       />
 
       <div className="relative mx-auto max-w-6xl">
-        <motion.h2
-          initial={{ opacity: 0, y: reducedMotion ? 0 : 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5 }}
+        <Reveal
+          as="h2"
           className="max-w-2xl text-balance font-display text-3xl font-medium text-ink sm:text-4xl"
         >
           Software development methodologies
-        </motion.h2>
+        </Reveal>
 
-        <motion.p
-          initial={{ opacity: 0, y: reducedMotion ? 0 : 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.5, delay: 0.08 }}
-          className="mt-5 max-w-2xl text-graphite"
-        >
+        <Reveal as="p" delay={0.08} className="mt-5 max-w-2xl text-graphite">
           At Devliora, we apply a variety of software development life cycle models, from
           structured to Agile, to ensure smooth delivery and maximum value for our clients.
-        </motion.p>
+        </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-10 sm:grid-cols-3">
           {METHODOLOGIES.map((method, i) => (
-            <motion.div
-              key={method.title}
-              initial={{ opacity: 0, y: reducedMotion ? 0 : 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-            >
+            <Reveal key={method.title} delay={i * 0.1}>
               <p className="font-display text-xl font-semibold text-ember">{method.title}</p>
               <method.icon className="mt-4 h-6 w-6 text-ember" strokeWidth={1.75} />
               <p className="mt-4 text-sm leading-relaxed text-graphite">{method.description}</p>
               <div className="mt-5 rounded-lg bg-graphite/5 p-4">
                 <p className="text-sm italic leading-relaxed text-graphite/80">{method.example}</p>
               </div>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </div>

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { Send, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import Reveal from "@/components/Reveal";
 import {
   submitConsultationRequest,
   type ServiceInterest,
@@ -65,19 +65,8 @@ const labelClasses =
   "font-mono text-xs uppercase tracking-[0.15em] text-graphite/60";
 
 export default function BookConsultationForm() {
-  const shouldReduceMotion = useReducedMotion();
   const [form, setForm] = useState<FormState>(INITIAL_STATE);
   const [status, setStatus] = useState<SubmitStatus>("idle");
-
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.5, delay: i * 0.08 },
-        };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -123,10 +112,7 @@ export default function BookConsultationForm() {
 
       <div className="relative mx-auto max-w-3xl px-6">
         {status === "success" ? (
-          <motion.div
-            {...fadeUp(0)}
-            className="flex flex-col items-center gap-4 rounded-2xl border border-wire bg-paper px-8 py-16 text-center"
-          >
+          <Reveal className="flex flex-col items-center gap-4 rounded-2xl border border-wire bg-paper px-8 py-16 text-center" role="status">
             <CheckCircle2 className="h-12 w-12 text-signal" />
             <h2 className="font-display text-2xl font-semibold text-ink">
               Request received — thank you.
@@ -135,11 +121,13 @@ export default function BookConsultationForm() {
               One of our engineers will reach out within 48 hours to confirm
               your consultation and preferred time.
             </p>
-          </motion.div>
+          </Reveal>
         ) : (
-          <motion.form
-            {...fadeUp(0)}
+          <Reveal>
+          <form
             onSubmit={handleSubmit}
+            aria-label="Book a consultation"
+            aria-busy={status === "submitting"}
             className="grid gap-6 md:grid-cols-2"
           >
             <div className="flex flex-col gap-2">
@@ -196,7 +184,7 @@ export default function BookConsultationForm() {
             <div className="flex flex-col gap-2">
               <label htmlFor="companyName" className={labelClasses}>
                 Company name{" "}
-                <span className="normal-case tracking-normal text-graphite/40">
+                <span className="normal-case tracking-normal text-graphite/60">
                   (optional)
                 </span>
               </label>
@@ -255,7 +243,7 @@ export default function BookConsultationForm() {
             <div className="flex flex-col gap-2">
               <label htmlFor="preferredDate" className={labelClasses}>
                 Preferred date{" "}
-                <span className="normal-case tracking-normal text-graphite/40">
+                <span className="normal-case tracking-normal text-graphite/60">
                   (optional)
                 </span>
               </label>
@@ -292,7 +280,7 @@ export default function BookConsultationForm() {
             <div className="flex flex-col gap-2 md:col-span-2">
               <label htmlFor="additionalDetails" className={labelClasses}>
                 Additional details{" "}
-                <span className="normal-case tracking-normal text-graphite/40">
+                <span className="normal-case tracking-normal text-graphite/60">
                   (optional)
                 </span>
               </label>
@@ -328,14 +316,15 @@ export default function BookConsultationForm() {
               </button>
 
               {status === "error" && (
-                <p className="mt-4 flex items-center gap-2 text-sm text-ember">
+                <p role="alert" className="mt-4 flex items-center gap-2 text-sm text-ember">
                   <AlertCircle className="h-4 w-4" />
                   Something went wrong submitting your request. Please try
                   again or email us directly.
                 </p>
               )}
             </div>
-          </motion.form>
+          </form>
+          </Reveal>
         )}
       </div>
     </section>

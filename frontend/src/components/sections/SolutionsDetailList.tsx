@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { SOLUTIONS } from "@/lib/solutions";
 import { slugify } from "@/lib/slugify";
+import Reveal from "@/components/Reveal";
+import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 
 export default function SolutionsDetailList() {
-  const shouldReduceMotion = useReducedMotion();
+  const shouldReduceMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     const hash = window.location.hash.slice(1);
@@ -27,21 +28,11 @@ export default function SolutionsDetailList() {
 
         <div className="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-ink/10 bg-ink/10 md:grid-cols-2">
           {SOLUTIONS.map((solution, i) => (
-            <motion.div
+            <Reveal
               key={solution.id}
               id={slugify(solution.title)}
-              initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.5, delay: i * 0.08 }}
-              // whileHover, not a CSS :hover class: once this motion.div's
-              // own whileInView settles, Framer Motion leaves a permanent
-              // inline `transform` on it that would beat a CSS transform.
-              // Plain scale (no translate/rotate) — the parent grid relies
-              // on its own overflow-hidden for the gap-px hairline mosaic
-              // trick, which would clip a bigger lift.
-              whileHover={shouldReduceMotion ? undefined : { scale: 1.03, zIndex: 10 }}
-              className="relative z-0 scroll-mt-24 bg-paper p-8"
+              delay={i * 0.08}
+              className="hover-pop relative z-0 scroll-mt-24 bg-paper p-8"
             >
               <span className="font-mono text-sm tabular-nums text-signal">
                 {solution.id}
@@ -50,7 +41,7 @@ export default function SolutionsDetailList() {
                 {solution.title}
               </h3>
               <p className="mt-3 text-graphite">{solution.description}</p>
-            </motion.div>
+            </Reveal>
           ))}
         </div>
       </div>

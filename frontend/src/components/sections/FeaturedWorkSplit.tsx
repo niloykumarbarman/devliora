@@ -1,9 +1,7 @@
-"use client";
-
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
+import Reveal from "@/components/Reveal";
 
 export type FeaturedWorkSplitItem = {
   slug: string;
@@ -28,34 +26,29 @@ const PANEL_TINTS = [
 // from), shown full-bleed as image/text split cards — a second, visually
 // distinct take on the same "proof of work" idea as ClientSpotlight.
 export default function FeaturedWorkSplit({ items }: FeaturedWorkSplitProps) {
-  const shouldReduceMotion = useReducedMotion();
-
   if (items.length === 0) return null;
 
   return (
     <section className="relative overflow-hidden border-t border-paper/10">
       <div className="grid grid-cols-1 md:grid-cols-2">
         {items.map((item, i) => (
-          <motion.div
+          <Reveal
             key={item.slug}
-            initial={shouldReduceMotion ? undefined : { opacity: 0, x: i % 2 === 0 ? -32 : 32 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="group relative flex flex-col overflow-hidden sm:min-h-[420px] sm:flex-row"
+            className={`group relative flex flex-col overflow-hidden sm:min-h-[420px] sm:flex-row ${
+              i % 2 === 0 ? "reveal-from-left" : "reveal-from-right"
+            }`}
           >
             <Link
               href={`/portfolio/${item.slug}`}
               className="relative h-56 w-full shrink-0 overflow-hidden sm:h-auto sm:w-[45%] lg:w-1/2"
             >
               {item.thumbnailUrl && (
-                <motion.img
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
                   src={resolveImageUrl(item.thumbnailUrl)}
-                  alt=""
-                  initial={shouldReduceMotion ? undefined : { scale: 1.15 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+                  alt={item.title}
+                  loading="lazy"
+                  decoding="async"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
               )}
@@ -83,7 +76,7 @@ export default function FeaturedWorkSplit({ items }: FeaturedWorkSplitProps) {
                 <ArrowRight className="h-3 w-3 transition-transform group-hover/link:translate-x-0.5" />
               </Link>
             </div>
-          </motion.div>
+          </Reveal>
         ))}
       </div>
     </section>

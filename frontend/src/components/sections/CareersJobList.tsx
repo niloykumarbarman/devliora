@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { Briefcase, MapPin, Clock } from "lucide-react";
 import { fetchJobListings, type JobListing } from "@/lib/jobListings";
+import Reveal from "@/components/Reveal";
 
 export default function CareersJobList() {
-  const shouldReduceMotion = useReducedMotion();
   const [jobs, setJobs] = useState<JobListing[]>([]);
   const [status, setStatus] = useState<"loading" | "success" | "error">(
     "loading"
@@ -79,16 +78,10 @@ export default function CareersJobList() {
           {status === "success" && jobs.length > 0 && (
             <ul className="grid gap-px overflow-hidden border border-ink/10 bg-ink/10">
               {jobs.map((job, i) => (
-                <motion.li
+                <Reveal
                   key={job.id}
-                  initial={
-                    shouldReduceMotion ? undefined : { opacity: 0, y: 12 }
-                  }
-                  whileInView={
-                    shouldReduceMotion ? undefined : { opacity: 1, y: 0 }
-                  }
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  as="li"
+                  delay={i * 0.08}
                   className="bg-paper px-6 py-6 sm:px-8"
                 >
                   <h3 className="font-display text-lg font-semibold text-ink">
@@ -108,7 +101,7 @@ export default function CareersJobList() {
                       {job.employmentType}
                     </span>
                   </div>
-                </motion.li>
+                </Reveal>
               ))}
             </ul>
           )}

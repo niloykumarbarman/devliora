@@ -1,11 +1,8 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 import { ShieldAlert } from "lucide-react";
 import { CICD_PIPELINE } from "@/lib/cloudDevops";
 
 export default function CiCdPipeline() {
-  const reduceMotion = useReducedMotion();
 
   return (
     <section
@@ -22,13 +19,7 @@ export default function CiCdPipeline() {
       />
 
       <div className="relative mx-auto max-w-4xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-signal">
             CI/CD Pipeline
           </p>
@@ -39,7 +30,7 @@ export default function CiCdPipeline() {
             Every change follows the same automated route. Three stages are quality
             gates — a failure there stops the release before it ships.
           </p>
-        </motion.div>
+        </Reveal>
 
         <ol className="relative mt-16 pl-10 sm:pl-14">
           {/* Rail */}
@@ -56,14 +47,7 @@ export default function CiCdPipeline() {
           {CICD_PIPELINE.map((stage, i) => {
             const Icon = stage.icon;
             return (
-              <motion.li
-                key={stage.id}
-                initial={reduceMotion ? false : { opacity: 0, x: 12 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.4, ease: "easeOut", delay: i * 0.05 }}
-                className="relative pb-8 last:pb-0"
-              >
+              <Reveal key={stage.id} as="li" delay={i * 0.05} className="relative pb-8 last:pb-0">
                 <span
                   className="absolute -left-10 flex h-8 w-8 items-center justify-center rounded-full border border-ink/15 bg-paper text-signal sm:-left-14 sm:h-10 sm:w-10"
                 >
@@ -72,7 +56,7 @@ export default function CiCdPipeline() {
 
                 <div className="group rounded-sm border border-ink/10 bg-white/60 p-4 transition-colors hover:border-signal/40 sm:p-5">
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                    <span className="font-mono text-xs text-graphite/45">
+                    <span className="font-mono text-xs text-graphite/60">
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     <h3 className="font-display text-base font-semibold sm:text-lg">
@@ -89,7 +73,7 @@ export default function CiCdPipeline() {
                     {stage.detail}
                   </p>
                 </div>
-              </motion.li>
+              </Reveal>
             );
           })}
         </ol>

@@ -31,7 +31,7 @@ export default function IndustriesMenu({
     <div
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className="absolute inset-x-0 top-full z-40 hidden border-t border-wire/60 bg-paper shadow-lg lg:block"
+      className="absolute inset-x-0 top-full z-40 hidden max-h-[calc(100dvh-4.75rem)] overflow-y-auto overscroll-contain border-t border-wire/60 bg-paper shadow-lg lg:block"
     >
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[1.3fr_1fr]">
         <div className="relative aspect-[16/10] overflow-hidden rounded-lg bg-wire/10">
@@ -51,7 +51,7 @@ export default function IndustriesMenu({
         </div>
 
         <div>
-          <h3 className="font-mono text-xs font-semibold uppercase tracking-widest text-graphite/50">
+          <h3 className="font-mono text-xs font-semibold uppercase tracking-widest text-graphite/65">
             Industries
           </h3>
           <ul className="mt-4 space-y-3">
@@ -66,9 +66,9 @@ export default function IndustriesMenu({
                 </Link>
               </li>
             ))}
-            {!loaded && <li className="font-mono text-sm text-graphite/40">Loading…</li>}
+            {!loaded && <li className="font-mono text-sm text-graphite/60">Loading…</li>}
             {loaded && industries.length === 0 && (
-              <li className="font-mono text-sm text-graphite/40">No industries yet.</li>
+              <li className="font-mono text-sm text-graphite/60">No industries yet.</li>
             )}
           </ul>
         </div>

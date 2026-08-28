@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Cloud, Layers, LayoutGrid } from "lucide-react";
+import { ArrowRight, Blocks, Cloud, Layers, LayoutGrid } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 import { serviceHref } from "@/lib/services";
 import { MEGA_MENU_TECHNOLOGIES } from "@/lib/megaMenuTechnologies";
@@ -20,7 +20,7 @@ type MegaMenuProps = {
 };
 
 const columnHeadingClass =
-  "font-mono text-xs font-semibold uppercase tracking-widest text-graphite/50";
+  "font-mono text-xs font-semibold uppercase tracking-widest text-graphite/65";
 const linkClass =
   "group flex items-center gap-2 font-mono text-sm text-graphite/70 transition-colors duration-200 hover:text-ink";
 const viewAllClass =
@@ -45,7 +45,11 @@ export default function MegaMenu({
     <div
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
-      className="absolute inset-x-0 top-full z-40 hidden border-t border-wire/60 bg-paper shadow-lg lg:block"
+      // Cap to the space below the nav and scroll internally, so a long
+      // Services list stays fully reachable on short laptop viewports
+      // instead of being clipped below the fold (this panel is
+      // position:absolute, so the page can't scroll to reveal it).
+      className="absolute inset-x-0 top-full z-40 hidden max-h-[calc(100dvh-4.75rem)] overflow-y-auto overscroll-contain border-t border-wire/60 bg-paper shadow-lg lg:block"
     >
       <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 py-10 md:grid-cols-[1fr_2fr]">
         <div className="relative hidden aspect-[4/5] overflow-hidden rounded-lg bg-wire/10 md:block">
@@ -86,16 +90,24 @@ export default function MegaMenu({
                   </Link>
                 </li>
               ))}
-              {!loaded && <li className="font-mono text-sm text-graphite/40">Loading…</li>}
+              {!loaded && <li className="font-mono text-sm text-graphite/60">Loading…</li>}
             </ul>
             <Link href="/services" onClick={onNavigate} className={viewAllClass}>
               View all services
               <ArrowRight className="h-3 w-3" />
             </Link>
             <Link
-              href="/cloud-devops"
+              href="/custom-software-development"
               onClick={onNavigate}
               className="mt-4 flex items-center gap-2 rounded-md border border-signal/25 bg-signal/[0.06] px-3 py-2 font-mono text-xs font-semibold text-signal transition-colors hover:border-signal/50 hover:bg-signal/10"
+            >
+              <Blocks className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />
+              Custom Software Development
+            </Link>
+            <Link
+              href="/cloud-devops"
+              onClick={onNavigate}
+              className="mt-2 flex items-center gap-2 rounded-md border border-signal/25 bg-signal/[0.06] px-3 py-2 font-mono text-xs font-semibold text-signal transition-colors hover:border-signal/50 hover:bg-signal/10"
             >
               <Cloud className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />
               Cloud &amp; DevOps Engineering

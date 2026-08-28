@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { fetchIndustries, IndustryDto } from "@/lib/industries";
 import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
@@ -63,9 +64,13 @@ export default function TechnologyDetailIndustries({ paragraph, imageUrl: imageU
 
           <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-3">
             {industries.map((industry) => (
-              <span key={industry.id} className="font-mono text-base text-ember">
+              <Link
+                key={industry.id}
+                href={`/industries/${industry.slug}`}
+                className="font-mono text-base text-ember underline-offset-4 transition-colors hover:text-paper hover:underline"
+              >
                 {industry.name}
-              </span>
+              </Link>
             ))}
           </div>
         </div>

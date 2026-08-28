@@ -1,7 +1,12 @@
 "use client";
 
-import { useRef, useState, type ReactNode, type PointerEvent as ReactPointerEvent } from "react";
-import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 
 interface DraggableMarqueeProps {
   children: ReactNode;
@@ -10,6 +15,12 @@ interface DraggableMarqueeProps {
   trackClassName?: string;
 }
 
+// Was framer-motion (useMotionValue + useAnimationFrame). Now a plain
+// rAF loop writing `transform: translate3d(x,0,0)` straight to the track
+// node — same auto-scroll, hover-pause, pointer-drag and momentum, with
+// no animation-library runtime. The loop only runs while the strip is
+// actually on screen (IntersectionObserver) and is fully halted for
+// `prefers-reduced-motion`.
 export default function DraggableMarquee({
   children,
   speed = 60,
@@ -17,10 +28,13 @@ export default function DraggableMarquee({
   trackClassName = "",
 }: DraggableMarqueeProps) {
   const trackRef = useRef<HTMLDivElement>(null);
-  const x = useMotionValue(0);
+  const xRef = useRef(0);
 
   const isDraggingRef = useRef(false);
-  const [isHovering, setIsHovering] = useState(false);
+  const isHoveringRef = useRef(false);
+  const isOnScreenRef = useRef(true);
+  const [isReducedMotion, setIsReducedMotion] = useState(false);
+
   const startClientXRef = useRef(0);
   const startXRef = useRef(0);
   const lastClientXRef = useRef(0);
@@ -28,42 +42,75 @@ export default function DraggableMarquee({
   const velocityRef = useRef(0);
   const momentumUntilRef = useRef(0);
 
-  function wrap(value: number, halfWidth: number) {
-    let v = value;
-    while (v <= -halfWidth) v += halfWidth;
-    while (v > 0) v -= halfWidth;
-    return v;
-  }
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const sync = () => setIsReducedMotion(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
-  useAnimationFrame((_, delta) => {
-    const track = trackRef.current;
-    if (!track) return;
-    const halfWidth = track.scrollWidth / 2;
-    if (halfWidth === 0) return;
+  useEffect(() => {
+    const el = trackRef.current?.parentElement;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        isOnScreenRef.current = entry.isIntersecting;
+      },
+      { rootMargin: "200px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
-    if (isDraggingRef.current) return;
+  useEffect(() => {
+    if (isReducedMotion) return;
+    let raf = 0;
+    let last = performance.now();
 
-    const now = performance.now();
-    if (now < momentumUntilRef.current) {
-      const next = x.get() + (velocityRef.current * delta) / 1000;
-      velocityRef.current *= 0.94;
-      x.set(wrap(next, halfWidth));
-      return;
-    }
+    const wrap = (value: number, halfWidth: number) => {
+      let v = value;
+      while (v <= -halfWidth) v += halfWidth;
+      while (v > 0) v -= halfWidth;
+      return v;
+    };
 
-    if (isHovering) return;
+    const tick = (now: number) => {
+      raf = requestAnimationFrame(tick);
+      const delta = now - last;
+      last = now;
 
-    const next = x.get() - (speed * delta) / 1000;
-    x.set(wrap(next, halfWidth));
-  });
+      const track = trackRef.current;
+      if (!track) return;
+      const halfWidth = track.scrollWidth / 2;
+      if (halfWidth === 0) return;
+
+      if (isDraggingRef.current) return;
+
+      if (now < momentumUntilRef.current) {
+        xRef.current = wrap(
+          xRef.current + (velocityRef.current * delta) / 1000,
+          halfWidth
+        );
+        velocityRef.current *= 0.94;
+      } else if (!isHoveringRef.current && isOnScreenRef.current) {
+        xRef.current = wrap(xRef.current - (speed * delta) / 1000, halfWidth);
+      } else {
+        return;
+      }
+      track.style.transform = `translate3d(${xRef.current}px,0,0)`;
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [speed, isReducedMotion]);
 
   function handlePointerDown(e: ReactPointerEvent<HTMLDivElement>) {
-    const track = trackRef.current;
-    if (!track) return;
+    if (!trackRef.current) return;
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
     isDraggingRef.current = true;
     startClientXRef.current = e.clientX;
-    startXRef.current = x.get();
+    startXRef.current = xRef.current;
     lastClientXRef.current = e.clientX;
     lastTimeRef.current = performance.now();
     velocityRef.current = 0;
@@ -75,8 +122,11 @@ export default function DraggableMarquee({
     if (!track) return;
     const halfWidth = track.scrollWidth / 2;
 
-    const deltaX = e.clientX - startClientXRef.current;
-    x.set(wrap(startXRef.current + deltaX, halfWidth));
+    let v = startXRef.current + (e.clientX - startClientXRef.current);
+    while (v <= -halfWidth) v += halfWidth;
+    while (v > 0) v -= halfWidth;
+    xRef.current = v;
+    track.style.transform = `translate3d(${v}px,0,0)`;
 
     const now = performance.now();
     const dt = now - lastTimeRef.current;
@@ -96,20 +146,20 @@ export default function DraggableMarquee({
   return (
     <div
       className={`cursor-grab select-none overflow-hidden touch-pan-y active:cursor-grabbing ${className}`}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      onMouseEnter={() => (isHoveringRef.current = true)}
+      onMouseLeave={() => (isHoveringRef.current = false)}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
     >
-      <motion.div
+      <div
         ref={trackRef}
-        style={{ x }}
         className={`flex w-max items-stretch ${trackClassName}`}
+        style={{ willChange: "transform" }}
       >
         {children}
-      </motion.div>
+      </div>
     </div>
   );
 }

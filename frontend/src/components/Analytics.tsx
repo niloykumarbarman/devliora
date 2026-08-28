@@ -5,6 +5,12 @@ import Script from "next/script";
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
 
+// Both GA and Microsoft Clarity load with `lazyOnload` — after the page
+// has fully loaded and the main thread is quiet — instead of
+// `afterInteractive`. Neither is needed for first paint or first input,
+// and Clarity in particular (a session recorder) is heavy; keeping both
+// off the critical path protects LCP/INP/TBT. Analytics still fires on
+// every real visit, just a beat later.
 export default function Analytics() {
   return (
     <>
@@ -12,9 +18,9 @@ export default function Analytics() {
         <>
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-            strategy="afterInteractive"
+            strategy="lazyOnload"
           />
-          <Script id="ga4-init" strategy="afterInteractive">
+          <Script id="ga4-init" strategy="lazyOnload">
             {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
@@ -25,7 +31,7 @@ export default function Analytics() {
         </>
       )}
       {CLARITY_PROJECT_ID && (
-        <Script id="clarity-init" strategy="afterInteractive">
+        <Script id="clarity-init" strategy="lazyOnload">
           {`
             (function(c,l,a,r,i,t,y){
                 c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};

@@ -3,9 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
 import { User, CalendarDays } from "lucide-react";
+import Reveal from "@/components/Reveal";
 import { fetchBlogPosts, type BlogPost } from "@/lib/blogPosts";
+import { categoryForPost } from "@/lib/blogContent";
 import { resolveImageUrl } from "@/lib/hero";
 
 function formatDate(value: string | null): string {
@@ -18,7 +19,6 @@ function formatDate(value: string | null): string {
 }
 
 export default function BlogPostList() {
-  const shouldReduceMotion = useReducedMotion();
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [status, setStatus] = useState<"loading" | "success" | "error">(
     "loading"
@@ -92,16 +92,10 @@ export default function BlogPostList() {
               }`}
             >
               {posts.map((post, i) => (
-                <motion.article
+                <Reveal
                   key={post.id}
-                  initial={
-                    shouldReduceMotion ? undefined : { opacity: 0, y: 20 }
-                  }
-                  whileInView={
-                    shouldReduceMotion ? undefined : { opacity: 1, y: 0 }
-                  }
-                  viewport={{ once: true, margin: "-60px" }}
-                  transition={{ duration: 0.5, delay: i * 0.08 }}
+                  as="article"
+                  delay={i * 0.08}
                   className="flex flex-col bg-paper"
                 >
                   {/* Scale-only hover (no translate/rotate, and a plain
@@ -127,7 +121,10 @@ export default function BlogPostList() {
                   </div>
 
                   <div className="flex flex-1 flex-col p-6">
-                    <h3 className="font-display text-lg font-medium text-ink">
+                    <p className="font-mono text-[0.625rem] font-semibold uppercase tracking-widest text-signal">
+                      {categoryForPost(post.slug, post.title).name}
+                    </p>
+                    <h3 className="mt-2 font-display text-lg font-medium text-ink">
                       {post.title}
                     </h3>
 
@@ -147,7 +144,7 @@ export default function BlogPostList() {
                     </div>
                   </div>
                   </Link>
-                </motion.article>
+                </Reveal>
               ))}
             </div>
           )}

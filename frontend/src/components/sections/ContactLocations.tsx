@@ -1,19 +1,10 @@
-"use client";
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, MapPin, Phone, Mail } from "lucide-react";
+import { ArrowRight, MapPin, Phone, Mail, Clock } from "lucide-react";
 import type { OfficeLocationDto } from "@/lib/officeLocations";
+import Reveal from "@/components/Reveal";
+import { siteConfig } from "@/lib/seo";
+
 export default function ContactLocations({ offices }: { offices: OfficeLocationDto[] }) {
-  const shouldReduceMotion = useReducedMotion();
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-60px" },
-          transition: { duration: 0.5, delay: i * 0.08 },
-        };
   return (
     <section className="relative overflow-hidden bg-ink text-paper">
       {/* Schedule-a-call banner */}
@@ -30,10 +21,57 @@ export default function ContactLocations({ offices }: { offices: OfficeLocationD
         </span>
       </Link>
       <div className="mx-auto max-w-6xl px-6 py-20 md:py-28">
-        <motion.div
-          {...fadeUp(0)}
-          className="grid gap-12 sm:grid-cols-2 sm:gap-16"
+        {/* Canonical contact channel — always shown, pulled from the one
+            place the phone/email are defined (siteConfig), so it can't
+            drift from the structured data and is never blank if the
+            admin-managed office list is empty. */}
+        <Reveal className="grid gap-6 sm:grid-cols-3">
+          <a
+            href={`mailto:${siteConfig.contactEmail}`}
+            className="flex items-start gap-3 rounded-lg border border-paper/10 bg-paper/[0.03] p-5 transition-colors hover:border-signal/40"
+          >
+            <Mail className="mt-0.5 h-5 w-5 shrink-0 text-signal" strokeWidth={1.75} />
+            <span>
+              <span className="block font-mono text-xs uppercase tracking-[0.14em] text-paper/50">
+                Email
+              </span>
+              <span className="mt-1 block text-paper">{siteConfig.contactEmail}</span>
+            </span>
+          </a>
+          <a
+            href={`tel:${siteConfig.contactPhone}`}
+            className="flex items-start gap-3 rounded-lg border border-paper/10 bg-paper/[0.03] p-5 transition-colors hover:border-signal/40"
+          >
+            <Phone className="mt-0.5 h-5 w-5 shrink-0 text-signal" strokeWidth={1.75} />
+            <span>
+              <span className="block font-mono text-xs uppercase tracking-[0.14em] text-paper/50">
+                Phone
+              </span>
+              <span className="mt-1 block text-paper">{siteConfig.contactPhoneDisplay}</span>
+            </span>
+          </a>
+          <div className="flex items-start gap-3 rounded-lg border border-paper/10 bg-paper/[0.03] p-5">
+            <Clock className="mt-0.5 h-5 w-5 shrink-0 text-signal" strokeWidth={1.75} />
+            <span>
+              <span className="block font-mono text-xs uppercase tracking-[0.14em] text-paper/50">
+                Response time
+              </span>
+              <span className="mt-1 block text-paper/80">
+                A substantive reply within two business days.
+              </span>
+            </span>
+          </div>
+        </Reveal>
+
+        {offices.length > 0 && (
+        <>
+        <Reveal
+          as="h2"
+          className="mt-20 font-display text-3xl font-semibold text-paper sm:text-4xl"
         >
+          Our offices
+        </Reveal>
+        <Reveal delay={0.08} className="mt-12 grid gap-12 sm:grid-cols-2 sm:gap-16">
           {offices.map((office) => (
             <div key={office.id}>
               <h3 className="font-mono text-sm uppercase tracking-[0.15em] text-ember">
@@ -56,11 +94,8 @@ export default function ContactLocations({ offices }: { offices: OfficeLocationD
               <div className="mt-6 h-px w-full bg-gradient-to-r from-ember to-transparent" />
             </div>
           ))}
-        </motion.div>
-        <motion.div
-          {...fadeUp(1)}
-          className="mt-16 grid gap-6 sm:grid-cols-2"
-        >
+        </Reveal>
+        <Reveal delay={0.08} className="mt-16 grid gap-6 sm:grid-cols-2">
           {offices.map((office) => (
             <div
               key={office.id}
@@ -68,7 +103,7 @@ export default function ContactLocations({ offices }: { offices: OfficeLocationD
             >
               <iframe
                 title={`${office.country} office map`}
-                src={`https://www.google.com/maps?q=${office.mapQuery}&output=embed`}
+                src={`https://www.google.com/maps?q=${encodeURIComponent(office.mapQuery)}&output=embed`}
                 width="100%"
                 height="320"
                 style={{ border: 0 }}
@@ -77,7 +112,9 @@ export default function ContactLocations({ offices }: { offices: OfficeLocationD
               />
             </div>
           ))}
-        </motion.div>
+        </Reveal>
+        </>
+        )}
       </div>
     </section>
   );

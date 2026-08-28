@@ -1,12 +1,8 @@
-"use client";
-
 import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 export default function IndustriesCTA() {
-  const shouldReduceMotion = useReducedMotion();
-
   return (
     <section className="relative overflow-hidden bg-ink py-24">
       <div className="bg-grain absolute inset-0" />
@@ -19,18 +15,12 @@ export default function IndustriesCTA() {
       />
       <div className="absolute inset-0 bg-[size:56px_56px] bg-[linear-gradient(to_right,rgba(243,242,237,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(243,242,237,0.04)_1px,transparent_1px)]" />
 
-      <motion.div
-        initial={shouldReduceMotion ? undefined : { opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-60px" }}
-        transition={{ duration: 0.5 }}
-        className="relative mx-auto max-w-3xl px-6 text-center"
-      >
+      <Reveal className="relative mx-auto max-w-3xl px-6 text-center">
         <h2 className="mt-4 text-balance font-display text-3xl font-semibold text-paper md:text-4xl">
-          Don't see your industry? <span className="text-signal">Tell us about it.</span>
+          Don&apos;t see your industry? <span className="text-signal">Tell us about it.</span>
         </h2>
         <p className="mt-4 text-wire">
-          This list reflects where we've done the deepest work, not the
+          This list reflects where we&apos;ve done the deepest work, not the
           limits of what we can take on.
         </p>
 
@@ -41,7 +31,7 @@ export default function IndustriesCTA() {
           Start a conversation
           <ArrowRight className="h-4 w-4" />
         </Link>
-      </motion.div>
+      </Reveal>
     </section>
   );
 }

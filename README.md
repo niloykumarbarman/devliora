@@ -94,8 +94,12 @@ Useful scripts (in `frontend/`): `npm run dev`, `npm run build`, `npm run lint`.
 
 Nothing real is committed. Templates:
 
-- `frontend/.env.example` — `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_GA_MEASUREMENT_ID`, `NEXT_PUBLIC_CLARITY_PROJECT_ID`
+- `frontend/.env.example` — `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_GA_MEASUREMENT_ID`, `NEXT_PUBLIC_CLARITY_PROJECT_ID`, `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`, `NEXT_PUBLIC_BING_SITE_VERIFICATION`
 - `infra/docker/.env.example` — everything `docker-compose.prod.yml` needs: `POSTGRES_*`, `JWT_SECRET_KEY`, `CORS_ALLOWED_ORIGIN`, the `NEXT_PUBLIC_*` build args, `GEMINI_API_KEY` / `GEMINI_DAILY_QUOTA`, and `TELEGRAM_*`
+
+The `NEXT_PUBLIC_*` analytics IDs and site-verification tokens are not secrets
+(they render into public HTML); they're env vars so nothing is hard-coded.
+Search Console / Bing / GA4 / Clarity setup steps are in `frontend/README.md`.
 
 On the VPS, real values live in `infra/docker/.env` (git-ignored). Secrets are
 never placed in any `appsettings*.json` or committed file — see **SECURITY.md**

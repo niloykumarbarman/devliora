@@ -7,9 +7,9 @@ import CaseStudiesList from "@/components/sections/CaseStudiesList";
 import CaseStudiesCTA from "@/components/sections/CaseStudiesCTA";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Case Studies | Devliora",
+  title: "Software Engineering Case Studies",
   description:
-    "How we approach hard engineering problems, from the constraint we started with to the system running in production today.",
+    "Walk-throughs of Devliora's engineering work — the constraint, the system built, and the outcome. Confidential engagements are shown as illustrative examples.",
   path: "/case-studies",
 });
 
@@ -17,7 +17,7 @@ export default function CaseStudiesPage() {
   return (
     <>
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <CaseStudiesHero />
         <CaseStudiesList />
         <CaseStudiesCTA />

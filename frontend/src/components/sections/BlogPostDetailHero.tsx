@@ -1,8 +1,4 @@
-"use client";
-
-import Link from "next/link";
-import { motion, useReducedMotion } from "framer-motion";
-import { ArrowLeft, User, CalendarDays } from "lucide-react";
+import { User, CalendarDays } from "lucide-react";
 import type { BlogPostDetail } from "@/lib/blogPosts";
 
 function formatDate(value: string | null): string {
@@ -16,38 +12,31 @@ function formatDate(value: string | null): string {
 
 export default function BlogPostDetailHero({
   post,
+  categoryName,
+  updatedAt,
 }: {
   post: BlogPostDetail;
+  categoryName?: string;
+  updatedAt?: string | null;
 }) {
-  const shouldReduceMotion = useReducedMotion();
-
-  const fadeUp = (i: number) =>
-    shouldReduceMotion
-      ? {}
-      : {
-          initial: { opacity: 0, y: 24 },
-          animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.5, delay: i * 0.08 },
-        };
-
   return (
     <section className="relative overflow-hidden bg-ink py-20 sm:py-28">
       <div className="bg-grain absolute inset-0 opacity-40" />
 
       <div className="relative mx-auto max-w-3xl px-6">
-        <motion.div {...fadeUp(0)}>
-        </motion.div>
+        {categoryName && (
+          <p className="hero-fade-rise font-mono text-xs font-semibold uppercase tracking-widest text-signal">
+            {categoryName}
+          </p>
+        )}
 
-        <motion.h1
-          {...fadeUp(1)}
-          className="mt-6 text-balance font-display text-3xl font-semibold text-paper sm:text-4xl md:text-5xl"
-        >
+        <h1 className="hero-h1-rise mt-6 text-balance font-display text-3xl font-semibold text-paper sm:text-4xl md:text-5xl">
           {post.title}
-        </motion.h1>
+        </h1>
 
-        <motion.div
-          {...fadeUp(2)}
-          className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-wide text-wire"
+        <div
+          className="hero-fade-rise mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-wide text-wire"
+          style={{ animationDelay: "0.24s" }}
         >
           <span className="inline-flex items-center gap-1.5">
             <User className="h-3.5 w-3.5 text-signal" />
@@ -57,7 +46,12 @@ export default function BlogPostDetailHero({
             <CalendarDays className="h-3.5 w-3.5 text-signal" />
             {formatDate(post.publishedAt)}
           </span>
-        </motion.div>
+          {updatedAt && updatedAt !== post.publishedAt && (
+            <span className="inline-flex items-center gap-1.5 text-wire/70">
+              Updated {formatDate(updatedAt)}
+            </span>
+          )}
+        </div>
       </div>
     </section>
   );

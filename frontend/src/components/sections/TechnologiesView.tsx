@@ -1,6 +1,4 @@
-"use client";
-
-import { motion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 import DraggableMarquee from "@/components/DraggableMarquee";
 import TechBrandIcon from "@/components/TechBrandIcon";
 import { getTechIcon } from "@/lib/techIcons";
@@ -46,32 +44,22 @@ export default function TechnologiesView({ technologies }: { technologies: Techn
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,theme(colors.paper/4)_1px,transparent_1px),linear-gradient(to_bottom,theme(colors.paper/4)_1px,transparent_1px)] bg-[size:56px_56px]"
       />
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <h2 className="mt-5 text-balance font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             The same stack we <span className="text-signal">run our own systems on</span>.
           </h2>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-paper/70">
             No stack chosen for a pitch deck. Every tool here is one we operate in production, including this site.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {grouped.map(({ cat, items }) => {
             const meta = CATEGORY_META[cat];
             const accent = ACCENT_CLASSES[meta.accent];
             return (
-              <motion.div
+              <Reveal
                 key={cat}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
                 className={`group relative overflow-hidden rounded-sm border bg-graphite/40 pb-5 pt-8 transition-colors ${accent.border}`}
               >
                 <div
@@ -111,7 +99,7 @@ export default function TechnologiesView({ technologies }: { technologies: Techn
                     })}
                   </DraggableMarquee>
                 </div>
-              </motion.div>
+              </Reveal>
             );
           })}
         </div>

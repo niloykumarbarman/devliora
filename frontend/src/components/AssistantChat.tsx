@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { MessageCircle, X, Send, Loader2, PhoneCall, Minus, CalendarDays, Headset } from "lucide-react";
 import {
   sendAssistantMessage,
@@ -131,7 +130,6 @@ function formatConversationTimestamp(date: Date): string {
 
 export default function AssistantChat() {
   const pathname = usePathname();
-  const prefersReducedMotion = useReducedMotion();
 
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
@@ -206,10 +204,6 @@ export default function AssistantChat() {
     openChatPanel();
   }
 
-  const panelTransition = prefersReducedMotion
-    ? { duration: 0 }
-    : { type: "spring" as const, stiffness: 320, damping: 30 };
-
   async function sendMessage(text: string) {
     const trimmed = text.trim();
     if (!trimmed || isSending) return;
@@ -276,14 +270,9 @@ export default function AssistantChat() {
 
   return (
     <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
-      <AnimatePresence>
-        {showTooltip && !isOpen && (
-          <motion.div
-            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.96 }}
-            animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
-            exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: 8, scale: 0.96 }}
-            transition={panelTransition}
-            className="relative max-w-[12rem] rounded-2xl rounded-br-sm border border-wire bg-paper px-4 py-3 text-sm text-ink shadow-2xl sm:max-w-[15rem]"
+      {showTooltip && !isOpen && (
+          <div
+            className="chat-pop-in relative max-w-[12rem] rounded-2xl rounded-br-sm border border-wire bg-paper px-4 py-3 text-sm text-ink shadow-2xl sm:max-w-[15rem]"
             role="status"
           >
             <button
@@ -305,30 +294,12 @@ export default function AssistantChat() {
               Chat with my AI Assistant! Ask about our services, projects, or
               anything else.
             </button>
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
 
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={
-              prefersReducedMotion
-                ? { opacity: 0 }
-                : { opacity: 0, y: 24, scale: 0.96 }
-            }
-            animate={
-              prefersReducedMotion
-                ? { opacity: 1 }
-                : { opacity: 1, y: 0, scale: 1 }
-            }
-            exit={
-              prefersReducedMotion
-                ? { opacity: 0 }
-                : { opacity: 0, y: 24, scale: 0.96 }
-            }
-            transition={panelTransition}
-            className={`flex w-[22rem] flex-col overflow-hidden rounded-2xl border border-wire bg-paper shadow-2xl sm:w-96 ${isMinimized ? "h-auto" : "h-[32rem]"}`}
+      {isOpen && (
+          <div
+            className={`chat-panel-in flex w-[22rem] flex-col overflow-hidden rounded-2xl border border-wire bg-paper shadow-2xl sm:w-96 ${isMinimized ? "h-auto" : "h-[32rem]"}`}
             role="dialog"
             aria-label="Devliora assistant chat"
           >
@@ -372,11 +343,17 @@ export default function AssistantChat() {
             </div>
 
             {!isMinimized && (
-            <div ref={scrollRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-4">
+            <div
+              ref={scrollRef}
+              role="log"
+              aria-live="polite"
+              aria-label="Conversation"
+              className="flex-1 space-y-3 overflow-y-auto px-4 py-4"
+            >
               {messages.length === 0 && !showCallbackForm && (
                 <div className="space-y-3">
                   {openedAt && (
-                    <p className="text-center font-mono text-[10px] uppercase tracking-[0.1em] text-graphite/40">
+                    <p className="text-center font-mono text-[10px] uppercase tracking-[0.1em] text-graphite/60">
                       {formatConversationTimestamp(openedAt)}
                     </p>
                   )}
@@ -465,19 +442,21 @@ export default function AssistantChat() {
               {showCallbackForm && (
                 <form
                   onSubmit={handleCallbackSubmit}
+                  aria-label="Request a callback"
                   className="space-y-2.5 rounded-lg border border-wire p-4"
                 >
                   <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-graphite">
                     Request a Callback
                   </p>
                   {callbackStatus === "sent" ? (
-                    <p className="text-sm text-ink">
+                    <p role="status" className="text-sm text-ink">
                       Thanks, we will be in touch shortly.
                     </p>
                   ) : (
                     <>
                       <input
                         required
+                        aria-label="Name"
                         placeholder="Name"
                         value={callbackForm.fullName}
                         onChange={handleCallbackChange("fullName")}
@@ -486,6 +465,7 @@ export default function AssistantChat() {
                       <input
                         required
                         type="email"
+                        aria-label="Email"
                         placeholder="Email"
                         value={callbackForm.email}
                         onChange={handleCallbackChange("email")}
@@ -493,6 +473,7 @@ export default function AssistantChat() {
                       />
                       <input
                         required
+                        aria-label="Phone"
                         placeholder="Phone"
                         value={callbackForm.phone}
                         onChange={handleCallbackChange("phone")}
@@ -500,12 +481,14 @@ export default function AssistantChat() {
                       />
                       <input
                         required
+                        aria-label="Subject"
                         placeholder="Subject"
                         value={callbackForm.subject}
                         onChange={handleCallbackChange("subject")}
                         className="w-full rounded-lg border border-wire bg-paper px-3 py-2 text-sm text-ink placeholder:text-graphite/40 outline-none transition focus-visible:border-signal focus-visible:ring-2 focus-visible:ring-signal/30"
                       />
                       <textarea
+                        aria-label="What should we know?"
                         placeholder="What should we know?"
                         value={callbackForm.message}
                         onChange={handleCallbackChange("message")}
@@ -513,7 +496,7 @@ export default function AssistantChat() {
                         className="w-full resize-none rounded-lg border border-wire bg-paper px-3 py-2 text-sm text-ink placeholder:text-graphite/40 outline-none transition focus-visible:border-signal focus-visible:ring-2 focus-visible:ring-signal/30"
                       />
                       {callbackStatus === "error" && (
-                        <p className="text-xs text-ember">
+                        <p role="alert" className="text-xs text-ember">
                           Could not send your request. Please try again.
                         </p>
                       )}
@@ -552,11 +535,12 @@ export default function AssistantChat() {
                   {REQUEST_CALLBACK_PHRASE}
                 </button>
               )}
-              <form onSubmit={handleSend} className="flex items-center gap-2">
+              <form onSubmit={handleSend} aria-label="Send a message to the assistant" className="flex items-center gap-2">
                 <input
                   ref={inputRef}
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
+                  aria-label="Message"
                   placeholder="Ask about our services..."
                   className="flex-1 rounded-lg border border-wire bg-paper px-4 py-2.5 text-sm text-ink placeholder:text-graphite/40 outline-none transition focus-visible:border-signal focus-visible:ring-2 focus-visible:ring-signal/30"
                 />
@@ -573,7 +557,7 @@ export default function AssistantChat() {
                   )}
                 </button>
               </form>
-              <p className="mt-2 text-center text-[10px] leading-snug text-graphite/50">
+              <p className="mt-2 text-center text-[10px] leading-snug text-graphite/65">
                 This chat may be saved to help our team follow up. See our{" "}
                 <Link href="/privacy" className="underline hover:text-graphite">
                   privacy policy
@@ -582,26 +566,24 @@ export default function AssistantChat() {
               </p>
             </div>
             )}
-          </motion.div>
+          </div>
         )}
-      </AnimatePresence>
 
       <div className="flex flex-col items-center gap-3">
-        <motion.a
+        <a
           href="https://t.me/Devliora_bot"
           target="_blank"
           rel="noopener noreferrer"
-          whileHover={prefersReducedMotion ? undefined : { y: -2 }}
           aria-label="Chat with us on Telegram"
           title="Chat with us on Telegram"
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-[#26A5E4] text-paper shadow-[0_0_24px_-6px_#26A5E4] transition-all"
+          className="flex h-12 w-12 items-center justify-center rounded-full bg-[#26A5E4] text-paper shadow-[0_0_24px_-6px_#26A5E4] transition-transform hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
         >
           <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor" aria-hidden="true">
             <path d="M9.036 15.803 8.72 20.09c.46 0 .658-.198.898-.436l2.155-2.06 4.467 3.27c.818.452 1.401.214 1.62-.757l2.937-13.81h.001c.256-1.19-.43-1.656-1.226-1.363L2.6 9.9c-1.157.452-1.14 1.1-.197 1.393l4.408 1.376L17.05 6.29c.485-.318.928-.142.564.176"/>
           </svg>
-        </motion.a>
+        </a>
 
-        <motion.button
+        <button
           type="button"
           onClick={() => {
             if (isOpen) {
@@ -611,16 +593,15 @@ export default function AssistantChat() {
             }
             if (showTooltip) dismissTooltip();
           }}
-          whileHover={prefersReducedMotion ? undefined : { y: -2 }}
           aria-label={isOpen ? "Close assistant chat" : "Open assistant chat"}
-          className="flex h-14 w-14 items-center justify-center rounded-full bg-signal text-paper shadow-[0_0_24px_-6px_var(--color-signal)] transition-all"
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-signal text-paper shadow-[0_0_24px_-6px_var(--color-signal)] transition-transform hover:-translate-y-0.5 motion-reduce:transition-none motion-reduce:hover:translate-y-0"
         >
           {isOpen ? (
             <X className="h-6 w-6" />
           ) : (
             <MessageCircle className="h-6 w-6" />
           )}
-        </motion.button>
+        </button>
       </div>
     </div>
   );

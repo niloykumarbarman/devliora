@@ -1,10 +1,7 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
+import Reveal from "@/components/Reveal";
 import { DEVOPS_SERVICES } from "@/lib/cloudDevops";
 
 export default function DevOpsServices() {
-  const reduceMotion = useReducedMotion();
 
   return (
     <section
@@ -21,13 +18,7 @@ export default function DevOpsServices() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-signal">
             DevOps Services
           </p>
@@ -38,20 +29,13 @@ export default function DevOpsServices() {
             Most projects combine two or three of these. Each one is deliverable on
             its own, with a clear definition of done.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-16 grid gap-px overflow-hidden rounded-sm border border-ink/10 bg-ink/10 sm:grid-cols-2 lg:grid-cols-4">
           {DEVOPS_SERVICES.map((service, i) => {
             const Icon = service.icon;
             return (
-              <motion.article
-                key={service.title}
-                initial={reduceMotion ? false : { opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.06 }}
-                className="group flex flex-col bg-paper p-6 transition-colors hover:bg-white"
-              >
+              <Reveal key={service.title} as="article" delay={i * 0.06} className="group flex flex-col bg-paper p-6 transition-colors hover:bg-white">
                 <Icon className="h-6 w-6 text-signal" strokeWidth={1.5} />
                 <h3 className="mt-4 font-display text-lg font-semibold leading-tight">
                   {service.title}
@@ -70,7 +54,7 @@ export default function DevOpsServices() {
                     </li>
                   ))}
                 </ul>
-              </motion.article>
+              </Reveal>
             );
           })}
         </div>

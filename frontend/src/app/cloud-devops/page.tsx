@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { breadcrumbJsonLd, buildMetadata, serviceJsonLd } from "@/lib/seo";
+import { clusterCrossLinks } from "@/lib/crossLinks";
+import RelatedLinks from "@/components/sections/RelatedLinks";
 import CloudDevOpsHero from "@/components/sections/cloud-devops/CloudDevOpsHero";
 import CloudPlatforms from "@/components/sections/cloud-devops/CloudPlatforms";
 import DevOpsStack from "@/components/sections/cloud-devops/DevOpsStack";
@@ -15,11 +17,12 @@ import BuiltForProduction from "@/components/sections/cloud-devops/BuiltForProdu
 import SiteTechArchitecture from "@/components/sections/cloud-devops/SiteTechArchitecture";
 import DevOpsServices from "@/components/sections/cloud-devops/DevOpsServices";
 import CloudDevOpsCTA from "@/components/sections/cloud-devops/CloudDevOpsCTA";
+import JsonLd from "@/components/JsonLd";
 
 const PAGE_PATH = "/cloud-devops";
-const PAGE_TITLE = "Cloud Infrastructure & DevOps Engineering | Devliora";
+const PAGE_TITLE = "Cloud Infrastructure & DevOps Engineering";
 const PAGE_DESCRIPTION =
-  "Devliora designs, automates and operates production cloud infrastructure — AWS, Azure, Google Cloud, Kubernetes, Terraform, CI/CD pipelines, monitoring, observability and cloud security for teams that need reliable software delivery.";
+  "Devliora designs, automates and operates production cloud infrastructure — AWS, Azure, Kubernetes, Terraform, CI/CD, monitoring and security for reliable delivery.";
 
 export const metadata: Metadata = buildMetadata({
   title: PAGE_TITLE,
@@ -42,16 +45,10 @@ export default function CloudDevOpsPage() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }}
-      />
+      <JsonLd data={breadcrumb} />
+      <JsonLd data={service} />
       <Navbar />
-      <main>
+      <main id="main-content" tabIndex={-1}>
         <CloudDevOpsHero />
         <CloudPlatforms />
         <DevOpsStack />
@@ -64,6 +61,7 @@ export default function CloudDevOpsPage() {
         <BuiltForProduction />
         <SiteTechArchitecture />
         <DevOpsServices />
+        <RelatedLinks groups={clusterCrossLinks("cloud")} dark />
         <CloudDevOpsCTA />
       </main>
       <Footer />

@@ -1,7 +1,5 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import { ShieldCheck, Clock, FileCheck, Handshake } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 type Guarantee = {
   icon: typeof ShieldCheck;
@@ -37,8 +35,6 @@ const GUARANTEES: Guarantee[] = [
 ];
 
 export default function TrustGuarantees() {
-  const reduceMotion = useReducedMotion();
-
   return (
     <section id="trust" className="relative scroll-mt-24 overflow-hidden bg-paper text-ink">
       <div
@@ -51,13 +47,7 @@ export default function TrustGuarantees() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-2xl"
-        >
+        <Reveal className="max-w-2xl">
           <h2 className="mt-5 text-balance font-display text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
             Commitments we{" "}
             <span className="text-signal">put in writing</span>.
@@ -67,31 +57,16 @@ export default function TrustGuarantees() {
             clients. In the meantime, here is exactly what you can expect
             from working with us.
           </p>
-        </motion.div>
+        </Reveal>
 
         <div className="mt-16 grid gap-px overflow-hidden rounded-sm border border-ink/10 bg-ink/10 sm:grid-cols-2">
           {GUARANTEES.map((item, i) => {
             const Icon = item.icon;
             return (
-              <motion.div
+              <Reveal
                 key={item.title}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-60px" }}
-                transition={
-                  reduceMotion
-                    ? { duration: 0.3 }
-                    : { duration: 0.5, ease: "easeOut", delay: i * 0.08 }
-                }
-                // whileHover, not a CSS :hover class: once this motion.div's
-                // own whileInView settles, Framer Motion leaves a permanent
-                // inline `transform` on the element that would silently
-                // beat any CSS class's :hover transform. Plain scale (no
-                // translate/rotate) since the parent grid relies on its own
-                // `overflow-hidden` for the gap-px hairline mosaic trick,
-                // which would clip a bigger lift.
-                whileHover={reduceMotion ? undefined : { scale: 1.03, zIndex: 10 }}
-                className="relative z-0 bg-paper p-8"
+                delay={i * 0.08}
+                className="hover-pop relative z-0 bg-paper p-8"
               >
                 <Icon className="h-6 w-6 text-signal" strokeWidth={1.75} />
                 <h3 className="mt-5 font-display text-xl font-semibold tracking-tight">
@@ -100,7 +75,7 @@ export default function TrustGuarantees() {
                 <p className="mt-3 text-sm leading-relaxed text-graphite/75">
                   {item.description}
                 </p>
-              </motion.div>
+              </Reveal>
             );
           })}
         </div>
