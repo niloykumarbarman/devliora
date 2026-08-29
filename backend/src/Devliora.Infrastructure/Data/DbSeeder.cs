@@ -1,13 +1,21 @@
 using Devliora.Domain.Entities;
 using Devliora.Domain.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace Devliora.Infrastructure.Data;
 
 /// <summary>
-/// Idempotent startup seeder. Safe to run on every application start:
-/// it only inserts data when the relevant table is empty, so it will
-/// never duplicate rows and will self-heal if data is ever lost
-/// (e.g. accidental volume wipe) without requiring a manual script.
+/// Idempotent startup seeder. Safe to run on every application start.
+///
+/// It seeds per key (technology Name / industry Slug), inserting only the
+/// rows that are missing — never updating or deleting existing data. The
+/// old "skip if the table has any row" guard was wrong: several later
+/// migrations (SeedAdditionalIndustries, SeedMobileTech, SeedXamarinMobileTech)
+/// insert a handful of rows during Database.Migrate(), which runs *before*
+/// this seeder, so on a fresh database the guard tripped and the core
+/// technology / industry sets were never inserted. Per-key seeding
+/// self-heals that and is still safe to run against a fully-populated
+/// production database (every key already exists → nothing inserted).
 /// </summary>
 public static class DbSeeder
 {
@@ -19,11 +27,6 @@ public static class DbSeeder
 
     private static async Task SeedTechnologiesAsync(AppDbContext context, CancellationToken cancellationToken)
     {
-        if (context.TechnologyItems.Any())
-        {
-            return;
-        }
-
         var technologies = new List<TechnologyItem>
         {
             Tech("aspnetcore", "ASP.NET Core", TechnologyCategory.BackendApis, 1),
@@ -66,7 +69,18 @@ public static class DbSeeder
             Tech("ollama", "Ollama", TechnologyCategory.AiMlData, 5),
         };
 
-        context.TechnologyItems.AddRange(technologies);
+        var existingNames = await context.TechnologyItems
+            .Select(t => t.Name)
+            .ToListAsync(cancellationToken);
+        var existing = new HashSet<string>(existingNames, StringComparer.OrdinalIgnoreCase);
+
+        var missing = technologies.Where(t => !existing.Contains(t.Name)).ToList();
+        if (missing.Count == 0)
+        {
+            return;
+        }
+
+        context.TechnologyItems.AddRange(missing);
         await context.SaveChangesAsync(cancellationToken);
     }
 
@@ -75,11 +89,6 @@ public static class DbSeeder
     // new admin-managed Industry table isn't empty after migrating.
     private static async Task SeedIndustriesAsync(AppDbContext context, CancellationToken cancellationToken)
     {
-        if (context.Industries.Any())
-        {
-            return;
-        }
-
         // Descriptions and stats are illustrative starting content — replace
         // with real figures and sourcing from the admin panel before launch.
         var industries = new List<Industry>
@@ -170,7 +179,18 @@ public static class DbSeeder
             },
         };
 
-        context.Industries.AddRange(industries);
+        var existingSlugs = await context.Industries
+            .Select(i => i.Slug)
+            .ToListAsync(cancellationToken);
+        var existing = new HashSet<string>(existingSlugs, StringComparer.OrdinalIgnoreCase);
+
+        var missing = industries.Where(i => !existing.Contains(i.Slug)).ToList();
+        if (missing.Count == 0)
+        {
+            return;
+        }
+
+        context.Industries.AddRange(missing);
         await context.SaveChangesAsync(cancellationToken);
     }
 

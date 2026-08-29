@@ -7,9 +7,11 @@ import { ArrowRight } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
-import { serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
-import { SOLUTIONS } from "@/lib/solutions";
-import { slugify } from "@/lib/slugify";
+import { serviceHref, fetchServices, type ServiceDto } from "@/lib/services";
+import {
+  fetchAllTechnologyDetailPages,
+  type TechnologyDetailPageSummaryDto,
+} from "@/lib/technologyDetailPages";
 import { API_BASE_URL } from "@/lib/apiConfig";
 import QualityManagement from "@/components/sections/QualityManagement";
 import PricingModels from "@/components/sections/PricingModels";
@@ -19,28 +21,6 @@ import PricingModels from "@/components/sections/PricingModels";
 // a few (PHP, iOS/Android, Flutter, VR, SQL Server) aren't in the site's
 // admin-managed Technologies list today, so confirm they're real
 // capabilities before this goes out representing Devliora's stack.
-const TECH_COLUMNS: string[][] = [
-  [
-    ".NET Development",
-    "Java Development",
-    "PHP Development",
-    "Node.js Development",
-    "Flutter Development",
-    "Frontend Development",
-    "SQL Server Development",
-    "MySQL Development",
-  ],
-  [
-    "AWS Development",
-    "Azure Development",
-    "iOS Development",
-    "Android Development",
-    "AI Development",
-    "VR Development",
-    "eCommerce",
-    "Python",
-  ],
-];
 
 // The reference's "Our talent pool" stats (90%/70%/35%, 20+ countries,
 // Dhaka HQ) are specific numbers about that company's own team — not
@@ -83,9 +63,23 @@ export default function ServicesHero() {
   const [techImageUrl, setTechImageUrl] = useState("");
   const [solutionsImageUrl, setSolutionsImageUrl] = useState("");
   const [testimonial, setTestimonial] = useState<Testimonial | null>(null);
+  // Services, Technologies and Solutions are all admin-managed API data
+  // now — these three lists used to be hardcoded.
+  const [services, setServices] = useState<ServiceDto[]>([]);
+  const [techPages, setTechPages] = useState<TechnologyDetailPageSummaryDto[]>([]);
+  const [solutionPages, setSolutionPages] = useState<TechnologyDetailPageSummaryDto[]>([]);
 
   useEffect(() => {
     let cancelled = false;
+    fetchServices().then((data) => {
+      if (!cancelled) setServices(data);
+    });
+    fetchAllTechnologyDetailPages().then((pages) => {
+      if (cancelled) return;
+      const sorted = [...pages].sort((a, b) => a.displayOrder - b.displayOrder);
+      setTechPages(sorted.filter((p) => (p.pageType || "technology") === "technology"));
+      setSolutionPages(sorted.filter((p) => p.pageType === "solution"));
+    });
     fetchSiteSettings().then((data) => {
       if (cancelled || !data) return;
       if (data.servicesBannerImageUrl) setBannerImageUrl(resolveImageUrl(data.servicesBannerImageUrl));
@@ -179,17 +173,19 @@ export default function ServicesHero() {
               </Reveal>
 
               <Reveal delay={0.32} className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
-                {STATIC_SERVICE_LINKS.map((column, colIndex) => (
-                  <div key={colIndex} className="flex flex-col gap-2">
-                    {column.map((service) => (
-                      <Link
-                        key={service.slug}
-                        href={serviceHref(service.slug)}
-                        className="font-medium text-ember transition-colors hover:text-paper"
-                      >
-                        {service.title}
-                      </Link>
-                    ))}
+                {[0, 1].map((col) => (
+                  <div key={col} className="flex flex-col gap-2">
+                    {services
+                      .filter((_, i) => i % 2 === col)
+                      .map((service) => (
+                        <Link
+                          key={service.slug}
+                          href={serviceHref(service.slug)}
+                          className="font-medium text-ember transition-colors hover:text-paper"
+                        >
+                          {service.title}
+                        </Link>
+                      ))}
                   </div>
                 ))}
               </Reveal>
@@ -299,13 +295,19 @@ export default function ServicesHero() {
               </p>
 
               <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
-                {TECH_COLUMNS.map((column, colIndex) => (
-                  <div key={colIndex} className="flex flex-col gap-2">
-                    {column.map((tech) => (
-                      <span key={tech} className="font-medium text-ember">
-                        {tech}
-                      </span>
-                    ))}
+                {[0, 1].map((col) => (
+                  <div key={col} className="flex flex-col gap-2">
+                    {techPages
+                      .filter((_, i) => i % 2 === col)
+                      .map((tech) => (
+                        <Link
+                          key={tech.slug}
+                          href={`/technologies/${tech.slug}`}
+                          className="font-medium text-ember transition-colors hover:text-paper"
+                        >
+                          {tech.heroTitle || tech.technologyName}
+                        </Link>
+                      ))}
                   </div>
                 ))}
               </div>
@@ -418,13 +420,13 @@ export default function ServicesHero() {
               </Reveal>
 
               <Reveal delay={0.24} className="mt-8 flex flex-col gap-3">
-                {SOLUTIONS.map((solution) => (
+                {solutionPages.map((solution) => (
                   <Link
-                    key={solution.id}
-                    href={`/solutions#${slugify(solution.title)}`}
+                    key={solution.slug}
+                    href={`/solutions/${solution.slug}`}
                     className="w-fit font-medium text-ember transition-colors hover:text-paper"
                   >
-                    {solution.title}
+                    {solution.heroTitle || solution.technologyName}
                   </Link>
                 ))}
               </Reveal>

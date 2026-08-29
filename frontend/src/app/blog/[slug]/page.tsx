@@ -36,7 +36,12 @@ export async function generateMetadata({
 
   return buildMetadata({
     title: post.title,
-    description: post.excerpt,
+    // The excerpt is the meta description; fall back to a title-based
+    // line so a post published without one still gets a non-empty,
+    // unique description rather than inheriting the site default.
+    description:
+      post.excerpt?.trim() ||
+      `${post.title} — insights from the Devliora engineering team.`,
     path: `/blog/${post.slug}`,
     image: post.coverImageUrl || undefined,
     type: "article",

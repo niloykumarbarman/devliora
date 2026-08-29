@@ -9,9 +9,6 @@ import { fetchSiteSettings } from "@/lib/siteSettings";
 import { resolveImageUrl } from "@/lib/hero";
 import { useExploreMenuData } from "@/lib/useExploreMenuData";
 import { serviceHref } from "@/lib/services";
-import { MEGA_MENU_TECHNOLOGIES } from "@/lib/megaMenuTechnologies";
-import { SOLUTIONS } from "@/lib/solutions";
-import { slugify } from "@/lib/slugify";
 import { fetchIndustries, type IndustryDto } from "@/lib/industries";
 import MegaMenu from "./MegaMenu";
 import IndustriesMenu from "./IndustriesMenu";
@@ -353,6 +350,8 @@ export default function Navbar() {
         <MegaMenu
           open={megaOpen}
           services={exploreMenu.services}
+          technologies={exploreMenu.technologies}
+          solutions={exploreMenu.solutions}
           loaded={exploreMenu.loaded}
           imageUrl={servicesImageUrl}
           onMouseEnter={openMega}
@@ -443,8 +442,8 @@ export default function Navbar() {
                           Technologies
                         </p>
                         <ul className="mt-1">
-                          {MEGA_MENU_TECHNOLOGIES.map((tech) => (
-                            <li key={tech.label}>
+                          {exploreMenu.technologies.map((tech) => (
+                            <li key={tech.href}>
                               <Link
                                 href={tech.href}
                                 onClick={closeMobileMenu}
@@ -461,14 +460,14 @@ export default function Navbar() {
                           Solutions
                         </p>
                         <ul className="mt-1">
-                          {SOLUTIONS.map((solution) => (
-                            <li key={solution.id}>
+                          {exploreMenu.solutions.map((solution) => (
+                            <li key={solution.href}>
                               <Link
-                                href={`/solutions#${slugify(solution.title)}`}
+                                href={solution.href}
                                 onClick={closeMobileMenu}
                                 className="block py-2 font-mono text-xs text-graphite/70 hover:text-ink"
                               >
-                                {solution.title}
+                                {solution.label}
                               </Link>
                             </li>
                           ))}

@@ -166,3 +166,66 @@ export const SERVICE_WHO_AND_PROBLEMS: Record<string, ServiceWhoAndProblems> = {
     ],
   },
 };
+
+// SEO metadata overlay for /services/[slug]. Purely additive: the page's
+// generateMetadata falls back to the CMS `service.title` /
+// `service.shortDescription` for any slug not listed here, so this never
+// hides or replaces admin-managed content — it only supplies a longer,
+// keyword-led <title> (~50–60 chars, brand-suffixed by buildMetadata)
+// and a 150–160-char meta description with a call to action, which the
+// short CMS fields don't provide. Keep every claim to real capability
+// statements — no invented metrics or client counts.
+export interface ServiceSeo {
+  /** Bare title; buildMetadata appends " | Devliora". Target 50–60 chars total. */
+  title: string;
+  /** 150–160 chars, ends with a light CTA. */
+  description: string;
+}
+
+export const SERVICE_SEO: Record<string, ServiceSeo> = {
+  "software-engineering": {
+    title: "Software Engineering & Architecture Services",
+    description:
+      "Devliora's software engineering team designs, builds and hardens custom systems — APIs, platforms and integrations — to a standard your team can own and scale.",
+  },
+  "ai-development": {
+    title: "AI Development Services — ML & Automation",
+    description:
+      "Practical AI features — extraction, classification, prediction and automation — engineered to be measurable and safe in production, not just a demo. Talk to us.",
+  },
+  "performance-reliability-engineering": {
+    title: "Performance & Reliability Engineering Services",
+    description:
+      "Load testing, performance profiling and reliability engineering so software stays fast from first user to peak traffic. Find the ceiling before customers do.",
+  },
+  "digital-design": {
+    title: "Product Design & UI/UX Services for Software",
+    description:
+      "UI/UX and product design that fixes the unclear screens costing you users and support time — research, design systems and clean handoff to engineering.",
+  },
+  "digital-marketing": {
+    title: "Digital Marketing Services for Tech Companies",
+    description:
+      "SEO, content, paid and email run with proper tracking and cadence, so you can see which channel returns the spend — not a generic campaign template. Let's talk.",
+  },
+  "it-consulting": {
+    title: "IT Consulting & Software Architecture Services",
+    description:
+      "An outside engineering read before you commit budget — build vs buy, re-platform, cloud moves, delivery problems — grounded in what ships. Book a consult.",
+  },
+  "it-maintenance-support": {
+    title: "Software Maintenance & Application Support",
+    description:
+      "Dependable L1–L3 support, security patching, dependency upkeep and steady improvements for software that is live and matters, with an accountable owner.",
+  },
+  "staff-augmentation": {
+    title: "Staff Augmentation & Dedicated Dev Teams",
+    description:
+      "Experienced engineers embedded with your team to add capacity without a long hiring cycle — your roadmap, your standards, ramped up fast. Tell us what you need.",
+  },
+  "software-quality-assurance": {
+    title: "Software QA & Automated Testing Services",
+    description:
+      "Automated test suites, CI quality gates and a written definition of done, so releases stop being tense and regressions stop reappearing. Book a QA assessment.",
+  },
+};

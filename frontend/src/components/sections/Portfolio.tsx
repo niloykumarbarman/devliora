@@ -1,52 +1,20 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import Link from "next/link";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
+import { fetchPortfolios } from "@/lib/portfolios";
 
 type Project = {
+  slug: string;
   client: string;
   category: string;
   title: string;
   description: string;
   tags: string[];
 };
-
-const PROJECTS: Project[] = [
-  {
-    client: "Meridian Logistics",
-    category: "Platform Engineering",
-    title: "Fleet operations platform rebuild",
-    description:
-      "Replaced a decade-old monolith with a service-based platform handling live dispatch, routing, and driver compliance for a national fleet.",
-    tags: ["ASP.NET Core", "PostgreSQL", "Redis"],
-  },
-  {
-    client: "Northbridge Health",
-    category: "System Migration",
-    title: "Patient records modernization",
-    description:
-      "Migrated a legacy on-premise records system to a cloud-native architecture with zero downtime and full audit compliance.",
-    tags: ["Cloud Migration", "Audit Logging", "PostgreSQL"],
-  },
-  {
-    client: "Verity Payments",
-    category: "API Design & Integration",
-    title: "Multi-bank settlement API",
-    description:
-      "Designed a contract-first settlement API connecting six banking partners, processing transactions with strict idempotency guarantees.",
-    tags: ["REST API", "JWT Auth", "Rate Limiting"],
-  },
-  {
-    client: "Devliora",
-    category: "Internal Platform",
-    title: "This website and its backend platform",
-    description:
-      "Designed and built end to end, with the same architecture patterns, security defaults, and caching strategy we apply for clients.",
-    tags: ["Next.js", "ASP.NET Core", "Redis"],
-  },
-];
 
 const AUTO_ROTATE_MS = 4500;
 
@@ -74,7 +42,9 @@ function ProjectCard({ project, isSignal }: { project: Project; isSignal: boolea
       </p>
 
       <h3 className="mt-5 font-display text-2xl font-semibold leading-snug tracking-tight sm:text-3xl">
-        {project.title}
+        <Link href={`/portfolio/${project.slug}`} className="hover:text-signal">
+          {project.title}
+        </Link>
       </h3>
       <p className="mt-3 text-sm leading-relaxed text-graphite/75">
         {project.description}
@@ -98,9 +68,36 @@ export default function Portfolio() {
   const reduceMotion = usePrefersReducedMotion();
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
-  const count = PROJECTS.length;
+  const [projects, setProjects] = useState<Project[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchPortfolios().then((items) => {
+      if (cancelled) return;
+      setProjects(
+        items.map((p) => ({
+          slug: p.slug,
+          client: p.clientName || "Devliora",
+          category: p.industry || "Case study",
+          title: p.title,
+          description: p.summary,
+          tags: (p.techStack || "")
+            .split(/,\s*/)
+            .map((t) => t.trim())
+            .filter(Boolean)
+            .slice(0, 4),
+        }))
+      );
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const count = projects.length;
 
   const goTo = useCallback((index: number) => {
+    if (count === 0) return;
     setActive(((index % count) + count) % count);
   }, [count]);
 
@@ -108,7 +105,7 @@ export default function Portfolio() {
   const goNext = useCallback(() => goTo(active + 1), [active, goTo]);
 
   useEffect(() => {
-    if (paused || reduceMotion) return;
+    if (paused || reduceMotion || count === 0) return;
     const timer = setInterval(() => {
       setActive((prev) => (prev + 1) % count);
     }, AUTO_ROTATE_MS);
@@ -119,6 +116,8 @@ export default function Portfolio() {
     setPaused(true);
     fn();
   };
+
+  if (count === 0) return null;
 
   return (
     <section id="work" className="relative scroll-mt-24 overflow-hidden bg-paper text-ink">
@@ -152,7 +151,7 @@ export default function Portfolio() {
             className="relative flex h-[420px] items-center justify-center sm:h-[380px]"
             style={{ perspective: "1400px" }}
           >
-            {PROJECTS.map((project, i) => {
+            {projects.map((project, i) => {
               let offset = i - active;
               if (offset > count / 2) offset -= count;
               if (offset < -count / 2) offset += count;
@@ -203,7 +202,7 @@ export default function Portfolio() {
             </button>
 
             <div className="flex items-center">
-              {PROJECTS.map((project, i) => (
+              {projects.map((project, i) => (
                 <button
                   key={project.title}
                   type="button"

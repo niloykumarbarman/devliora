@@ -5,13 +5,13 @@ import Image from "next/image";
 import { ArrowRight, Blocks, Cloud, Layers, LayoutGrid } from "lucide-react";
 import { resolveImageUrl } from "@/lib/hero";
 import { serviceHref } from "@/lib/services";
-import { MEGA_MENU_TECHNOLOGIES } from "@/lib/megaMenuTechnologies";
-import { MEGA_MENU_SOLUTIONS } from "@/lib/megaMenuSolutions";
-import type { ExploreService } from "@/lib/useExploreMenuData";
+import type { ExploreService, ExploreLink } from "@/lib/useExploreMenuData";
 
 type MegaMenuProps = {
   open: boolean;
   services: ExploreService[];
+  technologies: ExploreLink[];
+  solutions: ExploreLink[];
   loaded: boolean;
   imageUrl?: string;
   onMouseEnter: () => void;
@@ -29,6 +29,8 @@ const viewAllClass =
 export default function MegaMenu({
   open,
   services,
+  technologies,
+  solutions,
   loaded,
   imageUrl,
   onMouseEnter,
@@ -37,8 +39,8 @@ export default function MegaMenu({
 }: MegaMenuProps) {
   if (!open) return null;
 
-  // Show every active service — previously capped at 6, which silently
-  // hid anything past that (e.g. Digital Design at position 7).
+  // Every column is admin-managed API data, shown in full — the panel
+  // scrolls internally so nothing is hidden past a cap.
   const visibleServices = [...services].sort((a, b) => a.displayOrder - b.displayOrder);
 
   return (
@@ -116,18 +118,19 @@ export default function MegaMenu({
 
           <div>
             <h3 className={columnHeadingClass}>Technologies</h3>
-            {/* Static list matching kaz.com.bd's mega-menu exactly, per
-                explicit request — see lib/megaMenuTechnologies.ts. Not
-                the real admin-managed Technologies data (that's still
-                intact and reachable via "View all" below). */}
+            {/* Admin-managed: every /technologies/[slug] page
+                (technology-detail-pages, pageType "technology"). */}
             <ul className="mt-4 space-y-3">
-              {MEGA_MENU_TECHNOLOGIES.map((tech) => (
-                <li key={tech.label}>
+              {technologies.map((tech) => (
+                <li key={tech.href}>
                   <Link href={tech.href} onClick={onNavigate} className={linkClass}>
                     {tech.label}
                   </Link>
                 </li>
               ))}
+              {!loaded && technologies.length === 0 && (
+                <li className="font-mono text-sm text-graphite/60">Loading…</li>
+              )}
             </ul>
             <Link href="/technologies" onClick={onNavigate} className={viewAllClass}>
               View all technologies
@@ -137,18 +140,19 @@ export default function MegaMenu({
 
           <div>
             <h3 className={columnHeadingClass}>Solutions</h3>
-            {/* Static list matching kaz.com.bd's mega-menu exactly, per
-                explicit request — see lib/megaMenuSolutions.ts. Not
-                Devliora's own real SOLUTIONS categories list (that's
-                still intact on /solutions itself). */}
+            {/* Admin-managed: every /solutions/[slug] page
+                (technology-detail-pages, pageType "solution"). */}
             <ul className="mt-4 space-y-3">
-              {MEGA_MENU_SOLUTIONS.map((solution) => (
-                <li key={solution.label}>
+              {solutions.map((solution) => (
+                <li key={solution.href}>
                   <Link href={solution.href} onClick={onNavigate} className={linkClass}>
                     {solution.label}
                   </Link>
                 </li>
               ))}
+              {!loaded && solutions.length === 0 && (
+                <li className="font-mono text-sm text-graphite/60">Loading…</li>
+              )}
             </ul>
             <Link href="/solutions" onClick={onNavigate} className={viewAllClass}>
               View all solutions

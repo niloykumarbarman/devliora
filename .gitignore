@@ -33,3 +33,12 @@ appsettings.Production.json
 *.pfx
 *.swp
 *.swo
+
+# Database dumps / backups — never commit (contain Admins, RefreshTokens, etc.)
+*.sql
+*.dump
+*.dump.gz
+backup_*.sql
+db-dumps/
+# Local dev snapshots from scripts/backup-local.sh (db dumps + uploads tarballs)
+backups/

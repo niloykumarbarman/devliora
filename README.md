@@ -90,6 +90,29 @@ npm run dev
 
 Useful scripts (in `frontend/`): `npm run dev`, `npm run build`, `npm run lint`.
 
+### 4. Backups & restore (local dev)
+
+Your local database (`postgres_data` volume) and uploaded media
+(`wwwroot/uploads/`) exist only on your machine — a `docker compose down -v`
+or a cleared uploads folder loses them. Two scripts snapshot and restore
+both. They never touch production.
+
+```bash
+./scripts/backup-local.sh          # snapshot DB + uploads to backups/, prune >7 days old
+./scripts/restore-local.sh         # restore from the most recent snapshot (asks yes/no)
+./scripts/restore-local.sh backups/db/devliora_backup_20260829_1530.dump   # a specific one
+```
+
+- Output goes to `backups/db/*.dump` (pg_dump custom format) and
+  `backups/uploads/*.tar.gz`. The whole `backups/` folder is git-ignored —
+  dumps contain `Admins` / `RefreshTokens` and must never be committed.
+- Restore runs `pg_restore --clean --if-exists` (drops and recreates local
+  tables) and replaces `wwwroot/uploads/`. Stop the backend first if a drop
+  hangs on open connections, then restart it afterwards so EF re-checks
+  migrations.
+- Override defaults with env vars: `RETENTION_DAYS`, `CONTAINER`, `DB_NAME`,
+  `DB_USER`.
+
 ## Environment variables
 
 Nothing real is committed. Templates:

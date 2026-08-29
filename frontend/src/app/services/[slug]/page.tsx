@@ -38,7 +38,7 @@ import {
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Reveal from "@/components/Reveal";
-import { fetchServiceBySlug, fetchServices, serviceHref, STATIC_SERVICE_LINKS } from "@/lib/services";
+import { fetchServiceBySlug, fetchServices, serviceHref } from "@/lib/services";
 import { fetchIndustries } from "@/lib/industries";
 import { fetchHero, resolveImageUrl } from "@/lib/hero";
 import { fetchCaseStudies } from "@/lib/caseStudies";
@@ -46,12 +46,11 @@ import { fetchBlogPosts, type BlogPost } from "@/lib/blogPosts";
 import { fetchTechnologies } from "@/lib/technologies";
 import { fetchFaqsForService } from "@/lib/faq";
 import FAQView from "@/components/sections/FAQView";
-import { MEGA_MENU_TECHNOLOGIES } from "@/lib/megaMenuTechnologies";
 import { API_BASE_URL } from "@/lib/apiConfig";
 import { breadcrumbJsonLd, buildMetadata, serviceJsonLd, faqPageJsonLd, webPageJsonLd } from "@/lib/seo";
 import RelatedLinks from "@/components/sections/RelatedLinks";
 import { serviceCrossLinks } from "@/lib/crossLinks";
-import { SERVICE_WHO_AND_PROBLEMS } from "@/lib/serviceContent";
+import { SERVICE_WHO_AND_PROBLEMS, SERVICE_SEO } from "@/lib/serviceContent";
 import { getTechIcon } from "@/lib/techIcons";
 import TechBrandIcon from "@/components/TechBrandIcon";
 import ServiceTabs, {
@@ -200,10 +199,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     });
   }
   const tab = tabLabel ? SERVICE_TABS[baseSlug]?.find((t) => t.label === tabLabel) : null;
+  // SEO overlay (lib/serviceContent.ts) supplies a longer keyword-led
+  // title and a 150–160-char description with a CTA where the short CMS
+  // fields don't. Deep-linked tab URLs keep their own tab-specific
+  // title/body; everything else falls back to the CMS values.
+  const seo = tab ? null : SERVICE_SEO[canonicalSlug];
   return buildMetadata({
-    title: tab ? tab.heading : service.title,
-    description: tab ? tab.body : service.shortDescription,
+    title: seo?.title ?? (tab ? tab.heading : service.title),
+    description: seo?.description ?? (tab ? tab.body : service.shortDescription),
     path: `/services/${canonicalSlug}`,
+    image: service.heroImageUrl ? resolveImageUrl(service.heroImageUrl) : undefined,
   });
 }
 
@@ -1469,21 +1474,23 @@ export default async function ServiceDetailPage({ params }: Props) {
                   <p className="mt-5 max-w-md text-paper/70">{service.fullDescription}</p>
 
                   <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
-                    {STATIC_SERVICE_LINKS.map((column, colIndex) => (
-                      <div key={colIndex} className="flex flex-col gap-2">
-                        {column.map((link) => (
-                          <Link
-                            key={link.slug}
-                            href={serviceHref(link.slug)}
-                            className={
-                              link.slug === service.slug
-                                ? "font-medium text-paper"
-                                : "font-medium text-ember transition-colors hover:text-paper"
-                            }
-                          >
-                            {link.title}
-                          </Link>
-                        ))}
+                    {[0, 1].map((col) => (
+                      <div key={col} className="flex flex-col gap-2">
+                        {allServices
+                          .filter((_, i) => i % 2 === col)
+                          .map((link) => (
+                            <Link
+                              key={link.slug}
+                              href={serviceHref(link.slug)}
+                              className={
+                                link.slug === service.slug
+                                  ? "font-medium text-paper"
+                                  : "font-medium text-ember transition-colors hover:text-paper"
+                              }
+                            >
+                              {link.title}
+                            </Link>
+                          ))}
                       </div>
                     ))}
                   </div>
@@ -3313,13 +3320,13 @@ export default async function ServiceDetailPage({ params }: Props) {
                     it ships. TensorFlow and PyTorch for training, Python for the pipeline around it.
                   </p>
                   <div className="mt-8 grid grid-cols-1 gap-x-8 gap-y-2 sm:grid-cols-2">
-                    {MEGA_MENU_TECHNOLOGIES.map((tech) => (
+                    {technologies.map((tech) => (
                       <Link
-                        key={tech.label}
-                        href={tech.href}
+                        key={tech.id}
+                        href="/technologies"
                         className="font-medium text-ember transition-colors hover:text-paper"
                       >
-                        {tech.label}
+                        {tech.displayName || tech.name}
                       </Link>
                     ))}
                   </div>

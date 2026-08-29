@@ -93,6 +93,21 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
 
+      // /admin has no page of its own — it's just an entry point to the
+      // default admin section. This lives here (not as a redirect() in
+      // app/admin/page.tsx) on purpose: a Server Component whose render
+      // immediately calls redirect() trips React's dev-mode RSC render
+      // timing (flushComponentPerformance -> performance.measure with a
+      // negative timestamp: "'AdminRootPage' cannot have a negative time
+      // stamp"). Redirecting at the routing layer means that component
+      // never renders. Not permanent — it's an internal app route, not a
+      // canonical URL, and /admin is noindex anyway.
+      {
+        source: "/admin",
+        destination: "/admin/consultations",
+        permanent: false,
+      },
+
       // Canonical service-URL architecture. These slugs are the common
       // search-intent names for services Devliora already delivers, each
       // under one canonical page. Rather than spin up thin, near-duplicate

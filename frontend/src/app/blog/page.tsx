@@ -7,9 +7,9 @@ import BlogPostList from "@/components/sections/BlogPostList";
 import BlogCTA from "@/components/sections/BlogCTA";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Engineering Blog",
+  title: "Software Engineering Blog & Architecture Notes",
   description:
-    "Engineering practices, architecture decisions, and lessons from building enterprise systems.",
+    "Engineering practices, architecture decisions and lessons from building custom and enterprise software — written by the Devliora team, not ghostwritten.",
   path: "/blog",
 });
 
