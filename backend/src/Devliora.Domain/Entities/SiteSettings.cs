@@ -10,6 +10,10 @@ public class SiteSettings : BaseEntity
     // Empty => the CSS code-screen backdrop in BlogHero.tsx is used.
     public string BlogHeroImageUrl { get; set; } = string.Empty;
 
+    // Hero banner image behind "Book a free consultation" on
+    // /book-consultation. Empty => the dark grid backdrop.
+    public string BookConsultationHeroImageUrl { get; set; } = string.Empty;
+
     public string IndustriesImageUrl { get; set; } = string.Empty;
     public string ServicesImageUrl { get; set; } = string.Empty;
 

@@ -7,6 +7,7 @@ public class SiteSettingsDto
     public string SiteName { get; set; } = string.Empty;
     public string PortfolioHeroImageUrl { get; set; } = string.Empty;
     public string BlogHeroImageUrl { get; set; } = string.Empty;
+    public string BookConsultationHeroImageUrl { get; set; } = string.Empty;
     public string IndustriesImageUrl { get; set; } = string.Empty;
     public string ServicesImageUrl { get; set; } = string.Empty;
     public string ServicesBannerImageUrl { get; set; } = string.Empty;
