@@ -1,9 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import { MapPin, Phone } from "lucide-react";
 import { fetchOfficeLocations } from "@/lib/officeLocations";
-import { fetchSiteSettings } from "@/lib/siteSettings";
-import { resolveImageUrl } from "@/lib/hero";
 
 const iconProps = { className: "h-5 w-5", fill: "currentColor", viewBox: "0 0 24 24" } as const;
 
@@ -72,32 +69,20 @@ const FOOTER_LINKS = {
 };
 
 export default async function Footer() {
-  const [offices, settings] = await Promise.all([
-    fetchOfficeLocations(),
-    fetchSiteSettings(),
-  ]);
+  const offices = await fetchOfficeLocations();
 
   return (
     <footer className="border-t border-wire/60 bg-ink text-paper">
       <div className="mx-auto max-w-6xl px-6 py-16">
         <div className="grid gap-12 md:grid-cols-[2fr_1fr_1fr_1fr_1fr]">
           <div>
-            {settings?.logoUrl ? (
-              <span className="relative block h-9 w-[170px]">
-                <Image
-                  src={resolveImageUrl(settings.logoUrl)}
-                  alt="Devliora"
-                  fill
-                  loading="lazy"
-                  sizes="170px"
-                  className="object-contain object-left"
-                />
-              </span>
-            ) : (
-              <p className="font-display text-lg font-semibold">
-                Devliora<span className="text-signal">.</span>
-              </p>
-            )}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/devliora-logo.svg"
+              alt="Devliora"
+              className="h-9 w-auto"
+              loading="lazy"
+            />
             <p className="mt-3 max-w-xs text-sm text-paper/60">
               We architect and build the software systems enterprise teams
               depend on to run.

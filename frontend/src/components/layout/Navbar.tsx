@@ -1,12 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { fetchSiteSettings } from "@/lib/siteSettings";
-import { resolveImageUrl } from "@/lib/hero";
 import { useExploreMenuData } from "@/lib/useExploreMenuData";
 import { serviceHref } from "@/lib/services";
 import { fetchIndustries, type IndustryDto } from "@/lib/industries";
@@ -39,7 +37,6 @@ export default function Navbar() {
   const [megaOpen, setMegaOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
-  const [logoUrl, setLogoUrl] = useState("");
   const [industriesImageUrl, setIndustriesImageUrl] = useState("");
   const [servicesImageUrl, setServicesImageUrl] = useState("");
   const [industries, setIndustries] = useState<IndustryDto[]>([]);
@@ -61,9 +58,6 @@ export default function Navbar() {
 
   useEffect(() => {
     fetchSiteSettings().then((settings) => {
-      if (settings?.logoUrl) {
-        setLogoUrl(settings.logoUrl);
-      }
       if (settings?.industriesImageUrl) {
         setIndustriesImageUrl(settings.industriesImageUrl);
       }
@@ -203,26 +197,17 @@ export default function Navbar() {
           href="/"
           className="flex items-center font-display text-xl font-semibold tracking-tight text-ink"
         >
-          {logoUrl ? (
-            // Uploaded logo, contained at its natural aspect in a fixed
-            // slot — no sprite-cropping. Best with a landscape (~4:1)
-            // logo; a taller image just scales down to fit.
-            <span className="relative block h-10 w-[180px]">
-              <Image
-                src={resolveImageUrl(logoUrl)}
-                alt="Devliora"
-                fill
-                priority
-                sizes="180px"
-                className="object-contain object-left"
-              />
-            </span>
-          ) : (
-            <>
-              Devliora
-              <span className="ml-0.5 text-signal">.</span>
-            </>
-          )}
+          {/* Bundled brand mark (public/devliora-logo.svg) — a correctly
+              cropped, horizontal SVG. Not the Site-Settings logoUrl:
+              uploads there keep arriving on an A4-portrait canvas that
+              renders as a sliver. Swap the src for an <Image> off
+              logoUrl again once a proper wide asset is in the CMS. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/devliora-logo.svg"
+            alt="Devliora"
+            className="h-9 w-auto sm:h-10"
+          />
         </Link>
 
         <ul className="hidden items-center gap-6 lg:flex">
