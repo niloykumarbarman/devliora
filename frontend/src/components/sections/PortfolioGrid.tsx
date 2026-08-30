@@ -114,7 +114,7 @@ export default function PortfolioGrid() {
             <div className="mb-14 max-w-2xl">
               <h2 className="text-balance font-display text-3xl font-semibold leading-tight text-graphite md:text-4xl">
                 Our work &mdash; drawn from{" "}
-                <span className="text-signal">10+ years</span> of projects
+                <span className="text-signal">1 year</span> of projects
               </h2>
               <p className="mt-4 text-lg text-graphite/70">
                 Success is reflected in the outcomes achieved by our
