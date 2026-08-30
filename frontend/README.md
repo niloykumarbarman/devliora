@@ -71,6 +71,7 @@ they're env vars only so nothing is hard-coded and each environment sets its own
 |---|---|
 | `NEXT_PUBLIC_API_URL` | Base URL of the backend API, e.g. `https://devliora.com/api` |
 | `NEXT_PUBLIC_GA_MEASUREMENT_ID` | Google Analytics 4 Measurement ID (`G-…`). Analytics only loads if set. |
+| `NEXT_PUBLIC_GTM_ID` | Google Tag Manager container ID (`GTM-…`). **Optional** — defaults to Devliora's own container (`GTM-TK49XR3M`) in `Analytics.tsx`; set only to override for a non-prod build. |
 | `NEXT_PUBLIC_CLARITY_PROJECT_ID` | Microsoft Clarity project ID. Only loads if set. |
 | `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` | Google Search Console "HTML tag" token → `google-site-verification` meta tag. Rendered only if set. |
 | `NEXT_PUBLIC_BING_SITE_VERIFICATION` | Bing Webmaster Tools "HTML Meta Tag" token → `msvalidate.01` meta tag. Rendered only if set. |
@@ -93,6 +94,11 @@ never `NEXT_PUBLIC_*`.
    `NEXT_PUBLIC_GA_MEASUREMENT_ID`. Loaded lazily by `src/components/Analytics.tsx`.
 4. **Microsoft Clarity** — create a project at clarity.microsoft.com, set
    `NEXT_PUBLIC_CLARITY_PROJECT_ID`. Also loaded by `Analytics.tsx`.
+5. **Google Tag Manager** — container `GTM-TK49XR3M` is hard-wired in
+   `Analytics.tsx` and ships on every build (the `<head>` script +
+   `<noscript>` iframe), so nothing to set. `www.googletagmanager.com` is
+   already allowed in the CSP `script-src`/`frame-src`/`img-src`/`connect-src`
+   (`next.config.ts`). Publish container changes from the GTM UI, not code.
 
 ## Scripts
 

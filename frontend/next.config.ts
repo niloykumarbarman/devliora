@@ -15,9 +15,10 @@ const isProd = process.env.NODE_ENV === "production";
 //     pipeline; revisit if one is added).
 //   - Tailwind's stylesheet + React inline style props -> style-src
 //     'self' 'unsafe-inline'.
-//   - GA4 + Microsoft Clarity: script hosts, plus their beacon/ingest
-//     endpoints in connect-src and img-src.
-//   - The Google Maps office embeds in ContactLocations -> frame-src.
+//   - GA4 + Microsoft Clarity + Google Tag Manager: script hosts, plus
+//     their beacon/ingest endpoints in connect-src and img-src.
+//   - The Google Maps office embeds in ContactLocations, and GTM's
+//     <noscript> fallback iframe (www.googletagmanager.com) -> frame-src.
 //   - Remote image hosts in next.config `images.remotePatterns`.
 // Fonts are self-hosted by next/font, so font-src is just 'self'.
 // 'unsafe-eval' is deliberately absent (only Turbopack dev needs it, and
@@ -33,7 +34,7 @@ const CSP = [
   "img-src 'self' data: blob: https://placehold.co https://media.istockphoto.com https://*.google-analytics.com https://*.googletagmanager.com https://*.clarity.ms https://c.bing.com",
   "font-src 'self'",
   "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://*.clarity.ms",
-  "frame-src https://www.google.com",
+  "frame-src https://www.google.com https://www.googletagmanager.com",
   "worker-src 'self' blob:",
   "manifest-src 'self'",
   "upgrade-insecure-requests",
