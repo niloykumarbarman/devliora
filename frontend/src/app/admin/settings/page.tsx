@@ -32,7 +32,6 @@ export default function AdminSettingsPage() {
   const [technologiesMobileImageUrl, setTechnologiesMobileImageUrl] = useState("");
   const [technologiesDotNetImageUrl, setTechnologiesDotNetImageUrl] = useState("");
   const [loading, setLoading] = useState(true);
-  const [uploading, setUploading] = useState(false);
   const [uploadingHero, setUploadingHero] = useState(false);
   const [uploadingBlogHero, setUploadingBlogHero] = useState(false);
   const [uploadingIndustries, setUploadingIndustries] = useState(false);
@@ -90,24 +89,6 @@ export default function AdminSettingsPage() {
     };
     load();
   }, []);
-
-  const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    e.target.value = "";
-    if (!file) return;
-
-    setUploading(true);
-    setError("");
-    setSuccess(false);
-    try {
-      const url = await uploadImage(file);
-      setLogoUrl(url);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to upload logo.");
-    } finally {
-      setUploading(false);
-    }
-  };
 
   const handleHeroFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -498,41 +479,6 @@ export default function AdminSettingsPage() {
             }}
             className={inputClass}
           />
-        </div>
-
-        <div className="md:col-span-2">
-          <label className={labelClass}>Logo</label>
-          <div className="mt-3 flex h-32 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
-            {logoUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={resolveImageUrl(logoUrl)}
-                alt="Logo preview"
-                className="h-full w-full object-contain p-4"
-              />
-            ) : (
-              <div className="flex flex-col items-center gap-2 text-graphite/30">
-                <ImageIcon className="h-6 w-6" />
-                <span className="text-xs">No logo set</span>
-              </div>
-            )}
-          </div>
-
-          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
-            {uploading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <Upload className="h-4 w-4" />
-            )}
-            {uploading ? "Uploading..." : "Upload new logo"}
-            <input
-              type="file"
-              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
-              className="hidden"
-              onChange={handleFileChange}
-              disabled={uploading}
-            />
-          </label>
         </div>
 
         <div className="md:col-span-2">
@@ -1185,7 +1131,7 @@ export default function AdminSettingsPage() {
           <button
             type="button"
             onClick={handleSave}
-            disabled={saving || uploading || !settingsId}
+            disabled={saving || !settingsId}
             className="flex items-center gap-2 rounded-lg bg-signal px-4 py-2 text-sm font-medium text-ink shadow-sm transition hover:brightness-110 disabled:opacity-60"
           >
             {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
