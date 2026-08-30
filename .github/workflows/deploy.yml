@@ -19,7 +19,26 @@ jobs:
             cd ${{ secrets.VPS_PROJECT_PATH }}
             git fetch origin main
             git reset --hard origin/main
-            echo "Deployed commit: $(git log --oneline -1)"
+            echo "Deploying commit: $(git log --oneline -1)"
+
+            # --- Pre-deploy database backup (runs before any rebuild /
+            #     migration). Aborts the deploy if the dump is missing or
+            #     unreadable, so production is never rebuilt without a
+            #     known-good snapshot to roll back to.
+            mkdir -p /root/backups
+            TS=$(date +%Y%m%d_%H%M%S)
+            DUMP="/root/backups/prod_devliora_${TS}.dump"
+            docker exec devliora-postgres sh -c \
+              'pg_dump -U "$POSTGRES_USER" -d "$POSTGRES_DB" -Fc --no-owner --no-privileges' > "$DUMP"
+            if ! docker exec -i devliora-postgres pg_restore -l < "$DUMP" > /dev/null 2>&1; then
+              echo "!! DB backup at $DUMP is not a valid archive — aborting deploy, production untouched"
+              rm -f "$DUMP"
+              exit 1
+            fi
+            echo "DB backup OK: $DUMP ($(du -h "$DUMP" | cut -f1))"
+            # keep the 14 most recent backups
+            ls -1t /root/backups/prod_devliora_*.dump 2>/dev/null | tail -n +15 | xargs -r rm -f
+
             cp infra/nginx/devliora.com.conf /etc/nginx/sites-available/devliora.com
             nginx -t && systemctl reload nginx
             cd infra/docker
