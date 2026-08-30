@@ -42,11 +42,14 @@ function ProjectCard({ project, isSignal }: { project: Project; isSignal: boolea
       </p>
 
       <h3 className="mt-5 font-display text-2xl font-semibold leading-snug tracking-tight sm:text-3xl">
-        <Link href={`/portfolio/${project.slug}`} className="hover:text-signal">
+        <Link
+          href={`/portfolio/${project.slug}`}
+          className="line-clamp-2 hover:text-signal"
+        >
           {project.title}
         </Link>
       </h3>
-      <p className="mt-3 text-sm leading-relaxed text-graphite/75">
+      <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-graphite/75">
         {project.description}
       </p>
 
@@ -148,7 +151,7 @@ export default function Portfolio() {
           onMouseLeave={() => setPaused(false)}
         >
           <div
-            className="relative flex h-[420px] items-center justify-center sm:h-[380px]"
+            className="relative flex h-[460px] items-center justify-center sm:h-[420px]"
             style={{ perspective: "1400px" }}
           >
             {projects.map((project, i) => {
