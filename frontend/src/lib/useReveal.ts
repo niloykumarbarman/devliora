@@ -53,7 +53,25 @@ export function useReveal<T extends HTMLElement = HTMLDivElement>() {
 
     el.classList.add("reveal-pending");
     obs.observe(el);
-    return () => obs.unobserve(el);
+
+    // Safety net. The observer only fires on a scroll/resize/layout that
+    // brings the element into view. Content that mounts below the fold in
+    // a client component (e.g. a list rendered after its fetch resolves)
+    // and is never scrolled to would otherwise stay at opacity:0 forever
+    // — a blank gap where cards should be. After a short grace period,
+    // reveal anything still pending so nothing is permanently hidden.
+    const failsafe = window.setTimeout(() => {
+      if (!el.classList.contains("is-revealed")) {
+        el.classList.add("is-revealed", "reveal-animate");
+        el.classList.remove("reveal-pending");
+        obs.unobserve(el);
+      }
+    }, 1200);
+
+    return () => {
+      window.clearTimeout(failsafe);
+      obs.unobserve(el);
+    };
   }, []);
 
   return ref;

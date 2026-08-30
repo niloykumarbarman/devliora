@@ -23,6 +23,7 @@ import {
   Handshake,
   Code2,
   Package,
+  Info,
 } from "lucide-react";
 import { clearAdminToken, isAdminAuthenticated } from "@/lib/adminAuth";
 
@@ -37,6 +38,7 @@ const NAV_ITEMS = [
   { href: "/admin/portfolio", label: "Portfolio", icon: FolderKanban },
   { href: "/admin/testimonials", label: "Testimonials", icon: Quote },
   { href: "/admin/hero", label: "Hero", icon: PanelTop },
+  { href: "/admin/about", label: "About Page", icon: Info },
   { href: "/admin/technologies", label: "Technologies", icon: Cpu },
   { href: "/admin/technology-detail-pages", label: "Technology Pages", icon: Code2 },
   { href: "/admin/solution-detail-pages", label: "Solution Pages", icon: Package },

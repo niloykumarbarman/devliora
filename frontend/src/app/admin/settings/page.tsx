@@ -15,6 +15,7 @@ export default function AdminSettingsPage() {
   const [logoUrl, setLogoUrl] = useState("");
   const [siteName, setSiteName] = useState("");
   const [portfolioHeroImageUrl, setPortfolioHeroImageUrl] = useState("");
+  const [blogHeroImageUrl, setBlogHeroImageUrl] = useState("");
   const [industriesImageUrl, setIndustriesImageUrl] = useState("");
   const [servicesImageUrl, setServicesImageUrl] = useState("");
   const [servicesBannerImageUrl, setServicesBannerImageUrl] = useState("");
@@ -33,6 +34,7 @@ export default function AdminSettingsPage() {
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [uploadingHero, setUploadingHero] = useState(false);
+  const [uploadingBlogHero, setUploadingBlogHero] = useState(false);
   const [uploadingIndustries, setUploadingIndustries] = useState(false);
   const [uploadingServices, setUploadingServices] = useState(false);
   const [uploadingServicesBanner, setUploadingServicesBanner] = useState(false);
@@ -63,6 +65,7 @@ export default function AdminSettingsPage() {
           setLogoUrl(data.logoUrl);
           setSiteName(data.siteName);
           setPortfolioHeroImageUrl(data.portfolioHeroImageUrl);
+          setBlogHeroImageUrl(data.blogHeroImageUrl);
           setIndustriesImageUrl(data.industriesImageUrl);
           setServicesImageUrl(data.servicesImageUrl);
           setServicesBannerImageUrl(data.servicesBannerImageUrl);
@@ -121,6 +124,24 @@ export default function AdminSettingsPage() {
       setError(err instanceof Error ? err.message : "Failed to upload portfolio hero image.");
     } finally {
       setUploadingHero(false);
+    }
+  };
+
+  const handleBlogHeroFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+
+    setUploadingBlogHero(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const url = await uploadImage(file);
+      setBlogHeroImageUrl(url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to upload blog hero image.");
+    } finally {
+      setUploadingBlogHero(false);
     }
   };
 
@@ -405,6 +426,7 @@ export default function AdminSettingsPage() {
         logoUrl,
         siteName,
         portfolioHeroImageUrl,
+        blogHeroImageUrl,
         industriesImageUrl,
         servicesImageUrl,
         servicesBannerImageUrl,
@@ -544,6 +566,45 @@ export default function AdminSettingsPage() {
               className="hidden"
               onChange={handleHeroFileChange}
               disabled={uploadingHero}
+            />
+          </label>
+        </div>
+
+        <div className="md:col-span-2">
+          <label className={labelClass}>Blog Page Hero Background</label>
+          <p className="mt-1 text-xs text-graphite/50">
+            The image behind the &quot;Engineering Insights&quot; title on /blog. Leave
+            unset to use the built-in code-screen backdrop.
+          </p>
+          <div className="mt-3 flex h-40 w-full items-center justify-center overflow-hidden rounded-lg border border-dashed border-graphite/15 bg-graphite/5">
+            {blogHeroImageUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={resolveImageUrl(blogHeroImageUrl)}
+                alt="Blog hero preview"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <div className="flex flex-col items-center gap-2 text-graphite/30">
+                <ImageIcon className="h-6 w-6" />
+                <span className="text-xs">No blog hero image set</span>
+              </div>
+            )}
+          </div>
+
+          <label className="mt-3 flex w-fit cursor-pointer items-center gap-2 rounded-lg border border-graphite/15 px-4 py-2.5 text-sm font-medium text-graphite transition hover:border-signal hover:text-signal">
+            {uploadingBlogHero ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Upload className="h-4 w-4" />
+            )}
+            {uploadingBlogHero ? "Uploading..." : "Upload blog hero image"}
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif,image/svg+xml"
+              className="hidden"
+              onChange={handleBlogHeroFileChange}
+              disabled={uploadingBlogHero}
             />
           </label>
         </div>

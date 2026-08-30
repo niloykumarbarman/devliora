@@ -5,6 +5,11 @@ public class SiteSettings : BaseEntity
     public string LogoUrl { get; set; } = string.Empty;
     public string SiteName { get; set; } = "Devliora";
     public string PortfolioHeroImageUrl { get; set; } = string.Empty;
+
+    // Hero banner image behind the "Engineering Insights" title on /blog.
+    // Empty => the CSS code-screen backdrop in BlogHero.tsx is used.
+    public string BlogHeroImageUrl { get; set; } = string.Empty;
+
     public string IndustriesImageUrl { get; set; } = string.Empty;
     public string ServicesImageUrl { get; set; } = string.Empty;
 

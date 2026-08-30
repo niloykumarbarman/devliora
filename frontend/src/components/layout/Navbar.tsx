@@ -1,12 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { fetchSiteSettings } from "@/lib/siteSettings";
-import { resolveImageUrl } from "@/lib/hero";
 import { useExploreMenuData } from "@/lib/useExploreMenuData";
 import { serviceHref } from "@/lib/services";
 import { fetchIndustries, type IndustryDto } from "@/lib/industries";
@@ -39,7 +37,6 @@ export default function Navbar() {
   const [megaOpen, setMegaOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
-  const [logoUrl, setLogoUrl] = useState("");
   const [industriesImageUrl, setIndustriesImageUrl] = useState("");
   const [servicesImageUrl, setServicesImageUrl] = useState("");
   const [industries, setIndustries] = useState<IndustryDto[]>([]);
@@ -61,9 +58,6 @@ export default function Navbar() {
 
   useEffect(() => {
     fetchSiteSettings().then((settings) => {
-      if (settings?.logoUrl) {
-        setLogoUrl(settings.logoUrl);
-      }
       if (settings?.industriesImageUrl) {
         setIndustriesImageUrl(settings.industriesImageUrl);
       }
@@ -199,24 +193,16 @@ export default function Navbar() {
         aria-label="Primary"
         className="relative z-10 mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4"
       >
-        <Link href="/" className="flex items-center font-display text-lg font-semibold tracking-tight text-ink">
-          {logoUrl ? (
-            <span className="relative block h-11 w-[213px] overflow-hidden">
-              <Image
-                src={resolveImageUrl(logoUrl)}
-                alt="Devliora"
-                width={334}
-                height={472}
-                priority
-                className="absolute -left-[56px] -top-[202px] h-[472px] w-[334px] max-w-none"
-              />
-            </span>
-          ) : (
-            <>
-              Devliora
-              <span className="ml-0.5 text-signal">.</span>
-            </>
-          )}
+        <Link
+          href="/"
+          className="flex items-center font-display text-xl font-semibold tracking-tight text-ink"
+        >
+          {/* Wordmark, not the Site-Settings logo image: the uploaded
+              asset there is a full-page portrait SVG that can't render as
+              a header mark. Re-enable an <Image> here once a proper
+              landscape logo (~4:1) is uploaded. */}
+          Devliora
+          <span className="ml-0.5 text-signal">.</span>
         </Link>
 
         <ul className="hidden items-center gap-6 lg:flex">

@@ -4,17 +4,20 @@ using System.Collections.Generic;
 using Devliora.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Devliora.Infrastructure.Migrations
+namespace Devliora.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260830073624_AddBlogHeroImageToSiteSettings")]
+    partial class AddBlogHeroImageToSiteSettings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,206 +25,6 @@ namespace Devliora.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("Devliora.Domain.Entities.AboutContent", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("CtaBody")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CtaButtonText")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CtaButtonUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CtaHeading")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("CtaHeadingAccent")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FounderBody")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FounderCtaText")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FounderCtaUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FounderEyebrow")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FounderName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FounderRole")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("HeroHeading")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("HeroHeadingAccent")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("HeroHeadingSuffix")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("HeroImageUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("HeroSubtitle")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("MissionBody")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MissionCardBody")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MissionCardLabel")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MissionHeading")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("MissionHeadingAccent")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PrinciplesHeading")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("PrinciplesHeadingAccent")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("VisionCardBody")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("VisionCardLabel")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AboutContents");
-                });
-
-            modelBuilder.Entity("Devliora.Domain.Entities.AboutFounderCard", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AboutContentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Body")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("IconName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AboutContentId");
-
-                    b.ToTable("AboutFounderCards");
-                });
-
-            modelBuilder.Entity("Devliora.Domain.Entities.AboutPrinciple", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AboutContentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Detail")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("DisplayOrder")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("IconName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AboutContentId");
-
-                    b.ToTable("AboutPrinciples");
-                });
 
             modelBuilder.Entity("Devliora.Domain.Entities.Admin", b =>
                 {
@@ -1743,28 +1546,6 @@ namespace Devliora.Infrastructure.Migrations
                     b.ToTable("Testimonials");
                 });
 
-            modelBuilder.Entity("Devliora.Domain.Entities.AboutFounderCard", b =>
-                {
-                    b.HasOne("Devliora.Domain.Entities.AboutContent", "AboutContent")
-                        .WithMany("FounderCards")
-                        .HasForeignKey("AboutContentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AboutContent");
-                });
-
-            modelBuilder.Entity("Devliora.Domain.Entities.AboutPrinciple", b =>
-                {
-                    b.HasOne("Devliora.Domain.Entities.AboutContent", "AboutContent")
-                        .WithMany("Principles")
-                        .HasForeignKey("AboutContentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AboutContent");
-                });
-
             modelBuilder.Entity("Devliora.Domain.Entities.ChatMessage", b =>
                 {
                     b.HasOne("Devliora.Domain.Entities.ChatConversation", "Conversation")
@@ -1901,13 +1682,6 @@ namespace Devliora.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("TechnologyDetailPage");
-                });
-
-            modelBuilder.Entity("Devliora.Domain.Entities.AboutContent", b =>
-                {
-                    b.Navigation("FounderCards");
-
-                    b.Navigation("Principles");
                 });
 
             modelBuilder.Entity("Devliora.Domain.Entities.ChatConversation", b =>

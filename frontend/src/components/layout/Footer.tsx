@@ -1,9 +1,6 @@
 import Link from "next/link";
-import Image from "next/image";
 import { MapPin, Phone } from "lucide-react";
-import { fetchSiteSettings } from "@/lib/siteSettings";
 import { fetchOfficeLocations } from "@/lib/officeLocations";
-import { resolveImageUrl } from "@/lib/hero";
 
 const iconProps = { className: "h-5 w-5", fill: "currentColor", viewBox: "0 0 24 24" } as const;
 
@@ -72,7 +69,6 @@ const FOOTER_LINKS = {
 };
 
 export default async function Footer() {
-  const settings = await fetchSiteSettings();
   const offices = await fetchOfficeLocations();
 
   return (
@@ -80,22 +76,9 @@ export default async function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-16">
         <div className="grid gap-12 md:grid-cols-[2fr_1fr_1fr_1fr_1fr]">
           <div>
-            {settings?.logoUrl ? (
-              <span className="relative block h-10 w-[194px] overflow-hidden">
-                <Image
-                  src={resolveImageUrl(settings.logoUrl)}
-                  alt="Devliora"
-                  width={304}
-                  height={429}
-                  loading="lazy"
-                  className="absolute -left-[51px] -top-[184px] h-[429px] w-[304px] max-w-none"
-                />
-              </span>
-            ) : (
-              <p className="font-display text-lg font-semibold">
-                Devliora<span className="text-signal">.</span>
-              </p>
-            )}
+            <p className="font-display text-lg font-semibold">
+              Devliora<span className="text-signal">.</span>
+            </p>
             <p className="mt-3 max-w-xs text-sm text-paper/60">
               We architect and build the software systems enterprise teams
               depend on to run.

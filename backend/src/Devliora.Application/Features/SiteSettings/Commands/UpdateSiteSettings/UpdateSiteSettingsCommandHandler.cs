@@ -26,6 +26,7 @@ public class UpdateSiteSettingsCommandHandler : IRequestHandler<UpdateSiteSettin
         settings.LogoUrl = request.LogoUrl;
         settings.SiteName = request.SiteName;
         settings.PortfolioHeroImageUrl = request.PortfolioHeroImageUrl;
+        settings.BlogHeroImageUrl = request.BlogHeroImageUrl;
         settings.IndustriesImageUrl = request.IndustriesImageUrl;
         settings.ServicesImageUrl = request.ServicesImageUrl;
         settings.ServicesBannerImageUrl = request.ServicesBannerImageUrl;

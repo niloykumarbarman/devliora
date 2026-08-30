@@ -6,6 +6,7 @@ export interface SiteSettingsDto {
   logoUrl: string;
   siteName: string;
   portfolioHeroImageUrl: string;
+  blogHeroImageUrl: string;
   industriesImageUrl: string;
   servicesImageUrl: string;
   servicesBannerImageUrl: string;

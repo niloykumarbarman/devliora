@@ -81,83 +81,74 @@ export default function CaseStudiesList() {
           )}
 
           {status === "success" && studies.length > 0 && (
-            <div className="flex flex-col gap-px overflow-hidden rounded-xl border border-ink/10 bg-ink/10">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {studies.map((study, i) => {
                 const name = cleanCaseStudyText(study.clientName);
+                const industry = cleanCaseStudyText(study.industry);
                 const isIllustrative = isIllustrativeCaseStudy(study);
                 return (
                   <Reveal
                     key={study.id}
                     as="article"
-                    delay={(i % 4) * 0.08}
-                    className="group bg-paper p-8 transition-colors duration-300 hover:bg-ink/[0.02] md:p-12"
+                    delay={(i % 3) * 0.06}
+                    className="group flex flex-col overflow-hidden rounded-xl border border-graphite/12 bg-paper shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_-20px_rgba(14,20,32,0.35)]"
                   >
-                    {/* Scale-only (no translate/rotate/tilt-3d): the
-                        grandparent list is `overflow-hidden` (it relies on
-                        that for the gap-px hairline mosaic trick), which
-                        would clip a bigger lift at the row edges. */}
                     <Link
                       href={`/case-studies/${study.slug}`}
-                      className="relative z-0 block transition-transform duration-300 hover:z-10 hover:scale-[1.02]"
+                      className="flex flex-1 flex-col"
                     >
-                      {study.coverImageUrl && (
-                        <div className="relative mb-6 h-48 w-full overflow-hidden rounded-lg">
+                      <div className="relative aspect-[16/9] w-full overflow-hidden bg-ink">
+                        {study.coverImageUrl ? (
                           <Image
                             src={resolveImageUrl(study.coverImageUrl)}
                             alt={cleanCaseStudyText(study.title)}
                             fill
-                            sizes="(min-width: 768px) 800px, 100vw"
-                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                            className="object-cover transition-transform duration-500 group-hover:scale-105"
                           />
-                        </div>
-                      )}
-                      <div className="flex flex-wrap items-center gap-3">
-                      <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-signal">
-                        {cleanCaseStudyText(study.industry)} — {name}
-                      </p>
-                      {isIllustrative && (
-                        <span className="rounded-sm border border-ember/30 px-2 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-ember">
-                          Illustrative
+                        ) : (
+                          // No cover set in the CMS — branded placeholder
+                          // so the card never looks broken.
+                          <div className="flex h-full w-full items-center justify-center bg-[radial-gradient(circle_at_30%_20%,rgba(59,130,246,0.28),transparent_60%)]">
+                            <span className="font-display text-lg font-medium text-paper/70">
+                              Devliora
+                            </span>
+                          </div>
+                        )}
+                        <span
+                          className={`absolute left-4 top-4 max-w-[calc(100%-2rem)] truncate rounded-full bg-ink/80 px-3 py-1 font-mono text-[0.625rem] font-semibold uppercase tracking-widest text-paper backdrop-blur-sm ${
+                            isIllustrative ? "sm:max-w-[55%]" : ""
+                          }`}
+                        >
+                          {industry || "Case Study"}
                         </span>
-                      )}
-                    </div>
+                        {isIllustrative && (
+                          <span className="absolute right-4 top-4 rounded-sm border border-ember/40 bg-ink/70 px-2 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.1em] text-ember backdrop-blur-sm">
+                            Illustrative
+                          </span>
+                        )}
+                      </div>
 
-                    <h3 className="mt-3 text-2xl font-semibold leading-snug tracking-tight text-graphite sm:text-3xl">
-                      {cleanCaseStudyText(study.title)}
-                    </h3>
+                      <div className="flex flex-1 flex-col p-6">
+                        <p className="font-mono text-xs uppercase tracking-wide text-graphite/70">
+                          {name || "Client engagement"}
+                        </p>
 
-                    <div className="mt-8 grid gap-6 sm:grid-cols-3">
-                      <div>
-                        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ember">
-                          Challenge
+                        <h3 className="mt-2 font-display text-lg font-medium text-ink transition-colors group-hover:text-signal">
+                          {cleanCaseStudyText(study.title)}
+                        </h3>
+
+                        <p className="mt-2 line-clamp-3 flex-1 text-sm leading-relaxed text-graphite">
+                          {cleanCaseStudyText(study.challenge)}
                         </p>
-                        <p className="mt-2 text-sm leading-relaxed text-graphite/70">
-                          {study.challenge}
-                        </p>
+
+                        <span className="mt-4 inline-flex items-center gap-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-graphite/65 transition-colors group-hover:text-signal">
+                          Read full case study
+                          <ArrowUpRight className="h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                        </span>
                       </div>
-                      <div>
-                        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ember">
-                          Solution
-                        </p>
-                        <p className="mt-2 text-sm leading-relaxed text-graphite/70">
-                          {study.solution}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-ember">
-                          Results
-                        </p>
-                        <p className="mt-2 text-sm leading-relaxed text-graphite/70">
-                          {study.results}
-                        </p>
-                      </div>
-                    </div>
-                  <span className="mt-6 inline-flex items-center gap-1.5 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-graphite/65 transition-colors group-hover:text-ember">
-                        Read full case study
-                        <ArrowUpRight className="h-3.5 w-3.5 shrink-0 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                      </span>
-                      </Link>
-                    </Reveal>
+                    </Link>
+                  </Reveal>
                 );
               })}
             </div>

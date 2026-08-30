@@ -8,6 +8,7 @@ public class UpdateSiteSettingsCommand : IRequest<Unit>
     public string LogoUrl { get; set; } = string.Empty;
     public string SiteName { get; set; } = string.Empty;
     public string PortfolioHeroImageUrl { get; set; } = string.Empty;
+    public string BlogHeroImageUrl { get; set; } = string.Empty;
     public string IndustriesImageUrl { get; set; } = string.Empty;
     public string ServicesImageUrl { get; set; } = string.Empty;
     public string ServicesBannerImageUrl { get; set; } = string.Empty;

@@ -22,6 +22,9 @@ public interface IAppDbContext
     DbSet<RefreshToken> RefreshTokens { get; }
     DbSet<ConsultationRequest> ConsultationRequests { get; }
     DbSet<HeroContent> HeroContents { get; }
+    DbSet<AboutContent> AboutContents { get; }
+    DbSet<AboutFounderCard> AboutFounderCards { get; }
+    DbSet<AboutPrinciple> AboutPrinciples { get; }
     DbSet<TechnologyItem> TechnologyItems { get; }
     DbSet<TechnologyDetailPage> TechnologyDetailPages { get; }
     DbSet<TechnologyDetailFeature> TechnologyDetailFeatures { get; }

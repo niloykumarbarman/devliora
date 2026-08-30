@@ -27,6 +27,9 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<ConsultationRequest> ConsultationRequests => Set<ConsultationRequest>();
     public DbSet<HeroContent> HeroContents => Set<HeroContent>();
+    public DbSet<AboutContent> AboutContents => Set<AboutContent>();
+    public DbSet<AboutFounderCard> AboutFounderCards => Set<AboutFounderCard>();
+    public DbSet<AboutPrinciple> AboutPrinciples => Set<AboutPrinciple>();
     public DbSet<TechnologyItem> TechnologyItems => Set<TechnologyItem>();
     public DbSet<TechnologyDetailPage> TechnologyDetailPages => Set<TechnologyDetailPage>();
     public DbSet<TechnologyDetailFeature> TechnologyDetailFeatures => Set<TechnologyDetailFeature>();

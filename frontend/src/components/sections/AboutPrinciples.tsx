@@ -1,34 +1,12 @@
-import { ShieldCheck, GitCommitHorizontal, Gauge, MessageSquareText } from "lucide-react";
-import Reveal from "@/components/Reveal";
+"use client";
 
-const PRINCIPLES = [
-  {
-    icon: ShieldCheck,
-    title: "Security by default",
-    detail:
-      "Password hashing, short-lived access tokens, rotating and revocable refresh tokens, per-IP rate limiting on auth endpoints — configured before a single feature is built.",
-  },
-  {
-    icon: GitCommitHorizontal,
-    title: "Transparent history",
-    detail:
-      "Every feature ships as a reviewable commit on a public, linear history. No squashed mystery commits, no hidden branches.",
-  },
-  {
-    icon: Gauge,
-    title: "Performance as a requirement",
-    detail:
-      "Redis cache-aside on every domain entity from day one, not bolted on after a client complains about load times.",
-  },
-  {
-    icon: MessageSquareText,
-    title: "Direct communication",
-    detail:
-      "One engineer, one point of contact. Questions get a real answer within 48 hours, not routed through account managers.",
-  },
-];
+import Reveal from "@/components/Reveal";
+import { useAbout, aboutIcon } from "@/lib/aboutContent";
 
 export default function AboutPrinciples() {
+  const { about } = useAbout();
+  if (!about || about.principles.length === 0) return null;
+
   return (
     <section className="bg-grain relative overflow-hidden bg-ink py-24 text-paper md:py-32">
       <div
@@ -44,28 +22,30 @@ export default function AboutPrinciples() {
       />
 
       <div className="relative mx-auto max-w-6xl px-6">
-
         <Reveal
           as="h2"
           delay={0.08}
           className="mt-4 max-w-2xl text-balance text-3xl font-semibold leading-tight md:text-4xl"
         >
-          How Devliora <span className="text-signal">actually works.</span>
+          {about.principlesHeading}{" "}
+          {about.principlesHeadingAccent && (
+            <span className="text-signal">{about.principlesHeadingAccent}</span>
+          )}
         </Reveal>
 
         <div className="mt-14 grid gap-px overflow-hidden rounded-xl bg-paper/10 sm:grid-cols-2">
-          {PRINCIPLES.map((principle, i) => {
-            const Icon = principle.icon;
+          {about.principles.map((principle, i) => {
+            const Icon = aboutIcon(principle.iconName);
             return (
               <Reveal
-                key={principle.title}
+                key={principle.id ?? principle.title}
                 delay={(i + 2) * 0.08}
                 className="bg-ink p-8"
               >
                 <Icon className="h-6 w-6 text-signal" strokeWidth={1.75} />
                 <h3 className="mt-5 text-lg font-semibold">{principle.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-paper/60">
-                  {principle.detail}
+                  {principle.body}
                 </p>
               </Reveal>
             );
