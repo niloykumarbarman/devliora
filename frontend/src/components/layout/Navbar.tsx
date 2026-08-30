@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { fetchSiteSettings } from "@/lib/siteSettings";
+import { resolveImageUrl } from "@/lib/hero";
 import { useExploreMenuData } from "@/lib/useExploreMenuData";
 import { serviceHref } from "@/lib/services";
 import { fetchIndustries, type IndustryDto } from "@/lib/industries";
@@ -37,6 +39,7 @@ export default function Navbar() {
   const [megaOpen, setMegaOpen] = useState(false);
   const [industriesOpen, setIndustriesOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
+  const [logoUrl, setLogoUrl] = useState("");
   const [industriesImageUrl, setIndustriesImageUrl] = useState("");
   const [servicesImageUrl, setServicesImageUrl] = useState("");
   const [industries, setIndustries] = useState<IndustryDto[]>([]);
@@ -58,6 +61,9 @@ export default function Navbar() {
 
   useEffect(() => {
     fetchSiteSettings().then((settings) => {
+      if (settings?.logoUrl) {
+        setLogoUrl(settings.logoUrl);
+      }
       if (settings?.industriesImageUrl) {
         setIndustriesImageUrl(settings.industriesImageUrl);
       }
@@ -197,12 +203,26 @@ export default function Navbar() {
           href="/"
           className="flex items-center font-display text-xl font-semibold tracking-tight text-ink"
         >
-          {/* Wordmark, not the Site-Settings logo image: the uploaded
-              asset there is a full-page portrait SVG that can't render as
-              a header mark. Re-enable an <Image> here once a proper
-              landscape logo (~4:1) is uploaded. */}
-          Devliora
-          <span className="ml-0.5 text-signal">.</span>
+          {logoUrl ? (
+            // Uploaded logo, contained at its natural aspect in a fixed
+            // slot — no sprite-cropping. Best with a landscape (~4:1)
+            // logo; a taller image just scales down to fit.
+            <span className="relative block h-10 w-[180px]">
+              <Image
+                src={resolveImageUrl(logoUrl)}
+                alt="Devliora"
+                fill
+                priority
+                sizes="180px"
+                className="object-contain object-left"
+              />
+            </span>
+          ) : (
+            <>
+              Devliora
+              <span className="ml-0.5 text-signal">.</span>
+            </>
+          )}
         </Link>
 
         <ul className="hidden items-center gap-6 lg:flex">
