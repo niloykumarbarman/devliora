@@ -83,38 +83,29 @@ export default function ServicesView({ services }: { services: ServiceItem[] }) 
                     isActive ? "bg-ink text-paper" : "bg-paper"
                   }`}
                 >
-                  <div className="flex items-center justify-between">
-                    <span
-                      className={`flex h-16 w-16 items-center justify-center rounded-sm transition-colors duration-300 ${
-                        isSignal
-                          ? isActive
-                            ? "bg-signal/30 text-signal"
-                            : "bg-signal/15 text-signal"
-                          : isActive
-                            ? "bg-ember/30 text-ember"
-                            : "bg-ember/15 text-ember"
-                      }`}
-                    >
-                      {service.iconUrl ? (
-                        <Image
-                          src={service.iconUrl}
-                          alt=""
-                          width={28}
-                          height={28}
-                          className="h-7 w-7 object-contain"
-                        />
-                      ) : (
-                        <Layers className="h-7 w-7" strokeWidth={1.6} />
-                      )}
-                    </span>
-                    <span
-                      className={`font-mono text-[11px] uppercase tracking-[0.15em] transition-colors duration-300 ${
-                        isActive ? "text-paper/55" : "text-graphite/60"
-                      }`}
-                    >
-                      /{service.slug}
-                    </span>
-                  </div>
+                  <span
+                    className={`flex h-16 w-16 items-center justify-center rounded-sm transition-colors duration-300 ${
+                      isSignal
+                        ? isActive
+                          ? "bg-signal/30 text-signal"
+                          : "bg-signal/15 text-signal"
+                        : isActive
+                          ? "bg-ember/30 text-ember"
+                          : "bg-ember/15 text-ember"
+                    }`}
+                  >
+                    {service.iconUrl ? (
+                      <Image
+                        src={service.iconUrl}
+                        alt=""
+                        width={28}
+                        height={28}
+                        className="h-7 w-7 object-contain"
+                      />
+                    ) : (
+                      <Layers className="h-7 w-7" strokeWidth={1.6} />
+                    )}
+                  </span>
                   <h3 className="mt-6 font-display text-xl font-semibold tracking-tight">
                     {service.title}
                   </h3>
